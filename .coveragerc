@@ -1,0 +1,5 @@
+[run]
+include = referral_platform/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
