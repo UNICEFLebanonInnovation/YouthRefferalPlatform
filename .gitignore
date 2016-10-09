@@ -76,3 +76,4 @@ tests/.hitch
 referral_platform/static/referral_platform/dist/
 webpack-stats.json
 webpack-stats-production.json
+/staticfiles/

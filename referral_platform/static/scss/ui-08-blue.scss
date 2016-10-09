@@ -1,0 +1,115 @@
+
+
+// UI Color Set ---------------------------------------------
+
+
+.ui-bg-color01   {background-color: #23395B !important;}
+.ui-bg-color02   {background-color: #3a5a77 !important;}
+
+.ui-block-color01   {background-color: #f2faff !important;}
+.ui-block-color02   {background-color: #dcf3fb !important;}
+.ui-block-color03   {background-color: #cfe5f1 !important;}
+
+.ui-menu-color01 {background-color: #406E8E !important;}
+.ui-menu-color02 {background-color: #3f6988 !important;}
+.ui-menu-color03 {background-color: #3d6584 !important;}
+.ui-menu-color04 {background-color: #3c6280 !important;}
+.ui-menu-color05 {background-color: #3c5e7c !important;}
+.ui-menu-color06 {background-color: #3a5a77 !important;}
+
+
+#top-navigation {
+  .ident {
+    .vc-name {
+      .position {
+        .pdf {
+          background: rgba(0, 0, 0, 0.1);
+        }
+        .position-title {
+          background: rgba(0, 0, 0, 0.1);
+        }
+      }
+      .name .name-pdf {
+        background: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+}
+.hvr-sweep-to-bottom:before {  background: rgba(0, 0, 0, 0.03);  }
+.hvr-sweep-to-right:before {  background: rgba(0, 0, 0, 0.03);  }
+
+
+#homesection {
+  .pro-experience {
+    h3 {color: $color25;}
+    .experience {  border-left: 1px solid #8EA8C3;  }
+    li.date {color: $color25;}
+    li.company a {
+      color: $color25;
+      &:hover {color: #8EA8C3;}
+      &:before {  background: #8EA8C3;  }
+    }
+    li.position {color: $color25;}
+  }
+  .circle-skills {
+    .progressbar {
+      .circle {
+        color: #406E8E;
+        p {color: $color25;}
+      }
+    }
+    h3, h4 {color: $color25;}
+  }
+  .personal .box {  border-bottom: 1px dotted #b0d2bd;  }
+}
+
+.name-title {color: $color01;}
+.subtitle {color: #406E8E;}
+
+.boxed {
+  background-image: url('../images/backgrounds/tweed.png');
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0 15px 4px;
+}
+
+.btn-wh-trans {
+  background: #8EA8C3;
+  border: 1px solid transparent;
+  color: $color01 !important;
+  &:hover {
+    background: $hovercolor;
+    color: $color01 !important;  }
+}
+
+footer {
+  h4 {  color: $color01;  }
+  p {color: $color01;}
+  .copyrights p {color: $color01;}
+  .follow .social li a i {
+    background: rgba(255,255,255,.7);
+    &:before {color: #3a5a77;}
+
+    &:hover {
+      background: $color01;
+      &:before {color: #3a5a77;}
+    }
+  }
+  input {
+    border-color: rgba(255,255,255, .6);
+    color: #ffffff;
+    &:focus { border-color: $color02;}
+  }
+  ::-webkit-input-placeholder {  color: $color06;  }
+  :-moz-placeholder {  color: $color06;  }
+  ::-moz-placeholder {  color: $color06;  opacity: 1; /* Since FF19 lowers the opacity of the placeholder by default */}
+  :-ms-input-placeholder {  color: $color06;  }
+
+  .cv-link a {
+    color: $color01;
+    i {
+      background: rgba(255,255,255,.7);
+      &:before {color: #3a5a77;}
+    }
+    &:hover {color: $color03;}
+    &:hover i {background: $color01;}
+  }
+}

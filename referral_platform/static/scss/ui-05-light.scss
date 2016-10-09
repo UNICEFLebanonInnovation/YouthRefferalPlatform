@@ -1,0 +1,118 @@
+
+
+// UI Color Set ---------------------------------------------
+
+
+.ui-bg-color01   {background-color: $color02 !important;}
+.ui-bg-color02   {background-color: $color20 !important;}
+
+.ui-block-color01   {background-color: $color02 !important;}
+.ui-block-color02   {background-color: $color02 !important;}
+.ui-block-color03   {background-color: $color03 !important;}
+
+.ui-menu-color01 {background-color: $color04 !important;}
+.ui-menu-color02 {background-color: $color04 !important;}
+.ui-menu-color03 {background-color: $color04 !important;}
+.ui-menu-color04 {background-color: $color04 !important;}
+.ui-menu-color05 {background-color: $color04 !important;}
+.ui-menu-color06 {background-color: $color04 !important;}
+
+#top-navigation {
+  .name-title h2 {color: $color25;}
+  .ident {
+    .vc-name {
+      .position {
+        h4 {  color: $color25;  }
+        .position-title {  background: $color03;  }
+        .pdf {
+          background: rgba(0, 0, 0, 0.05);
+          a i:before {  color: $color12;  }
+        }
+      }
+      .name .name-pdf {
+        background: rgba(0, 0, 0, 0.03);
+        a i:before {  color: $color12;  }
+      }
+    }
+  }
+  .menuitem a {
+    i:before {  color: $color12;  }
+    span {  color: $color25;  }
+  }
+}
+
+.hvr-sweep-to-bottom:before {  background: rgba(0, 0, 0, 0.03);  }
+.hvr-sweep-to-right:before {  background: rgba(0, 0, 0, 0.03);  }
+
+#homesection {
+  .pro-experience {
+    h3 {color: $color25;}
+    .experience {  border-left: 1px solid $color10;  }
+    li.date {color: $color25;}
+    li.company a {
+      color: $color25;
+      &:hover {color: $hovercolor;}
+      &:before {  background: $color10;  }
+    }
+    li.position {color: $color25;}
+  }
+  .circle-skills {
+    .progressbar {
+      .circle {
+        color: $color15;
+        p {color: $color25;}
+      }
+    }
+    h3, h4 {color: $color25;}
+  }
+  .personal .box {  border-bottom: 1px dotted $color05;  }
+}
+
+.btn-wh-trans {
+  background: $color07;
+  border: 1px solid transparent;
+  color: $color01 !important;
+  &:hover {
+    background: $color12;
+    color: $color01 !important;  }
+}
+
+.name-title {color: $color01;}
+
+.boxed {
+  background-image: url('../images/backgrounds/dark_wood.png');
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0 15px 4px;
+}
+
+footer {
+  h4 {  color: $color01;  }
+  p {color: $color02;}
+  .copyrights p {color: $color03;}
+  .follow .social li a i {
+    background: $color10;
+    &:before {color: $color20;}
+    &:hover {
+      background: $color08;
+      &:before {color: $color20;}
+    }
+  }
+  input {
+    border-color: $color09;
+    color: $color01;
+    &:focus { border-color: $color03;}
+  }
+  ::-webkit-input-placeholder {  color: $color09;  }
+  :-moz-placeholder {  color: $color09;  }
+  ::-moz-placeholder {  color: $color09;  opacity: 1; /* Since FF19 lowers the opacity of the placeholder by default */}
+  :-ms-input-placeholder {  color: $color09;  }
+
+  .cv-link a {
+    color: $color02;
+    i {
+      background: $color10;
+      &:before {color: $color20;}
+    }
+    &:hover {color: $color01;}
+    &:hover i {background: $color08;}
+  }
+}
