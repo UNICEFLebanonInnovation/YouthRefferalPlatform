@@ -1,59 +1,56 @@
 version: '2'
 
 volumes:
-  postgres_data: {}
-  postgres_backup: {}
+  postgres_data_dev: {}
+  postgres_backup_dev: {}
 
 services:
   postgres:
     build: ./compose/postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - postgres_backup:/backups
-    env_file: .env
+      - postgres_data_dev:/var/lib/postgresql/data
+      - postgres_backup_dev:/backups
+    environment:
+      - POSTGRES_USER=referral_platform
 
   django:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile
-    user: django
+      dockerfile: ./compose/django/Dockerfile-dev
+    command: python /app/manage.py runserver_plus 0.0.0.0:8000
     depends_on:
       - postgres
-      - redis
-    command: /gunicorn.sh
-    env_file: .env
-
-  nginx:
-    build: ./compose/nginx
-    depends_on:
-      - django
-
+    environment:
+      - POSTGRES_USER=referral_platform
+      - USE_DOCKER=yes
+    volumes:
+      - .:/app
     ports:
-      - "0.0.0.0:80:80"
+      - "8000:8000"
+    links:
+      - postgres
+
+      - mailhog
 
 
-  redis:
-    image: redis:latest
 
-  celeryworker:
+  pycharm:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile
-    user: django
-    env_file: .env
-    depends_on:
-     - postgres
-     - redis
-    command: celery -A referral_platform.taskapp worker -l INFO
-
-  celerybeat:
-    build:
-      context: .
-      dockerfile: ./compose/django/Dockerfile
-    user: django
-    env_file: .env
+      dockerfile: ./compose/django/Dockerfile-dev
     depends_on:
       - postgres
-      - redis
-    command: celery -A referral_platform.taskapp beat -l INFO
+    environment:
+      - POSTGRES_USER=referral_platform
+    volumes:
+      - .:/app
+    links:
+      - postgres
+
+
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
 

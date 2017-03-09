@@ -12,16 +12,20 @@ from .models import User
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     # These next two lines tell the view to index lookups by username
-    slug_field = 'username'
-    slug_url_kwarg = 'username'
+    slug_field = 'email'
+    slug_url_kwarg = 'email'
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
+        if self.request.user.partner:
+            return reverse('partners:home',
+                           kwargs={'partner': self.request.user.partner})
+
         return reverse('users:detail',
-                       kwargs={'username': self.request.user.username})
+                       kwargs={'email': self.request.user.email})
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -34,7 +38,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     # send the user back to their own page after a successful update
     def get_success_url(self):
         return reverse('users:detail',
-                       kwargs={'username': self.request.user.username})
+                       kwargs={'email': self.request.user.email})
 
     def get_object(self):
         # Only get the User record for the user making the request
@@ -44,5 +48,5 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 class UserListView(LoginRequiredMixin, ListView):
     model = User
     # These next two lines tell the view to index lookups by username
-    slug_field = 'username'
-    slug_url_kwarg = 'username'
+    slug_field = 'email'
+    slug_url_kwarg = 'email'

@@ -5,7 +5,7 @@
 [Color Scheme / Colors, textures]
 */
 .e-bg-light-texture {
-  background: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/backgrounds/dark_fish_skin.png"); }
+  background: url("../images/backgrounds/dark_fish_skin.png"); }
 
 .color01 {
   color: #ffffff !important; }
@@ -563,7 +563,7 @@ body {
     margin: 0 0 16px 0; }
 
 #initial {
-  background-image: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/initial/bg-01.jpg");
+  background-image: url("../images/initial/bg-01.jpg");
   background-attachment: fixed;
   background-position: center center;
   background-size: cover; }
@@ -771,7 +771,7 @@ i {
   width: 30%; }
 
 #back-top a {
-  background: #bfbfbf url(../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/back_top.png) no-repeat 50% 50%;
+  background: #bfbfbf url(../images/back_top.png) no-repeat 50% 50%;
   border: 1px solid #ffffff;
   bottom: 60px;
   display: block;
@@ -786,7 +786,7 @@ i {
   -o-transition: all 0.35s ease-in-out;
   -ms-transition: all 0.35s ease-in-out; }
   #back-top a:hover {
-    background: #e74c3c url(../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/back_top.png) no-repeat 50% 50%;
+    background: #e74c3c url(../images/back_top.png) no-repeat 50% 50%;
     border-color: #e74c3c; }
 
 input, textarea {
@@ -1029,7 +1029,7 @@ button, input, select, textarea {
     color: #e7e7e7; }
     #top-navigation .ident .vc-photo {
       min-height: 360px;
-      background: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/userpic01.jpg");
+      background: url("../images/userpic01.jpg");
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -1038,7 +1038,7 @@ button, input, select, textarea {
       -ms-filter: grayscale(100%);
       -o-filter: grayscale(100%);
       filter: grayscale(100%);
-      filter: url(../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/grayscale.svg#greyscale);
+      filter: url(../images/grayscale.svg#greyscale);
       /* Firefox 4+ */
       filter: gray;
       /* IE 6-9 */
@@ -1513,7 +1513,7 @@ button, input, select, textarea {
   -ms-filter: grayscale(100%);
   -o-filter: grayscale(100%);
   filter: grayscale(100%);
-  filter: url(../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/grayscale.svg#greyscale);
+  filter: url(../images/grayscale.svg#greyscale);
   /* Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
@@ -1527,7 +1527,7 @@ button, input, select, textarea {
   background-size: cover; }
 
 .timeline-bg01-01 {
-  background: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/timeline-1-01.jpg");
+  background: url("../images/timeline-1-01.jpg");
   background-position: center;
   background-size: cover; }
 
@@ -1537,7 +1537,7 @@ button, input, select, textarea {
   background-size: cover; }
 
 .timeline-bg02-01 {
-  background: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/timeline-2-01.jpg");
+  background: url("../images/timeline-2-01.jpg");
   background-position: center;
   background-size: cover; }
 
@@ -1547,7 +1547,7 @@ button, input, select, textarea {
   background-size: cover; }
 
 .timeline-bg03-01 {
-  background: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/timeline-3-01.jpg");
+  background: url("../images/timeline-3-01.jpg");
   background-position: center;
   background-size: cover; }
 
@@ -1557,7 +1557,7 @@ button, input, select, textarea {
   background-size: cover; }
 
 .timeline-bg04-01 {
-  background: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/timeline-4-01.jpg");
+  background: url("../images/timeline-4-01.jpg");
   background-position: center;
   background-size: cover; }
 
@@ -1606,7 +1606,7 @@ button, input, select, textarea {
         cursor: pointer; }
 
 #counts-dark-bg {
-  background: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/backgrounds/dark_wood.png"); }
+  background: url("../images/backgrounds/dark_wood.png"); }
   #counts-dark-bg .count-container .count-icon i::before {
     color: #ffffff; }
   #counts-dark-bg .count-container .count .digit {
@@ -2373,7 +2373,7 @@ footer {
   color: #84B59F; }
 
 .boxed {
-  background-image: url("../../../../../../Downloads/products%2FWB0RK211T/html/assets/custom/images/backgrounds/leather.png");
+  background-image: url("../images/backgrounds/leather.png");
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 15px 4px; }
 
 .btn-wh-trans {

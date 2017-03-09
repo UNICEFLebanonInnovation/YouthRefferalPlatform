@@ -81,10 +81,10 @@
 		if (colorScheme) {
 			var $colorStyles = $('link[data-id="color-styles"]');
 			if ($colorStyles.length) {
-				$colorStyles.attr('href', 'assets/custom/css/' + colorScheme + '.css');
+				$colorStyles.attr('href', '/static/css/' + colorScheme + '.css');
 			} else {
 				$("head link[rel='stylesheet']").last().after(
-					"<link href='assets/custom/css/" + colorScheme + ".css' property='stylesheet' rel='stylesheet' type='text/css' media='screen' data-id='color-styles'/>"
+					"<link href='/static/css/" + colorScheme + ".css' property='stylesheet' rel='stylesheet' type='text/css' media='screen' data-id='color-styles'/>"
 				);
 			}
 			$('#color-scheme').val(colorScheme);
@@ -144,11 +144,11 @@
             '<div>' +
                 '<h5 class="uppercase" style="color: #3498db; font-weight: 600;">More from Neuethemes:</h5>' +
                 '<div style="padding: 10px 0;">' +
-                    '<a href="https://wrapbootstrap.com/theme/method-landing-page-html-WB05231H0?ref=neuethemes" target="_blank"><img src="assets/custom/images/styleselector-promo/method-html.jpg" class="img-responsive"></a>' +
+                    '<a href="https://wrapbootstrap.com/theme/method-landing-page-html-WB05231H0?ref=neuethemes" target="_blank"><img src="/static/images/styleselector-promo/method-html.jpg" class="img-responsive"></a>' +
                     '<span class="small font-regular-normal" style="letter-spacing: 0px;">Method Landing page HTML</span>' +
                 '</div>' +
                 '<div style="padding: 10px 0;">' +
-                    '<a href="https://wrapbootstrap.com/theme/fletcher-personal-landing-page-html-WB029022K?ref=neuethemes" target="_blank"><img src="assets/custom/images/styleselector-promo/fletcher-html.jpg" class="img-responsive"></a>' +
+                    '<a href="https://wrapbootstrap.com/theme/fletcher-personal-landing-page-html-WB029022K?ref=neuethemes" target="_blank"><img src="/static/images/styleselector-promo/fletcher-html.jpg" class="img-responsive"></a>' +
                     '<span class="small font-regular-normal" style="letter-spacing: 0px;">Fletcher One-page HTML</span>' +
                 '</div>' +
                     '<div style="padding: 10px 0;">' +

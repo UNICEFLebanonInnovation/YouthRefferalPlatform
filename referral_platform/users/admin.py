@@ -5,38 +5,40 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+
 from .models import User
 
 
-class MyUserChangeForm(UserChangeForm):
+class PlatformUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
 
 
-class MyUserCreationForm(UserCreationForm):
+class PlatformUserCreationForm(UserCreationForm):
 
     error_message = UserCreationForm.error_messages.update({
-        'duplicate_username': 'This username has already been taken.'
+        'duplicate_email': 'This email has already been taken.'
     })
 
     class Meta(UserCreationForm.Meta):
         model = User
+        fields = ('email', 'first_name', 'last_name', 'partner', 'password1', 'password2',)
 
-    def clean_username(self):
-        username = self.cleaned_data["username"]
+    def clean_email(self):
+        email = self.cleaned_data["email"]
         try:
-            User.objects.get(username=username)
+            User.objects.get(email=email)
         except User.DoesNotExist:
-            return username
-        raise forms.ValidationError(self.error_messages['duplicate_username'])
+            return email
+        raise forms.ValidationError(self.error_messages['duplicate_email'])
 
 
 @admin.register(User)
-class MyUserAdmin(AuthUserAdmin):
-    form = MyUserChangeForm
-    add_form = MyUserCreationForm
+class PlatformUserAdmin(admin.ModelAdmin):
+    form = PlatformUserChangeForm
+    add_form = PlatformUserCreationForm
     fieldsets = (
-            ('User Profile', {'fields': ('name',)}),
+            ('User Profile', {'fields': ('first_name',)}),
     ) + AuthUserAdmin.fieldsets
-    list_display = ('username', 'name', 'is_superuser')
-    search_fields = ['name']
+    list_display = ('first_name', 'is_superuser')
+    search_fields = ['first_name', 'last_name']

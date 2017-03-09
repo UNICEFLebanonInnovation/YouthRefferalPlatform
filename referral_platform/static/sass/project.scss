@@ -21,6 +21,10 @@ $red: #b94a48;
 // bootstrap alert CSS, translated to the django-standard levels of
 // debug, info, success, warning, error
 
+.h1 {
+  color: white;
+}
+
 .alert-debug {
   background-color: $white;
   border-color: $mint-green;

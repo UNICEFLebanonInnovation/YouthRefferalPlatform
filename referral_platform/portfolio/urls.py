@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
 
     url(r'^$', TemplateView.as_view(template_name='portfolio/portfolio.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='portfolio/about.html'), name='about'),
+    url(r'^resume/$', TemplateView.as_view(template_name='portfolio/resume.html'), name='resume'),
 
 ]
 

@@ -22,7 +22,7 @@ urlpatterns = [
 
     # URL pattern for the UserDetailView
     url(
-        regex=r'^(?P<username>[\w.@+-]+)/$',
+        regex=r'^(?P<email>[\w.@+-]+)/$',
         view=views.UserDetailView.as_view(),
         name='detail'
     ),
