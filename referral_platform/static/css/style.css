@@ -1522,7 +1522,7 @@ button, input, select, textarea {
   transition: all .5s ease-in-out; }
 
 .timeline-bg01 {
-  background: url("../images/timeline-1.jpg");
+  background: url("../images/timeline-1-01.jpg");
   background-position: center;
   background-size: cover; }
 
@@ -1532,7 +1532,7 @@ button, input, select, textarea {
   background-size: cover; }
 
 .timeline-bg02 {
-  background: url("../images/timeline-2.jpg");
+  background: url("../images/timeline-2-01.jpg");
   background-position: center;
   background-size: cover; }
 
@@ -1542,7 +1542,7 @@ button, input, select, textarea {
   background-size: cover; }
 
 .timeline-bg03 {
-  background: url("../images/timeline-3.jpg");
+  background: url("../images/timeline-3-01.jpg");
   background-position: center;
   background-size: cover; }
 
@@ -1552,7 +1552,7 @@ button, input, select, textarea {
   background-size: cover; }
 
 .timeline-bg04 {
-  background: url("../images/timeline-4.jpg");
+  background: url("../images/timeline-4-01.jpg");
   background-position: center;
   background-size: cover; }
 

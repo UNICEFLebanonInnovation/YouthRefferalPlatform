@@ -11,7 +11,7 @@ from .models import User
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
-    # These next two lines tell the view to index lookups by username
+    # These next two lines tell the view to index lookups by email
     slug_field = 'email'
     slug_url_kwarg = 'email'
 
@@ -49,4 +49,3 @@ class UserListView(LoginRequiredMixin, ListView):
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = 'email'
-    slug_url_kwarg = 'email'

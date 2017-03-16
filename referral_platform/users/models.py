@@ -36,13 +36,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
-    partner = models.ForeignKey(
-        PartnerOrganization,
-        blank=True, null=True,
-        verbose_name=_('Partner'),
-        related_name='+'
-    )
-
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

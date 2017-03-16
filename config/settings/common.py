@@ -30,7 +30,8 @@ DJANGO_APPS = (
 
     # Useful template tags:
     # 'django.contrib.humanize',
-
+    'dal',
+    'dal_select2',
     # Admin
     'django.contrib.admin',
 )
@@ -39,6 +40,8 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'bootstrap3_datetime',
+    'import_export',
 )
 
 # Apps specific for this project go here.
@@ -47,6 +50,10 @@ LOCAL_APPS = (
     'referral_platform.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'referral_platform.partners',
+    'referral_platform.locations',
+    'referral_platform.portfolios',
+    'referral_platform.courses',
+    'referral_platform.initiatives',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -224,7 +231,7 @@ SOCIALACCOUNT_ADAPTER = 'referral_platform.users.adapters.SocialAccountAdapter'
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'users:redirect'
+LOGIN_REDIRECT_URL = 'youth:home'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER

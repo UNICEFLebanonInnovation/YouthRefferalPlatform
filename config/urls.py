@@ -8,9 +8,13 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
+
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^', include('referral_platform.portfolios.urls', namespace='youth')),
+    url(r'^courses/', include('referral_platform.courses.urls', namespace='courses')),
+    url(r'^initiatives/', include('referral_platform.initiatives.urls', namespace='initiatives')),
+
+    #url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, include(admin.site.urls)),
@@ -21,8 +25,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^partners/', include('referral_platform.partners.urls', namespace='partners')),
-    url(r'^portfolio/', include('referral_platform.portfolio.urls', namespace='students'))
-
+    url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

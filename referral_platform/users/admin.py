@@ -22,7 +22,7 @@ class PlatformUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('email', 'first_name', 'last_name', 'partner', 'password1', 'password2',)
+        fields = ('email', 'first_name', 'last_name', 'password1', 'password2',)
 
     def clean_email(self):
         email = self.cleaned_data["email"]
