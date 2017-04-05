@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:34+0300\n"
+"POT-Creation-Date: 2017-04-05 16:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,8 @@ msgstr "يمكنني التلفّظ بوضوح/ التعبير عن تفكيري
 #: referral_platform/courses/forms.py:30
 msgid ""
 "I can express my opinions when my classmates/friends/peers disagree with me"
-msgstr "يمكنني التعبير عن آرائي عندما يخالفني الرأي زملائي في الصّف/رفاقي/نظرائي"
+msgstr ""
+"يمكنني التعبير عن آرائي عندما يخالفني الرأي زملائي في الصّف/رفاقي/نظرائي"
 
 #: referral_platform/courses/forms.py:33
 msgid ""
@@ -82,7 +83,9 @@ msgstr "يمكنني دوماً التوصّل إلى حلّ مشاكلي عند
 msgid ""
 "Usually I have discussions with my friends/parents/classmates to clarify "
 "issues before taking important decisions"
-msgstr "عادةً، أجري نقاشات مع رفاقي/أهلي/ زملائي في الصّف لتوضيح المسائل قبل اتّخاذ قرارات مهمة."
+msgstr ""
+"عادةً، أجري نقاشات مع رفاقي/أهلي/ زملائي في الصّف لتوضيح المسائل قبل اتّخاذ "
+"قرارات مهمة."
 
 #: referral_platform/courses/forms.py:62
 msgid ""
@@ -114,7 +117,9 @@ msgstr "الإنتماء إلى فريق أمر مسلٍ"
 
 #: referral_platform/courses/forms.py:82
 msgid "I build on the ideas of others."
-msgstr "أبني على أفكار الآخرين. (الترجمة الأصلية: أناقش صراحةً أفكاري مع آخرين في المجموعة)."
+msgstr ""
+"أبني على أفكار الآخرين. (الترجمة الأصلية: أناقش صراحةً أفكاري مع آخرين في "
+"المجموعة)."
 
 #: referral_platform/courses/forms.py:85
 msgid "I am willing to compromise my own view to obtain a group consensus."
@@ -128,13 +133,15 @@ msgstr "أعتقد أنّ العمل كفريق يساعد على تحقيق إ�
 msgid ""
 "I support and praise as well as give constructive criticisms to people I "
 "work with as part of a team"
-msgstr "أدعم وأمدح وأقدّم انتقادات بنّاءة للأشخاص الذين أعمل معهم كجزء من فريق.  "
+msgstr ""
+"أدعم وأمدح وأقدّم انتقادات بنّاءة للأشخاص الذين أعمل معهم كجزء من فريق.  "
 
 #: referral_platform/courses/forms.py:96
 msgid ""
 "In my social environment, if I have a problem, I have a friend of my own age "
 "that I trust to talk to"
-msgstr "في بيئتي الإجتماعية، في حال واجهت مشكلة، لديّ رفيق في سنّي أثق بالتحدّث إليه. "
+msgstr ""
+"في بيئتي الإجتماعية، في حال واجهت مشكلة، لديّ رفيق في سنّي أثق بالتحدّث إليه. "
 
 #: referral_platform/courses/forms.py:99
 msgid ""
@@ -178,13 +185,17 @@ msgstr "أعتقد أنه بإمكاني المساهمة في تطوير (تح�
 msgid ""
 "I am able to address/discuss community concerns in interactions with "
 "community leaders/people of authority at the local level"
-msgstr "أنا قادر على معالجة/ مناقشة مواضيع تهمّ مجتمعي من خلال التفاعل مع قادة هذا المجتمع أو النافذين فيه على المستوى المحلّي. "
+msgstr ""
+"أنا قادر على معالجة/ مناقشة مواضيع تهمّ مجتمعي من خلال التفاعل مع قادة هذا "
+"المجتمع أو النافذين فيه على المستوى المحلّي. "
 
 #: referral_platform/courses/forms.py:127
 msgid ""
 "I participate actively in addressing my community concerns through media/"
 "social media"
-msgstr "أُشارك بنشاط في معالجة المواضيع التي تهمّ مجتمعي من خلال وسائل الإعلام/ التواصل الإجتماعي. "
+msgstr ""
+"أُشارك بنشاط في معالجة المواضيع التي تهمّ مجتمعي من خلال وسائل الإعلام/ "
+"التواصل الإجتماعي. "
 
 #: referral_platform/courses/forms.py:132
 msgid "I wash my hands before and after having food"
@@ -216,19 +227,24 @@ msgstr "عندما أتناول الطعام، أتنبّه إلى حجم الح
 msgid ""
 "I do some kind of stretching, strength or physical activities at least 3 "
 "times a week"
-msgstr "أمارس بعض أنواع تمارين التمدّد، والقوة واللياقة البدنية ثلاث مرّات على الأقل أسبوعياً."
+msgstr ""
+"أمارس بعض أنواع تمارين التمدّد، والقوة واللياقة البدنية ثلاث مرّات على الأقل "
+"أسبوعياً."
 
 #: referral_platform/courses/forms.py:153
 msgid ""
 "I spend no more than 2 hours a day on recreational screen time such as "
 "watching TV, gaming, or on the internet"
-msgstr "لا أمضي أكثر من ساعتين في اليوم على الشاشات الترفيهية على غرار التلفاز والألعاب أو الإنترنت. "
+msgstr ""
+"لا أمضي أكثر من ساعتين في اليوم على الشاشات الترفيهية على غرار التلفاز "
+"والألعاب أو الإنترنت. "
 
 #: referral_platform/courses/forms.py:156
 msgid ""
 "I respect the environment around me, I manage my solid waste in a way that "
 "causes no harm to nature"
-msgstr "أحترم البيئة من حولي وأتخلّص من النفايات الصلبة بطريقة لا تضرّ بالطبيعة. "
+msgstr ""
+"أحترم البيئة من حولي وأتخلّص من النفايات الصلبة بطريقة لا تضرّ بالطبيعة. "
 
 #: referral_platform/courses/forms.py:181
 #, fuzzy
