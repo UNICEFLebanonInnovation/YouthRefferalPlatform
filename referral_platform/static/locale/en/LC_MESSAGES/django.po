@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 10:47+0300\n"
+"POT-Creation-Date: 2017-04-05 15:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,235 @@ msgstr ""
 
 #: referral_platform/courses/forms.py:21
 msgid "Completely agree"
+msgstr ""
+
+#: referral_platform/courses/forms.py:27
+msgid "I can articulate/state my thoughts, feelings and ideas to others well"
+msgstr ""
+
+#: referral_platform/courses/forms.py:30
+msgid ""
+"I can express my opinions when my classmates/friends/peers disagree with me"
+msgstr ""
+
+#: referral_platform/courses/forms.py:33
+msgid ""
+"I communicate without interrupting others and allowing others too to "
+"communicate"
+msgstr ""
+
+#: referral_platform/courses/forms.py:36
+msgid "I listen carefully to my classmates/friends/peers when they speak to me"
+msgstr ""
+
+#: referral_platform/courses/forms.py:41
+msgid "In general, I am satisfied with myself"
+msgstr ""
+
+#: referral_platform/courses/forms.py:44
+msgid "I feel that I have a number of good qualities"
+msgstr ""
+
+#: referral_platform/courses/forms.py:47
+msgid "I have set long term goals for myself"
+msgstr ""
+
+#: referral_platform/courses/forms.py:50
+msgid "I make decisions to help achieve my long term goals"
+msgstr ""
+
+#: referral_platform/courses/forms.py:53
+msgid "I can always manage to solve my problems if I try hard enough"
+msgstr ""
+
+#: referral_platform/courses/forms.py:58
+msgid ""
+"Usually I have discussions with my friends/parents/classmates to clarify "
+"issues before taking important decisions"
+msgstr ""
+
+#: referral_platform/courses/forms.py:62
+msgid ""
+"I am flexible in changing my mind if I am convinced by my friends/parents/"
+"classmates opinions"
+msgstr ""
+
+#: referral_platform/courses/forms.py:65
+msgid "I can say no to activities that I think are wrong."
+msgstr ""
+
+#: referral_platform/courses/forms.py:68
+msgid "I know how to distinguish between facts and opinions"
+msgstr ""
+
+#: referral_platform/courses/forms.py:71
+msgid ""
+"I try to consider different points of view and different solutions to "
+"problems"
+msgstr ""
+
+#: referral_platform/courses/forms.py:74
+msgid "I'm confident that I can develop creative ideas to solve problems"
+msgstr ""
+
+#: referral_platform/courses/forms.py:79
+msgid "Being part of a team is fun"
+msgstr ""
+
+#: referral_platform/courses/forms.py:82
+msgid "I build on the ideas of others."
+msgstr ""
+
+#: referral_platform/courses/forms.py:85
+msgid "I am willing to compromise my own view to obtain a group consensus."
+msgstr ""
+
+#: referral_platform/courses/forms.py:88
+msgid "I think working as a team helps accomplish better achievement"
+msgstr ""
+
+#: referral_platform/courses/forms.py:91
+msgid ""
+"I support and praise as well as give constructive criticisms to people I "
+"work with as part of a team"
+msgstr ""
+
+#: referral_platform/courses/forms.py:96
+msgid ""
+"In my social environment, if I have a problem, I have a friend of my own age "
+"that I trust to talk to"
+msgstr ""
+
+#: referral_platform/courses/forms.py:99
+msgid ""
+"In my community, I accept others who are from different religion and "
+"nationality"
+msgstr ""
+
+#: referral_platform/courses/forms.py:102
+msgid "I feel I belong to my community"
+msgstr ""
+
+#: referral_platform/courses/forms.py:107
+msgid ""
+"I feel that any conflict in my community should be the everyone's concern"
+msgstr ""
+
+#: referral_platform/courses/forms.py:110
+msgid ""
+"I like to be involved in social activities that help develop my community"
+msgstr ""
+
+#: referral_platform/courses/forms.py:113
+msgid "I know where to volunteer in my community"
+msgstr ""
+
+#: referral_platform/courses/forms.py:116
+msgid "I feel I am appreciated for my contributions to my community"
+msgstr ""
+
+#: referral_platform/courses/forms.py:119
+msgid ""
+"I believe I can contribute towards the development (betterment) of my "
+"community"
+msgstr ""
+
+#: referral_platform/courses/forms.py:124
+msgid ""
+"I am able to address/discuss community concerns in interactions with "
+"community leaders/people of authority at the local level"
+msgstr ""
+
+#: referral_platform/courses/forms.py:127
+msgid ""
+"I participate actively in addressing my community concerns through media/"
+"social media"
+msgstr ""
+
+#: referral_platform/courses/forms.py:132
+msgid "I wash my hands before and after having food"
+msgstr ""
+
+#: referral_platform/courses/forms.py:135
+msgid "I use soap to wash my hands"
+msgstr ""
+
+#: referral_platform/courses/forms.py:138
+msgid "I wash my hands after using toilet"
+msgstr ""
+
+#: referral_platform/courses/forms.py:141
+msgid "I take bath after playing"
+msgstr ""
+
+#: referral_platform/courses/forms.py:144
+msgid "I brush my teeth twice daily"
+msgstr ""
+
+#: referral_platform/courses/forms.py:147
+msgid ""
+"When eating, I am mindful of my food intake by watching my portion sizes and "
+"nutritional intake"
+msgstr ""
+
+#: referral_platform/courses/forms.py:150
+msgid ""
+"I do some kind of stretching, strength or physical activities at least 3 "
+"times a week"
+msgstr ""
+
+#: referral_platform/courses/forms.py:153
+msgid ""
+"I spend no more than 2 hours a day on recreational screen time such as "
+"watching TV, gaming, or on the internet"
+msgstr ""
+
+#: referral_platform/courses/forms.py:156
+msgid ""
+"I respect the environment around me, I manage my solid waste in a way that "
+"causes no harm to nature"
+msgstr ""
+
+#: referral_platform/courses/forms.py:181
+msgid "Part 1: Communication Skills"
+msgstr ""
+
+#: referral_platform/courses/forms.py:188
+msgid "Part 2: Self-esteem"
+msgstr ""
+
+#: referral_platform/courses/forms.py:196
+msgid "Part 3: Critical thinking and analysis skills"
+msgstr ""
+
+#: referral_platform/courses/forms.py:205
+msgid "Part 4: Teambuilding skills"
+msgstr ""
+
+#: referral_platform/courses/forms.py:213
+msgid "Part 5: Social Cohesion & Sense of belonging"
+msgstr ""
+
+#: referral_platform/courses/forms.py:219
+msgid "Part 6: Social Responsibility & Volunteerism"
+msgstr ""
+
+#: referral_platform/courses/forms.py:227
+msgid "Part 7: Advocacy and Mobilization"
+msgstr ""
+
+#: referral_platform/courses/forms.py:232
+msgid "Part 8: Healthy LifeStyle"
+msgstr ""
+
+#: referral_platform/courses/forms.py:244
+#: referral_platform/portfolios/forms.py:273
+msgid "Save changes"
+msgstr ""
+
+#: referral_platform/courses/forms.py:245
+#: referral_platform/portfolios/forms.py:274
+msgid "Cancel"
 msgstr ""
 
 #: referral_platform/initiatives/forms.py:18
@@ -573,14 +802,6 @@ msgstr ""
 msgid ""
 "4. We would like to follow up with you after the training, what is your "
 "preferred method of communication?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:273
-msgid "Save changes"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:274
-msgid "Cancel"
 msgstr ""
 
 #: referral_platform/portfolios/models.py:26
