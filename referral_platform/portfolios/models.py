@@ -23,7 +23,7 @@ class Nationality(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = "Nationalities"
+        verbose_name_plural = _("Nationalities")
 
     def __unicode__(self):
         return self.name
@@ -45,7 +45,7 @@ class IDType(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name = "ID Type"
+        verbose_name = _("ID Type")
 
     def __unicode__(self):
         return self.name
@@ -57,7 +57,7 @@ class EducationLevel(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name = "ALP Level"
+        verbose_name = _("ALP Level")
 
     def __unicode__(self):
         return self.name
@@ -236,8 +236,8 @@ class YoungPerson(Person):
     education_status = models.CharField(
         max_length=50,
         choices=Choices(
-            ('currently_studying', _('Currently Studying')),
-            ('stopped_studying', _('Stopped Studying')),
+            ('currently_studying', _('Yes, I am currently studying')),
+            ('stopped_studying', _('Yes, but I stopped studying')),
             ('never_studied', _('Never been to an educational institution')),
             ('na', _('NA')),
         )

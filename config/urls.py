@@ -25,7 +25,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^partners/', include('referral_platform.partners.urls', namespace='partners')),
-    url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
+    # url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -13,6 +13,8 @@ from dal import autocomplete
 
 from referral_platform.portfolios.models import YoungPerson
 
+YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
+
 
 class RegistrationForm(forms.ModelForm):
 
@@ -21,16 +23,20 @@ class RegistrationForm(forms.ModelForm):
             options={
                 "format": "DD/MM/YYYY",
                 "pickTime": False
-            }))
+            })
+    )
 
     leaving_education_reasons = forms.MultipleChoiceField(
         choices=Choices(
-            (_('Family Pressure/ Social Norms')),
-            (_('Physical or mental health problems')),
-            (_('Distance to school')),
-            (_('Safety due to conflict')),
-            (_('Low standard of schools/Lack of Space')),
-            (_('Discrimination at School')),
+            (_('To help my family in house chores')),
+            (_('To help my family in breadwinning')),
+            (_('I got low grades or did not pass my exams')),
+            (_('I have/had physical or mental health problems')),
+            (_('School was too far away')),
+            (_('School was too expensive')),
+            (_('School was unsafe due to community conflict')),
+            (_('School was boring/not appealing to me')),
+            (_('I felt discriminated against at school')),
             (_('Other')),
         ),
         widget=forms.CheckboxSelectMultiple
@@ -52,7 +58,7 @@ class RegistrationForm(forms.ModelForm):
     )
     looking_for_work = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
-        choices=((False, 'No'), (True, 'Yes')),
+        choices=YES_NO_CHOICE,
         widget=forms.RadioSelect
     )
 
@@ -70,20 +76,20 @@ class RegistrationForm(forms.ModelForm):
 
     obstacles_for_work = forms.MultipleChoiceField(
         choices=Choices(
-            ('location', _('Inadequate Location')),
-            ('salary', _('Low Salary')),
-            ('disability', _('Disability')),
+            ('location', _('The workplace was in an unsafe location')),
+            ('salary', _('Low Salary Offered')),
+            ('disability', _('Mental or Physical Disability')),
             ('education', _('Low Education Level')),
             ('language', _('Foreign Language')),
-            ('opportunities', _('Low Job Opportunities')),
-            ('skills', _('Lack of Skills')),
+            ('opportunities', _('Few Job Opportunities')),
+            ('skills', _('Lack of Skills for the job')),
             ('laws', _('Rigid Labour Laws')),
         ),
         widget=forms.CheckboxSelectMultiple
     )
     supporting_family = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
-        choices=((False, 'No'), (True, 'Yes')),
+        choices=YES_NO_CHOICE,
         widget=forms.RadioSelect
     )
 
@@ -112,57 +118,57 @@ class RegistrationForm(forms.ModelForm):
 
     trained_before = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
-        choices=((False, 'No'), (True, 'Yes')),
+        choices=YES_NO_CHOICE,
         widget=forms.RadioSelect
     )
 
     sports_group = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
-        choices=((False, 'No'), (True, 'Yes')),
+        choices=YES_NO_CHOICE,
         widget=forms.RadioSelect
     )
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['id_type'].empty_label = 'ID Type'
-        self.fields['sex'].empty_label = 'Gender'
-        self.fields['parents_phone_number'].empty_label = 'Nationality'
-        self.fields['location'].empty_label = 'Location'
-        self.fields['partner_organization'].empty_label = 'Partner Organisation'
-        self.fields['education_status'].empty_label = 'Are you currently studying?'
-        self.fields['education_type'].empty_label = 'Type of education?'
-        self.fields['education_level'].empty_label = 'Current education level?'
+        self.fields['id_type'].empty_label = _('ID Type')
+        self.fields['sex'].empty_label = _('Gender')
+        self.fields['parents_phone_number'].empty_label = _('Nationality')
+        self.fields['location'].empty_label = _('Location')
+        self.fields['partner_organization'].empty_label = _('Partner Organisation')
+        self.fields['education_status'].empty_label = _('Are you currently studying?')
+        self.fields['education_type'].empty_label = _('Type of education?')
+        self.fields['education_level'].empty_label = _('Current education level?')
         self.helper = FormHelper()
         self.helper.form_show_labels = False
         self.helper.layout = Layout(
             Fieldset(
-                'Basic Data',
+                _('Basic Data'),
                 Div(
-                    Div(PrependedText('first_name', 'First Name'), css_class='col-md-4'),
-                    Div(PrependedText('father_name', 'Father Name'), css_class='col-md-4'),
-                    Div(PrependedText('last_name', 'Last Name'), css_class='col-md-4'),
+                    Div(PrependedText('first_name', _('First Name')), css_class='col-md-4'),
+                    Div(PrependedText('father_name', _('Father Name')), css_class='col-md-4'),
+                    Div(PrependedText('last_name', _('Last Name')), css_class='col-md-4'),
                     css_class='row',
                 ),
                 Div(
-                    Div(PrependedText('mother_firstname', 'Mother First Name'), css_class='col-md-6'),
-                    Div(PrependedText('mother_lastname', 'Mother Last Name'), css_class='col-md-6'),
+                    Div(PrependedText('mother_firstname', _('Mother First Name')), css_class='col-md-6'),
+                    Div(PrependedText('mother_lastname', _('Mother Last Name')), css_class='col-md-6'),
                     css_class='row',
                 ),
                 Div(
-                    Div(PrependedText('id_number', 'ID Number'), css_class='col-md-6', ),
+                    Div(PrependedText('id_number', _('ID Number')), css_class='col-md-6', ),
                     Div('id_type', css_class='col-md-6',),
                     css_class='row',
                 ),
                 Div(
-                    Div(PrependedText('disability', 'Disability'), css_class='col-md-4', ),
+                    Div(PrependedText('disability', _('Disability')), css_class='col-md-4', ),
                     Div('sex', css_class='col-md-4', ),
-                    Div(PrependedText('birthdate', 'Birthdate'), css_class='col-md-4', ),
+                    Div(PrependedText('birthdate', _('Birthdate')), css_class='col-md-4', ),
                     css_class='row',
                 ),
                 Div(
                     Div('nationality', css_class='col-md-4', ),
-                    Div(PrependedText('phone', 'Phone Number'), css_class='col-md-4', ),
-                    Div(PrependedText('parents_phone_number', 'Parents Phone Number'), css_class='col-md-4', ),
+                    Div(PrependedText('phone', _('Phone Number')), css_class='col-md-4', ),
+                    Div(PrependedText('parents_phone_number', _('Parents Phone Number')), css_class='col-md-4', ),
                     css_class='row',
                 ),
                 Div(
@@ -172,117 +178,100 @@ class RegistrationForm(forms.ModelForm):
                 ),
             ),
             Fieldset(
-                'Educational Information',
-                HTML("<p>Have you been enrolled in any education programme?</p>"),
+                _('Educational Information'),
                 Div(
-                    Div('education_status', css_class='col-md-4', ),
-                    Div('education_type', css_class='col-md-4', ),
-                    Div('education_level', css_class='col-md-4', ),
+                    Div(
+                        HTML(_('1. Have you ever attended school or other training programs?')),
+                        'education_status', css_class='col-md-4',
+                    ),
+                    Div(
+                        HTML(_('1.a What type of education are/were you enrolled in?')),
+                        'education_type', css_class='col-md-4',
+                    ),
+                    Div(
+                        HTML(_('1.b What is the level of education you have successfully completed?')),
+                        'education_level', css_class='col-md-4',
+                    ),
                     css_class='row',
                 ),
-                HTML("<p>What were your reason(s) for stopping studying? Please tick all that apply?</p>"),
-                Div('leaving_education_reasons'),
+                HTML(_('2. What were your reason(s) for stopping studying? Please tick all that apply?')),
+                Field('leaving_education_reasons'),
             ),
             Fieldset(
-                'Livelihood Information',
+                _('Livelihood Information'),
                 Div(
                     Div(
-                        HTML("<p>1. Relationship with Labour Market*</p>"),
-                        Div('employment_status'),
+                        HTML(_('1. Relationship with Labour Market')),
+                        Field('employment_status'),
                         css_class='col-md-6'),
                     Div(
-                        HTML("<p>2. What is the sector(s) you worked in / or are working in?</p>"),
-                        Div('employment_sectors'),
+                        HTML(_('2. What is the sector(s) you worked in / or are working in?')),
+                        Field('employment_sectors'),
                         css_class='col-md-6'),
                     css_class='row',
                 ),
                 Div(
                     Div(
-                        HTML("<p>3. If you are currently not working, are you searching for work now?*</p>"),
+                        HTML(_('3. If you are currently not working, are you searching for work now?')),
                         Div('looking_for_work'),
                         css_class='col-md-6'),
                     Div(
-                        HTML("<p>3.a If yes, through whom? (select multiple)</p>"),
+                        HTML(_('3.a If yes, through whom? (select multiple)')),
                         Div('through_whom'),
                         css_class='col-md-6'),
                     css_class='row',
                 ),
                 Div(
                     Div(
-                        HTML("<p>4. What are the obstacles in searching for/or having work?*</p>"),
+                        HTML(_('4. What are the obstacles in searching for/or having work?')),
                         Div('obstacles_for_work'),
                         css_class='col-md-6'),
                     Div(
-                        HTML("<p>4.a Do you participate in supporting your family financially?</p>"),
+                        HTML(_('4.a Do you participate in supporting your family financially?')),
                         Div('supporting_family'),
                         css_class='col-md-6'),
                     css_class='row',
                 ),
                 Div(
                     Div(
-                        HTML("<p>5. Please check all the choice(s) that best describes your household composition</p>"),
+                        HTML(_('5. Please check all the choice(s) that best describes your household composition')),
                         Div('household_composition'),
                         css_class='col-md-6'),
                     Div(
-                        HTML("<p>6. How many members in your household work?</p>"),
+                        HTML(_('6. How many members in your household work?')),
                         Div('household_working'),
                         css_class='col-md-6'),
                     css_class='row',
                 ),
             ),
             Fieldset(
-                'Safety and Security Information',
+                _('Follow-up Availability'),
                 Div(
                     Div(
-                        HTML("<p>1. Which statement applies to you?</p>"),
-                        Div('safety'),
-                        css_class='col-md-6'),
-                    Div(
-                        HTML("<p>2. Can you tell us why?</p>"),
-                        Div('safety_reasons'),
-                        css_class='col-md-6'),
-                    css_class='row',
-                ),
-            ),
-            Fieldset(
-                'Follow-up Availability',
-                Div(
-                    Div(
-                        HTML("<p>1. Have you attended any kind of training before?</p>"),
+                        HTML(_('1. Have you attended any kind of training before?')),
                         Div('trained_before'),
                         css_class='col-md-6'),
                     Div(
-                        HTML("<p>1.a If not, why?</p>"),
+                        HTML(_('1.a If not, why?')),
                         Div('not_trained_reason'),
                         css_class='col-md-6'),
                     css_class='row',
                 ),
                 Div(
                     Div(
-                        HTML("<p>2. Are you a part of Sports Group?</p>"),
-                        Div('sports_group'),
-                        css_class='col-md-6'),
-                    Div(
-                        HTML("<p>2.a What is the type of sports you practice?</p>"),
-                        Div('sport_type'),
-                        css_class='col-md-6'),
-                    css_class='row',
-                ),
-                Div(
-                    Div(
-                        HTML("<p>3. How did you know about this program?</p>"),
+                        HTML(_('How did you know about this program?')),
                         Div('referred_by'),
                         css_class='col-md-6'),
                     Div(
-                        HTML("<p>4. We would like to follow up with you after the training, what is your preferred method of communication?</p>"),
+                        HTML(_('4. We would like to follow up with you after the training, what is your preferred method of communication?')),
                         Div('communication_preference'),
                         css_class='col-md-6'),
                     css_class='row',
                 ),
             ),
             FormActions(
-                Submit('save', 'Save changes'),
-                Button('cancel', 'Cancel')
+                Submit('save', _('Save changes')),
+                Button('cancel', _('Cancel'))
             )
         )
 
