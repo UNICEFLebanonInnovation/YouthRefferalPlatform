@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}Registration{% endblock %}
 
@@ -19,7 +20,6 @@
 
         <section class="inner-section light bg-color01">
             <div class="container-fluid nopadding">
-                {% load crispy_forms_tags %}
                 {% crispy form %}
             </div>
         </section>

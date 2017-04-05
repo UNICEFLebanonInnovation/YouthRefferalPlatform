@@ -156,11 +156,11 @@ class LifeSkillsAssessmentForm(forms.Form):
         help_text=_('I respect the environment around me, I manage my solid waste in a way that causes no harm to nature'))
 
 
-    def _generate_rows(slef, *fields):
+    def _generate_rows(self, *fields):
         return [
             Div(
                 Div(
-                    HTML("<p>{}</p>".format(slef.fields[field].help_text)),
+                    HTML("<p>{}</p>".format(self.fields[field].help_text)),
                     css_class='col-md-3',
                 ),
                 Div(
