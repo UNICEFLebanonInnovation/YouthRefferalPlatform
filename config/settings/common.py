@@ -64,6 +64,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -123,6 +124,14 @@ TIME_ZONE = 'Asia/Beirut'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
+LANGUAGE_COOKIE_NAME = 'default_language'
+
+LANGUAGES = (
+    ('ar-ar', 'arabic'),
+    ('en-us', 'english'),
+)
+
+LANGUAGES_BIDI = ["en-us"]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
@@ -256,6 +265,10 @@ STATICFILES_FINDERS += ("compressor.finders.CompressorFinder", )
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
+
+LOCALE_PATHS = [
+    str(APPS_DIR.path('static/locale')),
+]
 
 # WEBPACK
 # ------------------------------------------------------------------------------

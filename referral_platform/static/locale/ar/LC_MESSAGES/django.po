@@ -1,0 +1,1067 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-05 10:47+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: referral_platform/courses/forms.py:17
+msgid "Completely disagree"
+msgstr "معارض بالكامل"
+
+#: referral_platform/courses/forms.py:18
+msgid "Somewhat disagree"
+msgstr "معارض نوعاً ما"
+
+#: referral_platform/courses/forms.py:19
+msgid "Neither agree nor disagree"
+msgstr "لا موافق ولا غير موافق"
+
+#: referral_platform/courses/forms.py:20
+msgid "Somewhat agree"
+msgstr "موافق نوعاً ما"
+
+#: referral_platform/courses/forms.py:21
+msgid "Completely agree"
+msgstr "موافق بالكامل"
+
+#: referral_platform/initiatives/forms.py:18
+msgid ""
+"Improving or installing basic services (electricity, water, sanitation, and "
+"waste removal)"
+msgstr "تحسين أو تثبيت الخدمات الأساسية (الكهرباء، المياه، الصرف الصحي وإزالة النفايات)"
+
+#: referral_platform/initiatives/forms.py:19
+msgid "Enhancing social cohesion"
+msgstr "تعزيز التماسك الاجتماعي"
+
+#: referral_platform/initiatives/forms.py:20
+msgid "Environmental"
+msgstr "بيئية"
+
+#: referral_platform/initiatives/forms.py:21
+msgid "Health Services"
+msgstr "خدمات صحية"
+
+#: referral_platform/initiatives/forms.py:22
+msgid "Educational, informational or knowledge sharing"
+msgstr "تعليمية، معلوماتية أو تبادل معلومات"
+
+#: referral_platform/initiatives/forms.py:23
+msgid "Advocacy or Raising awareness"
+msgstr "المناصرة أو زيادة الوعي"
+
+#: referral_platform/initiatives/forms.py:24
+msgid "Political"
+msgstr "سياسية"
+
+#: referral_platform/initiatives/forms.py:25
+msgid "Spiritual/Religious"
+msgstr "روحية / دينية"
+
+#: referral_platform/initiatives/forms.py:26
+msgid "Artistic/Cultural/Sports"
+msgstr "فنية / ثقافية / رياضة"
+
+#: referral_platform/initiatives/forms.py:27
+msgid "Enhancing public safety"
+msgstr "تعزيز السلامة العامة"
+
+#: referral_platform/initiatives/forms.py:28
+msgid ""
+"Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)"
+msgstr "تحسين المساحات العامة (الحدائق، المستشفيات، المباني، المدارس والأرصفة)"
+
+#: referral_platform/initiatives/forms.py:29
+#: referral_platform/initiatives/forms.py:57
+#: referral_platform/portfolios/forms.py:40
+#: referral_platform/portfolios/forms.py:72
+#: referral_platform/portfolios/forms.py:114
+msgid "Other"
+msgstr "غير ذلك (يرجى التحديد)"
+
+#: referral_platform/initiatives/forms.py:36
+msgid "Self-Management"
+msgstr "الإدارة الذاتية"
+
+#: referral_platform/initiatives/forms.py:37
+msgid "Cooperation & Teamwork"
+msgstr "التعاون والعمل الجماعي"
+
+#: referral_platform/initiatives/forms.py:38
+msgid "Creativity"
+msgstr "الإبداع"
+
+#: referral_platform/initiatives/forms.py:39
+msgid "Critical Thinking"
+msgstr "التفكير النقدي"
+
+#: referral_platform/initiatives/forms.py:40
+msgid "Negotiation"
+msgstr "التفاوض"
+
+#: referral_platform/initiatives/forms.py:41
+msgid "Respect for diversity"
+msgstr "احترام التنوع"
+
+#: referral_platform/initiatives/forms.py:42
+msgid "Decision Making"
+msgstr "إتخاذ القرار"
+
+#: referral_platform/initiatives/forms.py:43
+msgid "Participation"
+msgstr "مشاركة"
+
+#: referral_platform/initiatives/forms.py:44
+msgid "Communication"
+msgstr "الاتصالات"
+
+#: referral_platform/initiatives/forms.py:45
+msgid "Empathy"
+msgstr "التعاطف"
+
+#: referral_platform/initiatives/forms.py:46
+msgid "Problem-Solving"
+msgstr "حل المشاكل"
+
+#: referral_platform/initiatives/forms.py:47
+msgid "Resilience"
+msgstr "المرونة"
+
+#: referral_platform/initiatives/forms.py:54
+msgid "Other NGOs"
+msgstr "منظمات غير حكومية أخرى"
+
+#: referral_platform/initiatives/forms.py:55
+msgid "Schools"
+msgstr "المدارس"
+
+#: referral_platform/initiatives/forms.py:56
+msgid "Municipality"
+msgstr "البلدية "
+
+#: referral_platform/initiatives/models.py:33
+msgid "1-2 weeks"
+msgstr "أسبوع - أسبوعان"
+
+#: referral_platform/initiatives/models.py:34
+msgid "3-4 weeks"
+msgstr "3-4 أسابيع"
+
+#: referral_platform/initiatives/models.py:35
+msgid "4-6 weeks"
+msgstr "4 - 6 أسابيع"
+
+#: referral_platform/initiatives/models.py:36
+msgid "More than 6 weeks"
+msgstr "أكثر من 6 أسابيع "
+
+#: referral_platform/initiatives/models.py:66
+#: referral_platform/initiatives/models.py:96
+msgid "1-50"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:67
+#: referral_platform/initiatives/models.py:97
+msgid "51-100"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:68
+#: referral_platform/initiatives/models.py:98
+msgid "501-1000"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:69
+#: referral_platform/initiatives/models.py:99
+msgid "greater than 1000"
+msgstr "أكثر من 1000"
+
+#: referral_platform/initiatives/models.py:76
+msgid "1-6 years"
+msgstr "1-6 سنوات"
+
+#: referral_platform/initiatives/models.py:77
+msgid "7-13 years"
+msgstr "7-13 سنوات"
+
+#: referral_platform/initiatives/models.py:78
+msgid "14-24 years"
+msgstr "14-24 سنة"
+
+#: referral_platform/initiatives/models.py:79
+msgid "25-50 years"
+msgstr "25-50 سنة"
+
+#: referral_platform/initiatives/models.py:80
+msgid "50 years and above"
+msgstr "50 سنة وما فوق  "
+
+#: referral_platform/initiatives/models.py:87
+msgid "Both male and females"
+msgstr "الذكور والإناث على حد سواء"
+
+#: referral_platform/initiatives/models.py:88
+msgid "Only males"
+msgstr "الذكور فقط "
+
+#: referral_platform/initiatives/models.py:89
+msgid "only female"
+msgstr "الإناث فقط "
+
+#: referral_platform/initiatives/models.py:107
+msgid "UNICEF"
+msgstr "اليونيسيف"
+
+#: referral_platform/initiatives/models.py:108
+msgid "Local Business"
+msgstr "شركة محلية"
+
+#: referral_platform/initiatives/models.py:109
+msgid "Organisation"
+msgstr "منظمة"
+
+#: referral_platform/initiatives/models.py:116
+msgid "Financial (self-explanatory)"
+msgstr "مالي (ذاتي التفسير)"
+
+#: referral_platform/initiatives/models.py:117
+msgid ""
+"Technical (for ex. developing awareness tools materials, trainings..etc)"
+msgstr "تقني (على سبيل المثال تطوير مواد أدوات التوعية، التدريب ... الخ)"
+
+#: referral_platform/initiatives/models.py:118
+msgid "In-Kind (posters, booklet,etc)"
+msgstr "عيني (ملصقات، كتيبات ... الخ)"
+
+#: referral_platform/portfolios/forms.py:16
+msgid "No"
+msgstr "كلا"
+
+#: referral_platform/portfolios/forms.py:16
+msgid "Yes"
+msgstr "نعم"
+
+#: referral_platform/portfolios/forms.py:31
+msgid "To help my family in house chores"
+msgstr "لمساعدة عائلتي في الأعمال المنزلية"
+
+#: referral_platform/portfolios/forms.py:32
+msgid "To help my family in breadwinning"
+msgstr "لمساعدة عائلتي في كسب العيش"
+
+#: referral_platform/portfolios/forms.py:33
+msgid "I got low grades or did not pass my exams"
+msgstr "حصلت على علامات متدنّية أو لم أنجح في امتحاناتي"
+
+#: referral_platform/portfolios/forms.py:34
+msgid "I have/had physical or mental health problems"
+msgstr "لدي / كانت لدي مشاكل في الصحة البدنية أو العقلية"
+
+#: referral_platform/portfolios/forms.py:35
+msgid "School was too far away"
+msgstr "كانت المدرسة بعيدة جداً"
+
+#: referral_platform/portfolios/forms.py:36
+msgid "School was too expensive"
+msgstr "كانت المدرسة مكلفة للغاية"
+
+#: referral_platform/portfolios/forms.py:37
+msgid "School was unsafe due to community conflict"
+msgstr "كانت المدرسة غير آمنة بسبب الصراع المجتمعي "
+
+#: referral_platform/portfolios/forms.py:38
+msgid "School was boring/not appealing to me"
+msgstr "كانت المدرسة مملة / لم تستهويني"
+
+#: referral_platform/portfolios/forms.py:39
+msgid "I felt discriminated against at school"
+msgstr "شعرت بالتمييز في المدرسة"
+
+#: referral_platform/portfolios/forms.py:47
+msgid "Markets and shops"
+msgstr "الأسواق والمحلات التجارية"
+
+#: referral_platform/portfolios/forms.py:48
+msgid "Agriculture & Fishing"
+msgstr "الزراعة والصيد "
+
+#: referral_platform/portfolios/forms.py:49
+msgid "Handicrafts and art crafts (carpentry, wood works, etc)"
+msgstr "الحرف اليدوية والحرف الفنية (النجارة، والأعمال الخشبية ... الخ)"
+
+#: referral_platform/portfolios/forms.py:50
+msgid "Manufacturing, factory and machinery"
+msgstr "التصنيع، المصانع والآلات"
+
+#: referral_platform/portfolios/forms.py:51
+msgid "construction and associated industries (plumbing, electrician)"
+msgstr "البناء والصناعات المرتبطة بها (السباكة، الكهرباء، ...) "
+
+#: referral_platform/portfolios/forms.py:52
+msgid ""
+"Unskilled labor and basic occupations (shoe cleaners, street sellers, "
+"domestic help, etc)"
+msgstr "العمالة غير الماهرة والمهن الأساسية (ماسحو أحذية، باعة في الشوارع، أعمال مساعدة منزلية ... الخ)"
+
+#: referral_platform/portfolios/forms.py:53
+msgid "Civil Society"
+msgstr "المجتمع المدني"
+
+#: referral_platform/portfolios/forms.py:54
+msgid "I don't want to answer"
+msgstr "لا أريد الإجابة "
+
+#: referral_platform/portfolios/forms.py:67
+msgid "Through family and friends"
+msgstr " من خلال العائلة والأصدقاء"
+
+#: referral_platform/portfolios/forms.py:68
+msgid "Through an employment office"
+msgstr " من خلال مكتب توظيف"
+
+#: referral_platform/portfolios/forms.py:69
+msgid "Through a trainer"
+msgstr "من خلال مدرّب"
+
+#: referral_platform/portfolios/forms.py:70
+msgid "Through an NGO that you were trained with"
+msgstr " من خلال منظمة غير حكومية تدرّبت لديها"
+
+#: referral_platform/portfolios/forms.py:71
+msgid "Through the Internet"
+msgstr " عبر الانترنت"
+
+#: referral_platform/portfolios/forms.py:79
+msgid "The workplace was in an unsafe location"
+msgstr "مكان العمل في مكان غير آمن"
+
+#: referral_platform/portfolios/forms.py:80
+msgid "Low Salary Offered"
+msgstr "تدنّي الرواتب المقدمة"
+
+#: referral_platform/portfolios/forms.py:81
+msgid "Mental or Physical Disability"
+msgstr "الإعاقة الذهنية أو البدنية"
+
+#: referral_platform/portfolios/forms.py:82
+msgid "Low Education Level"
+msgstr "مستوى التعليم المتدنّي"
+
+#: referral_platform/portfolios/forms.py:83
+msgid "Foreign Language"
+msgstr "اللغة الأجنبية"
+
+#: referral_platform/portfolios/forms.py:84
+msgid "Few Job Opportunities"
+msgstr "ندرة فرص العمل"
+
+#: referral_platform/portfolios/forms.py:85
+msgid "Lack of Skills for the job"
+msgstr "الافتقاد إلى المهارات لشغل هذه الوظيفة"
+
+#: referral_platform/portfolios/forms.py:86
+msgid "Rigid Labour Laws"
+msgstr "قوانين العمل الصارمة"
+
+#: referral_platform/portfolios/forms.py:98
+msgid "Mother (check)"
+msgstr "الأم (ضع علامة)"
+
+#: referral_platform/portfolios/forms.py:99
+msgid "Father (check)"
+msgstr "الأب (ضع علامة)"
+
+#: referral_platform/portfolios/forms.py:100
+msgid "Sister - # 1, 2, 3"
+msgstr "الأخوات. العدد 1، 2، 3"
+
+#: referral_platform/portfolios/forms.py:101
+msgid "Brother - # 1, 2, 3"
+msgstr "الإخوة. العدد 1، 2، 3"
+
+#: referral_platform/portfolios/forms.py:102
+msgid "Other relatives"
+msgstr "أقارب آخرون"
+
+#: referral_platform/portfolios/forms.py:103
+msgid "No response"
+msgstr "لا جواب"
+
+#: referral_platform/portfolios/forms.py:110
+msgid "conflict-related"
+msgstr "ذات صلة بالنزاع"
+
+#: referral_platform/portfolios/forms.py:111
+msgid "violence at home"
+msgstr "عنف في المنزل"
+
+#: referral_platform/portfolios/forms.py:112
+msgid "harassment/violence by the neighborhood"
+msgstr "التحرش / عنف من قبل الحي"
+
+#: referral_platform/portfolios/forms.py:113
+msgid "harassment/violence in the school"
+msgstr "التحرش / عنف في المدرسة"
+
+#: referral_platform/portfolios/forms.py:133
+#: referral_platform/portfolios/models.py:48
+msgid "ID Type"
+msgstr "نوع الهوية"
+
+#: referral_platform/portfolios/forms.py:134
+msgid "Gender"
+msgstr "الجنس"
+
+#: referral_platform/portfolios/forms.py:135
+msgid "Nationality"
+msgstr "الجنسية"
+
+#: referral_platform/portfolios/forms.py:136
+msgid "Location"
+msgstr "الموقع الجغرافي"
+
+#: referral_platform/portfolios/forms.py:137
+msgid "Partner Organisation"
+msgstr "الجمعية"
+
+#: referral_platform/portfolios/forms.py:138
+msgid "Are you currently studying?"
+msgstr "هل تدرس حاليا؟"
+
+#: referral_platform/portfolios/forms.py:139
+msgid "Type of education?"
+msgstr "نوع التعليم"
+
+#: referral_platform/portfolios/forms.py:140
+msgid "Current education level?"
+msgstr "مستوى التعليم الحالي"
+
+#: referral_platform/portfolios/forms.py:145
+msgid "Basic Data"
+msgstr " البيانات الشخصية"
+
+#: referral_platform/portfolios/forms.py:147
+msgid "First Name"
+msgstr "الاسم الأول "
+
+#: referral_platform/portfolios/forms.py:148
+msgid "Father Name"
+msgstr " اسم الأب"
+
+#: referral_platform/portfolios/forms.py:149
+msgid "Last Name"
+msgstr " اسم العائلة"
+
+#: referral_platform/portfolios/forms.py:153
+msgid "Mother First Name"
+msgstr "اسم الام"
+
+#: referral_platform/portfolios/forms.py:154
+msgid "Mother Last Name"
+msgstr "شهرة الام"
+
+#: referral_platform/portfolios/forms.py:158
+msgid "ID Number"
+msgstr "رقم (إن وجد) "
+
+#: referral_platform/portfolios/forms.py:163
+#: referral_platform/portfolios/models.py:341
+msgid "Disability"
+msgstr "إعاقة"
+
+#: referral_platform/portfolios/forms.py:165
+msgid "Birthdate"
+msgstr "تاريخ الولادة "
+
+#: referral_platform/portfolios/forms.py:170
+msgid "Phone Number"
+msgstr "رقم هاتف الشاب"
+
+#: referral_platform/portfolios/forms.py:171
+msgid "Parents Phone Number"
+msgstr " رقم هاتف الوالدين"
+
+#: referral_platform/portfolios/forms.py:181
+msgid "Educational Information"
+msgstr "الجزء الثاني: معلومات تربوية"
+
+#: referral_platform/portfolios/forms.py:184
+msgid "1. Have you ever attended school or other training programs?"
+msgstr "1. هل سبق لك أن ذهبت إلى مدرسة أو تابعت برامج تدريبية أخرى؟"
+
+#: referral_platform/portfolios/forms.py:188
+msgid "1.a What type of education are/were you enrolled in?"
+msgstr "1.أ. إذا كنت مسجلاً حالياً، ففي أي نوع من التعليم أنت مسجل؟ *"
+
+#: referral_platform/portfolios/forms.py:192
+msgid "1.b What is the level of education you have successfully completed?"
+msgstr "1.ب. إذا توقفت عن الدراسة، فما نوع التعليم الذي أكملته؟"
+
+#: referral_platform/portfolios/forms.py:197
+msgid ""
+"2. What were your reason(s) for stopping studying? Please tick all that "
+"apply?"
+msgstr "2. ما هو سبب (أسباب) التوقف عن الدراسة؟ يرجى وضع علامة على كل ما ينطبق *؟"
+
+#: referral_platform/portfolios/forms.py:201
+msgid "Livelihood Information"
+msgstr "معلومات حول سبل العيش"
+
+#: referral_platform/portfolios/forms.py:204
+msgid "1. Relationship with Labour Market"
+msgstr "1. العلاقة مع سوق العمل *  "
+
+#: referral_platform/portfolios/forms.py:208
+msgid "2. What is the sector(s) you worked in / or are working in?"
+msgstr "2. ما هو القطاع (القطاعات) التي عملت / أو تعمل فيها؟ * (مرتبط)"
+
+#: referral_platform/portfolios/forms.py:215
+msgid "3. If you are currently not working, are you searching for work now?"
+msgstr "3. إذا كنت لا تعمل حالياً، هل تبحث عن عمل الآن؟ * (مرتبط)"
+
+#: referral_platform/portfolios/forms.py:219
+msgid "3.a If yes, through whom? (select multiple)"
+msgstr "3.أ. إذا كانت الإجابة بنعم، فمن خلال من؟ (اختيار أكثر من جواب)"
+
+#: referral_platform/portfolios/forms.py:226
+msgid "4. What are the obstacles in searching for/or having work?"
+msgstr "4. ما هي العقبات في البحث عن / أو العمل؟ * (مرتبط)"
+
+#: referral_platform/portfolios/forms.py:230
+msgid "4.a Do you participate in supporting your family financially?"
+msgstr "4.أ. هل تشارك في دعم عائلتك مالياً؟ "
+
+#: referral_platform/portfolios/forms.py:237
+msgid ""
+"5. Please check all the choice(s) that best describes your household "
+"composition"
+msgstr "5. ضع علامة على جميع الخيارات التي تصف تركيبة أسرتك بالشكل الأفضل"
+
+#: referral_platform/portfolios/forms.py:241
+msgid "6. How many members in your household work?"
+msgstr "6. كم عدد أفراد أسرتك؟"
+
+#: referral_platform/portfolios/forms.py:248
+msgid "Follow-up Availability"
+msgstr ""
+
+#: referral_platform/portfolios/forms.py:251
+msgid "1. Have you attended any kind of training before?"
+msgstr "1. هل تابعت أي نوع من التدريب مع هذه المنظمة / المنظمة غير الحكومية من قبل؟"
+
+#: referral_platform/portfolios/forms.py:255
+msgid "1.a If not, why?"
+msgstr "1.أ.  إذا لم يكن كذلك، فلماذا؟"
+
+#: referral_platform/portfolios/forms.py:262
+msgid "How did you know about this program?"
+msgstr "3. كيف عرفت بهذا البرنامج والمنظمة؟"
+
+#: referral_platform/portfolios/forms.py:266
+msgid ""
+"4. We would like to follow up with you after the training, what is your "
+"preferred method of communication?"
+msgstr "4. نود المتابعة معك بعد التدريب، ما هي طريقة التواصل المفضلة لديك؟"
+
+#: referral_platform/portfolios/forms.py:273
+msgid "Save changes"
+msgstr "حفظ"
+
+#: referral_platform/portfolios/forms.py:274
+msgid "Cancel"
+msgstr "الغاء"
+
+#: referral_platform/portfolios/models.py:26
+msgid "Nationalities"
+msgstr "الجنسيات"
+
+#: referral_platform/portfolios/models.py:60
+msgid "ALP Level"
+msgstr "مستوى التعليم غير نظامي"
+
+#: referral_platform/portfolios/models.py:82
+msgid "January"
+msgstr "كانون الثاني"
+
+#: referral_platform/portfolios/models.py:83
+msgid "February"
+msgstr "شباط"
+
+#: referral_platform/portfolios/models.py:84
+msgid "March"
+msgstr "آذار"
+
+#: referral_platform/portfolios/models.py:85
+msgid "April"
+msgstr "نيسان"
+
+#: referral_platform/portfolios/models.py:86
+msgid "May"
+msgstr "ايار"
+
+#: referral_platform/portfolios/models.py:87
+msgid "June"
+msgstr "حزيران"
+
+#: referral_platform/portfolios/models.py:88
+msgid "July"
+msgstr "تموز"
+
+#: referral_platform/portfolios/models.py:89
+msgid "August"
+msgstr "آب"
+
+#: referral_platform/portfolios/models.py:90
+msgid "September"
+msgstr "ايلول"
+
+#: referral_platform/portfolios/models.py:91
+msgid "October"
+msgstr "تشرين اول"
+
+#: referral_platform/portfolios/models.py:92
+msgid "November"
+msgstr "تشرين ثاني"
+
+#: referral_platform/portfolios/models.py:93
+msgid "December"
+msgstr "كانون اول"
+
+#: referral_platform/portfolios/models.py:97
+msgid "Male"
+msgstr "ذكر"
+
+#: referral_platform/portfolios/models.py:98
+msgid "Female"
+msgstr "انثى"
+
+#: referral_platform/portfolios/models.py:239
+msgid "Yes, I am currently studying"
+msgstr "نعم، أنا أدرس حالياً"
+
+#: referral_platform/portfolios/models.py:240
+msgid "Yes, but I stopped studying"
+msgstr "نعم، ولكن توقّفت عن الدراسة"
+
+#: referral_platform/portfolios/models.py:241
+msgid "Never been to an educational institution"
+msgstr "لا، لم أذهب أبداً إلى أي مؤسسة أكاديمية"
+
+#: referral_platform/portfolios/models.py:242
+msgid "NA"
+msgstr "غير محدد"
+
+#: referral_platform/portfolios/models.py:248
+msgid "Non formal Education"
+msgstr "'تعليم غير نظامي"
+
+#: referral_platform/portfolios/models.py:249
+msgid "Formal Education"
+msgstr "تعليم نظامي"
+
+#: referral_platform/portfolios/models.py:267
+msgid "Currently Working - full time"
+msgstr "أعمل حالياً - بدوام كامل"
+
+#: referral_platform/portfolios/models.py:268
+msgid "Currently Working - part time"
+msgstr "أعمل حالياً - بدوام جزئي"
+
+#: referral_platform/portfolios/models.py:269
+msgid "Work in Summer Only"
+msgstr "أعمل في فصل الصيف فقط"
+
+#: referral_platform/portfolios/models.py:270
+msgid "Currently Unemployed"
+msgstr "حالياً عاطل عن العمل"
+
+#: referral_platform/portfolios/models.py:271
+msgid "Never worked"
+msgstr "لم تعمل"
+
+#: referral_platform/portfolios/models.py:315
+msgid " I always feel totally safe in my community "
+msgstr "أشعر دائماً بأمان تام في مجتمعي"
+
+#: referral_platform/portfolios/models.py:316
+msgid "Most of the days I feel safe in my community"
+msgstr "أشعر في معظم الأيام بأمان في مجتمعي"
+
+#: referral_platform/portfolios/models.py:317
+msgid "Most of the days I don't feel safe in my community "
+msgstr "لا أشعر في معظم الأيام بأمان في مجتمعي"
+
+#: referral_platform/portfolios/models.py:318
+msgid "I never feel safe in my community"
+msgstr "لم أشعر بالأمان في مجتمعي يوماً "
+
+#: referral_platform/portfolios/models.py:337
+msgid "No Interest"
+msgstr "قلة اهتمام"
+
+#: referral_platform/portfolios/models.py:338
+msgid "Financial barrier"
+msgstr "عائق مالي"
+
+#: referral_platform/portfolios/models.py:339
+msgid "Family pressure"
+msgstr "ضغط الأسرة"
+
+#: referral_platform/portfolios/models.py:340
+msgid "Discrimination"
+msgstr "التمييز"
+
+#: referral_platform/portfolios/models.py:342
+msgid "Distance"
+msgstr " المسافة"
+
+#: referral_platform/portfolios/models.py:343
+msgid "Safety"
+msgstr "السلامة"
+
+#: referral_platform/portfolios/models.py:355
+msgid "Through an NGO"
+msgstr "من خلال منظمة غير حكومية أخرى"
+
+#: referral_platform/portfolios/models.py:356
+msgid "Through a Sports Club/NGO"
+msgstr "من خلال نادٍ رياضي / منظمة غير حكومية"
+
+#: referral_platform/portfolios/models.py:357
+msgid "Through friends"
+msgstr "من خلال الأصدقاء"
+
+#: referral_platform/portfolios/models.py:358
+msgid "Others"
+msgstr "وسائل أخرى"
+
+#: referral_platform/portfolios/models.py:365
+msgid "Facebook"
+msgstr "فايسبوك، وإذا كان الأمر كذلك، يرجى تدوين اسم حسابك"
+
+#: referral_platform/portfolios/models.py:366
+msgid "E-mail"
+msgstr "البريد الإلكتروني، وإذا كان الأمر كذلك، يرجى تدوينه"
+
+#: referral_platform/portfolios/models.py:367
+msgid "Mobile"
+msgstr "الهاتف المحمول"
+
+#: referral_platform/portfolios/models.py:368
+msgid "Through the NGO partner"
+msgstr "من خلال شريك المنظمة غير الحكومية"
+
+#: referral_platform/portfolios/models.py:369
+msgid "I don't want follow up"
+msgstr "أنا لا أريد المتابعة "
+
+#: referral_platform/templates/account/account_inactive.html:5
+#: referral_platform/templates/account/account_inactive.html:8
+msgid "Account Inactive"
+msgstr "الحساب غير نشط"
+
+#: referral_platform/templates/account/account_inactive.html:10
+msgid "This account is inactive."
+msgstr "هذا الحساب غير نشط"
+
+#: referral_platform/templates/account/email.html:6
+msgid "Account"
+msgstr "الحساب"
+
+#: referral_platform/templates/account/email.html:9
+msgid "E-mail Addresses"
+msgstr "عناوين البريد الإلكتروني "
+
+#: referral_platform/templates/account/email.html:11
+msgid "The following e-mail addresses are associated with your account:"
+msgstr "العناوين البريدية الإلكترونية التالية مقترنة بحسابك:"
+
+#: referral_platform/templates/account/email.html:25
+msgid "Verified"
+msgstr "تم التحقق"
+
+#: referral_platform/templates/account/email.html:27
+msgid "Unverified"
+msgstr "لم يتم التحقق"
+
+#: referral_platform/templates/account/email.html:29
+msgid "Primary"
+msgstr "رئيسي"
+
+#: referral_platform/templates/account/email.html:35
+msgid "Make Primary"
+msgstr "جعله رئيسي"
+
+#: referral_platform/templates/account/email.html:36
+msgid "Re-send Verification"
+msgstr "إعادة ارسال التحقق"
+
+#: referral_platform/templates/account/email.html:37
+msgid "Remove"
+msgstr "حذف"
+
+#: referral_platform/templates/account/email.html:44
+msgid "Warning:"
+msgstr "تحزير"
+
+#: referral_platform/templates/account/email.html:44
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: referral_platform/templates/account/email.html:49
+msgid "Add E-mail Address"
+msgstr "اضف عنوان البريد الإلكتروني"
+
+#: referral_platform/templates/account/email.html:54
+msgid "Add E-mail"
+msgstr "اضف عنوان البريد الإلكتروني"
+
+#: referral_platform/templates/account/email.html:63
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr "هل تريد حقا إزالة عنوان البريد الإلكتروني المحدد؟"
+
+#: referral_platform/templates/account/email_confirm.html:6
+#: referral_platform/templates/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr "تأكيد العنوان البريد الإلكتوني"
+
+#: referral_platform/templates/account/email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr "الرجاء التأكد من ان a href=\"mailto:%(email)s\">%(email)s</a> هذا هو البريد الالكتروني لهذا المستخدم %(user_display)s."
+
+#: referral_platform/templates/account/email_confirm.html:20
+msgid "Confirm"
+msgstr "تأكيد"
+
+#: referral_platform/templates/account/email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: referral_platform/templates/account/login.html:7
+#: referral_platform/templates/account/login.html:11
+#: referral_platform/templates/account/login.html:44
+msgid "Sign In"
+msgstr "تسجيل الدخول"
+
+#: referral_platform/templates/account/login.html:16
+#, python-format
+msgid ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
+"up</a>\n"
+"for a %(site_name)s account and sign in below:"
+msgstr ""
+
+#: referral_platform/templates/account/login.html:26
+msgid "or"
+msgstr "او"
+
+#: referral_platform/templates/account/login.html:33
+#, python-format
+msgid ""
+"If you have not created an account yet, then please\n"
+"<a href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+
+#: referral_platform/templates/account/login.html:43
+msgid "Forgot Password?"
+msgstr "هل نسيت كلمة السر؟"
+
+#: referral_platform/templates/account/logout.html:5
+#: referral_platform/templates/account/logout.html:8
+#: referral_platform/templates/account/logout.html:17
+msgid "Sign Out"
+msgstr "تسجيل الخروج"
+
+#: referral_platform/templates/account/logout.html:10
+msgid "Are you sure you want to sign out?"
+msgstr "هل انت متأكد انك تريد تسجيل الخروج؟"
+
+#: referral_platform/templates/account/password_change.html:6
+#: referral_platform/templates/account/password_change.html:9
+#: referral_platform/templates/account/password_change.html:14
+#: referral_platform/templates/account/password_reset_from_key.html:5
+#: referral_platform/templates/account/password_reset_from_key.html:8
+#: referral_platform/templates/account/password_reset_from_key_done.html:4
+#: referral_platform/templates/account/password_reset_from_key_done.html:7
+msgid "Change Password"
+msgstr "تغيير كلمة السر"
+
+#: referral_platform/templates/account/password_reset.html:7
+#: referral_platform/templates/account/password_reset.html:11
+#: referral_platform/templates/account/password_reset_done.html:6
+#: referral_platform/templates/account/password_reset_done.html:9
+msgid "Password Reset"
+msgstr "إعادة تعيين كلمة السر"
+
+#: referral_platform/templates/account/password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr "هل نسيت كلمة السر؟ أدخل عنوان بريدك الإلكتروني أدناه، وسنرسل إليك رسالة بريد إلكتروني تسمح لك بإعادة تعيينها."
+
+#: referral_platform/templates/account/password_reset.html:21
+msgid "Reset My Password"
+msgstr "إعادة تعيين كلمة السر"
+
+#: referral_platform/templates/account/password_reset.html:24
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr "يرجى الاتصال بنا إذا كان لديك أي مشكلة في إعادة تعيين كلمة المرور الخاصة بك."
+
+#: referral_platform/templates/account/password_reset_done.html:15
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr "لقد أرسلنا لك رسالة عبر البريد الإلكتروني. يرجى الاتصال بنا إذا لم تصلك في غضون بضع دقائق."
+
+#: referral_platform/templates/account/password_reset_from_key.html:8
+msgid "Bad Token"
+msgstr ""
+
+#: referral_platform/templates/account/password_reset_from_key.html:12
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: referral_platform/templates/account/password_reset_from_key.html:18
+msgid "change password"
+msgstr "تغيير كلمة السر"
+
+#: referral_platform/templates/account/password_reset_from_key.html:21
+#: referral_platform/templates/account/password_reset_from_key_done.html:8
+msgid "Your password is now changed."
+msgstr "تم تغيير كلمة السر"
+
+#: referral_platform/templates/account/password_set.html:6
+#: referral_platform/templates/account/password_set.html:9
+#: referral_platform/templates/account/password_set.html:14
+msgid "Set Password"
+msgstr "ضبط كلمة السر"
+
+#: referral_platform/templates/account/signup.html:6
+msgid "Signup"
+msgstr "سجل"
+
+#: referral_platform/templates/account/signup.html:9
+#: referral_platform/templates/account/signup.html:25
+#: referral_platform/templates/account/signup.html:27
+msgid "Sign Up"
+msgstr "سجل"
+
+#: referral_platform/templates/account/signup.html:11
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: referral_platform/templates/account/signup_closed.html:5
+#: referral_platform/templates/account/signup_closed.html:8
+msgid "Sign Up Closed"
+msgstr "التسجيل مغلق"
+
+#: referral_platform/templates/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr "عذرا، ولكن الاشتراك مغلق حاليا."
+
+#: referral_platform/templates/account/verification_sent.html:5
+#: referral_platform/templates/account/verification_sent.html:8
+#: referral_platform/templates/account/verified_email_required.html:5
+#: referral_platform/templates/account/verified_email_required.html:8
+msgid "Verify Your E-mail Address"
+msgstr "تحقق من عنوان بريدك الإلكتروني"
+
+#: referral_platform/templates/account/verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: referral_platform/templates/account/verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: referral_platform/templates/account/verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: referral_platform/templates/account/verified_email_required.html:20
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr "<strong>ملاحظة:</strong>"
+"</a>لا يزال يمكنك تغيير عنوانك الالكتوني<a href=\"%(email_url)s\">"
+
+#: referral_platform/users/models.py:20
+msgid "email address"
+msgstr "عنوان البريد الإلكتروني "
+
+#: referral_platform/users/models.py:21
+msgid "first name"
+msgstr "الاسم الاول"
+
+#: referral_platform/users/models.py:22
+msgid "last name"
+msgstr "اسم العائلة"
+
+#: referral_platform/users/models.py:24
+msgid "staff status"
+msgstr "حالة المستخدم"
+
+#: referral_platform/users/models.py:26
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: referral_platform/users/models.py:29
+msgid "active"
+msgstr "فعال"
+
+#: referral_platform/users/models.py:32
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: referral_platform/users/models.py:36
+msgid "date joined"
+msgstr "تاريخ الانضمام"
+
+#: referral_platform/users/models.py:48
+msgid "user"
+msgstr "المستخدم"
+
+#: referral_platform/users/models.py:49
+msgid "users"
+msgstr "المستخدمين"
