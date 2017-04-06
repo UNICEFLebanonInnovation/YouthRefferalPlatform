@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 16:21+0300\n"
+"POT-Creation-Date: 2017-04-06 15:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,768 +224,427 @@ msgid ""
 "causes no harm to nature"
 msgstr ""
 
-#: referral_platform/courses/forms.py:181
+#: referral_platform/courses/forms.py:182
 msgid "Part 1: Communication Skills"
 msgstr ""
 
-#: referral_platform/courses/forms.py:188
+#: referral_platform/courses/forms.py:189
 msgid "Part 2: Self-esteem"
 msgstr ""
 
-#: referral_platform/courses/forms.py:196
+#: referral_platform/courses/forms.py:197
 msgid "Part 3: Critical thinking and analysis skills"
 msgstr ""
 
-#: referral_platform/courses/forms.py:205
+#: referral_platform/courses/forms.py:206
 msgid "Part 4: Teambuilding skills"
 msgstr ""
 
-#: referral_platform/courses/forms.py:213
+#: referral_platform/courses/forms.py:214
 msgid "Part 5: Social Cohesion & Sense of belonging"
 msgstr ""
 
-#: referral_platform/courses/forms.py:219
+#: referral_platform/courses/forms.py:220
 msgid "Part 6: Social Responsibility & Volunteerism"
 msgstr ""
 
-#: referral_platform/courses/forms.py:227
+#: referral_platform/courses/forms.py:228
 msgid "Part 7: Advocacy and Mobilization"
 msgstr ""
 
-#: referral_platform/courses/forms.py:232
+#: referral_platform/courses/forms.py:233
 msgid "Part 8: Healthy LifeStyle"
 msgstr ""
 
-#: referral_platform/courses/forms.py:244
-#: referral_platform/portfolios/forms.py:273
+#: referral_platform/courses/forms.py:245 referral_platform/youth/forms.py:278
 msgid "Save changes"
 msgstr ""
 
-#: referral_platform/courses/forms.py:245
-#: referral_platform/portfolios/forms.py:274
+#: referral_platform/courses/forms.py:246
+#: referral_platform/initiatives/forms.py:121
+#: referral_platform/youth/forms.py:279
 msgid "Cancel"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:18
+#: referral_platform/initiatives/forms.py:14
+#: referral_platform/initiatives/models.py:210
+#: referral_platform/initiatives/models.py:219
+#: referral_platform/youth/forms.py:16
+msgid "No"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:14
+#: referral_platform/initiatives/models.py:209
+#: referral_platform/initiatives/models.py:218
+#: referral_platform/youth/forms.py:16
+msgid "Yes"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:42
+#: referral_platform/youth/forms.py:142
+msgid "Partner Organisation"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:43
+msgid "Select Location for the initiative"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:44
+msgid "Duration of the initiative"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:51
+msgid "Initiative Title"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:54
+msgid "How many group members planned the initiative?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:58
+msgid "Planned start date"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:62
+msgid ""
+"The below question is to be answered by the team representative of the "
+"initiative"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:65
+msgid "Type of Initiative: (Select All That Apply)"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:69
+msgid ""
+"Can you please select the skills that your team used to plan the initiative?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:74
+msgid "What problem are you solving? How did you choose to do this initiative?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:75
+#: referral_platform/initiatives/forms.py:102
+#: referral_platform/initiatives/forms.py:105
+#: referral_platform/initiatives/forms.py:108
+#: referral_platform/initiatives/forms.py:111
+#: referral_platform/initiatives/forms.py:114
+#: referral_platform/initiatives/forms.py:117
+msgid "not more than 5 sentences"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:77
+msgid ""
+"What organizations, groups, or other people will you collaborate with on "
+"this project?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:80
+msgid ""
+"How many direct beneficiaries will benefit from your planned initiative?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:83
+msgid "Please select the age Groups of the beneficiaries"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:86
+msgid "Sex of beneficiaries"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:89
+msgid ""
+"How many indirect beneficiaries will benefit from your planned initiative?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:92
+msgid "Are you planning to mobilize resources for this project?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:95
+msgid "If so, from whom?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:98
+msgid ""
+"What kind of support are you planning to receive? (you can select more than "
+"one option)"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:101
+msgid ""
+"Can you please tell us what your initiative is about, its objective and why "
+"is it important?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:104
+msgid "Can you please tell us your planned results?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:107
+msgid "Can you please tell us your anticipated challenges?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:110
+msgid "How are you planning to mitigate those challenges?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:113
+msgid "How are you planning to measure progress achieved against your results?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:116
+msgid "How will you ensure the project is sustainable?"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:120
+msgid "Save"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:23
 msgid ""
 "Improving or installing basic services (electricity, water, sanitation, and "
 "waste removal)"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:19
+#: referral_platform/initiatives/models.py:24
 msgid "Enhancing social cohesion"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:20
+#: referral_platform/initiatives/models.py:25
 msgid "Environmental"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:21
+#: referral_platform/initiatives/models.py:26
 msgid "Health Services"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:22
+#: referral_platform/initiatives/models.py:27
 msgid "Educational, informational or knowledge sharing"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:23
+#: referral_platform/initiatives/models.py:28
 msgid "Advocacy or Raising awareness"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:24
+#: referral_platform/initiatives/models.py:29
 msgid "Political"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:25
+#: referral_platform/initiatives/models.py:30
 msgid "Spiritual/Religious"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:26
+#: referral_platform/initiatives/models.py:31
 msgid "Artistic/Cultural/Sports"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:27
+#: referral_platform/initiatives/models.py:32
 msgid "Enhancing public safety"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:28
+#: referral_platform/initiatives/models.py:33
 msgid ""
 "Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:29
-#: referral_platform/initiatives/forms.py:57
-#: referral_platform/portfolios/forms.py:40
-#: referral_platform/portfolios/forms.py:72
-#: referral_platform/portfolios/forms.py:114
+#: referral_platform/initiatives/models.py:34
+#: referral_platform/initiatives/models.py:106
+#: referral_platform/youth/forms.py:41 referral_platform/youth/forms.py:75
 msgid "Other"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:36
+#: referral_platform/initiatives/models.py:38
 msgid "Self-Management"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:37
+#: referral_platform/initiatives/models.py:39
 msgid "Cooperation & Teamwork"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:38
+#: referral_platform/initiatives/models.py:40
 msgid "Creativity"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:39
+#: referral_platform/initiatives/models.py:41
 msgid "Critical Thinking"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:40
+#: referral_platform/initiatives/models.py:42
 msgid "Negotiation"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:41
+#: referral_platform/initiatives/models.py:43
 msgid "Respect for diversity"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:42
+#: referral_platform/initiatives/models.py:44
 msgid "Decision Making"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:43
+#: referral_platform/initiatives/models.py:45
 msgid "Participation"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:44
+#: referral_platform/initiatives/models.py:46
 msgid "Communication"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:45
+#: referral_platform/initiatives/models.py:47
 msgid "Empathy"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:46
+#: referral_platform/initiatives/models.py:48
 msgid "Problem-Solving"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:47
+#: referral_platform/initiatives/models.py:49
 msgid "Resilience"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:54
-msgid "Other NGOs"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:55
-msgid "Schools"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:56
-msgid "Municipality"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:33
-msgid "1-2 weeks"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:34
-msgid "3-4 weeks"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:35
-msgid "4-6 weeks"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:36
-msgid "More than 6 weeks"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:66
-#: referral_platform/initiatives/models.py:96
-msgid "1-50"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:67
-#: referral_platform/initiatives/models.py:97
-msgid "51-100"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:68
-#: referral_platform/initiatives/models.py:98
-msgid "501-1000"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:69
-#: referral_platform/initiatives/models.py:99
-msgid "greater than 1000"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:76
-msgid "1-6 years"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:77
-msgid "7-13 years"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:78
-msgid "14-24 years"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:79
-msgid "25-50 years"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:80
-msgid "50 years and above"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:87
-msgid "Both male and females"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:88
-msgid "Only males"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:89
-msgid "only female"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:107
-msgid "UNICEF"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:108
-msgid "Local Business"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:109
-msgid "Organisation"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:116
+#: referral_platform/initiatives/models.py:53
 msgid "Financial (self-explanatory)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:117
+#: referral_platform/initiatives/models.py:54
 msgid ""
 "Technical (for ex. developing awareness tools materials, trainings..etc)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:118
+#: referral_platform/initiatives/models.py:55
 msgid "In-Kind (posters, booklet,etc)"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:16
-msgid "No"
+#: referral_platform/initiatives/models.py:68
+msgid "1-2 weeks"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:16
-msgid "Yes"
+#: referral_platform/initiatives/models.py:69
+msgid "3-4 weeks"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:31
-msgid "To help my family in house chores"
+#: referral_platform/initiatives/models.py:70
+msgid "4-6 weeks"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:32
-msgid "To help my family in breadwinning"
+#: referral_platform/initiatives/models.py:71
+msgid "More than 6 weeks"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:33
-msgid "I got low grades or did not pass my exams"
+#: referral_platform/initiatives/models.py:103
+msgid "Other NGOs"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:34
-msgid "I have/had physical or mental health problems"
+#: referral_platform/initiatives/models.py:104
+msgid "Schools"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:35
-msgid "School was too far away"
+#: referral_platform/initiatives/models.py:105
+msgid "Municipality"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:36
-msgid "School was too expensive"
+#: referral_platform/initiatives/models.py:114
+#: referral_platform/initiatives/models.py:144
+msgid "1-50"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:37
-msgid "School was unsafe due to community conflict"
+#: referral_platform/initiatives/models.py:115
+#: referral_platform/initiatives/models.py:145
+msgid "51-100"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:38
-msgid "School was boring/not appealing to me"
+#: referral_platform/initiatives/models.py:116
+#: referral_platform/initiatives/models.py:146
+msgid "501-1000"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:39
-msgid "I felt discriminated against at school"
+#: referral_platform/initiatives/models.py:117
+#: referral_platform/initiatives/models.py:147
+msgid "greater than 1000"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:47
-msgid "Markets and shops"
+#: referral_platform/initiatives/models.py:124
+msgid "1-6 years"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:48
-msgid "Agriculture & Fishing"
+#: referral_platform/initiatives/models.py:125
+msgid "7-13 years"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:49
-msgid "Handicrafts and art crafts (carpentry, wood works, etc)"
+#: referral_platform/initiatives/models.py:126
+msgid "14-24 years"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:50
-msgid "Manufacturing, factory and machinery"
+#: referral_platform/initiatives/models.py:127
+msgid "25-50 years"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:51
-msgid "construction and associated industries (plumbing, electrician)"
+#: referral_platform/initiatives/models.py:128
+msgid "50 years and above"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:52
+#: referral_platform/initiatives/models.py:135
+msgid "Both male and females"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:136
+msgid "Only males"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:137
+msgid "only female"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:155
+msgid "UNICEF"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:156
+msgid "Local Business"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:157
+msgid "Organisation"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:177
+msgid "Excellent - All of our team members were committed to the initiative"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:178
+msgid "Good - Most of our team was committed to the initiative"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:179
+msgid "Low - Some team members stopped participating"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:198
 msgid ""
-"Unskilled labor and basic occupations (shoe cleaners, street sellers, "
-"domestic help, etc)"
+"Exceeded the total number of direct beneficiaries that we planned to reach "
+"(greater than 100%)"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:53
-msgid "Civil Society"
+#: referral_platform/initiatives/models.py:199
+msgid "Reached all of the direct beneficiaries planned (100%)"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:54
-msgid "I don't want to answer"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:67
-msgid "Through family and friends"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:68
-msgid "Through an employment office"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:69
-msgid "Through a trainer"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:70
-msgid "Through an NGO that you were trained with"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:71
-msgid "Through the Internet"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:79
-msgid "The workplace was in an unsafe location"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:80
-msgid "Low Salary Offered"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:81
-msgid "Mental or Physical Disability"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:82
-msgid "Low Education Level"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:83
-msgid "Foreign Language"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:84
-msgid "Few Job Opportunities"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:85
-msgid "Lack of Skills for the job"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:86
-msgid "Rigid Labour Laws"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:98
-msgid "Mother (check)"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:99
-msgid "Father (check)"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:100
-msgid "Sister - # 1, 2, 3"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:101
-msgid "Brother - # 1, 2, 3"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:102
-msgid "Other relatives"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:103
-msgid "No response"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:110
-msgid "conflict-related"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:111
-msgid "violence at home"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:112
-msgid "harassment/violence by the neighborhood"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:113
-msgid "harassment/violence in the school"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:133
-#: referral_platform/portfolios/models.py:48
-msgid "ID Type"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:134
-msgid "Gender"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:135
-msgid "Nationality"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:136
-msgid "Location"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:137
-msgid "Partner Organisation"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:138
-msgid "Are you currently studying?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:139
-msgid "Type of education?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:140
-msgid "Current education level?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:145
-msgid "Basic Data"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:147
-msgid "First Name"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:148
-msgid "Father Name"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:149
-msgid "Last Name"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:153
-msgid "Mother First Name"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:154
-msgid "Mother Last Name"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:158
-msgid "ID Number"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:163
-#: referral_platform/portfolios/models.py:341
-msgid "Disability"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:165
-msgid "Birthdate"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:170
-msgid "Phone Number"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:171
-msgid "Parents Phone Number"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:181
-msgid "Educational Information"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:184
-msgid "1. Have you ever attended school or other training programs?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:188
-msgid "1.a What type of education are/were you enrolled in?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:192
-msgid "1.b What is the level of education you have successfully completed?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:197
+#: referral_platform/initiatives/models.py:200
+#, python-format
 msgid ""
-"2. What were your reason(s) for stopping studying? Please tick all that "
-"apply?"
+"Reached more than half of the direct beneficiaries planned (50% or more)"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:201
-msgid "Livelihood Information"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:204
-msgid "1. Relationship with Labour Market"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:208
-msgid "2. What is the sector(s) you worked in / or are working in?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:215
-msgid "3. If you are currently not working, are you searching for work now?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:219
-msgid "3.a If yes, through whom? (select multiple)"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:226
-msgid "4. What are the obstacles in searching for/or having work?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:230
-msgid "4.a Do you participate in supporting your family financially?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:237
+#: referral_platform/initiatives/models.py:201
 msgid ""
-"5. Please check all the choice(s) that best describes your household "
-"composition"
+"Reached less than half of the direct beneficiaries planned (Less then "
+"49%)\" (50% or more)"
 msgstr ""
 
-#: referral_platform/portfolios/forms.py:241
-msgid "6. How many members in your household work?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:248
-msgid "Follow-up Availability"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:251
-msgid "1. Have you attended any kind of training before?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:255
-msgid "1.a If not, why?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:262
-msgid "How did you know about this program?"
-msgstr ""
-
-#: referral_platform/portfolios/forms.py:266
-msgid ""
-"4. We would like to follow up with you after the training, what is your "
-"preferred method of communication?"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:26
-msgid "Nationalities"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:60
-msgid "ALP Level"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:82
-msgid "January"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:83
-msgid "February"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:84
-msgid "March"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:85
-msgid "April"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:86
-msgid "May"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:87
-msgid "June"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:88
-msgid "July"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:89
-msgid "August"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:90
-msgid "September"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:91
-msgid "October"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:92
-msgid "November"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:93
-msgid "December"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:97
-msgid "Male"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:98
-msgid "Female"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:239
-msgid "Yes, I am currently studying"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:240
-msgid "Yes, but I stopped studying"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:241
-msgid "Never been to an educational institution"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:242
-msgid "NA"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:248
-msgid "Non formal Education"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:249
-msgid "Formal Education"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:267
-msgid "Currently Working - full time"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:268
-msgid "Currently Working - part time"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:269
-msgid "Work in Summer Only"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:270
-msgid "Currently Unemployed"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:271
-msgid "Never worked"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:315
-msgid " I always feel totally safe in my community "
-msgstr ""
-
-#: referral_platform/portfolios/models.py:316
-msgid "Most of the days I feel safe in my community"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:317
-msgid "Most of the days I don't feel safe in my community "
-msgstr ""
-
-#: referral_platform/portfolios/models.py:318
-msgid "I never feel safe in my community"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:337
-msgid "No Interest"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:338
-msgid "Financial barrier"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:339
-msgid "Family pressure"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:340
-msgid "Discrimination"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:342
-msgid "Distance"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:343
-msgid "Safety"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:355
-msgid "Through an NGO"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:356
-msgid "Through a Sports Club/NGO"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:357
-msgid "Through friends"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:358
-msgid "Others"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:365
-msgid "Facebook"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:366
-msgid "E-mail"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:367
-msgid "Mobile"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:368
-msgid "Through the NGO partner"
-msgstr ""
-
-#: referral_platform/portfolios/models.py:369
-msgid "I don't want follow up"
+#: referral_platform/initiatives/models.py:211
+#: referral_platform/initiatives/models.py:220
+msgid "Somewhat"
 msgstr ""
 
 #: referral_platform/templates/account/account_inactive.html:5
@@ -1187,8 +846,7 @@ msgid "Signup"
 msgstr ""
 
 #: referral_platform/templates/account/signup.html:9
-#: referral_platform/templates/account/signup.html:25
-#: referral_platform/templates/account/signup.html:27
+#: referral_platform/templates/account/signup.html:29
 msgid "Sign Up"
 msgstr ""
 
@@ -1196,6 +854,24 @@ msgstr ""
 #, python-format
 msgid ""
 "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: referral_platform/templates/account/signup.html:21
+msgid ""
+"\n"
+"            This is a digital platform used by youth and the partners "
+"implementing youth activities to register their bio-data, enroll in courses, "
+"and track their progress through.\n"
+"            To ensure the coordination of the needed protection and "
+"assistance, we may need to share the collected information, including your "
+"personal data, with other humanitarian agencies.\n"
+"            In all cases, measures will be taken to prevent unauthorized "
+"dissemination of your personal data in line with international data "
+"protection standards.\n"
+"\n"
+"            By Clicking Sign Up you are giving us your consent to collect "
+"your bio-data and enroll you on our platform.\n"
+"            "
 msgstr ""
 
 #: referral_platform/templates/account/signup_closed.html:5
@@ -1282,4 +958,488 @@ msgstr ""
 
 #: referral_platform/users/models.py:49
 msgid "users"
+msgstr ""
+
+#: referral_platform/youth/forms.py:32
+msgid "To help my family in house chores"
+msgstr ""
+
+#: referral_platform/youth/forms.py:33
+msgid "To help my family in breadwinning"
+msgstr ""
+
+#: referral_platform/youth/forms.py:34
+msgid "I got low grades or did not pass my exams"
+msgstr ""
+
+#: referral_platform/youth/forms.py:35
+msgid "I have/had physical or mental health problems"
+msgstr ""
+
+#: referral_platform/youth/forms.py:36
+msgid "School was too far away"
+msgstr ""
+
+#: referral_platform/youth/forms.py:37
+msgid "School was too expensive"
+msgstr ""
+
+#: referral_platform/youth/forms.py:38
+msgid "School was unsafe due to community conflict"
+msgstr ""
+
+#: referral_platform/youth/forms.py:39
+msgid "School was boring/not appealing to me"
+msgstr ""
+
+#: referral_platform/youth/forms.py:40
+msgid "I felt discriminated against at school"
+msgstr ""
+
+#: referral_platform/youth/forms.py:49
+msgid "Markets and shops"
+msgstr ""
+
+#: referral_platform/youth/forms.py:50
+msgid "Agriculture & Fishing"
+msgstr ""
+
+#: referral_platform/youth/forms.py:51
+msgid "Handicrafts and art crafts (carpentry, wood works, etc)"
+msgstr ""
+
+#: referral_platform/youth/forms.py:52
+msgid "Manufacturing, factory and machinery"
+msgstr ""
+
+#: referral_platform/youth/forms.py:53
+msgid "construction and associated industries (plumbing, electrician)"
+msgstr ""
+
+#: referral_platform/youth/forms.py:54
+msgid ""
+"Unskilled labor and basic occupations (shoe cleaners, street sellers, "
+"domestic help, etc)"
+msgstr ""
+
+#: referral_platform/youth/forms.py:55
+msgid "Civil Society"
+msgstr ""
+
+#: referral_platform/youth/forms.py:56
+msgid "I don't want to answer"
+msgstr ""
+
+#: referral_platform/youth/forms.py:70
+msgid "Through family and friends"
+msgstr ""
+
+#: referral_platform/youth/forms.py:71
+msgid "Through an employment office"
+msgstr ""
+
+#: referral_platform/youth/forms.py:72
+msgid "Through a trainer"
+msgstr ""
+
+#: referral_platform/youth/forms.py:73
+msgid "Through an NGO that you were trained with"
+msgstr ""
+
+#: referral_platform/youth/forms.py:74
+msgid "Through the Internet"
+msgstr ""
+
+#: referral_platform/youth/forms.py:83
+msgid "The workplace was in an unsafe location"
+msgstr ""
+
+#: referral_platform/youth/forms.py:84
+msgid "Low Salary Offered"
+msgstr ""
+
+#: referral_platform/youth/forms.py:85
+msgid "Mental or Physical Disability"
+msgstr ""
+
+#: referral_platform/youth/forms.py:86
+msgid "Low Education Level"
+msgstr ""
+
+#: referral_platform/youth/forms.py:87
+msgid "Foreign Language"
+msgstr ""
+
+#: referral_platform/youth/forms.py:88
+msgid "Few Job Opportunities"
+msgstr ""
+
+#: referral_platform/youth/forms.py:89
+msgid "Lack of Skills for the job"
+msgstr ""
+
+#: referral_platform/youth/forms.py:90
+msgid "Rigid Labour Laws"
+msgstr ""
+
+#: referral_platform/youth/forms.py:103
+msgid "Mother (check)"
+msgstr ""
+
+#: referral_platform/youth/forms.py:104
+msgid "Father (check)"
+msgstr ""
+
+#: referral_platform/youth/forms.py:105
+msgid "Sister - # 1, 2, 3"
+msgstr ""
+
+#: referral_platform/youth/forms.py:106
+msgid "Brother - # 1, 2, 3"
+msgstr ""
+
+#: referral_platform/youth/forms.py:107
+msgid "Other relatives"
+msgstr ""
+
+#: referral_platform/youth/forms.py:108
+msgid "No response"
+msgstr ""
+
+#: referral_platform/youth/forms.py:138 referral_platform/youth/models.py:48
+msgid "ID Type"
+msgstr ""
+
+#: referral_platform/youth/forms.py:139
+msgid "Gender"
+msgstr ""
+
+#: referral_platform/youth/forms.py:140
+msgid "Nationality"
+msgstr ""
+
+#: referral_platform/youth/forms.py:141
+msgid "Location"
+msgstr ""
+
+#: referral_platform/youth/forms.py:143
+msgid "Are you currently studying?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:144
+msgid "Type of education?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:145
+msgid "Current education level?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:150
+msgid "Basic Data"
+msgstr ""
+
+#: referral_platform/youth/forms.py:152
+msgid "First Name"
+msgstr ""
+
+#: referral_platform/youth/forms.py:153
+msgid "Father Name"
+msgstr ""
+
+#: referral_platform/youth/forms.py:154
+msgid "Last Name"
+msgstr ""
+
+#: referral_platform/youth/forms.py:158
+msgid "Mother First Name"
+msgstr ""
+
+#: referral_platform/youth/forms.py:159
+msgid "Mother Last Name"
+msgstr ""
+
+#: referral_platform/youth/forms.py:163
+msgid "ID Number"
+msgstr ""
+
+#: referral_platform/youth/forms.py:168 referral_platform/youth/models.py:337
+msgid "Disability"
+msgstr ""
+
+#: referral_platform/youth/forms.py:170
+msgid "Birthdate"
+msgstr ""
+
+#: referral_platform/youth/forms.py:175
+msgid "Phone Number"
+msgstr ""
+
+#: referral_platform/youth/forms.py:176
+msgid "Parents Phone Number"
+msgstr ""
+
+#: referral_platform/youth/forms.py:186
+msgid "Educational Information"
+msgstr ""
+
+#: referral_platform/youth/forms.py:189
+msgid "1. Have you ever attended school or other training programs?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:193
+msgid "1.a What type of education are/were you enrolled in?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:197
+msgid "1.b What is the level of education you have successfully completed?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:202
+msgid ""
+"2. What were your reason(s) for stopping studying? Please tick all that "
+"apply?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:206
+msgid "Livelihood Information"
+msgstr ""
+
+#: referral_platform/youth/forms.py:209
+msgid "1. Relationship with Labour Market"
+msgstr ""
+
+#: referral_platform/youth/forms.py:213
+msgid "2. What is the sector(s) you worked in / or are working in?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:220
+msgid "3. If you are currently not working, are you searching for work now?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:224
+msgid "3.a If yes, through whom? (select multiple)"
+msgstr ""
+
+#: referral_platform/youth/forms.py:231
+msgid "4. What are the obstacles in searching for/or having work?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:235
+msgid "4.a Do you participate in supporting your family financially?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:242
+msgid ""
+"5. Please check all the choice(s) that best describes your household "
+"composition"
+msgstr ""
+
+#: referral_platform/youth/forms.py:246
+msgid "6. How many members in your household work?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:253
+msgid "Follow-up Availability"
+msgstr ""
+
+#: referral_platform/youth/forms.py:256
+msgid "1. Have you attended any kind of training before?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:260
+msgid "1.a If not, why?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:267
+msgid "How did you know about this program?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:271
+msgid ""
+"4. We would like to follow up with you after the training, what is your "
+"preferred method of communication?"
+msgstr ""
+
+#: referral_platform/youth/models.py:26
+msgid "Nationalities"
+msgstr ""
+
+#: referral_platform/youth/models.py:60
+msgid "ALP Level"
+msgstr ""
+
+#: referral_platform/youth/models.py:82
+msgid "January"
+msgstr ""
+
+#: referral_platform/youth/models.py:83
+msgid "February"
+msgstr ""
+
+#: referral_platform/youth/models.py:84
+msgid "March"
+msgstr ""
+
+#: referral_platform/youth/models.py:85
+msgid "April"
+msgstr ""
+
+#: referral_platform/youth/models.py:86
+msgid "May"
+msgstr ""
+
+#: referral_platform/youth/models.py:87
+msgid "June"
+msgstr ""
+
+#: referral_platform/youth/models.py:88
+msgid "July"
+msgstr ""
+
+#: referral_platform/youth/models.py:89
+msgid "August"
+msgstr ""
+
+#: referral_platform/youth/models.py:90
+msgid "September"
+msgstr ""
+
+#: referral_platform/youth/models.py:91
+msgid "October"
+msgstr ""
+
+#: referral_platform/youth/models.py:92
+msgid "November"
+msgstr ""
+
+#: referral_platform/youth/models.py:93
+msgid "December"
+msgstr ""
+
+#: referral_platform/youth/models.py:97
+msgid "Male"
+msgstr ""
+
+#: referral_platform/youth/models.py:98
+msgid "Female"
+msgstr ""
+
+#: referral_platform/youth/models.py:235
+msgid "Yes, I am currently studying"
+msgstr ""
+
+#: referral_platform/youth/models.py:236
+msgid "Yes, but I stopped studying"
+msgstr ""
+
+#: referral_platform/youth/models.py:237
+msgid "Never been to an educational institution"
+msgstr ""
+
+#: referral_platform/youth/models.py:238
+msgid "NA"
+msgstr ""
+
+#: referral_platform/youth/models.py:244
+msgid "Non formal Education"
+msgstr ""
+
+#: referral_platform/youth/models.py:245
+msgid "Formal Education"
+msgstr ""
+
+#: referral_platform/youth/models.py:263
+msgid "Currently Working - full time"
+msgstr ""
+
+#: referral_platform/youth/models.py:264
+msgid "Currently Working - part time"
+msgstr ""
+
+#: referral_platform/youth/models.py:265
+msgid "Work in Summer Only"
+msgstr ""
+
+#: referral_platform/youth/models.py:266
+msgid "Currently Unemployed"
+msgstr ""
+
+#: referral_platform/youth/models.py:267
+msgid "Never worked"
+msgstr ""
+
+#: referral_platform/youth/models.py:311
+msgid " I always feel totally safe in my community "
+msgstr ""
+
+#: referral_platform/youth/models.py:312
+msgid "Most of the days I feel safe in my community"
+msgstr ""
+
+#: referral_platform/youth/models.py:313
+msgid "Most of the days I don't feel safe in my community "
+msgstr ""
+
+#: referral_platform/youth/models.py:314
+msgid "I never feel safe in my community"
+msgstr ""
+
+#: referral_platform/youth/models.py:333
+msgid "No Interest"
+msgstr ""
+
+#: referral_platform/youth/models.py:334
+msgid "Financial barrier"
+msgstr ""
+
+#: referral_platform/youth/models.py:335
+msgid "Family pressure"
+msgstr ""
+
+#: referral_platform/youth/models.py:336
+msgid "Discrimination"
+msgstr ""
+
+#: referral_platform/youth/models.py:338
+msgid "Distance"
+msgstr ""
+
+#: referral_platform/youth/models.py:339
+msgid "Safety"
+msgstr ""
+
+#: referral_platform/youth/models.py:351
+msgid "Through an NGO"
+msgstr ""
+
+#: referral_platform/youth/models.py:352
+msgid "Through a Sports Club/NGO"
+msgstr ""
+
+#: referral_platform/youth/models.py:353
+msgid "Through friends"
+msgstr ""
+
+#: referral_platform/youth/models.py:354
+msgid "Others"
+msgstr ""
+
+#: referral_platform/youth/models.py:361
+msgid "Facebook"
+msgstr ""
+
+#: referral_platform/youth/models.py:362
+msgid "E-mail"
+msgstr ""
+
+#: referral_platform/youth/models.py:363
+msgid "Mobile"
+msgstr ""
+
+#: referral_platform/youth/models.py:364
+msgid "Through the NGO partner"
+msgstr ""
+
+#: referral_platform/youth/models.py:365
+msgid "I don't want follow up"
 msgstr ""
