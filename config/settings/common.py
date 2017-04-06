@@ -40,6 +40,8 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    #'allauth.socialaccount.providers.facebook',
+
     'bootstrap3_datetime',
     'import_export',
 )
@@ -51,7 +53,7 @@ LOCAL_APPS = (
     # Your stuff: custom apps go here
     'referral_platform.partners',
     'referral_platform.locations',
-    'referral_platform.portfolios',
+    'referral_platform.youth',
     'referral_platform.courses',
     'referral_platform.initiatives',
 )
@@ -127,8 +129,8 @@ LANGUAGE_CODE = 'en-us'
 LANGUAGE_COOKIE_NAME = 'default_language'
 
 LANGUAGES = (
-    ('ar-ar', 'arabic'),
-    ('en-us', 'english'),
+    ('ar-ar', 'Arabic'),
+    ('en-us', 'English'),
 )
 
 LANGUAGES_BIDI = ["en-us"]
@@ -236,6 +238,31 @@ ACCOUNT_SIGNUP_FORM_CLASS = "referral_platform.users.admin.PlatformUserCreationF
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'referral_platform.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'referral_platform.users.adapters.SocialAccountAdapter'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook':
+       {'METHOD': 'oauth2',
+        'SCOPE': ['email','public_profile', 'user_friends'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time'],
+        'EXCHANGE_TOKEN': True,
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.4'}}
+
+#facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '1442347179129203'
+SOCIAL_AUTH_FACEBOOK_SECRET ='ee205f6f25da8aa856ec90b39d7d61fd'
 
 # Custom user app defaults
 # Select the correct user model

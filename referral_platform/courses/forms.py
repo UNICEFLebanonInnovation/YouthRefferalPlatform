@@ -24,143 +24,143 @@ class LifeSkillsAssessmentForm(forms.Form):
     # comms skills
     articulation = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I can articulate/state my thoughts, feelings and ideas to others well'))
+        label=_('I can articulate/state my thoughts, feelings and ideas to others well'))
     express_opinions = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I can express my opinions when my classmates/friends/peers disagree with me'))
+        label=_('I can express my opinions when my classmates/friends/peers disagree with me'))
     not_interrupting = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I communicate without interrupting others and allowing others too to communicate'))
+        label=_('I communicate without interrupting others and allowing others too to communicate'))
     listening = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I listen carefully to my classmates/friends/peers when they speak to me'))
+        label=_('I listen carefully to my classmates/friends/peers when they speak to me'))
 
     # self esteem
     satisfied = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('In general, I am satisfied with myself'))
+        label=_('In general, I am satisfied with myself'))
     good_qualities =forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I feel that I have a number of good qualities'))
+        label=_('I feel that I have a number of good qualities'))
     set_goals = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I have set long term goals for myself'))
+        label=_('I have set long term goals for myself'))
     make_decisions = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I make decisions to help achieve my long term goals'))
+        label=_('I make decisions to help achieve my long term goals'))
     solve_problems = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I can always manage to solve my problems if I try hard enough'))
+        label=_('I can always manage to solve my problems if I try hard enough'))
 
     # analysis
     clarify_issues = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('Usually I have discussions with my friends/parents/classmates '
+        label=_('Usually I have discussions with my friends/parents/classmates '
                   'to clarify issues before taking important decisions'))
     take_advice = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I am flexible in changing my mind if I am convinced by my friends/parents/classmates opinions'))
+        label=_('I am flexible in changing my mind if I am convinced by my friends/parents/classmates opinions'))
     no_wrong_activities = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I can say no to activities that I think are wrong.'))
+        label=_('I can say no to activities that I think are wrong.'))
     determine_facts = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I know how to distinguish between facts and opinions'))
+        label=_('I know how to distinguish between facts and opinions'))
     consider_options = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I try to consider different points of view and different solutions to problems'))
+        label=_('I try to consider different points of view and different solutions to problems'))
     creative_ideas = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_("I'm confident that I can develop creative ideas to solve problems"))
+        label=_("I'm confident that I can develop creative ideas to solve problems"))
 
     # team building
     like_teams = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('Being part of a team is fun'))
+        label=_('Being part of a team is fun'))
     build_on_ideas = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I build on the ideas of others.'))
+        label=_('I build on the ideas of others.'))
     compromise= forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I am willing to compromise my own view to obtain a group consensus.'))
+        label=_('I am willing to compromise my own view to obtain a group consensus.'))
     teamwork = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I think working as a team helps accomplish better achievement'))
+        label=_('I think working as a team helps accomplish better achievement'))
     constructive_feedback = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I support and praise as well as give constructive criticisms to people I work with as part of a team'))
+        label=_('I support and praise as well as give constructive criticisms to people I work with as part of a team'))
 
     # social cohesion
     trust_peers = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('In my social environment, if I have a problem, I have a friend of my own age that I trust to talk to'))
+        label=_('In my social environment, if I have a problem, I have a friend of my own age that I trust to talk to'))
     accept_others = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('In my community, I accept others who are from different religion and nationality'))
+        label=_('In my community, I accept others who are from different religion and nationality'))
     community_belonging = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I feel I belong to my community'))
+        label=_('I feel I belong to my community'))
 
     # community
     conflict_concern = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_("I feel that any conflict in my community should be the everyone's concern"))
+        label=_("I feel that any conflict in my community should be the everyone's concern"))
     social_activities = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I like to be involved in social activities that help develop my community'))
+        label=_('I like to be involved in social activities that help develop my community'))
     volunteering = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I know where to volunteer in my community'))
+        label=_('I know where to volunteer in my community'))
     feel_appreciated = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I feel I am appreciated for my contributions to my community'))
+        label=_('I feel I am appreciated for my contributions to my community'))
     contribute = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I believe I can contribute towards the development (betterment) of my community'))
+        label=_('I believe I can contribute towards the development (betterment) of my community'))
 
     # advocacy
     discuss_concerns = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I am able to address/discuss community concerns in interactions with community leaders/people of authority at the local level'))
+        label=_('I am able to address/discuss community concerns in interactions with community leaders/people of authority at the local level'))
     awareness_raising = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I participate actively in addressing my community concerns through media/social media'))
+        label=_('I participate actively in addressing my community concerns through media/social media'))
 
     # lifestyle
     wash_hands_before_food = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I wash my hands before and after having food'))
+        label=_('I wash my hands before and after having food'))
     use_soap = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I use soap to wash my hands'))
+        label=_('I use soap to wash my hands'))
     wash_hands_after_toilet = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I wash my hands after using toilet'))
+        label=_('I wash my hands after using toilet'))
     take_baths = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I take bath after playing'))
+        label=_('I take bath after playing'))
     brush_teeth = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I brush my teeth twice daily'))
+        label=_('I brush my teeth twice daily'))
     eat_well = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('When eating, I am mindful of my food intake by watching my portion sizes and nutritional intake'))
+        label=_('When eating, I am mindful of my food intake by watching my portion sizes and nutritional intake'))
     exercise = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I do some kind of stretching, strength or physical activities at least 3 times a week'))
+        label=_('I do some kind of stretching, strength or physical activities at least 3 times a week'))
     limit_screen_time = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I spend no more than 2 hours a day on recreational screen time such as watching TV, gaming, or on the internet'))
+        label=_('I spend no more than 2 hours a day on recreational screen time such as watching TV, gaming, or on the internet'))
     respect_environment = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect,
-        help_text=_('I respect the environment around me, I manage my solid waste in a way that causes no harm to nature'))
+        label=_('I respect the environment around me, I manage my solid waste in a way that causes no harm to nature'))
 
 
     def _generate_rows(self, *fields):
         return [
             Div(
                 Div(
-                    HTML("<p>{}</p>".format(self.fields[field].help_text)),
+                    HTML("<p>{}</p>".format(self.fields[field].label)),
                     css_class='col-md-3',
                 ),
                 Div(
@@ -176,6 +176,7 @@ class LifeSkillsAssessmentForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_show_labels = False
         self.helper.help_text_inline = False
+        self.helper.label_class = 'hidden'
         self.helper.layout = Layout(
             Fieldset(
                 _('Part 1: Communication Skills'),

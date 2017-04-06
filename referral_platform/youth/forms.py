@@ -9,9 +9,9 @@ from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, Inline
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
 from bootstrap3_datetime.widgets import DateTimePicker
 
-from dal import autocomplete
+#from dal import autocomplete
 
-from referral_platform.portfolios.models import YoungPerson
+from referral_platform.youth.models import YoungPerson
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
@@ -23,7 +23,8 @@ class RegistrationForm(forms.ModelForm):
             options={
                 "format": "DD/MM/YYYY",
                 "pickTime": False
-            })
+            }),
+        required=True
     )
 
     leaving_education_reasons = forms.MultipleChoiceField(
@@ -39,7 +40,8 @@ class RegistrationForm(forms.ModelForm):
             (_('I felt discriminated against at school')),
             (_('Other')),
         ),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=True
     )
 
     employment_sectors = forms.MultipleChoiceField(
@@ -54,7 +56,8 @@ class RegistrationForm(forms.ModelForm):
             (_("I don't want to answer")),
 
         ),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=True
     )
     looking_for_work = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
@@ -71,7 +74,8 @@ class RegistrationForm(forms.ModelForm):
             (_('Through the Internet')),
             (_('Other')),
         ),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=False
     )
 
     obstacles_for_work = forms.MultipleChoiceField(
@@ -85,7 +89,8 @@ class RegistrationForm(forms.ModelForm):
             ('skills', _('Lack of Skills for the job')),
             ('laws', _('Rigid Labour Laws')),
         ),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=True
     )
     supporting_family = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
@@ -105,28 +110,28 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple
     )
 
-    safety_reasons = forms.MultipleChoiceField(
-        choices=Choices(
-            (_('conflict-related')),
-            (_('violence at home')),
-            (_('harassment/violence by the neighborhood')),
-            (_('harassment/violence in the school')),
-            (_('Other')),
-        ),
-        widget=forms.CheckboxSelectMultiple
-    )
+    # safety_reasons = forms.MultipleChoiceField(
+    #     choices=Choices(
+    #         (_('conflict-related')),
+    #         (_('violence at home')),
+    #         (_('harassment/violence by the neighborhood')),
+    #         (_('harassment/violence in the school')),
+    #         (_('Other')),
+    #     ),
+    #     widget=forms.CheckboxSelectMultiple
+    # )
 
-    trained_before = forms.TypedChoiceField(
-        coerce=lambda x: x == 'True',
-        choices=YES_NO_CHOICE,
-        widget=forms.RadioSelect
-    )
-
-    sports_group = forms.TypedChoiceField(
-        coerce=lambda x: x == 'True',
-        choices=YES_NO_CHOICE,
-        widget=forms.RadioSelect
-    )
+    # trained_before = forms.TypedChoiceField(
+    #     coerce=lambda x: x == 'True',
+    #     choices=YES_NO_CHOICE,
+    #     widget=forms.RadioSelect
+    # )
+    #
+    # sports_group = forms.TypedChoiceField(
+    #     coerce=lambda x: x == 'True',
+    #     choices=YES_NO_CHOICE,
+    #     widget=forms.RadioSelect
+    # )
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -275,6 +280,12 @@ class RegistrationForm(forms.ModelForm):
             )
         )
 
+    def save(self, user=None):
+        user_profile = super(RegistrationForm, self).save(commit=False)
+        if user:
+            user_profile.user = user
+        user_profile.save()
+        return user_profile
 
     class Meta:
         model = YoungPerson

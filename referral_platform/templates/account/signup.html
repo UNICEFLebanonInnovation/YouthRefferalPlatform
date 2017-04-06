@@ -18,11 +18,13 @@
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
         {% endif %}
         <p>
+            {% blocktrans %}
             This is a digital platform used by youth and the partners implementing youth activities to register their bio-data, enroll in courses, and track their progress through.
             To ensure the coordination of the needed protection and assistance, we may need to share the collected information, including your personal data, with other humanitarian agencies.
             In all cases, measures will be taken to prevent unauthorized dissemination of your personal data in line with international data protection standards.
 
             By Clicking {% trans "Sign Up" %} you are giving us your consent to collect your bio-data and enroll you on our platform.
+            {% endblocktrans %}
         </p>
         <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
     </form>

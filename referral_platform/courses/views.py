@@ -4,10 +4,12 @@ from django.views.generic import TemplateView, FormView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from referral_platform.users.views import UserRegisteredMixin
+
 from .forms import LifeSkillsAssessmentForm
 
 
-class CoursesOverview(LoginRequiredMixin, TemplateView):
+class CoursesOverview(UserRegisteredMixin, TemplateView):
 
     def get_template_names(self):
         return [
@@ -15,7 +17,7 @@ class CoursesOverview(LoginRequiredMixin, TemplateView):
         ]
 
 
-class LifeSkillsPreSkillsAssessmentView(LoginRequiredMixin, FormView):
+class LifeSkillsPreSkillsAssessmentView(UserRegisteredMixin, FormView):
 
     template_name = 'courses/empowerment/pre-skills-assessment.html'
     form_class = LifeSkillsAssessmentForm

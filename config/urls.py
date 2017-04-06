@@ -10,7 +10,7 @@ from django.views import defaults as default_views
 
 
 urlpatterns = [
-    url(r'^', include('referral_platform.portfolios.urls', namespace='youth')),
+    url(r'^', include('referral_platform.youth.urls', namespace='youth')),
     url(r'^courses/', include('referral_platform.courses.urls', namespace='courses')),
     url(r'^initiatives/', include('referral_platform.initiatives.urls', namespace='initiatives')),
 
@@ -26,6 +26,8 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^partners/', include('referral_platform.partners.urls', namespace='partners')),
     # url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
+
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -98,17 +98,15 @@ class Person(TimeStampedModel):
         ('Female', _('Female')),
     )
 
-    first_name = models.CharField(max_length=64, blank=True, null=True)
-    last_name = models.CharField(max_length=64, blank=True, null=True)
-    father_name = models.CharField(max_length=64, blank=True, null=True)
+    first_name = models.CharField(max_length=75)
+    last_name = models.CharField(max_length=75)
+    father_name = models.CharField(max_length=75)
     full_name = models.CharField(max_length=225, blank=True, null=True)
-    mother_fullname = models.CharField(max_length=64, blank=True, null=True)
-    mother_firstname = models.CharField(max_length=64, blank=True, null=True)
-    mother_lastname = models.CharField(max_length=64, blank=True, null=True)
+    mother_fullname = models.CharField(max_length=255)
+    mother_firstname = models.CharField(max_length=75)
+    mother_lastname = models.CharField(max_length=75)
     sex = models.CharField(
         max_length=50,
-        blank=True,
-        null=True,
         choices=GENDER,
     )
     birthday_year = models.CharField(
@@ -135,14 +133,12 @@ class Person(TimeStampedModel):
     age = models.CharField(max_length=4, blank=True, null=True)
     phone = models.CharField(max_length=64, blank=True, null=True)
     phone_prefix = models.CharField(max_length=10, blank=True, null=True)
-    id_number = models.CharField(max_length=45, blank=True, null=True)
+    id_number = models.CharField(max_length=45)
     id_type = models.ForeignKey(
         IDType,
-        blank=True, null=True,
     )
     nationality = models.ForeignKey(
         Nationality,
-        blank=True, null=True,
         related_name='+'
     )
     mother_nationality = models.ForeignKey(
@@ -227,10 +223,10 @@ class Person(TimeStampedModel):
 
 class YoungPerson(Person):
 
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='profile')
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
-    location = models.ForeignKey(Location, blank=True, null=True)
-    partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
+    location = models.ForeignKey(Location)
+    partner_organization = models.ForeignKey(PartnerOrganization)
     disability = models.CharField(max_length=100, blank=True, null=True)
 
     education_status = models.CharField(
