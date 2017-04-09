@@ -5,10 +5,10 @@ from django import forms
 
 from model_utils import Choices
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios
+from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, Alert
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
 
-
+YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 
 class LifeSkillsAssessmentForm(forms.Form):
@@ -242,8 +242,250 @@ class LifeSkillsAssessmentForm(forms.Form):
                                      'respect_environment')
             ),
             FormActions(
-                Submit('save', _('Save changes')),
+                Submit('save', _('Save')),
                 Button('cancel', _('Cancel'))
             )
         )
 
+
+class DigitalSkillsAssessmentForm(forms.Form):
+
+    CHOICES = Choices(
+        (1, _('Not good')),
+        (2, _('Some')),
+        (3, _('Neutral')),
+        (4, _('Good')),
+        (5, _('Very good')),
+    )
+
+    can_use_computers = forms.TypedChoiceField(
+        coerce=lambda x: x == 'True',
+        choices=YES_NO_CHOICE,
+        widget=forms.RadioSelect
+    )
+
+    reason_can_not_use_computers = forms.ChoiceField(
+        choices=Choices(
+            (_("I don't know how to use it")),
+            (_("I don't have a computer at home")),
+            (_("It's too expensive to use computers")),
+            (_("I never felt the need to use it")),
+            (_("There are not a lot of computers available in the community")),
+            (_('Other')),
+        ),
+        widget=forms.RadioSelect,
+        required=True
+    )
+
+    familiar_with = forms.MultipleChoiceField(
+        choices=Choices(
+            (_("Social networks & Forums")),
+            (_("Presentation Software")),
+            (_("Word Processing")),
+            (_("Software applications")),
+            (_("Internet/Search Engines")),
+            (_('Spreadsheets')),
+            (_('Operating systems')),
+        ),
+        widget=forms.RadioSelect,
+        required=True
+    )
+
+    # ICT Skills
+    know_computers = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Types of computers and related parts'))
+    importance_of_computers = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_("Describe the importance of computers in today's world"))
+    computer_parts = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Identify the main parts of computers'))
+    use_keyboard = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Identify the different groups of keys on a keyboard'))
+    use_mouse = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Perform different tasks by using a mouse'))
+    media_presentations = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Add photos, video and music to a presentation'))
+    filling_system = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Create a document filing system for easy retrieval'))
+    media_documents = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Insert graphics, text boxes and columns into a document'))
+    presentations = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Create a slideshow that is clear and visually interesting'))
+    send_emails = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Send emails with attachments'))
+    sync_files = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Sync data and media files across a number of devices'))
+    internet_research = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Conduct effective research on the Internet using a variety of resources'))
+    utilize_cloud = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Utilize the cloud to share files across devices'))
+
+    # Graphic skills
+    resize_images = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Use Paint.net to resize images'))
+    crop_images = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Use Paint.net to crop images'))
+    reformat_images = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Use Paint.net to change from JPEG to PNG'))
+    search_for_logo = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Search for graphics on logomkr'))
+    edit_logo = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Move, resize and change the color of your logo'))
+    add_text_to_logo = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Adding text to logo'))
+    save_logo = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Save your logo'))
+
+    # social networks
+    create_social_account = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Create a private account on social media (FB, Instagram)'))
+    structure_social_media = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Structure a frame work on social media'))
+    create_youtube_account = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Create a YouTube account'))
+    create_facebook_page = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Create a page on Facebook to market my business'))
+    create_website = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Develop a website for my business'))
+
+    # audiovisual skills
+    import_to_movie_maker = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Use Windows Movie Maker to import and edit slide shows and videos.'))
+    edit_in_movie_maker = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Use Windows Movie Maker to edit your movies and use effects & transitions.'))
+    add_audio_in_movie_maker = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Use Windows Movie Maker to add and edit audio.'))
+
+    # entrepreneurial skills
+    produce_work_plan = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Produce a work plan'))
+    set_goals = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Setting specific goals'))
+    identify_targets = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Identify the target group'))
+    identify_issues = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Identify issues that should be targeted'))
+
+    # website skills
+    use_wordpress = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Developing a website with a cloud-based web development platform such as WordPress'))
+    create_resources = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect,
+        label=_('Develop digital resources such as Main page, About Us and Contact us, Etc...'))
+
+    def _generate_rows(self, *fields):
+        return [
+            Div(
+                Div(
+                    HTML("<p>{}</p>".format(self.fields[field].label)),
+                    css_class='col-md-3',
+                ),
+                Div(
+                    InlineRadios(field),
+                    css_class='col-md-9',
+                ),
+                css_class='row'
+            ) for field in fields
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(DigitalSkillsAssessmentForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        self.helper.help_text_inline = False
+        self.helper.label_class = 'hidden'
+        self.helper.layout = Layout(
+            'can_use_computers',
+            'reason_can_not_use_computers',
+            Alert(_('If you have used a computer before, please continue answering the questions below. '
+                    'If you have not please STOP here.')),
+            'familiar_with',
+            Fieldset(
+                _('ICT Literacy'),
+                *self._generate_rows('know_computers',
+                                     'importance_of_computers',
+                                     'computer_parts',
+                                     'use_keyboard',
+                                     'use_mouse',
+                                     'media_presentations',
+                                     'filling_system',
+                                     'media_documents',
+                                     'presentations',
+                                     'send_emails',
+                                     'sync_files',
+                                     'internet_research',
+                                     'utilize_cloud')
+            ),
+            Fieldset(
+                _('Graphic skills'),
+                *self._generate_rows('resize_images',
+                                     'crop_images',
+                                     'reformat_images',
+                                     'search_for_logo',
+                                     'edit_logo',
+                                     'add_text_to_logo',
+                                     'save_logo')
+            ),
+            Fieldset(
+                _('Social communication skills'),
+                *self._generate_rows('create_social_account',
+                                     'structure_social_media',
+                                     'create_youtube_account',
+                                     'create_facebook_page',
+                                     'create_website')
+            ),
+            Fieldset(
+                _('Audiovisual skills'),
+                *self._generate_rows('import_to_movie_maker',
+                                     'edit_in_movie_maker',
+                                     'add_audio_in_movie_maker')
+            ),
+            Fieldset(
+                _('Entrepreneurial skills'),
+                *self._generate_rows('produce_work_plan',
+                                     'set_goals',
+                                     'identify_targets',
+                                     'identify_issues')
+            ),
+            Fieldset(
+                _('Website skills'),
+                *self._generate_rows('use_wordpress',
+                                     'create_resources')
+            ),
+            FormActions(
+                Submit('save', _('Save')),
+                Button('cancel', _('Cancel'))
+            )
+        )

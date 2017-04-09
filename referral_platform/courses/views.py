@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from referral_platform.users.views import UserRegisteredMixin
 
-from .forms import LifeSkillsAssessmentForm
+from .forms import LifeSkillsAssessmentForm, DigitalSkillsAssessmentForm
 
 
 class CoursesOverview(UserRegisteredMixin, TemplateView):
@@ -21,4 +21,10 @@ class LifeSkillsPreSkillsAssessmentView(UserRegisteredMixin, FormView):
 
     template_name = 'courses/empowerment/pre-skills-assessment.html'
     form_class = LifeSkillsAssessmentForm
+
+
+class DigitalSkillsAssessmentView(UserRegisteredMixin, FormView):
+
+    template_name = 'courses/labs/digital-skills.html'
+    form_class = DigitalSkillsAssessmentForm
 
