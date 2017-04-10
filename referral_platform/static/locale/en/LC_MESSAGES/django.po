@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 15:59+0300\n"
+"POT-Creation-Date: 2017-04-10 10:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,22 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: referral_platform/courses/forms.py:11
+#: referral_platform/initiatives/forms.py:14
+#: referral_platform/initiatives/models.py:210
+#: referral_platform/initiatives/models.py:219
+#: referral_platform/youth/forms.py:16
+msgid "No"
+msgstr ""
+
+#: referral_platform/courses/forms.py:11
+#: referral_platform/initiatives/forms.py:14
+#: referral_platform/initiatives/models.py:209
+#: referral_platform/initiatives/models.py:218
+#: referral_platform/youth/forms.py:16
+msgid "Yes"
+msgstr ""
 
 #: referral_platform/courses/forms.py:17
 msgid "Completely disagree"
@@ -256,28 +272,262 @@ msgstr ""
 msgid "Part 8: Healthy LifeStyle"
 msgstr ""
 
-#: referral_platform/courses/forms.py:245 referral_platform/youth/forms.py:278
-msgid "Save changes"
+#: referral_platform/courses/forms.py:245
+#: referral_platform/courses/forms.py:488
+#: referral_platform/initiatives/forms.py:120
+msgid "Save"
 msgstr ""
 
 #: referral_platform/courses/forms.py:246
+#: referral_platform/courses/forms.py:489
 #: referral_platform/initiatives/forms.py:121
 #: referral_platform/youth/forms.py:279
 msgid "Cancel"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:14
-#: referral_platform/initiatives/models.py:210
-#: referral_platform/initiatives/models.py:219
-#: referral_platform/youth/forms.py:16
-msgid "No"
+#: referral_platform/courses/forms.py:254
+msgid "Not good"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:14
-#: referral_platform/initiatives/models.py:209
-#: referral_platform/initiatives/models.py:218
-#: referral_platform/youth/forms.py:16
-msgid "Yes"
+#: referral_platform/courses/forms.py:255
+msgid "Some"
+msgstr ""
+
+#: referral_platform/courses/forms.py:256
+msgid "Neutral"
+msgstr ""
+
+#: referral_platform/courses/forms.py:257
+msgid "Good"
+msgstr ""
+
+#: referral_platform/courses/forms.py:258
+msgid "Very good"
+msgstr ""
+
+#: referral_platform/courses/forms.py:269
+msgid "I don't know how to use it"
+msgstr ""
+
+#: referral_platform/courses/forms.py:270
+msgid "I don't have a computer at home"
+msgstr ""
+
+#: referral_platform/courses/forms.py:271
+msgid "It's too expensive to use computers"
+msgstr ""
+
+#: referral_platform/courses/forms.py:272
+msgid "I never felt the need to use it"
+msgstr ""
+
+#: referral_platform/courses/forms.py:273
+msgid "There are not a lot of computers available in the community"
+msgstr ""
+
+#: referral_platform/courses/forms.py:274
+#: referral_platform/initiatives/models.py:34
+#: referral_platform/initiatives/models.py:106
+#: referral_platform/youth/forms.py:41 referral_platform/youth/forms.py:75
+msgid "Other"
+msgstr ""
+
+#: referral_platform/courses/forms.py:282
+msgid "Social networks & Forums"
+msgstr ""
+
+#: referral_platform/courses/forms.py:283
+msgid "Presentation Software"
+msgstr ""
+
+#: referral_platform/courses/forms.py:284
+msgid "Word Processing"
+msgstr ""
+
+#: referral_platform/courses/forms.py:285
+msgid "Software applications"
+msgstr ""
+
+#: referral_platform/courses/forms.py:286
+msgid "Internet/Search Engines"
+msgstr ""
+
+#: referral_platform/courses/forms.py:287
+msgid "Spreadsheets"
+msgstr ""
+
+#: referral_platform/courses/forms.py:288
+msgid "Operating systems"
+msgstr ""
+
+#: referral_platform/courses/forms.py:297
+msgid "Types of computers and related parts"
+msgstr ""
+
+#: referral_platform/courses/forms.py:300
+msgid "Describe the importance of computers in today's world"
+msgstr ""
+
+#: referral_platform/courses/forms.py:303
+msgid "Identify the main parts of computers"
+msgstr ""
+
+#: referral_platform/courses/forms.py:306
+msgid "Identify the different groups of keys on a keyboard"
+msgstr ""
+
+#: referral_platform/courses/forms.py:309
+msgid "Perform different tasks by using a mouse"
+msgstr ""
+
+#: referral_platform/courses/forms.py:312
+msgid "Add photos, video and music to a presentation"
+msgstr ""
+
+#: referral_platform/courses/forms.py:315
+msgid "Create a document filing system for easy retrieval"
+msgstr ""
+
+#: referral_platform/courses/forms.py:318
+msgid "Insert graphics, text boxes and columns into a document"
+msgstr ""
+
+#: referral_platform/courses/forms.py:321
+msgid "Create a slideshow that is clear and visually interesting"
+msgstr ""
+
+#: referral_platform/courses/forms.py:324
+msgid "Send emails with attachments"
+msgstr ""
+
+#: referral_platform/courses/forms.py:327
+msgid "Sync data and media files across a number of devices"
+msgstr ""
+
+#: referral_platform/courses/forms.py:330
+msgid "Conduct effective research on the Internet using a variety of resources"
+msgstr ""
+
+#: referral_platform/courses/forms.py:333
+msgid "Utilize the cloud to share files across devices"
+msgstr ""
+
+#: referral_platform/courses/forms.py:338
+msgid "Use Paint.net to resize images"
+msgstr ""
+
+#: referral_platform/courses/forms.py:341
+msgid "Use Paint.net to crop images"
+msgstr ""
+
+#: referral_platform/courses/forms.py:344
+msgid "Use Paint.net to change from JPEG to PNG"
+msgstr ""
+
+#: referral_platform/courses/forms.py:347
+msgid "Search for graphics on logomkr"
+msgstr ""
+
+#: referral_platform/courses/forms.py:350
+msgid "Move, resize and change the color of your logo"
+msgstr ""
+
+#: referral_platform/courses/forms.py:353
+msgid "Adding text to logo"
+msgstr ""
+
+#: referral_platform/courses/forms.py:356
+msgid "Save your logo"
+msgstr ""
+
+#: referral_platform/courses/forms.py:361
+msgid "Create a private account on social media (FB, Instagram)"
+msgstr ""
+
+#: referral_platform/courses/forms.py:364
+msgid "Structure a frame work on social media"
+msgstr ""
+
+#: referral_platform/courses/forms.py:367
+msgid "Create a YouTube account"
+msgstr ""
+
+#: referral_platform/courses/forms.py:370
+msgid "Create a page on Facebook to market my business"
+msgstr ""
+
+#: referral_platform/courses/forms.py:373
+msgid "Develop a website for my business"
+msgstr ""
+
+#: referral_platform/courses/forms.py:378
+msgid "Use Windows Movie Maker to import and edit slide shows and videos."
+msgstr ""
+
+#: referral_platform/courses/forms.py:381
+msgid ""
+"Use Windows Movie Maker to edit your movies and use effects & transitions."
+msgstr ""
+
+#: referral_platform/courses/forms.py:384
+msgid "Use Windows Movie Maker to add and edit audio."
+msgstr ""
+
+#: referral_platform/courses/forms.py:389
+msgid "Produce a work plan"
+msgstr ""
+
+#: referral_platform/courses/forms.py:392
+msgid "Setting specific goals"
+msgstr ""
+
+#: referral_platform/courses/forms.py:395
+msgid "Identify the target group"
+msgstr ""
+
+#: referral_platform/courses/forms.py:398
+msgid "Identify issues that should be targeted"
+msgstr ""
+
+#: referral_platform/courses/forms.py:403
+msgid ""
+"Developing a website with a cloud-based web development platform such as "
+"WordPress"
+msgstr ""
+
+#: referral_platform/courses/forms.py:406
+msgid ""
+"Develop digital resources such as Main page, About Us and Contact us, Etc..."
+msgstr ""
+
+#: referral_platform/courses/forms.py:432
+msgid ""
+"If you have used a computer before, please continue answering the questions "
+"below. If you have not please STOP here."
+msgstr ""
+
+#: referral_platform/courses/forms.py:436
+msgid "ICT Literacy"
+msgstr ""
+
+#: referral_platform/courses/forms.py:452
+msgid "Graphic skills"
+msgstr ""
+
+#: referral_platform/courses/forms.py:462
+msgid "Social communication skills"
+msgstr ""
+
+#: referral_platform/courses/forms.py:470
+msgid "Audiovisual skills"
+msgstr ""
+
+#: referral_platform/courses/forms.py:476
+msgid "Entrepreneurial skills"
+msgstr ""
+
+#: referral_platform/courses/forms.py:483
+msgid "Website skills"
 msgstr ""
 
 #: referral_platform/initiatives/forms.py:42
@@ -398,10 +648,6 @@ msgstr ""
 msgid "How will you ensure the project is sustainable?"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:120
-msgid "Save"
-msgstr ""
-
 #: referral_platform/initiatives/models.py:23
 msgid ""
 "Improving or installing basic services (electricity, water, sanitation, and "
@@ -447,12 +693,6 @@ msgstr ""
 #: referral_platform/initiatives/models.py:33
 msgid ""
 "Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:34
-#: referral_platform/initiatives/models.py:106
-#: referral_platform/youth/forms.py:41 referral_platform/youth/forms.py:75
-msgid "Other"
 msgstr ""
 
 #: referral_platform/initiatives/models.py:38
@@ -1258,6 +1498,10 @@ msgstr ""
 msgid ""
 "4. We would like to follow up with you after the training, what is your "
 "preferred method of communication?"
+msgstr ""
+
+#: referral_platform/youth/forms.py:278
+msgid "Save changes"
 msgstr ""
 
 #: referral_platform/youth/models.py:26

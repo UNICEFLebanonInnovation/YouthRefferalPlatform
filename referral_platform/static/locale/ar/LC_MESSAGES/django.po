@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 15:59+0300\n"
+"POT-Creation-Date: 2017-04-10 10:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: referral_platform/courses/forms.py:11
+#: referral_platform/initiatives/forms.py:14
+#: referral_platform/initiatives/models.py:210
+#: referral_platform/initiatives/models.py:219
+#: referral_platform/youth/forms.py:16
+msgid "No"
+msgstr "كلا"
+
+#: referral_platform/courses/forms.py:11
+#: referral_platform/initiatives/forms.py:14
+#: referral_platform/initiatives/models.py:209
+#: referral_platform/initiatives/models.py:218
+#: referral_platform/youth/forms.py:16
+msgid "Yes"
+msgstr "نعم"
 
 #: referral_platform/courses/forms.py:17
 msgid "Completely disagree"
@@ -150,8 +166,6 @@ msgid ""
 msgstr "في بيئتي، أتقبّل الآخرين الذين هم من دين وجنسية مختلفة عنّي."
 
 #: referral_platform/courses/forms.py:102
-#, fuzzy
-#| msgid "I never feel safe in my community"
 msgid "I feel I belong to my community"
 msgstr "أشعر بالإنتماء إلى مجتمعي. "
 
@@ -166,8 +180,6 @@ msgid ""
 msgstr "أحبّ الإنخراط في نشاطات إجتماعية تساعد على تطوير مجتمعي."
 
 #: referral_platform/courses/forms.py:113
-#, fuzzy
-#| msgid "I never feel safe in my community"
 msgid "I know where to volunteer in my community"
 msgstr "أعرف أين أتطوّع للعمل في مجتمعي. "
 
@@ -247,8 +259,6 @@ msgstr ""
 "أحترم البيئة من حولي وأتخلّص من النفايات الصلبة بطريقة لا تضرّ بالطبيعة. "
 
 #: referral_platform/courses/forms.py:182
-#, fuzzy
-#| msgid "Communication"
 msgid "Part 1: Communication Skills"
 msgstr "القسم  الأول: مهارات التواصل"
 
@@ -280,29 +290,264 @@ msgstr "القسم 7: المناصرة والحشد"
 msgid "Part 8: Healthy LifeStyle"
 msgstr "القسم 8: نمط حياة صحّي"
 
-#: referral_platform/courses/forms.py:245 referral_platform/youth/forms.py:278
-msgid "Save changes"
+#: referral_platform/courses/forms.py:245
+#: referral_platform/courses/forms.py:488
+#: referral_platform/initiatives/forms.py:120
+msgid "Save"
 msgstr "حفظ"
 
 #: referral_platform/courses/forms.py:246
+#: referral_platform/courses/forms.py:489
 #: referral_platform/initiatives/forms.py:121
 #: referral_platform/youth/forms.py:279
 msgid "Cancel"
 msgstr "الغاء"
 
-#: referral_platform/initiatives/forms.py:14
-#: referral_platform/initiatives/models.py:210
-#: referral_platform/initiatives/models.py:219
-#: referral_platform/youth/forms.py:16
-msgid "No"
-msgstr "كلا"
+#: referral_platform/courses/forms.py:254
+msgid "Not good"
+msgstr "غير جيد"
 
-#: referral_platform/initiatives/forms.py:14
-#: referral_platform/initiatives/models.py:209
-#: referral_platform/initiatives/models.py:218
-#: referral_platform/youth/forms.py:16
-msgid "Yes"
-msgstr "نعم"
+#: referral_platform/courses/forms.py:255
+msgid "Some"
+msgstr "بعض"
+
+#: referral_platform/courses/forms.py:256
+msgid "Neutral"
+msgstr "محايد"
+
+#: referral_platform/courses/forms.py:257
+msgid "Good"
+msgstr "جيد"
+
+#: referral_platform/courses/forms.py:258
+msgid "Very good"
+msgstr "جيد جدا"
+
+#: referral_platform/courses/forms.py:269
+msgid "I don't know how to use it"
+msgstr "لا أعرف كيف أستخدمه"
+
+#: referral_platform/courses/forms.py:270
+msgid "I don't have a computer at home"
+msgstr "لا أملك جهاز كمبيوتر في المنزل"
+
+#: referral_platform/courses/forms.py:271
+msgid "It's too expensive to use computers"
+msgstr "كلفة استخدام الكمبيوتر باهظة جدا"
+
+#: referral_platform/courses/forms.py:272
+msgid "I never felt the need to use it"
+msgstr "لم أشعر أبدا بحاجة لاستخدامه"
+
+#: referral_platform/courses/forms.py:273
+msgid "There are not a lot of computers available in the community"
+msgstr "لا يوجد الكثير من أجهزة الكمبيوتر المتاحة في المجتمع"
+
+#: referral_platform/courses/forms.py:274
+#: referral_platform/initiatives/models.py:34
+#: referral_platform/initiatives/models.py:106
+#: referral_platform/youth/forms.py:41 referral_platform/youth/forms.py:75
+msgid "Other"
+msgstr "غير ذلك (يرجى التحديد)"
+
+#: referral_platform/courses/forms.py:282
+msgid "Social networks & Forums"
+msgstr "الشبكات الاجتماعية والمنتديات"
+
+#: referral_platform/courses/forms.py:283
+msgid "Presentation Software"
+msgstr "برنامج العرض"
+
+#: referral_platform/courses/forms.py:284
+msgid "Word Processing"
+msgstr "كتابة نصوص"
+
+#: referral_platform/courses/forms.py:285
+msgid "Software applications"
+msgstr "تطبيقات برمجية"
+
+#: referral_platform/courses/forms.py:286
+msgid "Internet/Search Engines"
+msgstr "الانترنت / محركات البحث "
+
+#: referral_platform/courses/forms.py:287
+msgid "Spreadsheets"
+msgstr "جداول البيانات"
+
+#: referral_platform/courses/forms.py:288
+msgid "Operating systems"
+msgstr "أنظمة التشغيل"
+
+#: referral_platform/courses/forms.py:297
+msgid "Types of computers and related parts"
+msgstr "أنواع الحواسيب والقطع المتصلة بها"
+
+#: referral_platform/courses/forms.py:300
+msgid "Describe the importance of computers in today's world"
+msgstr "وصف أهمية أجهزة الكمبيوتر في عالم اليوم"
+
+#: referral_platform/courses/forms.py:303
+msgid "Identify the main parts of computers"
+msgstr "تعريف أجزاء الكمبيوتر الرئيسية"
+
+#: referral_platform/courses/forms.py:306
+msgid "Identify the different groups of keys on a keyboard"
+msgstr "استعمالات المفاتيح على لوحة المفاتيح"
+
+#: referral_platform/courses/forms.py:309
+msgid "Perform different tasks by using a mouse"
+msgstr "استخدام الماوس لمهام مختلفة"
+
+#: referral_platform/courses/forms.py:312
+msgid "Add photos, video and music to a presentation"
+msgstr "إضافة صور، فيديو، موسيقى إلى عرض تقديمي"
+
+#: referral_platform/courses/forms.py:315
+msgid "Create a document filing system for easy retrieval"
+msgstr "إنشاء نظام ادخال للمستندات لسهولة استرجاعها"
+
+#: referral_platform/courses/forms.py:318
+msgid "Insert graphics, text boxes and columns into a document"
+msgstr "إدراج رسومات، مربعات النصوص وأعمدة في مستند"
+
+#: referral_platform/courses/forms.py:321
+msgid "Create a slideshow that is clear and visually interesting"
+msgstr "إنشاء عرض الشرائح يكون واضح ومثير للاهتمام بصريا"
+
+#: referral_platform/courses/forms.py:324
+msgid "Send emails with attachments"
+msgstr "إرسال رسائل البريد الإلكتروني مع مرفقات"
+
+#: referral_platform/courses/forms.py:327
+msgid "Sync data and media files across a number of devices"
+msgstr "مزامنة البيانات وملفات الوسائط عبر عدد من الأجهزة"
+
+#: referral_platform/courses/forms.py:330
+msgid "Conduct effective research on the Internet using a variety of resources"
+msgstr "إجراء بحوث فعالة على الإنترنت باستخدام مجموعة متنوعة من المصادر"
+
+#: referral_platform/courses/forms.py:333
+msgid "Utilize the cloud to share files across devices"
+msgstr "استخدام السحابة لتبادل الملفات عبر الأجهزة"
+
+#: referral_platform/courses/forms.py:338
+msgid "Use Paint.net to resize images"
+msgstr "استخدام برنامج Paint.net لتغيير حجم الصور"
+
+#: referral_platform/courses/forms.py:341
+msgid "Use Paint.net to crop images"
+msgstr "استخدام برنامج Paint.net لقص الصور"
+
+#: referral_platform/courses/forms.py:344
+msgid "Use Paint.net to change from JPEG to PNG"
+msgstr "استخدام برنامج Paint.net لتغيير نوع الصور من JPEG"
+"الى PNG"
+
+#: referral_platform/courses/forms.py:347
+msgid "Search for graphics on logomkr"
+msgstr "البحث عن الرسومات على logomkr"
+
+#: referral_platform/courses/forms.py:350
+msgid "Move, resize and change the color of your logo"
+msgstr "تحريك، تغيير الحجم، و تغير لون الشعار الخاص بك"
+
+#: referral_platform/courses/forms.py:353
+msgid "Adding text to logo"
+msgstr "إضافة نص إلى الشعار"
+
+#: referral_platform/courses/forms.py:356
+msgid "Save your logo"
+msgstr "حفظ الشعار الخاص بك"
+
+#: referral_platform/courses/forms.py:361
+msgid "Create a private account on social media (FB, Instagram)"
+msgstr "إنشاء حساب خاص على وسائل التواصل الاجتماعي (فيسبوك، توتير، انستاجرام)"
+
+#: referral_platform/courses/forms.py:364
+msgid "Structure a frame work on social media"
+msgstr "بناء اطار عمل على شبكات التواصل الاجتماعي"
+
+#: referral_platform/courses/forms.py:367
+msgid "Create a YouTube account"
+msgstr "إنشاء حساب خاص على YouTube"
+
+#: referral_platform/courses/forms.py:370
+msgid "Create a page on Facebook to market my business"
+msgstr "إنشاء صفحة على فيسبوك لتسويق أعمالي"
+
+#: referral_platform/courses/forms.py:373
+msgid "Develop a website for my business"
+msgstr "إنشاء موقع الكتروني لعملي"
+
+#: referral_platform/courses/forms.py:378
+msgid "Use Windows Movie Maker to import and edit slide shows and videos."
+msgstr "استخدام Windows Movie Maker لاحضار وتعديل الشرائح وأشرطة الفيديو."
+
+#: referral_platform/courses/forms.py:381
+msgid ""
+"Use Windows Movie Maker to edit your movies and use effects & transitions."
+msgstr "استخدام Windows Movie Maker لتعديل أفلامك واستخدام المؤثرات والتحولات."
+
+#: referral_platform/courses/forms.py:384
+msgid "Use Windows Movie Maker to add and edit audio."
+msgstr "استخدام Windows Movie Maker لإضافة الصوت وتعديله."
+
+#: referral_platform/courses/forms.py:389
+msgid "Produce a work plan"
+msgstr "إنشاء خطة عمل"
+
+#: referral_platform/courses/forms.py:392
+msgid "Setting specific goals"
+msgstr "وضع أهداف محددة"
+
+#: referral_platform/courses/forms.py:395
+msgid "Identify the target group"
+msgstr "تحديد الفئة المستهدفة"
+
+#: referral_platform/courses/forms.py:398
+msgid "Identify issues that should be targeted"
+msgstr "تحديد القضايا التي يجب استهدافها"
+
+#: referral_platform/courses/forms.py:403
+msgid ""
+"Developing a website with a cloud-based web development platform such as "
+"WordPress"
+msgstr "تطوير موقع باستخدام WordPress"
+
+#: referral_platform/courses/forms.py:406
+msgid ""
+"Develop digital resources such as Main page, About Us and Contact us, Etc..."
+msgstr "تطوير مواد لموقع رقمي (الصفحة الرئيسية، عن الموقع، اتصل بنا، ...)"
+
+#: referral_platform/courses/forms.py:432
+msgid ""
+"If you have used a computer before, please continue answering the questions "
+"below. If you have not please STOP here."
+msgstr "إذا كنت قد استخدمت جهاز كمبيوتر من قبل، يرجى مواصلة الإجابة على الأسئلة أدناه . أو الرجاء التوقف هنا"
+
+#: referral_platform/courses/forms.py:436
+msgid "ICT Literacy"
+msgstr "محو الأمية التكنولوجية )تكنولوجيا المعلومات والاتصالات("
+
+#: referral_platform/courses/forms.py:452
+msgid "Graphic skills"
+msgstr "مهارات الرسم على الكمبيوتر"
+
+#: referral_platform/courses/forms.py:462
+msgid "Social communication skills"
+msgstr "مهارات استخدام وسائل التواصل الاجتماعي"
+
+#: referral_platform/courses/forms.py:470
+msgid "Audiovisual skills"
+msgstr "مهارات استخدام وسائل الوسائط السمعية والبصرية الرقمية"
+
+#: referral_platform/courses/forms.py:476
+msgid "Entrepreneurial skills"
+msgstr "مهارات ريادة الأعمال"
+
+#: referral_platform/courses/forms.py:483
+msgid "Website skills"
+msgstr "مهارات انشاء المواقع الالكترونية"
 
 #: referral_platform/initiatives/forms.py:42
 #: referral_platform/youth/forms.py:142
@@ -355,8 +600,6 @@ msgstr "ما هي المشكلة التي قمت بحلها؟ كيف اخترت 
 #: referral_platform/initiatives/forms.py:111
 #: referral_platform/initiatives/forms.py:114
 #: referral_platform/initiatives/forms.py:117
-#, fuzzy
-#| msgid "More than 6 weeks"
 msgid "not more than 5 sentences"
 msgstr "في 5 جمل كحدّ أقصى "
 
@@ -364,12 +607,16 @@ msgstr "في 5 جمل كحدّ أقصى "
 msgid ""
 "What organizations, groups, or other people will you collaborate with on "
 "this project?"
-msgstr "ما هي المنظمات، المجموعات أو الأشخاص الآخرون الذين ستتعاون معهم في هذا المشروع؟"
+msgstr ""
+"ما هي المنظمات، المجموعات أو الأشخاص الآخرون الذين ستتعاون معهم في هذا "
+"المشروع؟"
 
 #: referral_platform/initiatives/forms.py:80
 msgid ""
 "How many direct beneficiaries will benefit from your planned initiative?"
-msgstr " إذا كان الجواب نعم، فكم عدد المستفيدين المباشرين الذين سيستفيدون من مبادرتكم المخطط لها؟"
+msgstr ""
+" إذا كان الجواب نعم، فكم عدد المستفيدين المباشرين الذين سيستفيدون من "
+"مبادرتكم المخطط لها؟"
 
 #: referral_platform/initiatives/forms.py:83
 msgid "Please select the age Groups of the beneficiaries"
@@ -382,7 +629,8 @@ msgstr " جنس المستفيدين"
 #: referral_platform/initiatives/forms.py:89
 msgid ""
 "How many indirect beneficiaries will benefit from your planned initiative?"
-msgstr "كم عدد المستفيدين غير المباشرين الذين سيستفيدون من مبادرتكم المخطط لها؟"
+msgstr ""
+"كم عدد المستفيدين غير المباشرين الذين سيستفيدون من مبادرتكم المخطط لها؟"
 
 #: referral_platform/initiatives/forms.py:92
 msgid "Are you planning to mobilize resources for this project?"
@@ -423,10 +671,6 @@ msgstr "كيف تخطط لقياس التقدّم المحرز بناءً على
 #: referral_platform/initiatives/forms.py:116
 msgid "How will you ensure the project is sustainable?"
 msgstr "كيف ستضمن استدامة المشروع ؟"
-
-#: referral_platform/initiatives/forms.py:120
-msgid "Save"
-msgstr "حفظ"
 
 #: referral_platform/initiatives/models.py:23
 msgid ""
@@ -476,12 +720,6 @@ msgstr "تعزيز السلامة العامة"
 msgid ""
 "Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)"
 msgstr "تحسين المساحات العامة (الحدائق، المستشفيات، المباني، المدارس والأرصفة)"
-
-#: referral_platform/initiatives/models.py:34
-#: referral_platform/initiatives/models.py:106
-#: referral_platform/youth/forms.py:41 referral_platform/youth/forms.py:75
-msgid "Other"
-msgstr "غير ذلك (يرجى التحديد)"
 
 #: referral_platform/initiatives/models.py:38
 msgid "Self-Management"
@@ -649,19 +887,29 @@ msgid "Low - Some team members stopped participating"
 msgstr "منخفضة - توقّف بعض أعضاء الفريق عن المشاركة"
 
 #: referral_platform/initiatives/models.py:198
-msgid "Exceeded the total number of direct beneficiaries that we planned to reach (greater than 100%)"
-msgstr "تجاوز العدد الإجمالي للمستفيدين المباشرين الذين خططنا للوصول إليهم (أكثر من 100٪)"
+msgid ""
+"Exceeded the total number of direct beneficiaries that we planned to reach "
+"(greater than 100%)"
+msgstr ""
+"تجاوز العدد الإجمالي للمستفيدين المباشرين الذين خططنا للوصول إليهم (أكثر من "
+"100٪)"
 
 #: referral_platform/initiatives/models.py:199
 msgid "Reached all of the direct beneficiaries planned (100%)"
 msgstr "تم الوصول إلى جميع المستفيدين المباشرين المقرّرين (100٪)"
 
 #: referral_platform/initiatives/models.py:200
-msgid "Reached more than half of the direct beneficiaries planned (50% or more)"
+#, fuzzy, python-format
+#| msgid ""
+#| "Reached more than half of the direct beneficiaries planned (50% or more)"
+msgid ""
+"Reached more than half of the direct beneficiaries planned (50% or more)"
 msgstr "تم الوصول إلى أكثر من نصف المستفيدين المباشرين (50٪ أو أكثر)"
 
 #: referral_platform/initiatives/models.py:201
-msgid "Reached less than half of the direct beneficiaries planned (Less then 49%)"
+msgid ""
+"Reached less than half of the direct beneficiaries planned (Less then "
+"49%)\" (50% or more)"
 msgstr "لم يتم الوصول إلى العدد الإجمالي للمستفيدين المباشرين (أقل من 49٪)"
 
 #: referral_platform/initiatives/models.py:211
@@ -1294,6 +1542,10 @@ msgid ""
 "4. We would like to follow up with you after the training, what is your "
 "preferred method of communication?"
 msgstr "4. نود المتابعة معك بعد التدريب، ما هي طريقة التواصل المفضلة لديك؟"
+
+#: referral_platform/youth/forms.py:278
+msgid "Save changes"
+msgstr "حفظ"
 
 #: referral_platform/youth/models.py:26
 msgid "Nationalities"
