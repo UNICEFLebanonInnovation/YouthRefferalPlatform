@@ -127,6 +127,7 @@ TIME_ZONE = 'Asia/Beirut'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
 LANGUAGE_COOKIE_NAME = 'default_language'
+LANGUAGE_QUERY_PARAMETER = 'language'
 
 LANGUAGES = (
     ('ar-ar', 'Arabic'),
