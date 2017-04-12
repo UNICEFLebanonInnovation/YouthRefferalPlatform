@@ -1,6 +1,8 @@
 {% load staticfiles %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar" dir="rtl"{% else %}lang="en"{% endif %}>
 <!--[if IE 9]>
 <html class="ie9" lang="en">    <![endif]-->
 <!--[if IE 8]>
@@ -65,29 +67,29 @@
                 <ul id="nav" class="row nopadding cd-side-navigation">
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color01" data-animation-duration="1000"
                         data-animation-delay="100">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-insignia"></i><span>home</span></a>
+                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-insignia"></i><span>{% trans 'home' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color02" data-animation-duration="1000"
                         data-animation-delay="300">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-graduation61"></i><span>profile</span></a>
+                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-graduation61"></i><span>{% trans 'profile' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color03" data-animation-duration="1000"
                         data-animation-delay="500">
                         <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i
-                                class="flaticon-book-bag2"></i><span>courses</span></a>
+                                class="flaticon-book-bag2"></i><span>{% trans 'courses' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"
                         data-animation-delay="700">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-placeholders4"></i><span>partners</span></a>
+                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-placeholders4"></i><span>{% trans 'partners' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color05" data-animation-duration="1000"
                         data-animation-delay="900">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-earphones18"></i><span>support</span></a>
+                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-earphones18"></i><span>{% trans 'support' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
                         data-animation-delay="1100">
                         <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i
-                                class="flaticon-pens15"></i><span>blog</span></a>
+                                class="flaticon-pens15"></i><span>{% trans 'blog' %}</span></a>
                     </li>
                 </ul>
 
@@ -112,32 +114,32 @@
     <div class="container-fluid nopadding">
         <div class="row">
             <div class="col-sm-3">
-                <h5 class="font-accident-two-normal uppercase">Youth Referral Platform</h5>
+                <h5 class="font-accident-two-normal uppercase">{% trans 'Youth Referral Platform' %}</h5>
                 <p class="inline-block">
 
                 </p>
                 <div class="divider-dynamic"></div>
             </div>
             <div class="col-sm-3 cv-link">
-                <h5 class="font-accident-two-normal uppercase">Download cv</h5>
+                <h5 class="font-accident-two-normal uppercase">{% trans 'Download CV' %}</h5>
                 <div class="dividewhite1"></div>
-                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>English</a>
-                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>Arabic</a>
-                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>French</a>
+                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>{% trans 'English' %}</a>
+                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>{% trans 'Arabic' %}</a>
+                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>{% trans 'French' %}</a>
                 <p class="inline-block">
-                    The CV is in .pdf format. Use the Adobe Reader to open it.
+                    {% trans 'The CV is in .pdf format. Use the Adobe Reader to open it.' %}
                 </p>
                 <div class="divider-dynamic"></div>
             </div>
             <div class="col-sm-3">
-                <h5 class="font-accident-two-normal uppercase">Newsletter</h5>
+                <h5 class="font-accident-two-normal uppercase">{% trans 'Newsletter' %}</h5>
                 <div class="dividewhite1"></div>
-                <input class="newsletter-email" type="email" required="" name="ne" placeholder="Your Email">
-                <a href="#!" class="btn btn-wh-trans btn-xs">OK</a>
+                <input class="newsletter-email" type="email" required="" name="ne" placeholder="{% trans 'Your Email' %}">
+                <a href="#!" class="btn btn-wh-trans btn-xs">{% trans 'OK' %}</a>
                 <div class="divider-dynamic"></div>
             </div>
             <div class="col-sm-3">
-                <h5 class="font-accident-two-normal uppercase">Follow us</h5>
+                <h5 class="font-accident-two-normal uppercase">{% trans 'Follow us' %}</h5>
                 <div class="follow">
                     <ul class="list-inline social">
                         <li><a target="_blank" href="#" class="rst-icon-facebook"><i class="fa fa-facebook"></i></a></li>
@@ -147,30 +149,51 @@
                 </div>
                 <div class="divider-dynamic"></div>
             </div>
+            <div class="col-sm-3">
+                {% load i18n %}
+                {% get_current_language as LANGUAGE_CODE %}
+                <div class="btn-group">
+                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ LANGUAGE_CODE|upper }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url 'users:set_language' 'en-us' %}">
+                                {% trans 'English' %}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'users:set_language' 'ar-ar' %}">
+                                {% trans 'Arabic' %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="Menu"></div>
+            </div>
         </div>
         <div class="dividewhite1"></div>
         <div class="row">
             <div class="col-md-8 copyrights">
                 <p>© 2017 UNICEF Lebanon</p>
             </div>
-            <div class="col-sm-3">
-                {% load i18n %}
-                <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="{{ redirect_to }}" />
-                    <select name="language">
-                        {% get_current_language as LANGUAGE_CODE %}
-                        {% get_available_languages as LANGUAGES %}
-                        {% get_language_info_list for LANGUAGES as languages %}
-                        {% for language in languages %}
-                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                                {{ language.name_local }} ({{ language.code }})
-                            </option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="Go" />
-                </form>
-            </div>
+
+{#            <div class="col-sm-3">#}
+{#                {% load i18n %}#}
+{#                <form action="{% url 'users:set_language' %}" method="post">#}
+{#                    {% csrf_token %}#}
+{#                    <input name="next" type="hidden" value="{{ redirect_to }}" />#}
+{#                    <select name="language">#}
+{#                        {% get_current_language as LANGUAGE_CODE %}#}
+{#                        {% get_available_languages as LANGUAGES %}#}
+{#                        {% get_language_info_list for LANGUAGES as languages %}#}
+{#                        {% for language in languages %}#}
+{#                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>#}
+{#                                {{ language.name_local }} ({{ language.code }})#}
+{#                            </option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                    <input type="submit" value="Go" />#}
+{#                </form>#}
+{#            </div>#}
         </div>
     </div>
 </footer>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-10 10:14+0300\n"
+"POT-Creation-Date: 2017-04-11 15:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -440,8 +440,7 @@ msgstr "استخدام برنامج Paint.net لقص الصور"
 
 #: referral_platform/courses/forms.py:344
 msgid "Use Paint.net to change from JPEG to PNG"
-msgstr "استخدام برنامج Paint.net لتغيير نوع الصور من JPEG"
-"الى PNG"
+msgstr "استخدام برنامج Paint.net لتغيير نوع الصور من JPEG الى PNG"
 
 #: referral_platform/courses/forms.py:347
 msgid "Search for graphics on logomkr"
@@ -523,7 +522,9 @@ msgstr "تطوير مواد لموقع رقمي (الصفحة الرئيسية،
 msgid ""
 "If you have used a computer before, please continue answering the questions "
 "below. If you have not please STOP here."
-msgstr "إذا كنت قد استخدمت جهاز كمبيوتر من قبل، يرجى مواصلة الإجابة على الأسئلة أدناه . أو الرجاء التوقف هنا"
+msgstr ""
+"إذا كنت قد استخدمت جهاز كمبيوتر من قبل، يرجى مواصلة الإجابة على الأسئلة "
+"أدناه . أو الرجاء التوقف هنا"
 
 #: referral_platform/courses/forms.py:436
 msgid "ICT Literacy"
@@ -1196,6 +1197,72 @@ msgid ""
 msgstr ""
 "<strong>ملاحظة:</strong></a>لا يزال يمكنك تغيير عنوانك الالكتوني<a href="
 "\"%(email_url)s\">"
+
+#: referral_platform/templates/base.html:70
+msgid "home"
+msgstr "الرئيسية"
+
+#: referral_platform/templates/base.html:74
+msgid "profile"
+msgstr "الملف الشخصي"
+
+#: referral_platform/templates/base.html:79
+msgid "courses"
+msgstr "الدورات"
+
+#: referral_platform/templates/base.html:83
+msgid "partners"
+msgstr "الشركاء"
+
+#: referral_platform/templates/base.html:87
+msgid "support"
+msgstr "الدعم"
+
+#: referral_platform/templates/base.html:92
+msgid "blog"
+msgstr "مدونة"
+
+#: referral_platform/templates/base.html:117
+msgid "Youth Referral Platform"
+msgstr ""
+
+#: referral_platform/templates/base.html:124
+msgid "Download CV"
+msgstr "تحميل السيرة الذاتية"
+
+#: referral_platform/templates/base.html:126
+#: referral_platform/templates/base.html:160
+msgid "English"
+msgstr "الانكليزية"
+
+#: referral_platform/templates/base.html:127
+#: referral_platform/templates/base.html:165
+msgid "Arabic"
+msgstr "العربية"
+
+#: referral_platform/templates/base.html:128
+msgid "French"
+msgstr "الفرنسية"
+
+#: referral_platform/templates/base.html:130
+msgid "The CV is in .pdf format. Use the Adobe Reader to open it."
+msgstr "السيرة الذاتية هي في شكل PDF. استخدم أدوب ريدر لفتحه."
+
+#: referral_platform/templates/base.html:135
+msgid "Newsletter"
+msgstr "النشرة الالكتونية"
+
+#: referral_platform/templates/base.html:137
+msgid "Your Email"
+msgstr "البريد الإلكتروني"
+
+#: referral_platform/templates/base.html:138
+msgid "OK"
+msgstr "موافق"
+
+#: referral_platform/templates/base.html:142
+msgid "Follow us"
+msgstr "تابعنا على القنوات التالية"
 
 #: referral_platform/users/models.py:20
 msgid "email address"

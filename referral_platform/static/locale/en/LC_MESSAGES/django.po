@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-10 10:14+0300\n"
+"POT-Creation-Date: 2017-04-11 15:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1156,6 +1156,72 @@ msgstr ""
 msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
 "mail address</a>."
+msgstr ""
+
+#: referral_platform/templates/base.html:70
+msgid "home"
+msgstr ""
+
+#: referral_platform/templates/base.html:74
+msgid "profile"
+msgstr ""
+
+#: referral_platform/templates/base.html:79
+msgid "courses"
+msgstr ""
+
+#: referral_platform/templates/base.html:83
+msgid "partners"
+msgstr ""
+
+#: referral_platform/templates/base.html:87
+msgid "support"
+msgstr ""
+
+#: referral_platform/templates/base.html:92
+msgid "blog"
+msgstr ""
+
+#: referral_platform/templates/base.html:117
+msgid "Youth Referral Platform"
+msgstr ""
+
+#: referral_platform/templates/base.html:124
+msgid "Download cv"
+msgstr ""
+
+#: referral_platform/templates/base.html:126
+#: referral_platform/templates/base.html:160
+msgid "English"
+msgstr ""
+
+#: referral_platform/templates/base.html:127
+#: referral_platform/templates/base.html:165
+msgid "Arabic"
+msgstr ""
+
+#: referral_platform/templates/base.html:128
+msgid "French"
+msgstr ""
+
+#: referral_platform/templates/base.html:130
+msgid "The CV is in .pdf format. Use the Adobe Reader to open it."
+msgstr ""
+
+#: referral_platform/templates/base.html:135
+msgid "Newsletter"
+msgstr ""
+
+#: referral_platform/templates/base.html:137
+msgid "Your Email"
+msgstr ""
+
+#: referral_platform/templates/base.html:138
+msgid "OK"
+msgstr ""
+
+#: referral_platform/templates/base.html:142
+msgid "Follow us"
 msgstr ""
 
 #: referral_platform/users/models.py:20

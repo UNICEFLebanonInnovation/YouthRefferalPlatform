@@ -4,6 +4,9 @@ from __future__ import absolute_import, unicode_literals
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.utils import translation
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -62,3 +65,16 @@ class UserListView(LoginRequiredMixin, ListView):
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = 'email'
+
+
+class UserChangeLanguageRedirectView(RedirectView):
+
+    permanent = False
+    query_string = True
+    pattern_name = 'set_language'
+
+    def get_redirect_url(self, *args, **kwargs):
+        user_language = kwargs['language']
+        translation.activate(user_language)
+        self.request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+        return reverse('youth:home', kwargs={})

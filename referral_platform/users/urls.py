@@ -33,4 +33,11 @@ urlpatterns = [
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
+
+    url(
+        # r'^set-language/$',
+        r'^set-language/(?P<language>[\w.@+-]+)/$',
+        view=views.UserChangeLanguageRedirectView.as_view(),
+        name='set_language'
+    ),
 ]
