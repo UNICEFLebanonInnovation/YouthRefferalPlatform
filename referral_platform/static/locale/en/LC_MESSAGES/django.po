@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-25 13:49+0300\n"
+"POT-Creation-Date: 2017-04-26 13:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -273,13 +273,13 @@ msgid "Part 8: Healthy LifeStyle"
 msgstr ""
 
 #: referral_platform/courses/forms.py:245
-#: referral_platform/courses/forms.py:488
+#: referral_platform/courses/forms.py:490
 #: referral_platform/initiatives/forms.py:120
 msgid "Save"
 msgstr ""
 
 #: referral_platform/courses/forms.py:246
-#: referral_platform/courses/forms.py:489
+#: referral_platform/courses/forms.py:491
 #: referral_platform/initiatives/forms.py:121
 #: referral_platform/youth/forms.py:279
 msgid "Cancel"
@@ -500,33 +500,41 @@ msgid ""
 "Develop digital resources such as Main page, About Us and Contact us, Etc..."
 msgstr ""
 
+#: referral_platform/courses/forms.py:430
+msgid "Do you know how to use personal computers?"
+msgstr ""
+
 #: referral_platform/courses/forms.py:432
+msgid "If you don't use a computer, why not?"
+msgstr ""
+
+#: referral_platform/courses/forms.py:434
 msgid ""
 "If you have used a computer before, please continue answering the questions "
 "below. If you have not please STOP here."
 msgstr ""
 
-#: referral_platform/courses/forms.py:436
+#: referral_platform/courses/forms.py:438
 msgid "ICT Literacy"
 msgstr ""
 
-#: referral_platform/courses/forms.py:452
+#: referral_platform/courses/forms.py:454
 msgid "Graphic skills"
 msgstr ""
 
-#: referral_platform/courses/forms.py:462
+#: referral_platform/courses/forms.py:464
 msgid "Social communication skills"
 msgstr ""
 
-#: referral_platform/courses/forms.py:470
+#: referral_platform/courses/forms.py:472
 msgid "Audiovisual skills"
 msgstr ""
 
-#: referral_platform/courses/forms.py:476
+#: referral_platform/courses/forms.py:478
 msgid "Entrepreneurial skills"
 msgstr ""
 
-#: referral_platform/courses/forms.py:483
+#: referral_platform/courses/forms.py:485
 msgid "Website skills"
 msgstr ""
 
@@ -1224,6 +1232,10 @@ msgstr ""
 msgid "Follow us"
 msgstr ""
 
+#: referral_platform/templates/pages/registration.html:17
+msgid "Registration"
+msgstr ""
+
 #: referral_platform/users/models.py:20
 msgid "email address"
 msgstr ""
@@ -1468,7 +1480,7 @@ msgstr ""
 msgid "ID Number"
 msgstr ""
 
-#: referral_platform/youth/forms.py:168 referral_platform/youth/models.py:337
+#: referral_platform/youth/forms.py:168 referral_platform/youth/models.py:338
 msgid "Disability"
 msgstr ""
 
@@ -1578,178 +1590,178 @@ msgstr ""
 msgid "ALP Level"
 msgstr ""
 
-#: referral_platform/youth/models.py:82
+#: referral_platform/youth/models.py:83
 msgid "January"
 msgstr ""
 
-#: referral_platform/youth/models.py:83
+#: referral_platform/youth/models.py:84
 msgid "February"
 msgstr ""
 
-#: referral_platform/youth/models.py:84
+#: referral_platform/youth/models.py:85
 msgid "March"
 msgstr ""
 
-#: referral_platform/youth/models.py:85
+#: referral_platform/youth/models.py:86
 msgid "April"
 msgstr ""
 
-#: referral_platform/youth/models.py:86
+#: referral_platform/youth/models.py:87
 msgid "May"
 msgstr ""
 
-#: referral_platform/youth/models.py:87
+#: referral_platform/youth/models.py:88
 msgid "June"
 msgstr ""
 
-#: referral_platform/youth/models.py:88
+#: referral_platform/youth/models.py:89
 msgid "July"
 msgstr ""
 
-#: referral_platform/youth/models.py:89
+#: referral_platform/youth/models.py:90
 msgid "August"
 msgstr ""
 
-#: referral_platform/youth/models.py:90
+#: referral_platform/youth/models.py:91
 msgid "September"
 msgstr ""
 
-#: referral_platform/youth/models.py:91
+#: referral_platform/youth/models.py:92
 msgid "October"
 msgstr ""
 
-#: referral_platform/youth/models.py:92
+#: referral_platform/youth/models.py:93
 msgid "November"
 msgstr ""
 
-#: referral_platform/youth/models.py:93
+#: referral_platform/youth/models.py:94
 msgid "December"
 msgstr ""
 
-#: referral_platform/youth/models.py:97
+#: referral_platform/youth/models.py:98
 msgid "Male"
 msgstr ""
 
-#: referral_platform/youth/models.py:98
+#: referral_platform/youth/models.py:99
 msgid "Female"
 msgstr ""
 
-#: referral_platform/youth/models.py:235
+#: referral_platform/youth/models.py:236
 msgid "Yes, I am currently studying"
 msgstr ""
 
-#: referral_platform/youth/models.py:236
+#: referral_platform/youth/models.py:237
 msgid "Yes, but I stopped studying"
 msgstr ""
 
-#: referral_platform/youth/models.py:237
+#: referral_platform/youth/models.py:238
 msgid "Never been to an educational institution"
 msgstr ""
 
-#: referral_platform/youth/models.py:238
+#: referral_platform/youth/models.py:239
 msgid "NA"
 msgstr ""
 
-#: referral_platform/youth/models.py:244
+#: referral_platform/youth/models.py:245
 msgid "Non formal Education"
 msgstr ""
 
-#: referral_platform/youth/models.py:245
+#: referral_platform/youth/models.py:246
 msgid "Formal Education"
 msgstr ""
 
-#: referral_platform/youth/models.py:263
+#: referral_platform/youth/models.py:264
 msgid "Currently Working - full time"
 msgstr ""
 
-#: referral_platform/youth/models.py:264
+#: referral_platform/youth/models.py:265
 msgid "Currently Working - part time"
 msgstr ""
 
-#: referral_platform/youth/models.py:265
+#: referral_platform/youth/models.py:266
 msgid "Work in Summer Only"
 msgstr ""
 
-#: referral_platform/youth/models.py:266
+#: referral_platform/youth/models.py:267
 msgid "Currently Unemployed"
 msgstr ""
 
-#: referral_platform/youth/models.py:267
+#: referral_platform/youth/models.py:268
 msgid "Never worked"
 msgstr ""
 
-#: referral_platform/youth/models.py:311
+#: referral_platform/youth/models.py:312
 msgid " I always feel totally safe in my community "
 msgstr ""
 
-#: referral_platform/youth/models.py:312
+#: referral_platform/youth/models.py:313
 msgid "Most of the days I feel safe in my community"
 msgstr ""
 
-#: referral_platform/youth/models.py:313
+#: referral_platform/youth/models.py:314
 msgid "Most of the days I don't feel safe in my community "
 msgstr ""
 
-#: referral_platform/youth/models.py:314
+#: referral_platform/youth/models.py:315
 msgid "I never feel safe in my community"
 msgstr ""
 
-#: referral_platform/youth/models.py:333
+#: referral_platform/youth/models.py:334
 msgid "No Interest"
 msgstr ""
 
-#: referral_platform/youth/models.py:334
+#: referral_platform/youth/models.py:335
 msgid "Financial barrier"
 msgstr ""
 
-#: referral_platform/youth/models.py:335
+#: referral_platform/youth/models.py:336
 msgid "Family pressure"
 msgstr ""
 
-#: referral_platform/youth/models.py:336
+#: referral_platform/youth/models.py:337
 msgid "Discrimination"
 msgstr ""
 
-#: referral_platform/youth/models.py:338
+#: referral_platform/youth/models.py:339
 msgid "Distance"
 msgstr ""
 
-#: referral_platform/youth/models.py:339
+#: referral_platform/youth/models.py:340
 msgid "Safety"
 msgstr ""
 
-#: referral_platform/youth/models.py:351
+#: referral_platform/youth/models.py:352
 msgid "Through an NGO"
 msgstr ""
 
-#: referral_platform/youth/models.py:352
+#: referral_platform/youth/models.py:353
 msgid "Through a Sports Club/NGO"
 msgstr ""
 
-#: referral_platform/youth/models.py:353
+#: referral_platform/youth/models.py:354
 msgid "Through friends"
 msgstr ""
 
-#: referral_platform/youth/models.py:354
+#: referral_platform/youth/models.py:355
 msgid "Others"
 msgstr ""
 
-#: referral_platform/youth/models.py:361
+#: referral_platform/youth/models.py:362
 msgid "Facebook"
 msgstr ""
 
-#: referral_platform/youth/models.py:362
+#: referral_platform/youth/models.py:363
 msgid "E-mail"
 msgstr ""
 
-#: referral_platform/youth/models.py:363
+#: referral_platform/youth/models.py:364
 msgid "Mobile"
 msgstr ""
 
-#: referral_platform/youth/models.py:364
+#: referral_platform/youth/models.py:365
 msgid "Through the NGO partner"
 msgstr ""
 
-#: referral_platform/youth/models.py:365
+#: referral_platform/youth/models.py:366
 msgid "I don't want follow up"
 msgstr ""

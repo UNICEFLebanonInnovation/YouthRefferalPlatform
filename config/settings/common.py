@@ -126,6 +126,7 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 TIME_ZONE = 'Asia/Beirut'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+# LANGUAGE_CODE = 'ar-ar'
 LANGUAGE_CODE = 'ar-ar'
 LANGUAGE_COOKIE_NAME = 'default_language'
 LANGUAGE_QUERY_PARAMETER = 'language'
@@ -135,7 +136,7 @@ LANGUAGES = (
     ('en-us', 'English'),
 )
 
-LANGUAGES_BIDI = ["en-us"]
+LANGUAGES_BIDI = ["ar-ar"]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
@@ -330,6 +331,16 @@ SUIT_CONFIG = {
     },
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU_EXCLUDE': ('auth', 'sites'),
+    'MENU': (
+        {'label': 'View site', 'icon': 'icon-home', 'url': "/partners/profile"},
+        {'app': 'auth', 'label': 'Groups', 'icon': 'icon-user'},
+        {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
+        {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
+        {'app': 'partners', 'label': 'Partners', 'icon': 'icon-user'},
+        {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
+        {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
+
+    )
     # 'MENU': (
     #     'sites',
     #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},

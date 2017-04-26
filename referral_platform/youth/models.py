@@ -46,6 +46,7 @@ class IDType(models.Model):
     class Meta:
         ordering = ['id']
         verbose_name = _("ID Type")
+        verbose_name_plural = _("ID Type")
 
     def __unicode__(self):
         return self.name
@@ -58,6 +59,7 @@ class EducationLevel(models.Model):
     class Meta:
         ordering = ['id']
         verbose_name = _("ALP Level")
+        verbose_name_plural = _("ALP Level")
 
     def __unicode__(self):
         return self.name
@@ -367,3 +369,8 @@ class YoungPerson(Person):
         ),
         blank=True, null=True
     )
+
+    class Meta:
+        ordering = ['first_name']
+        verbose_name = _("Youth")
+        verbose_name_plural = _("Youth")

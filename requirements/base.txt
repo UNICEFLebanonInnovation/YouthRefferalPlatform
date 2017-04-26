@@ -48,4 +48,7 @@ django-import-export==0.5.1
 # Webpack
 django-webpack-loader==0.3.3
 
+# Django Suit
+django-suit==0.2.21
+
 # Your custom requirements go here
