@@ -427,13 +427,15 @@ class DigitalSkillsAssessmentForm(forms.Form):
         self.helper.help_text_inline = False
         self.helper.label_class = 'hidden'
         self.helper.layout = Layout(
+            HTML("<p>{}</p>".format(_('Do you know how to use personal computers?'))),
             'can_use_computers',
+            HTML("<p>{}</p>".format(_("If you don't use a computer, why not?"))),
             'reason_can_not_use_computers',
             Alert(_('If you have used a computer before, please continue answering the questions below. '
                     'If you have not please STOP here.')),
             'familiar_with',
             Fieldset(
-                _('ICT Literacy'),
+                _('ICT Literacy')
                 *self._generate_rows('know_computers',
                                      'importance_of_computers',
                                      'computer_parts',

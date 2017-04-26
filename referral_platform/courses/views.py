@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from referral_platform.users.views import UserRegisteredMixin
 
+from .models import Enrollment
 from .forms import LifeSkillsAssessmentForm, DigitalSkillsAssessmentForm
 
 
@@ -28,3 +29,10 @@ class DigitalSkillsAssessmentView(UserRegisteredMixin, FormView):
     template_name = 'courses/labs/digital-skills.html'
     form_class = DigitalSkillsAssessmentForm
 
+    def form_valid(self, form):
+
+        enrollment = Enrollment()
+        enrollment.youth = self.request.user.profile
+        enrollment.course = 'digitalskills'
+        enrollment.lab = form.fields['lab']
+        enrollment.save()

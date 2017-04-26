@@ -76,6 +76,7 @@ class Sport(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Person(TimeStampedModel):
 
     MONTHS = Choices(
