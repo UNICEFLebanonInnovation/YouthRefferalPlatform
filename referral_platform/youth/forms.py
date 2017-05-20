@@ -7,7 +7,7 @@ from model_utils import Choices
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineCheckboxes
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
-# from bootstrap3_datetime.widgets import DateTimePicker
+from bootstrap3_datetime.widgets import DateTimePicker
 
 #from dal import autocomplete
 
@@ -19,11 +19,11 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 class RegistrationForm(forms.ModelForm):
 
     birthdate = forms.DateField(
-        # widget=DateTimePicker(
-        #     options={
-        #         "format": "DD/MM/YYYY",
-        #         "pickTime": False
-        #     }),
+        widget=DateTimePicker(
+            options={
+                "format": "DD/MM/YYYY",
+                "pickTime": False
+            }),
         required=True
     )
 
