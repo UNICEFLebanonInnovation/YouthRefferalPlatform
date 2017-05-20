@@ -7,7 +7,7 @@ from model_utils import Choices
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, InlineField, Alert
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
-from bootstrap3_datetime.widgets import DateTimePicker
+# from bootstrap3_datetime.widgets import DateTimePicker
 
 from .models import YouthLedInitiative
 
@@ -21,11 +21,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         fields = '__all__'
 
     start_date = forms.DateField(
-        widget=DateTimePicker(
-            options={
-                "format": "DD/MM/YYYY",
-                "pickTime": False
-            }),
+        # widget=DateTimePicker(
+        #     options={
+        #         "format": "DD/MM/YYYY",
+        #         "pickTime": False
+        #     }),
         required=True
     )
 
