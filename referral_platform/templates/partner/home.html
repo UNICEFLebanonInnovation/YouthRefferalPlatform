@@ -476,11 +476,18 @@
           </div>
          </div>
 
-
         <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
               data-animation-origin="right">
             <div class="padding-50 flex-panel" style="padding-left: 0px;">
-                <h3 class="font-accident-two-normal uppercase">% of youth reported an improvement in digital skills</h3>
+                <h3 class="font-accident-two-normal uppercase">
+                    % of youth reported an improvement in digital skills
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}">{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
             <table class="table table-striped table-bordered cell-border"
                            data-height="500"
                            data-pagination="true"
@@ -490,7 +497,7 @@
                            width="100%">
                         <thead class="ui-block-color03 flex-col">
                             <tr>
-                                <th colspan="14" style="border: 0px; vertical-align: middle;">
+                                <th colspan="6" style="border: 0px; vertical-align: middle;">
                                      <div class="progress">
                                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
                                            58%
@@ -502,19 +509,11 @@
                             <tr>
                                 <th>Gender</th>
                                 <th>Nationality</th>
-                               <th class="col-md-1">January</th>
-                               <th class="col-md-1">February</th>
-                               <th class="col-md-1">March</th>
-                               <th class="col-md-1">April</th>
-                               <th class="col-md-1">May</th>
-                               <th class="col-md-1">June</th>
-                               <th class="col-md-1">July</th>
-                               <th class="col-md-1">August</th>
-                               <th class="col-md-1">September</th>
-                               <th class="col-md-1">October</th>
-                               <th class="col-md-1">November</th>
-                               <th class="col-md-1">December</th>
-                               <th class="col-md-1">Total</th>
+                               <th class="col-md-3">Pre/Post-test cycle 1</th>
+                               <th class="col-md-3">Pre/Post-test cycle 2</th>
+                               <th class="col-md-3">Pre/Post-test cycle 3</th>
+                               <th class="col-md-3">Pre/Post-test cycle 4</th>
+                               <th class="col-md-2">Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -527,14 +526,6 @@
                                 <td>8%</td>
                                 <td>8%</td>
                                 <td>8%</td>
-                                <td>8%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>40%</td>
                             </tr>
                             <tr>
@@ -543,14 +534,6 @@
                                 <td>7%</td>
                                 <td>7%</td>
                                 <td>7%</td>
-                                <td>7%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>35%</td>
                             </tr>
                             <tr>
@@ -559,14 +542,6 @@
                                 <td>9%</td>
                                 <td>9%</td>
                                 <td>9%</td>
-                                <td>9%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>45%</td>
                             </tr>
                             <tr>
@@ -575,14 +550,6 @@
                                 <td>11%</td>
                                 <td>11%</td>
                                 <td>11%</td>
-                                <td>11%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>55%</td>
                             </tr>
                             <tr>
@@ -594,14 +561,6 @@
                                 <td>8%</td>
                                 <td>8%</td>
                                 <td>8%</td>
-                                <td>8%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>40%</td>
                             </tr>
                             <tr>
@@ -610,14 +569,6 @@
                                 <td>7%</td>
                                 <td>7%</td>
                                 <td>7%</td>
-                                <td>7%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>35%</td>
                             </tr>
                             <tr>
@@ -626,14 +577,6 @@
                                 <td>9%</td>
                                 <td>9%</td>
                                 <td>9%</td>
-                                <td>9%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>45%</td>
                             </tr>
                             <tr>
@@ -642,14 +585,6 @@
                                 <td>11%</td>
                                 <td>11%</td>
                                 <td>11%</td>
-                                <td>11%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
                                 <td>55%</td>
                             </tr>
                         </tbody>
@@ -657,6 +592,237 @@
           </div>
          </div>
 
+        <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
+              data-animation-origin="right">
+            <div class="padding-50 flex-panel" style="padding-left: 0px;">
+                <h3 class="font-accident-two-normal uppercase">
+                    % of targeted adolescent, youth and caregivers who have increased knowledge on healthy lifestyle practices
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}">{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+            <table class="table table-striped table-bordered cell-border"
+                           data-height="500"
+                           data-pagination="true"
+                           data-search="true"
+                           cellspacing="0"
+                            cellpadding="0"
+                           width="100%">
+                        <thead class="ui-block-color03 flex-col">
+                            <tr>
+                                <th colspan="6" style="border: 0px; vertical-align: middle;">
+                                     <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
+                                           58%
+                                        </div>
+                                     </div>
+                                </th>
+                                <th style="border: 0px; vertical-align: middle;"></th>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Nationality</th>
+                               <th class="col-md-3">Pre/Post-test cycle 1</th>
+                               <th class="col-md-3">Pre/Post-test cycle 2</th>
+                               <th class="col-md-3">Pre/Post-test cycle 3</th>
+                               <th class="col-md-3">Pre/Post-test cycle 4</th>
+                               <th class="col-md-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Female</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>45%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>55%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Male</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>45%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>55%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+         </div>
+
+        <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
+              data-animation-origin="right">
+            <div class="padding-50 flex-panel" style="padding-left: 0px;">
+                <h3 class="font-accident-two-normal uppercase">
+                    % of targeted youth who have reported feeling more empowered as a result of the training they completed
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}">{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+            <table class="table table-striped table-bordered cell-border"
+                           data-height="500"
+                           data-pagination="true"
+                           data-search="true"
+                           cellspacing="0"
+                            cellpadding="0"
+                           width="100%">
+                        <thead class="ui-block-color03 flex-col">
+                            <tr>
+                                <th colspan="6" style="border: 0px; vertical-align: middle;">
+                                     <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
+                                           58%
+                                        </div>
+                                     </div>
+                                </th>
+                                <th style="border: 0px; vertical-align: middle;"></th>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Nationality</th>
+                               <th class="col-md-3">Pre/Post-test cycle 1</th>
+                               <th class="col-md-3">Pre/Post-test cycle 2</th>
+                               <th class="col-md-3">Pre/Post-test cycle 3</th>
+                               <th class="col-md-3">Pre/Post-test cycle 4</th>
+                               <th class="col-md-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Female</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>45%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>55%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Male</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>8%</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>7%</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>9%</td>
+                                <td>45%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>11%</td>
+                                <td>55%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+         </div>
 
 </div>
          </div>
