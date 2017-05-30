@@ -75,20 +75,23 @@
                     # of youth trained on Life skills
                     <select class="partner_location">
                         <option value="0">{% trans "Select a location" %}</option>
-                        <option value="">شبكة المختبرات الإبداعية العين</option>
-                        <option value="">شبكة المختبرات الإبداعية بدنايل</option>
-                        <option value="">شبكة المختبرات الإبداعية برج حمود</option>
-                        <option value="">شبكة المختبرات الإبداعية عكار ١</option>
-                        <option value="">شبكة المختبرات الإبداعية صيدا</option>
-                        <option value="">شبكة المختبرات الإبداعية بعلبك</option>
-                        <option value="">شبكة المختبرات الإبداعية الشوف</option>
-                        <option value="">شبكة المختبرات الإبداعية طرابلس ١</option>
-                        <option value="">شبكة المختبرات الإبداعية عكار ٢</option>
-                        <option value="">شبكة المختبرات الإبداعية النبطية</option>
-                        <option value="">شبكة المختبرات الإبداعية بريتال</option>
-                        <option value="">شبكة المختبرات الإبداعية بدارو</option>
-                        <option value="">شبكة المختبرات الإبداعية طرابلس ٢</option>
-                        <option value="">شبكة المختبرات الإبداعية سبلين</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}">{{ l }}</option>
+                        {% endfor %}
+                        <option value="1">شبكة المختبرات الإبداعية العين</option>
+                        <option value="2">شبكة المختبرات الإبداعية بدنايل</option>
+                        <option value="3">شبكة المختبرات الإبداعية برج حمود</option>
+                        <option value="4">شبكة المختبرات الإبداعية عكار ١</option>
+                        <option value="5">شبكة المختبرات الإبداعية صيدا</option>
+                        <option value="6">شبكة المختبرات الإبداعية بعلبك</option>
+                        <option value="7">شبكة المختبرات الإبداعية الشوف</option>
+                        <option value="8">شبكة المختبرات الإبداعية طرابلس ١</option>
+                        <option value="9">شبكة المختبرات الإبداعية عكار ٢</option>
+                        <option value="10">شبكة المختبرات الإبداعية النبطية</option>
+                        <option value="11">شبكة المختبرات الإبداعية بريتال</option>
+                        <option value="12">شبكة المختبرات الإبداعية بدارو</option>
+                        <option value="13">شبكة المختبرات الإبداعية طرابلس ٢</option>
+                        <option value="14">شبكة المختبرات الإبداعية سبلين</option>
                     </select>
                 </h3>
             <table class="table table-striped table-bordered cell-border"
@@ -272,7 +275,29 @@
         <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
               data-animation-origin="right">
             <div class="padding-50 flex-panel" style="padding-left: 0px;">
-                <h3 class="font-accident-two-normal uppercase"># of youth trained on Digital skills</h3>
+                <h3 class="font-accident-two-normal uppercase">
+                    # of youth trained on Digital skills
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}">{{ l }}</option>
+                        {% endfor %}
+                        <option value="1">شبكة المختبرات الإبداعية العين</option>
+                        <option value="2">شبكة المختبرات الإبداعية بدنايل</option>
+                        <option value="3">شبكة المختبرات الإبداعية برج حمود</option>
+                        <option value="4">شبكة المختبرات الإبداعية عكار ١</option>
+                        <option value="5">شبكة المختبرات الإبداعية صيدا</option>
+                        <option value="6">شبكة المختبرات الإبداعية بعلبك</option>
+                        <option value="7">شبكة المختبرات الإبداعية الشوف</option>
+                        <option value="8">شبكة المختبرات الإبداعية طرابلس ١</option>
+                        <option value="9">شبكة المختبرات الإبداعية عكار ٢</option>
+                        <option value="10">شبكة المختبرات الإبداعية النبطية</option>
+                        <option value="11">شبكة المختبرات الإبداعية بريتال</option>
+                        <option value="12">شبكة المختبرات الإبداعية بدارو</option>
+                        <option value="13">شبكة المختبرات الإبداعية طرابلس ٢</option>
+                        <option value="14">شبكة المختبرات الإبداعية سبلين</option>
+                    </select>
+                </h3>
             <table class="table table-striped table-bordered cell-border"
                            data-height="500"
                            data-pagination="true"
@@ -640,4 +665,15 @@
 
    </div>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('.partner_location').change(function(){
+            var url = '{% url "partners:profile" %}';
+            if($(this).val()){
+                window.location = url+'?location='+$(this).val();
+            }
+        });
+    });
+</script>
 {% endblock %}

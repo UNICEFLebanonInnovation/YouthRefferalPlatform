@@ -11,6 +11,15 @@ class PartnerView(LoginRequiredMixin, TemplateView):
 
     template_name = 'partner/home.html'
 
+    def get_context_data(self, **kwargs):
+        location = self.request.GET.get('location', 0)
+        locations = []
+
+        return {
+            'location': location,
+            'locations': locations
+        }
+
 
 class PartnerHomeView(LoginRequiredMixin, TemplateView):
 
