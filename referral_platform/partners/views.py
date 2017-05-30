@@ -13,7 +13,7 @@ class PartnerView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         location = self.request.GET.get('location', 0)
-        locations = []
+        locations = self.request.user.locations.all()
 
         return {
             'location': location,

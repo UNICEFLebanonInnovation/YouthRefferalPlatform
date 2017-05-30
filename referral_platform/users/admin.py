@@ -5,6 +5,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.utils.translation import ugettext_lazy as _
 
 from .models import User
 
@@ -38,11 +39,12 @@ class PlatformUserAdmin(admin.ModelAdmin):
     form = PlatformUserChangeForm
     add_form = PlatformUserCreationForm
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (None, {'fields': ('email', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', )}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (_('User Profile'), {'fields': ('first_name',)}),
+        (_(''), {'fields': ('locations',)}),
     )
     list_display = ('first_name', 'is_superuser')
     search_fields = ['first_name', 'last_name']
+    filter_horizontal = ('groups', 'user_permissions', 'locations', )
