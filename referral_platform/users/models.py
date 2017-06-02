@@ -10,7 +10,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from referral_platform.partners.models import PartnerOrganization
-from referral_platform.locations.models import Location
 
 from .managers import UserManager
 
@@ -36,7 +35,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
-    locations = models.ManyToManyField(Location, blank=True)
+    partner = models.ForeignKey(
+        PartnerOrganization,
+        null=True, blank=True
+    )
 
     objects = UserManager()
 
