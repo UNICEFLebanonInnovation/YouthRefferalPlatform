@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 
+from model_utils import Choices
+
 from referral_platform.locations.models import Location
 from referral_platform.youth.models import YoungPerson
+from referral_platform.partners.models import PartnerOrganization
 
 
 class Lab(models.Model):
@@ -12,21 +15,47 @@ class Lab(models.Model):
         ordering = ['name']
 
 
-class Course(models.Model):
+class Path(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Course(models.Model):
+    partner = models.ForeignKey(PartnerOrganization)
+    name = models.CharField(max_length=100)
+    path = models.ForeignKey(Path, blank=True, null=True, related_name='courses')
+    slug = models.SlugField(unique=True)
+    overview = models.TextField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    capacity = models.IntegerField(blank=True, null=True)
+    assessment_form = models.URLField(blank=True, null=True)
 
     class Meta:
         ordering = ['name']
 
+    def __unicode__(self):
+        return self.name
+
 
 class Enrollment(models.Model):
+
+    STATUS = Choices(
+        'enrolled',
+        'pre_test',
+        'post_test'
+    )
 
     youth = models.ForeignKey(YoungPerson)
     course = models.ForeignKey(Course, blank=True, null=True)
     location = models.ForeignKey(Location, blank=True, null=True)
 
-    pre_test = JSONField()
-    post_test = JSONField()
+    status = models.CharField(max_length=50, default=STATUS.enrolled)
+    pre_test = JSONField(blank=True, null=True)
+    post_test = JSONField(blank=True, null=True)
 
     class Meta:
         ordering = ['id']

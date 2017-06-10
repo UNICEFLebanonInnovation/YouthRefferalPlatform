@@ -21,12 +21,3 @@ class PartnerOrganization(models.Model):
     def __unicode__(self):
         return self.name
 
-
-class Course(models.Model):
-
-    partner = models.ForeignKey(PartnerOrganization)
-    name = models.CharField(max_length=100)
-    overview = models.TextField()
-    start_date = models.DateField()
-    end_date = models.DateField()
-    capacity = models.IntegerField()

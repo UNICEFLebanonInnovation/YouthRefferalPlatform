@@ -332,7 +332,7 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU_EXCLUDE': ('auth', 'sites'),
     'MENU': (
-        {'label': 'View site', 'icon': 'icon-home', 'url': "/partners/profile"},
+        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/partners/profile"},
         {'app': 'auth', 'label': 'Groups', 'icon': 'icon-user'},
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
         {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
