@@ -43,12 +43,13 @@ class CourseAssessment(UserRegisteredMixin, SingleObjectMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         course = self.get_object()
         youth = self.request.user.profile
-        new, enrollment = Enrollment.objects.get_or_create(youth=youth, course=course)
+        enrollment, new = Enrollment.objects.get_or_create(youth=youth, course=course)
 
         url = '{form}?d[youth_id]={id}&d[status]={status}&returnURL={callback}'.format(
             form = course.assessment_form,
             id = youth.number,
-            status = Enrollment.STATUS.pre_test if enrollment.status.enrolled else Enrollment.STATUS.post_test,
+            status = Enrollment.STATUS.pre_test if enrollment.status == Enrollment.STATUS.enrolled
+            else Enrollment.STATUS.post_test,
             callback = self.request.build_absolute_uri(
                 reverse('courses:overview', kwargs={'path': course.path.slug})
             )
@@ -77,6 +78,40 @@ class CourseAssessmentSubmission(SingleObjectMixin, View):
 
         enrollment.status = payload['status']
         setattr(enrollment, payload['status'], payload)
+
+        if enrollment.course.slug == 'lifeskills':
+            keys = [
+                'lifestyle/use_soap',
+                'lifestyle/wash_hands_after_toilet',
+                'lifestyle/take_baths',
+                'lifestyle/brush_teeth'
+                'lifestyle/eat_well',
+                'lifestyle/exercise',
+                'lifestyle/limit_screen_time',
+                'lifestyle/respect_environment',
+            ]
+            enrollment.score('healthy', enrollment.status, keys)
+
+            keys = [
+                'comm_skills/articulation',
+                'comm_skills/express_opinions',
+                'self_esteem/satisfied',
+                'self_esteem/good_qualities',
+                'self_esteem/set_goals',
+                'self_esteem/make_decisions',
+                'self_esteem/solve_problems',
+                'analysis/clarify_issues',
+                'analysis/take_advice',
+                'analysis/no_wrong_activities',
+                'analysis/determine_facts',
+                'analysis/consider_options',
+                'analysis/creative_ideas',
+                'team_building/build_on_ideas',
+                'team_building/constructive_feedback',
+                'social_cohesion/trust_peers'
+
+            ]
+            enrollment.score('empowered', enrollment.status, keys)
 
         enrollment.save()
 

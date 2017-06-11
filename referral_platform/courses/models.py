@@ -40,6 +40,9 @@ class Course(models.Model):
     def __unicode__(self):
         return self.name
 
+    def total_enrolled(self):
+        self.enrollment_set.count()
+
 
 class Enrollment(models.Model):
 
@@ -53,9 +56,28 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course, blank=True, null=True)
     location = models.ForeignKey(Location, blank=True, null=True)
 
-    status = models.CharField(max_length=50, default=STATUS.enrolled)
+    status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
     pre_test = JSONField(blank=True, null=True)
     post_test = JSONField(blank=True, null=True)
 
+    scores = JSONField(blank=True, null=True, default=dict)
+
     class Meta:
         ordering = ['id']
+
+    def score(self, indicator, stage, keys, weight=100):
+
+        assessment = getattr(self, stage, 'pre_test')
+
+        marks = {key: int(assessment.get(key, 0)) for key in keys}
+
+        maximum = 5 * len(keys)
+        total = sum(marks.values())
+        score = (float(total) / float(maximum)) * weight
+        self.scores['{}_{}'.format(indicator, stage)] = score
+
+        pre_test_score = self.scores.get('{}_{}'.format(indicator, 'pre_test'), 0)
+        post_test_score = self.scores.get('{}_{}'.format(indicator, 'post_test'), 0)
+        self.scores['{}_{}'.format(indicator, 'improved')] = post_test_score > pre_test_score
+
+

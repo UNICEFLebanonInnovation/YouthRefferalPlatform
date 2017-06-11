@@ -1,6 +1,10 @@
 
 from django.contrib import admin
 
+from django.contrib.postgres.fields import JSONField
+
+from prettyjson import PrettyJSONWidget
+
 from .models import (
     Lab,
     Path,
@@ -8,12 +12,15 @@ from .models import (
     Enrollment,
 )
 
+
 class SlugAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
 class EnrollmentAdmin(admin.ModelAdmin):
-
+    formfield_overrides = {
+        JSONField: {'widget': PrettyJSONWidget}
+    }
     list_display = (
         'youth',
         'course',

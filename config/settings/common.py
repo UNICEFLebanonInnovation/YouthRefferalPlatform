@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = (
 
     'bootstrap3_datetime',
     'import_export',
+    'prettyjson',
 )
 
 # Apps specific for this project go here.
