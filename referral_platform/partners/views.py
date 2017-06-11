@@ -42,7 +42,7 @@ class PartnerView(LoginRequiredMixin, TemplateView):
         lifeskills_improved = lifeskills_complete.filter(scores__healthy_improved=True)
         lifeskills_healthy_lifestyles = {
             'total_enrolled': lifeskills_enrollments.count(),
-            'total_improved': float(lifeskills_improved.count()) / float(lifeskills_enrollments.count()) * 100
+            'total_improved': float(lifeskills_improved.count()) / float(lifeskills_enrollments.count()) * 100 if float(lifeskills_enrollments.count()) else 0
         }
         lifeskills_healthy_lifestyles.update(self._build_age_sex_matrix(lifeskills_improved))
 
