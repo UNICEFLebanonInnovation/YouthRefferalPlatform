@@ -1,4 +1,6 @@
 {% extends "courses/base.html" %}
+{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block head_title %}{{ path.name }}{% endblock %}
 
@@ -39,11 +41,25 @@
                             </button>
                             </a>
                         {% else %}
-                            <a href="{% url 'courses:assessment' path.slug course.slug %}">
-                            <button type="button" class="btn btn-primary btn-lg">
+                            <select class="partner_location" >
+                                <option selected disabled>{% trans "Select a location" %}</option>
+                                {% for l in locations.all %}
+                                    <option value="{{ l.id }}">{{ l }}</option>
+                                {% endfor %}
+                            </select>
+                            <button id='enroll' type="button" class="btn btn-primary btn-lg">
                                 <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Enroll
                             </button>
-                            </a>
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    $('#enroll').click(function(){
+                                        var url = '{% url 'courses:assessment' path.slug course.slug %}';
+                                        if($('.partner_location').val()){
+                                            window.location = url+'?location='+$('.partner_location').val();
+                                        }
+                                    });
+                                });
+                            </script>
                         {% endif %}
                     </div>
                     <div class="dividewhite2"></div>

@@ -42,6 +42,7 @@ class YoungPersonAdmin(ImportExportModelAdmin):
                 'nationality',
                 'mother_nationality',
                 'location',
+                'partner_organization',
                 # 'address',
             ]
         }),
@@ -97,6 +98,7 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         'sex',
         'nationality',
         'location',
+        'partner_organization',
         'education_status',
         'education_type',
         'education_level',

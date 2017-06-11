@@ -24,7 +24,6 @@ class Path(models.Model):
 
 
 class Course(models.Model):
-    partner = models.ForeignKey(PartnerOrganization)
     name = models.CharField(max_length=100)
     path = models.ForeignKey(Path, blank=True, null=True, related_name='courses')
     slug = models.SlugField(unique=True)

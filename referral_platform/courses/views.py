@@ -12,9 +12,9 @@ from django.utils.decorators import method_decorator
 
 from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.youth.models import YoungPerson
+from referral_platform.locations.models import Location
 
 from .models import Enrollment, Course, Path
-from .forms import LifeSkillsAssessmentForm, DigitalSkillsAssessmentForm
 
 
 class CoursesOverview(UserRegisteredMixin, DetailView):
@@ -25,12 +25,12 @@ class CoursesOverview(UserRegisteredMixin, DetailView):
     template_name = 'courses/overview.html'
 
     def get_context_data(self, **kwargs):
-
+        locations = self.request.user.profile.partner_organization.locations
         enrollement = Enrollment.objects.filter(
             youth=self.request.user.profile,
             course__path=self.object
         ).last()
-        kwargs.update({'enrollment': enrollement})
+        kwargs.update({'enrollment': enrollement, 'locations': locations})
         return super(CoursesOverview, self).get_context_data(**kwargs)
 
 
@@ -43,7 +43,8 @@ class CourseAssessment(UserRegisteredMixin, SingleObjectMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         course = self.get_object()
         youth = self.request.user.profile
-        enrollment, new = Enrollment.objects.get_or_create(youth=youth, course=course)
+        location = Location.objects.get(id=self.request.GET.get('location'))
+        enrollment, new = Enrollment.objects.get_or_create(youth=youth, course=course, location=location)
 
         url = '{form}?d[youth_id]={id}&d[status]={status}&returnURL={callback}'.format(
             form = course.assessment_form,
