@@ -50,5 +50,6 @@ django-webpack-loader==0.3.3
 
 # Django Suit
 django-suit==0.2.25
+bootstrap3-datetime==2.4
 
 # Your custom requirements go here
