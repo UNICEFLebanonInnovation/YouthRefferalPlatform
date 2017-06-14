@@ -1,6 +1,8 @@
 
 from django.contrib import admin
-
+from import_export import resources, fields
+from import_export import fields
+from import_export.admin import ImportExportModelAdmin
 from django.contrib.postgres.fields import JSONField
 
 from prettyjson import PrettyJSONWidget
@@ -17,7 +19,22 @@ class SlugAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
-class EnrollmentAdmin(admin.ModelAdmin):
+class EnrollmentResource(resources.ModelResource):
+    class Meta:
+        model = Enrollment
+        fields = (
+            'youth',
+            'course',
+            'location',
+            'enrolled',
+            'pre_test_done',
+            'post_test_done',
+        )
+        export_order = fields
+
+
+class EnrollmentAdmin(ImportExportModelAdmin):
+    resource_class = EnrollmentResource
     formfield_overrides = {
         JSONField: {'widget': PrettyJSONWidget}
     }
@@ -28,6 +45,11 @@ class EnrollmentAdmin(admin.ModelAdmin):
         'enrolled',
         'pre_test_done',
         'post_test_done',
+    )
+    list_filter = (
+        'status',
+        'course',
+        'location',
     )
 
     def enrolled(self, obj):
