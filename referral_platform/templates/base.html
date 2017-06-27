@@ -2,7 +2,8 @@
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar" dir="rtl"{% else %}lang="en"{% endif %}>
+{#<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar" dir="rtl"{% else %}lang="en"{% endif %}>#}
+<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar"{% else %}lang="en"{% endif %}>
 <!--[if IE 9]>
 <html class="ie9" lang="en">    <![endif]-->
 <!--[if IE 8]>

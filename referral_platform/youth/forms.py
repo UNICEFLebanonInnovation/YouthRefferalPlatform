@@ -137,7 +137,7 @@ class RegistrationForm(forms.ModelForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['id_type'].empty_label = _('ID Type')
         self.fields['sex'].empty_label = _('Gender')
-        self.fields['parents_phone_number'].empty_label = _('Nationality')
+        self.fields['nationality'].empty_label = _('Nationality')
         self.fields['location'].empty_label = _('Location')
         self.fields['partner_organization'].empty_label = _('Partner Organisation')
         self.fields['education_status'].empty_label = _('Are you currently studying?')
