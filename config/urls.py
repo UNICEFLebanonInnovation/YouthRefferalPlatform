@@ -25,7 +25,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^partners/', include('referral_platform.partners.urls', namespace='partners')),
-    # url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
+    url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 

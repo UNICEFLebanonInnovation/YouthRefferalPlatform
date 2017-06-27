@@ -1550,11 +1550,11 @@ msgstr "شهرة الام"
 
 #: referral_platform/youth/forms.py:163
 msgid "ID Number"
-msgstr "رقم (إن وجد) "
+msgstr "رقم الهوية "
 
 #: referral_platform/youth/forms.py:168 referral_platform/youth/models.py:338
 msgid "Disability"
-msgstr "إعاقة"
+msgstr "لديك اي احتياجات خاصة؟"
 
 #: referral_platform/youth/forms.py:170
 msgid "Birthdate"

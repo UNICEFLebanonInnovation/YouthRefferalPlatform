@@ -9,7 +9,7 @@ from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, Inline
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
 from bootstrap3_datetime.widgets import DateTimePicker
 
-#from dal import autocomplete
+from dal import autocomplete
 
 from referral_platform.youth.models import YoungPerson
 
@@ -293,6 +293,5 @@ class RegistrationForm(forms.ModelForm):
         widgets = {
             'employment_status': forms.RadioSelect(),
             'sports_group': forms.RadioSelect(),
-            #'location': autocomplete.ModelSelect2(url='location-autocomplete')
-
+            'location': autocomplete.ModelSelect2(url='locations:location-autocomplete')
         }

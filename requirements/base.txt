@@ -53,4 +53,5 @@ django-suit==0.2.25
 bootstrap3-datetime==2.4
 django-prettyjson==0.3.0
 
+django-autocomplete-light==3.2.1
 # Your custom requirements go here
