@@ -21,7 +21,7 @@
                             <div class="dividewhite1"></div>
                             <h5 class="font-accident-two-bold uppercase">{{ course.name }}</h5>
                             <p class="small">
-                                {{ course.description }}
+                                {{ course.overview }}
                             </p>
                         </div>
                         {% if enrollment.status == 'enrolled' %}
@@ -41,25 +41,15 @@
                             </button>
                             </a>
                         {% else %}
-                            <select class="partner_location" >
+                            <select class="partner_location" id="enroll-{{ course.slug }}-location">
                                 <option selected disabled>{% trans "Select a location" %}</option>
                                 {% for l in locations.all %}
-                                    <option value="{{ l.id }}">{{ l }}</option>
+                                    <option value="{% url 'courses:assessment' path.slug course.slug %}?location={{ l.id }}">{{ l }}</option>
                                 {% endfor %}
                             </select>
-                            <button id='enroll' type="button" class="btn btn-primary btn-lg">
+                            <button id="enroll-{{ course.slug }}" type="button" class="btn btn-primary btn-lg enroll-course">
                                 <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Enroll
                             </button>
-                            <script type="text/javascript">
-                                $(document).ready(function(){
-                                    $('#enroll').click(function(){
-                                        var url = '{% url 'courses:assessment' path.slug course.slug %}';
-                                        if($('.partner_location').val()){
-                                            window.location = url+'?location='+$('.partner_location').val();
-                                        }
-                                    });
-                                });
-                            </script>
                         {% endif %}
                     </div>
                     <div class="dividewhite2"></div>
@@ -67,6 +57,17 @@
             {% endfor %}
         </div>
     </section>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.enroll-course').click(function(){
+                var location = '#'+$(this).attr('id')+'-location';
+                if($(location).val()){
+                    window.location = $(location).val();
+                }
+            });
+        });
+    </script>
 
 {% endblock %}
 
