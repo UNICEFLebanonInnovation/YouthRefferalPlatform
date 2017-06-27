@@ -121,11 +121,11 @@ class RegistrationForm(forms.ModelForm):
     #     widget=forms.CheckboxSelectMultiple
     # )
 
-    # trained_before = forms.TypedChoiceField(
-    #     coerce=lambda x: x == 'True',
-    #     choices=YES_NO_CHOICE,
-    #     widget=forms.RadioSelect
-    # )
+    trained_before = forms.TypedChoiceField(
+        coerce=lambda x: x == 'True',
+        choices=YES_NO_CHOICE,
+        widget=forms.RadioSelect
+    )
     #
     # sports_group = forms.TypedChoiceField(
     #     coerce=lambda x: x == 'True',
