@@ -43,6 +43,7 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',  # registration
     #'allauth.socialaccount.providers.facebook',
 
+    'bootstrap3',
     'bootstrap3_datetime',
     'import_export',
     'prettyjson',

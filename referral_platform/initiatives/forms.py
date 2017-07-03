@@ -23,7 +23,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     start_date = forms.DateField(
         widget=DateTimePicker(
             options={
-                "format": "DD/MM/YYYY",
+                "format": "dd/mm/yyyy",
                 "pickTime": False
             }),
         required=True
