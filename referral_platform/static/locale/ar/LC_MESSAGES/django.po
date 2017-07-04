@@ -348,7 +348,7 @@ msgstr "لا يوجد الكثير من أجهزة الكمبيوتر المتا
 #: referral_platform/initiatives/models.py:106
 #: referral_platform/youth/forms.py:41 referral_platform/youth/forms.py:75
 msgid "Other"
-msgstr "غير ذلك (يرجى التحديد)"
+msgstr "غير ذلك "
 
 #: referral_platform/courses/forms.py:282
 msgid "Social networks & Forums"

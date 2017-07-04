@@ -252,7 +252,7 @@ class YoungPerson(Person):
     education_grade = models.ForeignKey(Grade, blank=True, null=True)
     leaving_education_reasons = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
@@ -272,7 +272,7 @@ class YoungPerson(Person):
     )
     employment_sectors = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
@@ -289,7 +289,7 @@ class YoungPerson(Person):
     )
     obstacles_for_work = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
@@ -297,7 +297,7 @@ class YoungPerson(Person):
     supporting_family = models.NullBooleanField()
     household_composition = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
@@ -321,7 +321,7 @@ class YoungPerson(Person):
     )
     safety_reasons = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
