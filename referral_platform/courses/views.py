@@ -34,7 +34,6 @@ class CoursesOverview(UserRegisteredMixin, DetailView):
         return super(CoursesOverview, self).get_context_data(**kwargs)
 
 
-
 class CourseAssessment(UserRegisteredMixin, SingleObjectMixin, RedirectView):
 
     model = Course

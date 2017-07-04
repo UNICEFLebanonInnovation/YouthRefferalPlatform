@@ -21,7 +21,7 @@ class RegistrationForm(forms.ModelForm):
     birthdate = forms.DateField(
         widget=DateTimePicker(
             options={
-                "format": "dd/mm/yyyy",
+                "format": "mm/dd/yyyy",
                 "pickTime": False
             }),
         required=True
