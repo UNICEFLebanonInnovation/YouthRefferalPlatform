@@ -18,13 +18,27 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class RegistrationForm(forms.ModelForm):
 
-    birthdate = forms.DateField(
-        widget=DateTimePicker(
-            options={
-                "format": "mm/dd/yyyy",
-                "pickTime": False
-            }),
-        required=True
+    # birthdate = forms.DateField(
+    #     widget=DateTimePicker(
+    #         options={
+    #             "viewMode": "years",
+    #             "format": "mm/dd/yyyy",
+    #             "pickTime": False,
+    #             "stepping": 0,
+    #             "showClear": True,
+    #             "showClose": True,
+    #             "disabledHours": True,
+    #         }),
+    #     required=True
+    # )
+
+    sex = forms.ChoiceField(
+        widget=forms.Select, required=True,
+        choices=(
+            ('', _('Gender')),
+            ('Male', _('Male')),
+            ('Female', _('Female')),
+        )
     )
 
     leaving_education_reasons = forms.MultipleChoiceField(
@@ -136,7 +150,6 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['id_type'].empty_label = _('ID Type')
-        self.fields['sex'].empty_label = _('Gender')
         self.fields['nationality'].empty_label = _('Nationality')
         self.fields['location'].empty_label = _('Location')
         self.fields['partner_organization'].empty_label = _('Partner Organisation')
@@ -295,3 +308,6 @@ class RegistrationForm(forms.ModelForm):
             'sports_group': forms.RadioSelect(),
             'location': autocomplete.ModelSelect2(url='locations:location-autocomplete')
         }
+
+    class Media:
+        js = ('js/bootstrap-datetimepicker.js', )
