@@ -12,13 +12,14 @@ from bootstrap3_datetime.widgets import DateTimePicker
 from dal import autocomplete
 
 from referral_platform.youth.models import YoungPerson
+from referral_platform.locations.models import Location
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 
 class RegistrationForm(forms.ModelForm):
 
-    # birthdate = forms.DateField(
+    birthdate = forms.DateField(
     #     widget=DateTimePicker(
     #         options={
     #             "viewMode": "years",
@@ -29,8 +30,8 @@ class RegistrationForm(forms.ModelForm):
     #             "showClose": True,
     #             "disabledHours": True,
     #         }),
-    #     required=True
-    # )
+        required=True
+    )
 
     sex = forms.ChoiceField(
         widget=forms.Select, required=True,
@@ -146,6 +147,13 @@ class RegistrationForm(forms.ModelForm):
     #     choices=YES_NO_CHOICE,
     #     widget=forms.RadioSelect
     # )
+
+    location = forms.ModelChoiceField(
+        # queryset=Location.objects.filter(type_id=4),
+        queryset=Location.objects.all(),
+        widget=forms.Select, to_field_name='id',
+        required=True
+    )
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -306,8 +314,8 @@ class RegistrationForm(forms.ModelForm):
         widgets = {
             'employment_status': forms.RadioSelect(),
             'sports_group': forms.RadioSelect(),
-            'location': autocomplete.ModelSelect2(url='locations:location-autocomplete')
+            # 'location': autocomplete.ModelSelect2(url='locations:location-autocomplete')
         }
 
     class Media:
-        js = ('js/bootstrap-datetimepicker.js', )
+        js = ('js/bootstrap-datetimepicker.js', 'js/registrations.js')

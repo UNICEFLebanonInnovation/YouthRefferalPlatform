@@ -136,9 +136,11 @@ class Person(TimeStampedModel):
     age = models.CharField(max_length=4, blank=True, null=True)
     phone = models.CharField(max_length=64, blank=True, null=True)
     phone_prefix = models.CharField(max_length=10, blank=True, null=True)
-    id_number = models.CharField(max_length=45)
+    id_number = models.CharField(max_length=45, blank=True, null=True)
     id_type = models.ForeignKey(
         IDType,
+        blank=True,
+        null=True
     )
     nationality = models.ForeignKey(
         Nationality,
