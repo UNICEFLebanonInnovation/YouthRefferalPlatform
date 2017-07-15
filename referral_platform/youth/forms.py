@@ -56,7 +56,7 @@ class RegistrationForm(forms.ModelForm):
             (_('Other')),
         ),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=False
     )
 
     employment_sectors = forms.MultipleChoiceField(
@@ -149,8 +149,7 @@ class RegistrationForm(forms.ModelForm):
     # )
 
     location = forms.ModelChoiceField(
-        # queryset=Location.objects.filter(type_id=4),
-        queryset=Location.objects.all(),
+        queryset=Location.objects.filter(type_id__gte=4),
         widget=forms.Select, to_field_name='id',
         required=True
     )
@@ -159,7 +158,7 @@ class RegistrationForm(forms.ModelForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['id_type'].empty_label = _('ID Type')
         self.fields['nationality'].empty_label = _('Nationality')
-        self.fields['location'].empty_label = _('Location')
+        self.fields['location'].empty_label = _('Training center')
         self.fields['partner_organization'].empty_label = _('Partner Organisation')
         self.fields['education_status'].empty_label = _('Are you currently studying?')
         self.fields['education_type'].empty_label = _('Type of education?')
@@ -211,17 +210,22 @@ class RegistrationForm(forms.ModelForm):
                         'education_status', css_class='col-md-4',
                     ),
                     Div(
-                        HTML(_('1.a What type of education are/were you enrolled in?')),
-                        'education_type', css_class='col-md-4',
+                        HTML('<span id="education_type_q" class="hidden">' + _(
+                            '1.a What type of education are/were you enrolled in?') + '</span>'),
+                        'education_type', css_class='col-md-4 hidden',
                     ),
                     Div(
-                        HTML(_('1.b What is the level of education you have successfully completed?')),
-                        'education_level', css_class='col-md-4',
+                        HTML('<span id="education_level_q" class="hidden">' + _(
+                            '1.b What is the level of education you have successfully completed?') + '</span>'),
+                        'education_level', css_class='col-md-4 hidden'
                     ),
                     css_class='row',
                 ),
-                HTML(_('2. What were your reason(s) for stopping studying? Please tick all that apply?')),
-                Field('leaving_education_reasons'),
+                Div(
+                    HTML('<span id="leaving_education_reasons_q" class="hidden">' + _(
+                        '2. What were your reason(s) for stopping studying? Please tick all that apply?') + '</span>'),
+                    'leaving_education_reasons', css_class='hidden',
+                )
             ),
             Fieldset(
                 _('Livelihood Information'),

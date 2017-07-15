@@ -248,9 +248,11 @@ class YoungPerson(Person):
         choices=Choices(
             ('non-formal', _('Non formal Education')),
             ('formal', _('Formal Education')),
-        )
+        ),
+        blank=True,
+        null=True,
     )
-    education_level = models.ForeignKey(EducationLevel)
+    education_level = models.ForeignKey(EducationLevel, blank=True, null=True)
     education_grade = models.ForeignKey(Grade, blank=True, null=True)
     leaving_education_reasons = ArrayField(
         models.CharField(
@@ -270,7 +272,9 @@ class YoungPerson(Person):
             ('summer_only', _('Work in Summer Only')),
             ('unemployed', _('Currently Unemployed')),
             ('never_worked', _('Never worked')),
-        )
+        ),
+        blank=False,
+        null=False,
     )
     employment_sectors = ArrayField(
         models.CharField(

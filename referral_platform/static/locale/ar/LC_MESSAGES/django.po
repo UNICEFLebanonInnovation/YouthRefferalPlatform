@@ -1738,7 +1738,7 @@ msgstr "غير محدد"
 
 #: referral_platform/youth/models.py:245
 msgid "Non formal Education"
-msgstr "'تعليم غير نظامي"
+msgstr "تعليم غير نظامي"
 
 #: referral_platform/youth/models.py:246
 msgid "Formal Education"
@@ -1854,3 +1854,6 @@ msgstr "أنا لا أريد المتابعة "
 
 #msgid "Youth"
 #msgstr "الشباب"
+
+msgid "Training center"
+msgstr "الموقع / مركز التسجيل"
