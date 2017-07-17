@@ -1860,3 +1860,6 @@ msgstr "الموقع / مركز التسجيل"
 
 msgid "Looking for a work"
 msgstr "ابحث عن عمل"
+
+msgid "Details"
+msgstr "التفاصيل"

@@ -303,6 +303,10 @@ class RegistrationForm(forms.ModelForm):
                         HTML(_('4. We would like to follow up with you after the training, what is your preferred method of communication?')),
                         Div('communication_preference'),
                         css_class='col-md-6'),
+                    Div(
+                        HTML('<p id="communication_channel_q" class="hidden">' + _('Details') + '</p>'),
+                        Div('communication_channel'),
+                        css_class='col-md-6 hidden'),
                     css_class='row',
                 ),
             ),

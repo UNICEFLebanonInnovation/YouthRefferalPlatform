@@ -381,6 +381,11 @@ class YoungPerson(Person):
         blank=True, null=True
     )
 
+    communication_channel = models.CharField(
+        max_length=50,
+        blank=True, null=True
+    )
+
     class Meta:
         ordering = ['first_name']
         verbose_name = _("Youth")

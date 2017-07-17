@@ -5,6 +5,7 @@ $(document).ready(function(){
 
     change_education_status($('select#id_education_status').val());
     change_employment_status($('input[name=employment_status]:checked').val());
+    change_communication_preference($('select#id_communication_preference').val());
 
     $('#id_birthdate').datetimepicker({
         "format": "mm/dd/yyyy",
@@ -22,6 +23,10 @@ $(document).ready(function(){
 
     $('input[name=employment_status]').click(function () {
         change_employment_status($(this).val());
+    });
+
+    $('select#id_communication_preference').change(function(){
+        change_communication_preference($(this).val());
     });
 });
 
@@ -69,5 +74,19 @@ function change_employment_status(value){
 
         $('#obstacles_for_work_q').removeClass('hidden');
         $('#obstacles_for_work_q').parent().removeClass('hidden');
+    }
+}
+
+function change_communication_preference(value) {
+    console.log(value);
+
+    $('#communication_channel_q').addClass('hidden');
+    $('#communication_channel_q').parent().addClass('hidden');
+    $('#div_id_communication_channel').parent().addClass('hidden');
+
+    if(value == 'facebook' || value == 'email' || value == 'mobile'){
+        $('#communication_channel_q').removeClass('hidden');
+        $('#communication_channel_q').parent().removeClass('hidden');
+        $('#div_id_communication_channel').parent().removeClass('hidden');
     }
 }
