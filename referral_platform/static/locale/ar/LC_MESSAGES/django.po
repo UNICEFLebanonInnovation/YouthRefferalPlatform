@@ -1562,7 +1562,7 @@ msgstr "تاريخ الولادة "
 
 #: referral_platform/youth/forms.py:175
 msgid "Phone Number"
-msgstr "رقم هاتف الشاب"
+msgstr "رقم هاتف الشخصي"
 
 #: referral_platform/youth/forms.py:176
 msgid "Parents Phone Number"
@@ -1609,11 +1609,11 @@ msgstr "3. إذا كنت لا تعمل حالياً، هل تبحث عن عمل 
 
 #: referral_platform/youth/forms.py:224
 msgid "3.a If yes, through whom? (select multiple)"
-msgstr "3.أ. إذا كانت الإجابة بنعم، فمن خلال من؟ (اختيار أكثر من جواب)"
+msgstr "3.أ. فمن خلال من؟ (اختيار أكثر من جواب)"
 
 #: referral_platform/youth/forms.py:231
 msgid "4. What are the obstacles in searching for/or having work?"
-msgstr "4. ما هي العقبات في البحث عن / أو العمل؟ * (مرتبط)"
+msgstr "4. ما هي العقبات في البحث عن / أو العمل؟ * "
 
 #: referral_platform/youth/forms.py:235
 msgid "4.a Do you participate in supporting your family financially?"
@@ -1857,3 +1857,6 @@ msgstr "أنا لا أريد المتابعة "
 
 msgid "Training center"
 msgstr "الموقع / مركز التسجيل"
+
+msgid "Looking for a work"
+msgstr "ابحث عن عمل"

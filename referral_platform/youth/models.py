@@ -272,6 +272,7 @@ class YoungPerson(Person):
             ('summer_only', _('Work in Summer Only')),
             ('unemployed', _('Currently Unemployed')),
             ('never_worked', _('Never worked')),
+            ('looking_for_work', _('Looking for a work')),
         ),
         blank=False,
         null=False,
@@ -282,6 +283,8 @@ class YoungPerson(Person):
             blank=True,
             null=True,
         ),
+        blank=True,
+        null=True,
     )
     looking_for_work = models.BooleanField()
     through_whom = ArrayField(
@@ -299,6 +302,8 @@ class YoungPerson(Person):
             blank=True,
             null=True,
         ),
+        blank=True,
+        null=True,
     )
     supporting_family = models.NullBooleanField()
     household_composition = ArrayField(

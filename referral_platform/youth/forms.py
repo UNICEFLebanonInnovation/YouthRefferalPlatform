@@ -105,7 +105,7 @@ class RegistrationForm(forms.ModelForm):
             ('laws', _('Rigid Labour Laws')),
         ),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=False
     )
     supporting_family = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
@@ -235,27 +235,34 @@ class RegistrationForm(forms.ModelForm):
                         Field('employment_status'),
                         css_class='col-md-6'),
                     Div(
-                        HTML(_('2. What is the sector(s) you worked in / or are working in?')),
-                        Field('employment_sectors'),
-                        css_class='col-md-6'),
-                    css_class='row',
-                ),
-                Div(
+                        HTML('<p id="employment_sectors_q" class="hidden">' +
+                             _('2. What is the sector(s) you worked in / or are working in?') + '</p>'),
+                        'employment_sectors', css_class='col-md-6 hidden'),
                     Div(
-                        HTML(_('3. If you are currently not working, are you searching for work now?')),
-                        Div('looking_for_work'),
-                        css_class='col-md-6'),
-                    Div(
-                        HTML(_('3.a If yes, through whom? (select multiple)')),
+                        HTML('<p id="through_whom_q" class="hidden">' + _('3.a If yes, through whom? (select multiple)')
+                             + '</p>'),
                         Div('through_whom'),
-                        css_class='col-md-6'),
+                        css_class='col-md-6 hidden'),
                     css_class='row',
                 ),
+                # Div(
+                #     Div(
+                #         HTML(_('3. If you are currently not working, are you searching for work now?')),
+                #         Div('looking_for_work'),
+                #         css_class='col-md-6'),
+                #     Div(
+                #         HTML('<p id="obstacles_for_work_q">' +
+                #              _('4. What are the obstacles in searching for/or having work?') + '</p>'),
+                #         Div('obstacles_for_work'),
+                #         css_class='col-md-6 hidden'),
+                #     css_class='row',
+                # ),
                 Div(
                     Div(
-                        HTML(_('4. What are the obstacles in searching for/or having work?')),
+                        HTML('<p id="obstacles_for_work_q" class="hidden">' +
+                             _('4. What are the obstacles in searching for/or having work?') + '</p>'),
                         Div('obstacles_for_work'),
-                        css_class='col-md-6'),
+                        css_class='col-md-6 hidden'),
                     Div(
                         HTML(_('4.a Do you participate in supporting your family financially?')),
                         Div('supporting_family'),
