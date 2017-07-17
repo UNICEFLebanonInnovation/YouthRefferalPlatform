@@ -4,6 +4,7 @@
 $(document).ready(function(){
 
     change_education_status($('select#id_education_status').val());
+    change_employment_status($('input[name=employment_status]:checked').val());
 
     $('#id_birthdate').datetimepicker({
         "format": "mm/dd/yyyy",

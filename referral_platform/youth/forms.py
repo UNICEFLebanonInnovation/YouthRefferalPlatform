@@ -72,7 +72,7 @@ class RegistrationForm(forms.ModelForm):
 
         ),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=False
     )
     looking_for_work = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
