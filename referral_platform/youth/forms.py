@@ -77,7 +77,8 @@ class RegistrationForm(forms.ModelForm):
     looking_for_work = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
         choices=YES_NO_CHOICE,
-        widget=forms.RadioSelect
+        widget=forms.RadioSelect,
+        required=False
     )
 
     through_whom = forms.MultipleChoiceField(
