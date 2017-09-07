@@ -43,10 +43,15 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',  # registration
     #'allauth.socialaccount.providers.facebook',
 
+    'rest_framework',
+    'rest_framework_swagger',
+    'rest_framework.authtoken',
+
     'bootstrap3',
     'bootstrap3_datetime',
     'import_export',
     'prettyjson',
+    'django_tables2',
 )
 
 # Apps specific for this project go here.
@@ -59,6 +64,10 @@ LOCAL_APPS = (
     'referral_platform.youth',
     'referral_platform.courses',
     'referral_platform.initiatives',
+    'referral_platform.clm',
+    'referral_platform.schools',
+    'referral_platform.students',
+    'referral_platform.outreach',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
