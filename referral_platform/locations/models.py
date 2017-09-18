@@ -28,15 +28,12 @@ class Location(MPTTModel):
     p_code = models.CharField(max_length=32, blank=True, null=True)
 
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
-    pilot_in_use = models.BooleanField(blank=True, default=False)
-
 
     def __unicode__(self):
         return u'{} - {}'.format(
             self.name,
             self.type.name
         )
-
 
     class Meta:
         unique_together = ('name', 'type', 'p_code')

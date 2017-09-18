@@ -21,7 +21,8 @@ class LocationResource(resources.ModelResource):
             'type',
             'latitude',
             'longitude',
-            'p_code'
+            'p_code',
+            'parent',
         )
         export_order = ('name', )
 
@@ -29,8 +30,18 @@ class LocationResource(resources.ModelResource):
 class LocationAdmin(ImportExportModelAdmin):
     resource_class = LocationResource
     list_display = (
-        'name', 'parent'
+        'id',
+        'name',
+        'type',
+        'parent',
     )
+    list_filter = (
+        'type',
+    )
+    search_fields = (
+        'name',
+    )
+
 
 admin.site.register(Location, LocationAdmin)
 admin.site.register(LocationType)

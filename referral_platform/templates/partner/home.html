@@ -1,12 +1,17 @@
 {% extends "base.html" %}
+{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block main_content %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
 
    <div id="portfolio" class="inner-content">
 
       <section id="page-title" class="inner-section">
          <div class="container-fluid nopadding wow fadeInRight" data-wow-delay="0.2s" data-wow-offset="10">
-            <h2 class="font-accident-two-normal uppercase">[Partner Name]</h2>
+            <h2 class="font-accident-two-normal uppercase">{{ request.user.first_name }} {{ request.user.last_name }}</h2>
             <h5 class="font-accident-one-bold uppercase subtitle">Overview</h5>
             <p class="small fontcolor-medium">
                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id metus purus. Ut vulputate, est vel tincidunt mattis, orci neque iaculis lectus, et interdum quam felis vel tortor. Fusce ultrices dui quis nunc dignissim faucibus. Ut ac odio quis nibh viverra fringilla ac id nisi. Suspendisse tincidunt augue quis ligula cursus, non efficitur ligula faucibus. Mauris id neque maximus, tincidunt metus et, sodales nulla.
@@ -59,11 +64,792 @@
                   </div>
                </div>
             </div>
-            <div class="dividewhite2"></div>
          </div>
       </section>
+
+            <div class="dividewhite2"></div>
+
+<section class="inner-section">
+
+<div class="row">
+
+        <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
+              data-animation-origin="right">
+            <div class="padding-50 flex-panel" style="padding-left: 0px;">
+                <h3 class="font-accident-two-normal uppercase">
+                    # of youth trained on Life skills
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}" {% if location == l.id %}selected="selected"{% endif %}>{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+            <table class="table table-striped table-bordered cell-border"
+                           data-height="500"
+                           data-pagination="true"
+                           data-search="true"
+                           cellspacing="0"
+                            cellpadding="0"
+                           width="100%">
+                        <thead class="ui-block-color03 flex-col">
+                            <tr>
+                                <th colspan="15" style="border: 0px; vertical-align: middle;">
+                                    total: 175
+                                     <div class="progress">
+                                        <div class="progress-bar progress-bar-success"
+                                             role="progressbar"
+                                             aria-valuenow="{{ lifeskills_enrolled.total }}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="500">
+                                            {% widthratio lifeskills_enrolled.total 500 100 %}%
+                                        </div>
+                                     </div>
+                                </th>
+                                <th style="border: 0px; vertical-align: middle;">Target 500</th>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Total</th>
+                                <th>Nationality</th>
+                                <th class="col-md-1">January</th>
+                                <th class="col-md-1">February</th>
+                                <th class="col-md-1">March</th>
+                                <th class="col-md-1">April</th>
+                                <th class="col-md-1">May</th>
+                                <th class="col-md-1">June</th>
+                                <th class="col-md-1">July</th>
+                                <th class="col-md-1">August</th>
+                                <th class="col-md-1">September</th>
+                                <th class="col-md-1">October</th>
+                                <th class="col-md-1">November</th>
+                                <th class="col-md-1">December</th>
+                                <th class="col-md-1">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Female</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ lifeskills_enrolled.Female_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Female_LEB }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Female_LEB }}</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Female_SYR }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Female_SYR }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Female_PPL }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Female_PPL }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Male</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ lifeskills_enrolled.Male_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Male_LEB }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Male_LEB }}</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Male_SYR }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Male_SYR }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Male_PPL }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ lifeskills_enrolled.Male_PPL }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+         </div>
+
+        <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
+              data-animation-origin="right">
+            <div class="padding-50 flex-panel" style="padding-left: 0px;">
+                <h3 class="font-accident-two-normal uppercase">
+                    # of youth trained on Digital skills
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}" {% if location == l.id %}selected="selected"{% endif %}>{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+            <table class="table table-striped table-bordered cell-border"
+                           data-height="500"
+                           data-pagination="true"
+                           data-search="true"
+                           cellspacing="0"
+                            cellpadding="0"
+                           width="100%">
+                        <thead class="ui-block-color03 flex-col">
+                            <tr>
+                                <th colspan="15" style="border: 0px; vertical-align: middle;">
+                                    total: 175
+                                     <div class="progress">
+                                        <div class="progress-bar progress-bar-success"
+                                             role="progressbar"
+                                             aria-valuenow="{% widthratio digitalkills_enrolled.total 300 100 %}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="300">
+                                           {% widthratio digitalkills_enrolled.total 300 100 %}%
+                                        </div>
+                                     </div>
+                                </th>
+                                <th style="border: 0px; vertical-align: middle;">Target 300</th>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Total</th>
+                                <th>Nationality</th>
+                                <th class="col-md-1">January</th>
+                                <th class="col-md-1">February</th>
+                                <th class="col-md-1">March</th>
+                                <th class="col-md-1">April</th>
+                                <th class="col-md-1">May</th>
+                                <th class="col-md-1">June</th>
+                                <th class="col-md-1">July</th>
+                                <th class="col-md-1">August</th>
+                                <th class="col-md-1">September</th>
+                                <th class="col-md-1">October</th>
+                                <th class="col-md-1">November</th>
+                                <th class="col-md-1">December</th>
+                                <th class="col-md-1">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Female</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ digitalskills_enrolled.Female_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Female_LEB }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Female_LEB }}</td>
+                            </tr>
+                            <tr>
+                               <td>SYR</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Female_SYR }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Female_SYR }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Female_PPL }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Female_PPL }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Male</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ digitalskills_enrolled.Male_LEB }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Male_LEB }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Male_LEB }}</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Male_SYR }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Male_SYR }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Male_PPL }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{ digitalskills_enrolled.Male_PPL }}</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+         </div>
+
+        <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
+              data-animation-origin="right">
+            <div class="padding-50 flex-panel" style="padding-left: 0px;">
+                <h3 class="font-accident-two-normal uppercase">
+                    % of youth reported an improvement in digital skills
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}" {% if location == l.id %}selected="selected"{% endif %}>{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+            <table class="table table-striped table-bordered cell-border"
+                           data-height="500"
+                           data-pagination="true"
+                           data-search="true"
+                           cellspacing="0"
+                            cellpadding="0"
+                           width="100%">
+                        <thead class="ui-block-color03 flex-col">
+                            <tr>
+                                <th colspan="7" style="border: 0px; vertical-align: middle;">
+                                     <div class="progress">
+                                        <div class="progress-bar progress-bar-success"
+                                             role="progressbar"
+                                             aria-valuenow="{{ digitalskills_improved.total }}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                           {{ digitalskills_improved.total }}%
+                                        </div>
+                                     </div>
+                                </th>
+                                <th style="border: 0px; vertical-align: middle;"></th>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Total</th>
+                                <th>Nationality</th>
+                                <th class="col-md-3">Pre/Post-test cycle 1</th>
+                                <th class="col-md-3">Pre/Post-test cycle 2</th>
+                                <th class="col-md-3">Pre/Post-test cycle 3</th>
+                                <th class="col-md-3">Pre/Post-test cycle 4</th>
+                                <th class="col-md-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Female</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ digitalskills_improved.Female_total }}</td>
+                            </tr>
+                                                    <tr>
+                                <td>LEB</td>
+                                <td>{{ digitalskills_improved.Female_LEB }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ digitalskills_improved.Female_LEB }}%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>{{ digitalskills_improved.Female_SYR }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ digitalskills_improved.Female_SYR }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>{{ digitalskills_improved.Female_PPL }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ digitalskills_improved.Female_PPL }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Male</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ digitalskills_improved.Male_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>{{ digitalskills_improved.Male_LEB }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ digitalskills_improved.Male_LEB }}%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>{{ digitalskills_improved.Male_SYR }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ digitalskills_improved.Male_SYR }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>{{ digitalskills_improved.Male_PPL }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ digitalskills_improved.Male_PPL }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+         </div>
+
+        <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
+              data-animation-origin="right">
+            <div class="padding-50 flex-panel" style="padding-left: 0px;">
+                <h3 class="font-accident-two-normal uppercase">
+                    % of targeted adolescent, youth and caregivers who have increased knowledge on healthy lifestyle practices
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}" {% if location == l.id %}selected="selected"{% endif %}>{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+            <table class="table table-striped table-bordered cell-border"
+                           data-height="500"
+                           data-pagination="true"
+                           data-search="true"
+                           cellspacing="0"
+                            cellpadding="0"
+                           width="100%">
+                        <thead class="ui-block-color03 flex-col">
+                            <tr>
+                                <th colspan="7" style="border: 0px; vertical-align: middle;">
+                                     <div class="progress">
+                                        <div class="progress-bar progress-bar-success"
+                                             role="progressbar"
+                                             aria-valuenow="{{ lifeskills_healthy_lifestyles.total }}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                            {{ lifeskills_healthy_lifestyles.total }}%
+                                        </div>
+                                     </div>
+                                </th>
+                                <th style="border: 0px; vertical-align: middle;"></th>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Total</th>
+                                <th>Nationality</th>
+                                <th class="col-md-3">Pre/Post-test cycle 1</th>
+                                <th class="col-md-3">Pre/Post-test cycle 2</th>
+                                <th class="col-md-3">Pre/Post-test cycle 3</th>
+                                <th class="col-md-3">Pre/Post-test cycle 4</th>
+                                <th class="col-md-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Female</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ lifeskills_healthy_lifestyles.Female_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Female_LEB }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Female_LEB }}%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Female_SYR }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Female_SYR }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Female_PPL }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Female_PPL }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Male</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ lifeskills_healthy_lifestyles.Male_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Male_LEB }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Male_LEB }}%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Male_SYR }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Male_SYR }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Male_PPL }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_healthy_lifestyles.Male_PPL }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+         </div>
+
+        <div id="bar-skills" class="col-md-16 flex-column nopadding" data-section="bar-skills"
+              data-animation-origin="right">
+            <div class="padding-50 flex-panel" style="padding-left: 0px;">
+                <h3 class="font-accident-two-normal uppercase">
+                    % of targeted youth who have reported feeling more empowered as a result of the training they completed
+                    <select class="partner_location">
+                        <option value="0">{% trans "Select a location" %}</option>
+                        {% for l in locations %}
+                            <option value="{{ l.id }}" {% if location == l.id %}selected="selected"{% endif %}>{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+           <table class="table table-striped table-bordered cell-border"
+                           data-height="500"
+                           data-pagination="true"
+                           data-search="true"
+                           cellspacing="0"
+                            cellpadding="0"
+                           width="100%">
+                        <thead class="ui-block-color03 flex-col">
+                            <tr>
+                                <th colspan="7" style="border: 0px; vertical-align: middle;">
+                                     <div class="progress">
+                                        <div class="progress-bar progress-bar-success"
+                                             role="progressbar"
+                                             aria-valuenow="{{ lifeskills_feeling_empowered.total }}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                            {{ lifeskills_feeling_empowered.total }}%
+                                        </div>
+                                     </div>
+                                </th>
+                                <th style="border: 0px; vertical-align: middle;"></th>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Total</th>
+                                <th>Nationality</th>
+                                <th class="col-md-3">Pre/Post-test cycle 1</th>
+                                <th class="col-md-3">Pre/Post-test cycle 2</th>
+                                <th class="col-md-3">Pre/Post-test cycle 3</th>
+                                <th class="col-md-3">Pre/Post-test cycle 4</th>
+                                <th class="col-md-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Female</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ lifeskills_feeling_empowered.Female_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>{{ lifeskills_feeling_empowered.Female_LEB }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_feeling_empowered.Female_LEB }}%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>{{ lifeskills_feeling_empowered.Female_SYR }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_feeling_empowered.Female_SYR }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>{{ lifeskills_feeling_empowered.Female_PPL }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_feeling_empowered.Female_PPL }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="vertical-align: middle;">Male</td>
+                                <td rowspan="5" style="vertical-align: middle;">{{ lifeskills_feeling_empowered.Male_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>LEB</td>
+                                <td>{{ lifeskills_feeling_empowered.Male_LEB }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_feeling_empowered.Male_LEB }}%</td>
+                            </tr>
+                            <tr>
+                                <td>SYR</td>
+                                <td>{{ lifeskills_feeling_empowered.Male_SYR }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_feeling_empowered.Male_SYR }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRL</td>
+                                <td>{{ lifeskills_feeling_empowered.Male_PPL }}%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>{{ lifeskills_feeling_empowered.Male_PPL }}%</td>
+                            </tr>
+                            <tr>
+                                <td>PRS</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+         </div>
+
+</div>
+               </section>
+
+         </div>
       <!-- /Counts Block -->
 
-   </div>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('.partner_location').change(function(){
+            var url = '{% url "partners:profile" %}';
+            if($(this).val()){
+                window.location = url+'?location='+$(this).val();
+            }
+        });
+    });
+</script>
 {% endblock %}

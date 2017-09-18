@@ -435,7 +435,7 @@ class DigitalSkillsAssessmentForm(forms.Form):
                     'If you have not please STOP here.')),
             'familiar_with',
             Fieldset(
-                _('ICT Literacy')
+                _('ICT Literacy'),
                 *self._generate_rows('know_computers',
                                      'importance_of_computers',
                                      'computer_parts',

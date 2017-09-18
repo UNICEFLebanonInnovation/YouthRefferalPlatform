@@ -9,9 +9,10 @@ from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, Inline
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
 from bootstrap3_datetime.widgets import DateTimePicker
 
-#from dal import autocomplete
+from dal import autocomplete
 
 from referral_platform.youth.models import YoungPerson
+from referral_platform.locations.models import Location
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
@@ -19,12 +20,26 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 class RegistrationForm(forms.ModelForm):
 
     birthdate = forms.DateField(
-        widget=DateTimePicker(
-            options={
-                "format": "DD/MM/YYYY",
-                "pickTime": False
-            }),
+    #     widget=DateTimePicker(
+    #         options={
+    #             "viewMode": "years",
+    #             "format": "mm/dd/yyyy",
+    #             "pickTime": False,
+    #             "stepping": 0,
+    #             "showClear": True,
+    #             "showClose": True,
+    #             "disabledHours": True,
+    #         }),
         required=True
+    )
+
+    sex = forms.ChoiceField(
+        widget=forms.Select, required=True,
+        choices=(
+            ('', _('Gender')),
+            ('Male', _('Male')),
+            ('Female', _('Female')),
+        )
     )
 
     leaving_education_reasons = forms.MultipleChoiceField(
@@ -41,7 +56,7 @@ class RegistrationForm(forms.ModelForm):
             (_('Other')),
         ),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=False
     )
 
     employment_sectors = forms.MultipleChoiceField(
@@ -57,12 +72,13 @@ class RegistrationForm(forms.ModelForm):
 
         ),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=False
     )
     looking_for_work = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
         choices=YES_NO_CHOICE,
-        widget=forms.RadioSelect
+        widget=forms.RadioSelect,
+        required=False
     )
 
     through_whom = forms.MultipleChoiceField(
@@ -90,7 +106,7 @@ class RegistrationForm(forms.ModelForm):
             ('laws', _('Rigid Labour Laws')),
         ),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=False
     )
     supporting_family = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',
@@ -121,11 +137,11 @@ class RegistrationForm(forms.ModelForm):
     #     widget=forms.CheckboxSelectMultiple
     # )
 
-    # trained_before = forms.TypedChoiceField(
-    #     coerce=lambda x: x == 'True',
-    #     choices=YES_NO_CHOICE,
-    #     widget=forms.RadioSelect
-    # )
+    trained_before = forms.TypedChoiceField(
+        coerce=lambda x: x == 'True',
+        choices=YES_NO_CHOICE,
+        widget=forms.RadioSelect
+    )
     #
     # sports_group = forms.TypedChoiceField(
     #     coerce=lambda x: x == 'True',
@@ -133,12 +149,17 @@ class RegistrationForm(forms.ModelForm):
     #     widget=forms.RadioSelect
     # )
 
+    location = forms.ModelChoiceField(
+        queryset=Location.objects.filter(type_id__gte=4),
+        widget=forms.Select, to_field_name='id',
+        required=True
+    )
+
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['id_type'].empty_label = _('ID Type')
-        self.fields['sex'].empty_label = _('Gender')
-        self.fields['parents_phone_number'].empty_label = _('Nationality')
-        self.fields['location'].empty_label = _('Location')
+        self.fields['nationality'].empty_label = _('Nationality')
+        self.fields['location'].empty_label = _('Training center')
         self.fields['partner_organization'].empty_label = _('Partner Organisation')
         self.fields['education_status'].empty_label = _('Are you currently studying?')
         self.fields['education_type'].empty_label = _('Type of education?')
@@ -190,17 +211,22 @@ class RegistrationForm(forms.ModelForm):
                         'education_status', css_class='col-md-4',
                     ),
                     Div(
-                        HTML(_('1.a What type of education are/were you enrolled in?')),
-                        'education_type', css_class='col-md-4',
+                        HTML('<span id="education_type_q" class="hidden">' + _(
+                            '1.a What type of education are/were you enrolled in?') + '</span>'),
+                        'education_type', css_class='col-md-4 hidden',
                     ),
                     Div(
-                        HTML(_('1.b What is the level of education you have successfully completed?')),
-                        'education_level', css_class='col-md-4',
+                        HTML('<span id="education_level_q" class="hidden">' + _(
+                            '1.b What is the level of education you have successfully completed?') + '</span>'),
+                        'education_level', css_class='col-md-4 hidden'
                     ),
                     css_class='row',
                 ),
-                HTML(_('2. What were your reason(s) for stopping studying? Please tick all that apply?')),
-                Field('leaving_education_reasons'),
+                Div(
+                    HTML('<span id="leaving_education_reasons_q" class="hidden">' + _(
+                        '2. What were your reason(s) for stopping studying? Please tick all that apply?') + '</span>'),
+                    'leaving_education_reasons', css_class='hidden',
+                )
             ),
             Fieldset(
                 _('Livelihood Information'),
@@ -210,27 +236,34 @@ class RegistrationForm(forms.ModelForm):
                         Field('employment_status'),
                         css_class='col-md-6'),
                     Div(
-                        HTML(_('2. What is the sector(s) you worked in / or are working in?')),
-                        Field('employment_sectors'),
-                        css_class='col-md-6'),
-                    css_class='row',
-                ),
-                Div(
+                        HTML('<p id="employment_sectors_q" class="hidden">' +
+                             _('2. What is the sector(s) you worked in / or are working in?') + '</p>'),
+                        'employment_sectors', css_class='col-md-6 hidden'),
                     Div(
-                        HTML(_('3. If you are currently not working, are you searching for work now?')),
-                        Div('looking_for_work'),
-                        css_class='col-md-6'),
-                    Div(
-                        HTML(_('3.a If yes, through whom? (select multiple)')),
+                        HTML('<p id="through_whom_q" class="hidden">' + _('3.a If yes, through whom? (select multiple)')
+                             + '</p>'),
                         Div('through_whom'),
-                        css_class='col-md-6'),
+                        css_class='col-md-6 hidden'),
                     css_class='row',
                 ),
+                # Div(
+                #     Div(
+                #         HTML(_('3. If you are currently not working, are you searching for work now?')),
+                #         Div('looking_for_work'),
+                #         css_class='col-md-6'),
+                #     Div(
+                #         HTML('<p id="obstacles_for_work_q">' +
+                #              _('4. What are the obstacles in searching for/or having work?') + '</p>'),
+                #         Div('obstacles_for_work'),
+                #         css_class='col-md-6 hidden'),
+                #     css_class='row',
+                # ),
                 Div(
                     Div(
-                        HTML(_('4. What are the obstacles in searching for/or having work?')),
+                        HTML('<p id="obstacles_for_work_q" class="hidden">' +
+                             _('4. What are the obstacles in searching for/or having work?') + '</p>'),
                         Div('obstacles_for_work'),
-                        css_class='col-md-6'),
+                        css_class='col-md-6 hidden'),
                     Div(
                         HTML(_('4.a Do you participate in supporting your family financially?')),
                         Div('supporting_family'),
@@ -271,6 +304,10 @@ class RegistrationForm(forms.ModelForm):
                         HTML(_('4. We would like to follow up with you after the training, what is your preferred method of communication?')),
                         Div('communication_preference'),
                         css_class='col-md-6'),
+                    Div(
+                        HTML('<p id="communication_channel_q" class="hidden">' + _('Details') + '</p>'),
+                        Div('communication_channel'),
+                        css_class='col-md-6 hidden'),
                     css_class='row',
                 ),
             ),
@@ -293,6 +330,8 @@ class RegistrationForm(forms.ModelForm):
         widgets = {
             'employment_status': forms.RadioSelect(),
             'sports_group': forms.RadioSelect(),
-            #'location': autocomplete.ModelSelect2(url='location-autocomplete')
-
+            # 'location': autocomplete.ModelSelect2(url='locations:location-autocomplete')
         }
+
+    class Media:
+        js = ('js/bootstrap-datetimepicker.js', 'js/registrations.js')

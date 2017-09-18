@@ -48,4 +48,16 @@ django-import-export==0.5.1
 # Webpack
 django-webpack-loader==0.3.3
 
+# Django Suit
+django-suit==0.2.25
+django-bootstrap3==8.2.3
+bootstrap3-datetime==2.4
+django-prettyjson==0.3.0
+
+django-autocomplete-light==3.2.1
 # Your custom requirements go here
+
+djangorestframework==3.6.3
+django-rest-swagger==2.1.2
+django-tables2==1.10.0
+django-filter==0.13.0

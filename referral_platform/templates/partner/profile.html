@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+{% endblock %}
+
 {% block main_content %}
 
    <div id="portfolio" class="inner-content">
 
       <section id="page-title" class="inner-section">
          <div class="container-fluid nopadding wow fadeInRight" data-wow-delay="0.2s" data-wow-offset="10">
-            <h2 class="font-accident-two-normal uppercase">[Partner Name]</h2>
+            <h2 class="font-accident-two-normal uppercase">{{ request.user.first_name }} {{ request.user.last_name }}</h2>
             <h5 class="font-accident-one-bold uppercase subtitle">Overview</h5>
             <p class="small fontcolor-medium">
                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id metus purus. Ut vulputate, est vel tincidunt mattis, orci neque iaculis lectus, et interdum quam felis vel tortor. Fusce ultrices dui quis nunc dignissim faucibus. Ut ac odio quis nibh viverra fringilla ac id nisi. Suspendisse tincidunt augue quis ligula cursus, non efficitur ligula faucibus. Mauris id neque maximus, tincidunt metus et, sodales nulla.
@@ -48,16 +53,6 @@
                      <div class="count-text font-accident-one-bold">Referrals</div>
                   </div>
                </div>
-               <div class="col-lg-3 col-sm-6 col-xs-12 count">
-                  <div>
-                     <div class="count-icon">
-                        <i class="flaticon-clock"></i>
-                     </div>
-                     <span class=".integers digit font-accident-two-normal">165</span>
-
-                     <div class="count-text font-accident-one-bold">Hours</div>
-                  </div>
-               </div>
             </div>
             <div class="dividewhite2"></div>
          </div>
@@ -68,4 +63,3 @@
    </div>
 
 {% endblock %}
-
