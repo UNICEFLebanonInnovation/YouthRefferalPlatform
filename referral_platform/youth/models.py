@@ -101,6 +101,14 @@ class Person(TimeStampedModel):
         ('Female', _('Female')),
     )
 
+    FAMILY_STATUS = Choices(
+        ('married', _('Married')),
+        ('engaged', _('Engaged')),
+        ('divorced', _('Divorced')),
+        ('widower', _('Widower')),
+        ('single', _('Single')),
+    )
+
     first_name = models.CharField(max_length=75)
     last_name = models.CharField(max_length=75)
     father_name = models.CharField(max_length=75)

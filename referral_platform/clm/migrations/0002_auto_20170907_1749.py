@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('clm', '0001_initial'),
+        ('youth', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('schools', '0001_initial'),
         ('students', '0001_initial'),

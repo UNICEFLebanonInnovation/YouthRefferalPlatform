@@ -26,10 +26,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^partners/', include('referral_platform.partners.urls', namespace='partners')),
     url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
-    url(r'^clm/', include('referral_platform.clm.urls', namespace='clm')),
-    url(r'^students/', include('referral_platform.students.urls', namespace='students')),
-    url(r'^schools/', include('referral_platform.schools.urls', namespace='schools')),
-    url(r'^outreach/', include('referral_platform.schools.urls', namespace='outreach')),
+    url(r'^youth/', include('referral_platform.clm.urls', namespace='youth')),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 

@@ -5,9 +5,10 @@ from django import forms
 from django.core.urlresolvers import reverse
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineCheckboxes, InlineRadios
-from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
+from crispy_forms.bootstrap import FormActions, InlineRadios
+from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, HTML
 
+from referral_platform.youth.models import YoungPerson
 from referral_platform.students.models import (
     Student,
     Nationality,
@@ -28,7 +29,7 @@ from .models import (
     Site,
     Assessment
 )
-from .serializers import BLNSerializer, RSSerializer, CBECESerializer
+from .serializers import BLNSerializer
 
 YES_NO_CHOICE = ((1, "Yes"), (0, "No"))
 
@@ -90,7 +91,7 @@ class CommonForm(forms.ModelForm):
     student_last_name = forms.CharField(widget=forms.TextInput, required=True)
     student_sex = forms.ChoiceField(
         widget=forms.Select, required=True,
-        choices=Student.GENDER
+        choices=YoungPerson.GENDER
     )
     student_birthday_year = forms.ChoiceField(
         widget=forms.Select, required=True,
@@ -98,7 +99,7 @@ class CommonForm(forms.ModelForm):
     )
     student_birthday_month = forms.ChoiceField(
         widget=forms.Select, required=True,
-        choices=Student.MONTHS
+        choices=YoungPerson.MONTHS
     )
     student_birthday_day = forms.ChoiceField(
         widget=forms.Select, required=True,
@@ -123,7 +124,7 @@ class CommonForm(forms.ModelForm):
     )
     student_family_status = forms.ChoiceField(
         widget=forms.Select, required=True,
-        choices=Student.FAMILY_STATUS,
+        choices=YoungPerson.FAMILY_STATUS,
         initial='single'
     )
     student_have_children = forms.TypedChoiceField(
@@ -192,7 +193,6 @@ class CommonForm(forms.ModelForm):
                 instance.owner = request.user
                 instance.save()
             else:
-                print serializer.errors
                 return False
 
         return True
@@ -200,11 +200,6 @@ class CommonForm(forms.ModelForm):
     class Meta:
         model = CLM
         fields = (
-            # 'new_registry',
-            # 'student_outreached',
-            # 'have_barcode',
-            # 'search_barcode',
-            # 'search_student',
             'outreach_barcode',
             'governorate',
             'district',
@@ -270,10 +265,10 @@ class BLNForm(CommonForm):
         display_assessment = ' d-none'
         display_registry = ''
         instance = kwargs['instance'] if 'instance' in kwargs else ''
-        form_action = reverse('clm:bln_add')
+        form_action = reverse('youth:bln_add')
 
         if instance:
-            form_action = reverse('clm:bln_edit', kwargs={'pk': instance.id})
+            form_action = reverse('youth:bln_edit', kwargs={'pk': instance.id})
             assessment_pre = Assessment.objects.get(slug='bln_pre_test')
             assessment_post = Assessment.objects.get(slug='bln_post_test')
             display_assessment = ''
@@ -282,14 +277,14 @@ class BLNForm(CommonForm):
                 form=assessment_pre.assessment_form,
                 status='pre_test',
                 callback=self.request.build_absolute_uri(
-                    reverse('clm:bln_assessment', kwargs={'pk': instance.id})
+                    reverse('youth:bln_assessment', kwargs={'pk': instance.id})
                 )
             )
             post_test = '{form}?d[status]={status}&returnURL={callback}'.format(
                 form=assessment_post.assessment_form,
                 status='post_test',
                 callback=self.request.build_absolute_uri(
-                    reverse('clm:bln_assessment', kwargs={'pk': instance.id})
+                    reverse('youth:bln_assessment', kwargs={'pk': instance.id})
                 )
             )
 
@@ -474,7 +469,7 @@ class BLNForm(CommonForm):
             FormActions(
                 Submit('save', _('Save')),
                 Button('cancel', _('Cancel')),
-                HTML('<a class="btn btn-info" href="/clm/bln-list/">Back to list</a>'),
+                HTML('<a class="btn btn-info" href="/youth/bln-list/">Back to list</a>'),
             )
         )
 

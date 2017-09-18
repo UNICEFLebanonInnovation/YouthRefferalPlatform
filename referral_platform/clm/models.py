@@ -8,6 +8,7 @@ from django.contrib.postgres.fields import ArrayField, JSONField
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
+from referral_platform.youth.models import YoungPerson
 from referral_platform.students.models import Student, Labour
 from referral_platform.locations.models import Location
 from referral_platform.schools.models import (
@@ -175,7 +176,7 @@ class CLM(TimeStampedModel):
         null=True,
     )
     student = models.ForeignKey(
-        Student,
+        YoungPerson,
         blank=False, null=True,
         related_name='+',
     )
@@ -292,7 +293,7 @@ class CLM(TimeStampedModel):
         return 0
 
     def get_absolute_url(self):
-        return '/clm/edit/%d/' % self.pk
+        return '/youth/edit/%d/' % self.pk
 
     def __unicode__(self):
         if self.student:
