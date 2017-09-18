@@ -1,0 +1,10 @@
+{% load staticfiles i18n %}
+{% if record.owner.id == request.user.id %}
+    <button class="btn btn-danger delete-registration-row" itemscope="{{ record.id }}"
+            data-action="{{ column.attrs.url }}">
+        <i class="icon-trash icon-white"></i>
+        {% trans "Delete" %}
+    </button>
+{% else %}
+    {% trans "Not allowed" %}
+{% endif %}
