@@ -79,6 +79,17 @@ class Sport(models.Model):
         return self.name
 
 
+class Disability(models.Model):
+
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['name']
+
+    def __unicode__(self):
+        return self.name
+
+
 class Person(TimeStampedModel):
 
     MONTHS = Choices(
@@ -228,11 +239,24 @@ class Person(TimeStampedModel):
 
 class YoungPerson(Person):
 
+    MARITAL_STATUS = Choices(
+        ('married', _('Married')),
+        ('engaged', _('Engaged')),
+        ('divorced', _('Divorced')),
+        ('widower', _('Widower')),
+        ('single', _('Single')),
+    )
+
     user = models.OneToOneField(User, related_name='profile')
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
     location = models.ForeignKey(Location)
     partner_organization = models.ForeignKey(PartnerOrganization)
     disability = models.CharField(max_length=100, blank=True, null=True)
+    marital_status = models.CharField(
+        max_length=50,
+        choices=MARITAL_STATUS,
+        blank=True, null=True,
+    )
 
     education_status = models.CharField(
         max_length=50,

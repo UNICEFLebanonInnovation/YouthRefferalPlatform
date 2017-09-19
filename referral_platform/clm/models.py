@@ -8,13 +8,8 @@ from django.contrib.postgres.fields import ArrayField, JSONField
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
-from referral_platform.students.models import Student, Labour
+from referral_platform.youth.models import YoungPerson, Disability, EducationLevel
 from referral_platform.locations.models import Location
-from referral_platform.schools.models import (
-    School,
-    ClassRoom,
-    EducationalLevel,
-)
 
 
 class Assessment(models.Model):
@@ -26,64 +21,6 @@ class Assessment(models.Model):
     end_date = models.DateField(blank=True, null=True)
     capacity = models.IntegerField(blank=True, null=True)
     assessment_form = models.URLField(blank=True, null=True)
-
-    class Meta:
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-
-class Cycle(models.Model):
-
-    name = models.CharField(max_length=100)
-    current_cycle = models.BooleanField(blank=True, default=False)
-
-    class Meta:
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-
-class RSCycle(models.Model):
-
-    name = models.CharField(max_length=100)
-    current_cycle = models.BooleanField(blank=True, default=False)
-
-    class Meta:
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-
-class Site(models.Model):
-
-    name = models.CharField(max_length=100)
-    current_cycle = models.BooleanField(blank=True, default=False)
-
-    class Meta:
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-
-class Referral(models.Model):
-
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-
-class Disability(models.Model):
-
-    name = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['name']
@@ -175,7 +112,7 @@ class CLM(TimeStampedModel):
         null=True,
     )
     student = models.ForeignKey(
-        Student,
+        YoungPerson,
         blank=False, null=True,
         related_name='+',
     )
@@ -209,7 +146,7 @@ class CLM(TimeStampedModel):
         null=True,
     )
     hh_educational_level = models.ForeignKey(
-        EducationalLevel,
+        EducationLevel,
         blank=True, null=True,
         related_name='+',
     )
@@ -292,7 +229,7 @@ class CLM(TimeStampedModel):
         return 0
 
     def get_absolute_url(self):
-        return '/clm/edit/%d/' % self.pk
+        return '/youth/edit/%d/' % self.pk
 
     def __unicode__(self):
         if self.student:
@@ -302,135 +239,3 @@ class CLM(TimeStampedModel):
     class Meta:
         abstract = True
 
-
-class BLN(CLM):
-
-    cycle = models.ForeignKey(
-        Cycle,
-        blank=True, null=True,
-        related_name='+',
-    )
-    referral = ArrayField(
-        models.CharField(
-            choices=CLM.REFERRAL,
-            max_length=100,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-
-
-class RS(CLM):
-
-    SCHOOL_SHIFT = Choices(
-        ('first', _('First shift')),
-        ('second', _('Second shift')),
-    )
-
-    cycle = models.ForeignKey(
-        RSCycle,
-        blank=True, null=True,
-        related_name='+',
-    )
-    site = models.ForeignKey(
-        Site,
-        blank=True, null=True,
-        related_name='+',
-    )
-    school = models.ForeignKey(
-        School,
-        blank=False, null=True,
-        related_name='+',
-    )
-    shift = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
-        choices=SCHOOL_SHIFT
-    )
-
-
-class CBECE(CLM):
-
-    MUAC = Choices(
-        ('1', _('< 11.5 CM (severe malnutrition)')),
-        ('2', _('< 12.5 CM (moderate malnutrition)')),
-    )
-    REFER_SEASON = Choices(
-        ('academic', _('Academic')),
-        ('absence', _('Absence'))
-    )
-
-    cycle = models.ForeignKey(
-        Cycle,
-        blank=True, null=True,
-        related_name='+',
-    )
-    site = models.ForeignKey(
-        Site,
-        blank=True, null=True,
-        related_name='+',
-    )
-    school = models.ForeignKey(
-        School,
-        blank=False, null=True,
-        related_name='+',
-    )
-    referral = ArrayField(
-        models.CharField(
-            choices=CLM.REFERRAL,
-            max_length=100,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-    child_muac = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
-        choices=MUAC
-    )
-    grade = models.ForeignKey(
-        ClassRoom,
-        blank=True, null=True,
-        related_name='+',
-    )
-    referral_reasons = ArrayField(
-        models.CharField(
-            choices=REFER_SEASON,
-            max_length=100,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-    pre_test_arabic = models.IntegerField(
-        blank=True,
-        null=True,
-        choices=((x, x) for x in range(1, 20))
-    )
-    pre_test_language = models.FloatField(
-        blank=True,
-        null=True,
-        choices=((x, x) for x in range(1, 20))
-    )
-    pre_test_math = models.FloatField(
-        blank=True,
-        null=True,
-        choices=((x, x) for x in range(1, 20))
-    )
-    pre_test_science = models.FloatField(
-        blank=True,
-        null=True,
-        choices=((x, x) for x in range(1, 20))
-    )
-    school_readiness = models.CharField(
-        max_length=500,
-        blank=True,
-        null=True,
-    )

@@ -2,13 +2,13 @@
 import django_tables2 as tables
 from django.utils.translation import ugettext as _
 
-from .models import CLM, BLN, RS, CBECE
+from referral_platform.youth.models import YoungPerson
 
 
 class BootstrapTable(tables.Table):
 
     class Meta:
-        model = CLM
+        model = YoungPerson
         template = 'django_tables2/bootstrap.html'
         attrs = {'class': 'table table-bordered table-striped table-hover'}
 
@@ -32,47 +32,21 @@ class CommonTable(tables.Table):
     student_birthday = tables.Column(verbose_name=_('Birthday'), accessor='student.birthday')
 
     class Meta:
-        model = CLM
+        model = YoungPerson
         template = 'django_tables2/bootstrap.html'
         fields = (
             'edit_column',
             'delete_column',
             'pre_assessment',
             'post_assessment',
-            'student.first_name',
-            'student.father_name',
-            'student.last_name',
-            'student.sex',
+            'first_name',
+            'father_name',
+            'last_name',
+            'sex',
             'student_age',
             'student_birthday',
-            'student.nationality',
-            'student.mother_fullname',
-            'student.address',
-            'student.p_code',
+            'nationality',
+            'address',
+            'location',
         )
 
-
-class BLNTable(CommonTable):
-
-    edit_column = tables.TemplateColumn(verbose_name=_('Edit student'),
-                                        template_name='django_tables2/edit_column.html',
-                                        attrs={'url': '/clm/bln-edit/'})
-    delete_column = tables.TemplateColumn(verbose_name=_('Delete student'),
-                                          template_name='django_tables2/delete_column.html',
-                                          attrs={'url': 'api/clm-bln/'})
-
-    class Meta:
-        model = BLN
-        fields = CommonTable.Meta.fields
-
-
-class RSTable(CommonTable):
-
-    class Meta:
-        model = RS
-
-
-class CBECETable(CommonTable):
-
-    class Meta:
-        model = CBECE

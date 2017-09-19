@@ -2,7 +2,8 @@
 import json
 
 from rest_framework import serializers
-from .models import CLM, BLN, RS, CBECE
+
+from referral_platform.youth.models import YoungPerson
 
 
 def create_instance(validated_data, model):
@@ -84,7 +85,7 @@ class CLMSerializer(serializers.ModelSerializer):
     search_barcode = serializers.CharField(source='outreach_barcode', read_only=True)
 
     class Meta:
-        model = CLM
+        model = YoungPerson
         fields = (
             'id',
             'original_id',
@@ -129,79 +130,3 @@ class CLMSerializer(serializers.ModelSerializer):
             'save',
         )
 
-
-class BLNSerializer(CLMSerializer):
-
-    def create(self, validated_data):
-        from referral_platform.students.serializers import StudentSerializer
-        from referral_platform.students.models import Student
-
-        student_data = validated_data.pop('student', None)
-
-        if 'id' in student_data and student_data['id']:
-            student_serializer = StudentSerializer(Student.objects.get(id=student_data['id']), data=student_data)
-            student_serializer.is_valid(raise_exception=True)
-            student_serializer.instance = student_serializer.save()
-        else:
-            student_serializer = StudentSerializer(data=student_data)
-            student_serializer.is_valid(raise_exception=True)
-            student_serializer.instance = student_serializer.save()
-            print student_serializer.instance
-
-        try:
-            instance = BLN.objects.create(**validated_data)
-            instance.student = student_serializer.instance
-            instance.save()
-
-        except Exception as ex:
-            raise serializers.ValidationError({'Enrollment instance': ex.message})
-
-        return instance
-        # create_instance(validated_data=validated_data, model=BLN)
-
-    def update(self, instance, validated_data):
-        update_instance(instance=instance, validated_data=validated_data)
-
-    class Meta:
-        model = BLN
-        fields = CLMSerializer.Meta.fields + (
-            'cycle',
-            'referral',
-        )
-
-
-class RSSerializer(CLMSerializer):
-
-    def create(self, validated_data):
-        create_instance(validated_data=validated_data, model=self.Meta.model)
-
-    def update(self, instance, validated_data):
-        update_instance(instance=instance, validated_data=validated_data)
-
-    class Meta:
-        model = RS
-        fields = CLMSerializer.Meta.fields + (
-            'cycle',
-            'site',
-            'school',
-            'shift',
-        )
-
-
-class CBECESerializer(CLMSerializer):
-
-    def create(self, validated_data):
-        create_instance(validated_data=validated_data, model=self.Meta.model)
-
-    def update(self, instance, validated_data):
-        update_instance(instance=instance, validated_data=validated_data)
-
-    class Meta:
-        model = CBECE
-        fields = CLMSerializer.Meta.fields + (
-            'cycle',
-            'site',
-            'school',
-            'referral',
-            'child_muac',
-        )

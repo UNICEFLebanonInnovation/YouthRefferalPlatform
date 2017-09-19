@@ -4,18 +4,22 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from django.views.generic import TemplateView, RedirectView
 
 from referral_platform.users.views import PasswordChangeView, PasswordChangeDoneView, \
     LoginRedirectView
 
 urlpatterns = [
-                  url(r'^$', RedirectView.as_view(url='/clm/index')),
-                  url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
-                  url(r'^login-redirect/$', LoginRedirectView.as_view(), name='login-redirect'),
-                  url(r'^change-password/$', PasswordChangeView.as_view(), name='change_password'),
-                  url(r'^change-password-done/$', PasswordChangeDoneView.as_view(), name='change_password_done'),
+    url(r'^', include('referral_platform.youth.urls', namespace='youth')),
+    url(r'^courses/', include('referral_platform.courses.urls', namespace='courses')),
+    url(r'^initiatives/', include('referral_platform.initiatives.urls', namespace='initiatives')),
+
+    #url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+
+    # Django Admin, use {% url 'admin:index' %}
+    url(settings.ADMIN_URL, include(admin.site.urls)),
 
     # User management
     url(r'^users/', include('referral_platform.users.urls', namespace='users')),
@@ -24,13 +28,9 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^partners/', include('referral_platform.partners.urls', namespace='partners')),
     url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
-    url(r'^clm/', include('referral_platform.clm.urls', namespace='clm')),
-    url(r'^students/', include('referral_platform.students.urls', namespace='students')),
-    url(r'^schools/', include('referral_platform.schools.urls', namespace='schools')),
-    url(r'^outreach/', include('referral_platform.schools.urls', namespace='outreach')),
+    url(r'^youth/', include('referral_platform.clm.urls', namespace='youth')),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
-                  url(r'^youth/', include('referral_platform.youth.urls', namespace='youth')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

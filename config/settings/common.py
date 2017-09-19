@@ -65,9 +65,7 @@ LOCAL_APPS = (
     'referral_platform.courses',
     'referral_platform.initiatives',
     'referral_platform.clm',
-    'referral_platform.schools',
-    'referral_platform.students',
-    'referral_platform.outreach',
+
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -123,7 +121,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db('DATABASE_URL', default='postgis://postgres:postgres@localhost:5432/referral_platform'),
+    'default': env.db('DATABASE_URL', default='postgres:///referral_platform'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
