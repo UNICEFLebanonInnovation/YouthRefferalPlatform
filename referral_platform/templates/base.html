@@ -1,230 +1,94 @@
-{% load staticfiles %}
-{% load i18n %}
+{% load staticfiles i18n %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load util_tags %}
 <!DOCTYPE html>
-{#<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar" dir="rtl"{% else %}lang="en"{% endif %}>#}
-<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar"{% else %}lang="en"{% endif %}>
-<!--[if IE 9]>
-<html class="ie9" lang="en">    <![endif]-->
-<!--[if IE 8]>
-<html class="ie8" lang="en">    <![endif]-->
+{#<html ng-app {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar" dir="rtl"{% endif %}>#}
+<html ng-app>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name=viewport content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'images/favicons/apple-icon-57x57.png' %}">
-    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'images/favicons/apple-icon-60x60.png' %}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/favicons/apple-icon-72x72.png' %}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'images/favicons/apple-icon-76x76.png' %}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/favicons/apple-icon-114x114.png' %}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'images/favicons/apple-icon-120x120.png' %}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'images/favicons/apple-icon-144x144.png' %}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'images/favicons/apple-icon-152x152.png' %}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-icon-180x180.png' %}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'images/favicons/android-icon-192x192.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'images/favicons/favicon-96x96.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{% static 'images/favicons/ms-icon-144x144.png' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}Student Registration{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon-32x32.png' %}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon-16x16.png' %}" sizes="16x16">
+    <link rel="manifest" href="{% static 'images/manifest.json' %}">
+    <link rel="mask-icon" href="{% static 'images/safari-pinned-tab.svg' %}" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
 
-    <title>YFP | {% block head_title %}{% endblock %}</title>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
 
-    <meta name="description"
-          content="Gridus vCard HTML Template is the professional responsive personal website template, based on the latest Bootstrap 3">
-    <meta name="keywords" content="html5, template, website, responsive, bootstrap">
-    <meta name="author" content="neuethemes">
+    {% block css %}
+        <!-- Latest compiled and minified Bootstrap 4 Alpha 4 CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+              integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+              crossorigin="anonymous">
 
-    <!-- Preloader -->
-    <link href="{% static 'custom/2.2.0/css/preloader.css' %}" property='stylesheet' rel="stylesheet" type="text/css"
-          media="screen"/>
+        <!-- Your stuff: Third-party css libraries go here -->
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
-          media="screen">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" property='stylesheet'
-          rel="stylesheet" type="text/css" media="screen"/>
-    <link href="{% static 'vendor/flaticons/flaticon.min.css' %}" property='stylesheet' rel="stylesheet" type="text/css"
-          media="screen"/>
-    <link href="{% static 'vendor/hover/css/hover-min.css' %}" property='stylesheet' rel="stylesheet" type="text/css"
-          media="screen"/>
-    <link href="{% static 'vendor/mfp/css/magnific-popup.min.css' %}" property='stylesheet' rel="stylesheet"
-          type="text/css" media="screen"/>
-    <link href="{% static 'vendor/owl-carousel/assets/owl.carousel.min.css' %}" property='stylesheet' rel="stylesheet"
-          type="text/css" media="screen"/>
+        <!-- This file store project specific CSS -->
+        <link href="{% static 'css/project.css' %}" rel="stylesheet">
+        {#    <link href="{% static 'css/main.css' %}" rel="stylesheet">#}
+    {% endblock %}
 
-    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" property='stylesheet' rel="stylesheet" type="text/css"
-          media="screen"/>
+    {% block extra_head %}
+    {% endblock %}
 
-    <!-- Custom styles -->
-    <link href="{% static 'custom/2.2.0/css/style.css' %}" property='stylesheet' rel="stylesheet" type="text/css"
-          media="screen"/>
-    <link href="{% static 'custom/2.2.0/css/layouts/olivia.css' %}" property='stylesheet' rel="stylesheet"
-          type="text/css" media="screen"/>
-    <link href="{% static 'custom/2.2.0/css/colors/default.css' %}" id="color-styles" property='stylesheet'
-          rel="stylesheet" type="text/css" media="screen"/>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
 </head>
 
-<body id="olivia" class="boxed">
+<body>
 
-<!--Pre-Loader-->
-<div id="preloader"></div>
+{% include 'header.html' %}
 
-<header>
-    {% block header %}
-        <section id="top-navigation" class="container-fluid nopadding">
-            <div class="row nopadding ident ui-bg-color01">
+<div class="container">
 
-                <!-- Main Navigation -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
-                <ul id="nav" class="row nopadding cd-side-navigation">
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color01" data-animation-duration="1000"
-                        data-animation-delay="100">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-insignia"></i><span>{% trans 'home' %}</span></a>
-                    </li>
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color02" data-animation-duration="1000"
-                        data-animation-delay="300">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-graduation61"></i><span>{% trans 'profile' %}</span></a>
-                    </li>
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color03" data-animation-duration="1000"
-                        data-animation-delay="500">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i
-                                class="flaticon-book-bag2"></i><span>{% trans 'courses' %}</span></a>
-                    </li>
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"
-                        data-animation-delay="700">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-placeholders4"></i><span>{% trans 'partners' %}</span></a>
-                    </li>
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color05" data-animation-duration="1000"
-                        data-animation-delay="900">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i class="flaticon-earphones18"></i><span>{% trans 'support' %}</span></a>
-                    </li>
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
-                        data-animation-delay="1100">
-                        <a href="{% url 'youth:home' %}" class="hvr-sweep-to-bottom"><i
-                                class="flaticon-pens15"></i><span>{% trans 'blog' %}</span></a>
-                    </li>
-                </ul>
-
-                <!-- /Main Navigation -->
-
-            </div>
-        </section>
-    {% endblock %}
-</header>
-
-<!-- Container -->
-<div class="content-wrap">
     {% block main_content %}
-    {% endblock %}
+    {% endblock main_content %}
+
+</div> <!-- /container -->
+<div class="container-full-page" style="position: relative;width: 100%;padding: 15px;">
+    {% block content-full-page %}
+    {% endblock content-full-page %}
 </div>
 
-<footer class="padding-50 dark ui-bg-color01"
-        data-animation-origin="top"
-        data-animation-duration="500"
-        data-animation-delay="800"
-        data-animation-distance="50px">
-    <div class="container-fluid nopadding">
-        <div class="row">
-            <div class="col-sm-3">
-                <h5 class="font-accident-two-normal uppercase">{% trans 'Youth Referral Platform' %}</h5>
-                <p class="inline-block">
+{% block modal %}{% endblock modal %}
 
-                </p>
-                <div class="divider-dynamic"></div>
-            </div>
-            <div class="col-sm-3 cv-link">
-                <h5 class="font-accident-two-normal uppercase">{% trans 'Download CV' %}</h5>
-                <div class="dividewhite1"></div>
-                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>{% trans 'English' %}</a>
-                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>{% trans 'Arabic' %}</a>
-                <a href="#!"><i class="fa fa-long-arrow-down" aria-hidden="true"></i>{% trans 'French' %}</a>
-                <p class="inline-block">
-                    {% trans 'The CV is in .pdf format. Use the Adobe Reader to open it.' %}
-                </p>
-                <div class="divider-dynamic"></div>
-            </div>
-            <div class="col-sm-3">
-                <h5 class="font-accident-two-normal uppercase">{% trans 'Newsletter' %}</h5>
-                <div class="dividewhite1"></div>
-                <input class="newsletter-email" type="email" required="" name="ne" placeholder="{% trans 'Your Email' %}">
-                <a href="#!" class="btn btn-wh-trans btn-xs">{% trans 'OK' %}</a>
-                <div class="divider-dynamic"></div>
-            </div>
-            <div class="col-sm-3">
-                <h5 class="font-accident-two-normal uppercase">{% trans 'Follow us' %}</h5>
-                <div class="follow">
-                    <ul class="list-inline social">
-                        <li><a target="_blank" href="#" class="rst-icon-facebook"><i class="fa fa-facebook"></i></a></li>
-                        <li><a target="_blank" href="#" class="rst-icon-twitter"><i class="fa fa-twitter"></i></a></li>
-                        <li><a target="_blank" href="#" class="rst-icon-youtube"><i class="fa fa-youtube"></i></a></li>
-                    </ul>
-                </div>
-                <div class="divider-dynamic"></div>
-            </div>
-            <div class="col-sm-3">
-                {% load i18n %}
-                {% get_current_language as LANGUAGE_CODE %}
-                <div class="btn-group">
-                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ LANGUAGE_CODE|upper }}<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{% url 'users:set_language' 'en-us' %}">
-                                {% trans 'English' %}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'users:set_language' 'ar-ar' %}">
-                                {% trans 'Arabic' %}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div id="Menu"></div>
-            </div>
-        </div>
-        <div class="dividewhite1"></div>
-        <div class="row">
-            <div class="col-md-8 copyrights">
-                <p>© 2017 UNICEF Lebanon</p>
-            </div>
-        </div>
-    </div>
-</footer>
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+{% block javascript %}
+    <!-- Required by Bootstrap v4 Alpha 4 -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+            integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
 
-<!-- Back to Top -->
-<div id="back-top"></div>
-<!-- /Back to Top -->
+    <!-- Your stuff: Third-party javascript libraries go here -->
 
-<!-- JS -->
+    <!-- place project specific Javascript in this file -->
+    {#      {% compress js %}#}
+    <script src="{% static 'js/project.js' %}"></script>
+    {#      {% endcompress %}#}
 
-<script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
-<script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
-<script src="https://unpkg.com/scrollreveal@3.3.2/dist/scrollreveal.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
-
-{#<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>#}
-
-<script src="{% static 'vendor/mfp/js/jquery.magnific-popup.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'vendor/progressbar/progressbar.min.js' %}" type="text/javascript"></script>
-
-<script src="{% static 'vendor/anicounter/jquery.counterup.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'vendor/pjax/jquery.pjax.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'vendor/owl-carousel/owl.carousel.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'vendor/headlines/headlines.min.js' %}" type="text/javascript"></script>
-
-<!-- Custom scripts -->
-<script src="{% static 'custom/2.2.0/js/animation.js' %}" type="text/javascript"></script>
-<script src="{% static 'custom/2.2.0/js/custom.js' %}" type="text/javascript"></script>
-
-
+{% endblock javascript %}
+{% block extra_js %}
+{% endblock %}
 </body>
-
 </html>
+

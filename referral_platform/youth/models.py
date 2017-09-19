@@ -8,6 +8,8 @@ from django.db.models.signals import pre_save
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
@@ -116,9 +118,9 @@ class Person(TimeStampedModel):
     last_name = models.CharField(max_length=75)
     father_name = models.CharField(max_length=75)
     full_name = models.CharField(max_length=225, blank=True, null=True)
-    mother_fullname = models.CharField(max_length=255)
-    mother_firstname = models.CharField(max_length=75)
-    mother_lastname = models.CharField(max_length=75)
+    mother_fullname = models.CharField(max_length=255, blank=True, null=True)
+    mother_firstname = models.CharField(max_length=75, blank=True, null=True)
+    mother_lastname = models.CharField(max_length=75, blank=True, null=True)
     sex = models.CharField(
         max_length=50,
         choices=GENDER,
@@ -247,10 +249,10 @@ class YoungPerson(Person):
         ('single', _('Single')),
     )
 
-    user = models.OneToOneField(User, related_name='profile')
+    # user = models.OneToOneField(User, related_name='profile')
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
-    location = models.ForeignKey(Location)
-    partner_organization = models.ForeignKey(PartnerOrganization)
+    location = models.ForeignKey(Location, blank=True, null=True)
+    partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
         max_length=50,
@@ -265,7 +267,8 @@ class YoungPerson(Person):
             ('stopped_studying', _('Yes, but I stopped studying')),
             ('never_studied', _('Never been to an educational institution')),
             ('na', _('NA')),
-        )
+        ),
+        blank=True, null=True
     )
     education_type = models.CharField(
         max_length=50,
@@ -310,7 +313,7 @@ class YoungPerson(Person):
         blank=True,
         null=True,
     )
-    looking_for_work = models.BooleanField()
+    looking_for_work = models.NullBooleanField()
     through_whom = ArrayField(
         models.CharField(
             max_length=50,
@@ -414,3 +417,6 @@ class YoungPerson(Person):
         ordering = ['first_name']
         verbose_name = _("Youth")
         verbose_name_plural = _("Youth")
+
+    def get_absolute_url(self):
+        return reverse('youth:edit', kwargs={'pk': self.id})

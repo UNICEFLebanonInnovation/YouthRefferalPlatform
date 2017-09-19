@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import RedirectView
 
 
 from django_filters.views import FilterView
@@ -20,11 +21,28 @@ from referral_platform.youth.models import YoungPerson
 from .filters import BLNFilter
 from .tables import BootstrapTable, CommonTable
 from .forms import CommonForm
+from .models import Assessment, AssessmentSubmission
+
+
+class YouthListView(LoginRequiredMixin,
+                    FilterView,
+                    ExportMixin,
+                    SingleTableView,
+                    RequestConfig):
+
+    table_class = CommonTable
+    model = YoungPerson
+    template_name = 'clm/bln_list.html'
+
+    filterset_class = BLNFilter
+
+    def get_queryset(self):
+        return YoungPerson.objects.all()
 
 
 class YouthAddView(LoginRequiredMixin, CreateView):
 
-    template_name = 'youth/bln_add.html'
+    template_name = 'clm/bln_add.html'
     form_class = CommonForm
     model = YoungPerson
     success_url = '/youth/bln-list/'
@@ -49,9 +67,10 @@ class YouthAddView(LoginRequiredMixin, CreateView):
 
 class YouthEditView(LoginRequiredMixin, UpdateView):
 
-    template_name = 'youth/bln_edit.html'
+    template_name = 'clm/bln_edit.html'
     form_class = CommonForm
-    success_url = '/youth/bln-list/'
+    model = YoungPerson
+    success_url = '/youth/'
 
     # def get_context_data(self, **kwargs):
     #     # force_default_language(self.request)
@@ -75,41 +94,43 @@ class YouthEditView(LoginRequiredMixin, UpdateView):
     #     return super(YouthEditView, self).form_valid(form)
 
 
+class YouthAssessment(SingleObjectMixin, RedirectView):
+
+    model = Assessment
+
+    def get_redirect_url(self, *args, **kwargs):
+
+        assessment = self.get_object()
+        youth = YoungPerson.objects.get(number=self.request.GET.get('youth_id'))
+
+        url = '{form}?d[form_slug]={slug}&d[youth_id]={id}&d[status]={status}&returnURL={callback}'.format(
+            form = assessment.assessment_form,
+            slug = assessment.slug,
+            id = youth.number,
+            status = self.request.GET.get('status'),
+            callback = self.request.META.get('HTTP_REFERER', youth.get_absolute_url())
+        )
+        return url
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class YouthAssessmentSubmission(SingleObjectMixin, View):
 
-    model = YoungPerson
-    slug_url_kwarg = 'status'
-
     def post(self, request, *args, **kwargs):
 
-        if 'status' not in request.body:
+        if 'youth_id' not in request.body or 'status' not in request.body:
             return HttpResponseBadRequest()
 
         payload = json.loads(request.body.decode('utf-8'))
 
-        enrollment = YoungPerson.objects.get(id=self.kwargs['pk'])
-
-        enrollment.status = payload['status']
-        setattr(enrollment, payload['status'], payload)
+        youth = YoungPerson.objects.get(number=payload['youth_id'])
+        assessment = Assessment.objects.get(slug=payload['slug'])
+        submission, new = AssessmentSubmission.objects.get_or_create(
+            youth=youth,
+            assessment=assessment,
+            status=payload['status']
+        )
+        submission.data = payload
+        submission.save()
 
         return HttpResponse()
-
-
-class YouthListView(LoginRequiredMixin,
-                    FilterView,
-                    ExportMixin,
-                    SingleTableView,
-                    RequestConfig):
-
-    table_class = CommonTable
-    model = YoungPerson
-    template_name = 'youth/bln_list.html'
-    table = BootstrapTable(YoungPerson.objects.all(), order_by='id')
-
-    filterset_class = BLNFilter
-
-    def get_queryset(self):
-        return YoungPerson.objects.all()
-
-####################### API VIEWS #############################

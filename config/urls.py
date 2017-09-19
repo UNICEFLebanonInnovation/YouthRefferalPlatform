@@ -5,14 +5,16 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.views import defaults as default_views
 
 from referral_platform.users.views import PasswordChangeView, PasswordChangeDoneView, \
     LoginRedirectView
 
 urlpatterns = [
-    url(r'^', include('referral_platform.youth.urls', namespace='youth')),
+
+    # url(r'^', include('referral_platform.youth.urls', namespace='youth')),
+    url(r'^$', RedirectView.as_view(pattern_name='youth:list')),
     url(r'^courses/', include('referral_platform.courses.urls', namespace='courses')),
     url(r'^initiatives/', include('referral_platform.initiatives.urls', namespace='initiatives')),
 

@@ -25,13 +25,6 @@ DAYS.append(('', _('---------')))
 
 class CommonForm(forms.ModelForm):
 
-    country = forms.ModelChoiceField(
-        queryset=Location.objects.filter(parent__isnull=True), widget=forms.Select,
-        empty_label=_('country'),
-        required=True, to_field_name='id',
-        initial=0
-    )
-
     governorate = forms.ModelChoiceField(
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         empty_label=_('governorate'),
@@ -39,7 +32,12 @@ class CommonForm(forms.ModelForm):
         initial=0
     )
 
-    location = forms.CharField(widget=forms.TextInput, required=False)
+    location = forms.ModelChoiceField(
+        queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
+        empty_label=_('location'),
+        required=False, to_field_name='id',
+        initial=0
+    )
 
     class Meta:
         model = YoungPerson
@@ -54,7 +52,6 @@ class CommonForm(forms.ModelForm):
             'birthday_month',
             'birthday_day',
             'nationality',
-            'mother_fullname',
             'address',
             'marital_status',
         )
@@ -85,17 +82,15 @@ class CommonForm(forms.ModelForm):
             new_forms = {}
 
             for specific_form in all_forms:
-                formtxt = '{form}'.format(
-                    form=specific_form.assessment_form,
-                    status=specific_form.name,
-                    callback=self.request.build_absolute_uri(
-                        reverse('youth:assessment', kwargs={'pk': instance.id})
-                    )
+                formtxt = '{assessment}?youth_id={youth_id}&status={status}'.format(
+                    assessment=reverse('youth:assessment', kwargs={'slug': specific_form.slug}),
+                    youth_id=instance.number,
+                    status='registration',
                 )
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = {}
 
-                new_forms[specific_form.name][specific_form.test_order] = {'title': specific_form.title,
+                new_forms[specific_form.name][specific_form.id] = {'title': specific_form.name,
                                                                            'form': formtxt,
                                                                            'overview': specific_form.overview}
 
@@ -114,8 +109,7 @@ class CommonForm(forms.ModelForm):
                 testFieldset = Fieldset(
                     None,
                     Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
-                            'overview'] + '</h4>')
+                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order]['overview'] + '</h4>')
                     ),
                     assessment_div,
                     Div(
@@ -179,23 +173,13 @@ class CommonForm(forms.ModelForm):
                     Div('sex', css_class='col-md-3'),
                     HTML('<span class="badge badge-default">9</span>'),
                     Div('nationality', css_class='col-md-3'),
+                    HTML('<span class="badge badge-default">1</span>'),
+                    Div('marital_status', css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
                     HTML('<span class="badge badge-default">11</span>'),
                     Div('address', css_class='col-md-3'),
-                    css_class='row',
-                ),
-                css_class='bd-callout bd-callout-warning'
-            ),
-            Fieldset(
-                None,
-                Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">Marital Status</h4>')
-                ),
-                Div(
-                    HTML('<span class="badge badge-default">1</span>'),
-                    Div('marital_status', css_class='col-md-3'),
                     css_class='row',
                 ),
                 css_class='bd-callout bd-callout-warning'
@@ -210,7 +194,7 @@ class CommonForm(forms.ModelForm):
             FormActions(
                 Submit('save', _('Save')),
                 Button('cancel', _('Cancel')),
-                HTML('<a class="btn btn-info" href="/clm/bln-list/">Back to list</a>'),
+                HTML('<a class="btn btn-info" href="/youth/">Back to list</a>'),
             )
         )
 
