@@ -29,6 +29,20 @@ class Assessment(models.Model):
         return self.name
 
 
+class AssessmentSubmission(models.Model):
+
+    STATUS = Choices(
+        'enrolled',
+        'pre_test',
+        'post_test'
+    )
+
+    youth = models.ForeignKey(YoungPerson)
+    assessment = models.ForeignKey(Assessment)
+    status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
+    data = JSONField(blank=True, null=True, default=dict)
+
+
 class CLM(TimeStampedModel):
 
     LANGUAGES = Choices(

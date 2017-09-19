@@ -16,17 +16,7 @@ class BootstrapTable(tables.Table):
 class CommonTable(tables.Table):
 
     edit_column = tables.TemplateColumn(verbose_name=_('Edit student'),
-                                        template_name='django_tables2/edit_column.html',
-                                        attrs={'url': ''})
-    delete_column = tables.TemplateColumn(verbose_name=_('Delete student'),
-                                          template_name='django_tables2/delete_column.html',
-                                          attrs={'url': ''})
-    pre_assessment = tables.TemplateColumn(verbose_name=_('Pre-assessment'),
-                                           template_name='django_tables2/clm_assessment.html',
-                                           attrs={'url': ''})
-    post_assessment = tables.TemplateColumn(verbose_name=_('Pre-assessment'),
-                                            template_name='django_tables2/clm_assessment.html',
-                                            attrs={'url': ''})
+                                        template_name='django_tables2/edit_column.html',)
 
     student_age = tables.Column(verbose_name=_('Age'), accessor='student.age')
     student_birthday = tables.Column(verbose_name=_('Birthday'), accessor='student.birthday')
@@ -36,9 +26,6 @@ class CommonTable(tables.Table):
         template = 'django_tables2/bootstrap.html'
         fields = (
             'edit_column',
-            'delete_column',
-            'pre_assessment',
-            'post_assessment',
             'first_name',
             'father_name',
             'last_name',

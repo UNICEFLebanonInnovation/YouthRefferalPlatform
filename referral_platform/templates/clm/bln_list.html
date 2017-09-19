@@ -1,4 +1,4 @@
-{% extends "base_clm.html" %}
+{% extends "base.html" %}
 {% load staticfiles i18n %}
 {% load static %}
 {% load render_table from django_tables2 %}
@@ -22,13 +22,13 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item active">
-            <a href="{% url "clm:bln_add" %}" class="btn btn-success">
+            <a href="{% url "youth:add" %}" class="btn btn-success">
                 <i class="icon-plus-sign icon-white"></i>
                 {% trans "Add new Child" %}
             </a>
         </li>
         <li class="breadcrumb-item active">
-            <a href="{% url "clm:bln_add" %}" class="btn btn-success">
+            <a href="{% url "youth:add" %}" class="btn btn-success">
                 <i class="icon-plus-sign icon-white"></i>
                 {% trans "Export data" %}
             </a>
