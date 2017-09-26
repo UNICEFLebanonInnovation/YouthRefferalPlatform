@@ -3,25 +3,23 @@ from __future__ import absolute_import, unicode_literals
 
 import json
 
-from django.views.generic import ListView, FormView, TemplateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import RedirectView
+from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import RedirectView
-
-
 from django_filters.views import FilterView
-from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
+from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 
 from referral_platform.youth.models import YoungPerson
 from .filters import BLNFilter
-from .tables import BootstrapTable, CommonTable
 from .forms import CommonForm
 from .models import Assessment, AssessmentSubmission
+from .tables import CommonTable
 
 
 class YouthListView(LoginRequiredMixin,
@@ -45,7 +43,7 @@ class YouthAddView(LoginRequiredMixin, CreateView):
     template_name = 'clm/bln_add.html'
     form_class = CommonForm
     model = YoungPerson
-    success_url = '/youth/bln-list/'
+    success_url = '/youth'
 
     # def get_initial(self):
     #     initial = super(YouthAddView, self).get_initial()
