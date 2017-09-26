@@ -2,12 +2,12 @@ def generate_id(
             first_name,
             father_name,
             last_name,
-            mother_full_name="",
             gender,
             birthday_day,
             birthday_month,
-            birthday_year
-        ):
+            birthday_year,
+            mother_full_name="",
+    ):
     """
     Unique Number Proposal:
     full name total char number
@@ -20,7 +20,7 @@ def generate_id(
     :return:
     """
     import hashlib
-    
+
     try:
         # concatenate name to form full name with no spaces
         full_name = u'{}{}{}'.format(first_name, father_name, last_name)
