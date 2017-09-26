@@ -2,7 +2,7 @@ def generate_id(
             first_name,
             father_name,
             last_name,
-            mother_full_name,
+            mother_full_name="",
             gender,
             birthday_day,
             birthday_month,
@@ -20,8 +20,7 @@ def generate_id(
     :return:
     """
     import hashlib
-    if mother_full_name is None:
-        mother_full_name = ""
+    
     try:
         # concatenate name to form full name with no spaces
         full_name = u'{}{}{}'.format(first_name, father_name, last_name)
