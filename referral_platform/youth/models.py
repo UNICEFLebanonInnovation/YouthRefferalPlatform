@@ -4,6 +4,7 @@ from datetime import date
 import datetime
 
 from django.contrib.gis.db import models
+from django.core.validators import RegexValidator
 from django.db.models.signals import pre_save
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
@@ -113,10 +114,11 @@ class Person(TimeStampedModel):
         ('Male', _('Male')),
         ('Female', _('Female')),
     )
+    arabic_validator = RegexValidator(r'^[\u0600-\u065F\u066E-\u06FF ]*$', 'Only Arabic characters are allowed.')
 
-    first_name = models.CharField(max_length=75)
-    last_name = models.CharField(max_length=75)
-    father_name = models.CharField(max_length=75)
+    first_name = models.CharField(max_length=75, validators=[arabic_validator])
+    last_name = models.CharField(max_length=75, validators=[arabic_validator])
+    father_name = models.CharField(max_length=75, validators=[arabic_validator])
     full_name = models.CharField(max_length=225, blank=True, null=True)
     mother_fullname = models.CharField(max_length=255, blank=True, null=True)
     mother_firstname = models.CharField(max_length=75, blank=True, null=True)
