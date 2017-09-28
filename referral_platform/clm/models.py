@@ -102,7 +102,7 @@ class CLM(TimeStampedModel):
     )
     governorate = models.ForeignKey(
         Location,
-        blank=True, null=True,
+        blank=False, null=False,
         related_name='+',
     )
     district = models.ForeignKey(

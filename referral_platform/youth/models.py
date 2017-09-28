@@ -127,26 +127,28 @@ class Person(TimeStampedModel):
         max_length=50,
         choices=GENDER,
     )
+    from datetime import datetime
+    print datetime.today().year
+    current_year = datetime.today().year
     birthday_year = models.CharField(
         max_length=4,
-        blank=True,
-        null=True,
-        default=0,
-        choices=((str(x), x) for x in range(1970, 2051))
+        blank=False,
+        null=False,
+        choices=((str(x), x) for x in range(current_year -26 , current_year-6 ))
     )
     birthday_month = models.CharField(
         max_length=2,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
         default=0,
         choices=MONTHS
     )
     birthday_day = models.CharField(
         max_length=2,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
         default=0,
-        choices=((str(x), x) for x in range(1, 33))
+        choices=((str(x), x) for x in range(1, 32))
     )
     age = models.CharField(max_length=4, blank=True, null=True)
     phone = models.CharField(max_length=64, blank=True, null=True)
@@ -259,7 +261,7 @@ class YoungPerson(Person):
     marital_status = models.CharField(
         max_length=50,
         choices=MARITAL_STATUS,
-        blank=True, null=True,
+        blank=False, null=False,
     )
 
     education_status = models.CharField(

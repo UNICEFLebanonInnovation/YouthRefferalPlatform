@@ -28,8 +28,7 @@ class CommonForm(forms.ModelForm):
     governorate = forms.ModelChoiceField(
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         empty_label=_('governorate'),
-        required=False, to_field_name='id',
-        initial=0
+        required=True, to_field_name='id',
     )
 
     location = forms.ModelChoiceField(
