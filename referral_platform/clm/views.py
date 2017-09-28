@@ -45,7 +45,7 @@ class YouthAddView(LoginRequiredMixin, CreateView):
     template_name = 'clm/bln_add.html'
     form_class = CommonForm
     model = YoungPerson
-    success_url = '/youth/bln-list/'
+    success_url = '/youth/'
 
     # def get_initial(self):
     #     initial = super(YouthAddView, self).get_initial()
