@@ -82,7 +82,7 @@ class UserChangeLanguageRedirectView(RedirectView):
         user_language = kwargs['language']
         translation.activate(user_language)
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user_language
-        return reverse('youth:add')
+        return reverse('youth:list', kwargs={})
 
 class PasswordContextMixin(object):
     extra_context = None

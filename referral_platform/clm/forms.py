@@ -1,6 +1,8 @@
 from __future__ import unicode_literals, absolute_import, division
 
+from django.http import request
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as __
 from django import forms
 from django.core.urlresolvers import reverse
 
@@ -27,16 +29,17 @@ class CommonForm(forms.ModelForm):
 
     governorate = forms.ModelChoiceField(
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-        empty_label=_('governorate'),
+        empty_label=__('governorate'),
         required=True, to_field_name='id',
     )
 
     location = forms.ModelChoiceField(
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-        empty_label=_('location'),
+        empty_label=__('Location'),
         required=False, to_field_name='id',
         initial=0
     )
+
 
     class Meta:
         model = YoungPerson
@@ -59,10 +62,10 @@ class CommonForm(forms.ModelForm):
 
     class Media:
         js = (
-            'js/jquery-1.12.3.min.js',
-            'js/jquery-ui-1.12.1.js',
-            'js/validator.js',
-            'js/registrations.js',
+            #'js/jquery-1.12.3.min.js',
+            #'js/jquery-ui-1.12.1.js',
+            #'js/validator.js',
+            #'js/registrations.js',
         )
 
     def __init__(self, *args, **kwargs):
@@ -130,15 +133,15 @@ class CommonForm(forms.ModelForm):
             Fieldset(
                 None,
                 Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">Location Information</h4>')
+                    HTML('<h4 id="alternatives-to-hidden-labels">'+_('Location Information')+'</h4>')
                 ),
                 Div(
-                    HTML('<span class="badge badge-default">2</span>'),
+                    HTML('<span class="badge badge-default">1</span>'),
                     Div('governorate', css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
-                    HTML('<span class="badge badge-default">4</span>'),
+                    HTML('<span class="badge badge-default">2</span>'),
                     Div('location', css_class='col-md-3'),
                     css_class='row',
                 ),
@@ -147,37 +150,37 @@ class CommonForm(forms.ModelForm):
             Fieldset(
                 None,
                 Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">Personal Details</h4>')
+                    HTML('<h4 id="alternatives-to-hidden-labels">'+_('Personal Details')+'</h4>')
                 ),
                 Div(
-                    HTML('<span class="badge badge-default">2</span>'),
+                    HTML('<span class="badge badge-default">1</span>'),
                     Div('first_name', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">3</span>'),
+                    HTML('<span class="badge badge-default">2</span>'),
                     Div('father_name', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">4</span>'),
+                    HTML('<span class="badge badge-default">3</span>'),
                     Div('last_name', css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
-                    HTML('<span class="badge badge-default">5</span>'),
+                    HTML('<span class="badge badge-default">4</span>'),
                     Div('birthday_year', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">6</span>'),
+                    HTML('<span class="badge badge-default">5</span>'),
                     Div('birthday_month', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">7</span>'),
+                    HTML('<span class="badge badge-default">6</span>'),
                     Div('birthday_day', css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
-                    HTML('<span class="badge badge-default">8</span>'),
+                    HTML('<span class="badge badge-default">7</span>'),
                     Div('sex', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">9</span>'),
+                    HTML('<span class="badge badge-default">8</span>'),
                     Div('nationality', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">1</span>'),
+                    HTML('<span class="badge badge-default">9</span>'),
                     Div('marital_status', css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
-                    HTML('<span class="badge badge-default">11</span>'),
+                    HTML('<span class="badge badge-default">10</span>'),
                     Div('address', css_class='col-md-3'),
                     css_class='row',
                 ),
@@ -192,8 +195,7 @@ class CommonForm(forms.ModelForm):
         self.helper.layout.append(
             FormActions(
                 Submit('save', _('Save')),
-                Button('cancel', _('Cancel')),
-                HTML('<a class="btn btn-info" href="/youth/">Back to list</a>'),
+                HTML('<a class="btn btn-info" href="/youth/">'+_('Cancel')+'</a>'),
             )
         )
 

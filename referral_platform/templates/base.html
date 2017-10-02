@@ -40,8 +40,9 @@
     {% endblock %}
 
 </head>
+{% get_current_language as LANGUAGE_CODE %}
 
-<body>
+<body {% if LANGUAGE_CODE == "ar-ar" %} style=" direction:rtl; "  {% endif %}>
 
 {% include 'header.html' %}
 

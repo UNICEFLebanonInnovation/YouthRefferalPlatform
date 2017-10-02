@@ -11,38 +11,45 @@
 
 {% block content-full-page %}
 
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
+    <style>
+    .table-container th {
+        text-align: start;
+    }
+    </style>
+
+    <ol class="breadcrumb"  >
+        <li class="breadcrumb-item active" {% if LANGUAGE_CODE == 'ar-ar' %}style=" float: right; "{% endif %}>
             {{ request.user.partner }}
         </li>
-        <li class="breadcrumb-item active">
+        <li class="breadcrumb-item active" {% if LANGUAGE_CODE == 'ar-ar' %}style=" float: right; "{% endif %}>
             {{ request.user }}
         </li>
+
+
     </ol>
 
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
+    <ol class="breadcrumb" >
+        <li class="breadcrumb-item active" {% if LANGUAGE_CODE == 'ar-ar' %}style=" float: right; "{% endif %}>
             <a href="{% url "youth:add" %}" class="btn btn-success">
                 <i class="icon-plus-sign icon-white"></i>
-                {% trans "Add new Child" %}
+                {% trans "Add new beneficiary" %}
             </a>
         </li>
-        <li class="breadcrumb-item active">
+
+        {% comment %}<li class="breadcrumb-item active">
             <a href="{% url "youth:add" %}" class="btn btn-success">
                 <i class="icon-plus-sign icon-white"></i>
                 {% trans "Export data" %}
             </a>
-        </li>
+        </li>{% endcomment %}
     </ol>
 
-    {% if filter %}
-        <div class="col-sm-10 pb-5">
-            <form action="" method="get" class="form form-inline">
-                {% bootstrap_form filter.form layout='inline' %}
-                {% bootstrap_button 'filter' %}
-            </form>
-        </div>
-    {% endif %}
+    <div class="col-sm-10 pb-5">
+        <form action="" method="get" class="form form-inline">
+            {% bootstrap_form filter.form layout='inline' %}
+            {% bootstrap_button _('Filter') %}
+        </form>
+    </div>
     <div class="col-sm-10">
         {% render_table table 'django_tables2/bootstrap.html' %}
     </div>
@@ -50,7 +57,7 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    {% comment %}<script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootbox.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootbox.js' %}"></script>{% endcomment %}
 {% endblock %}

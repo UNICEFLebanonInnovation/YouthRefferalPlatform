@@ -334,4 +334,4 @@ class RegistrationForm(forms.ModelForm):
         }
 
     class Media:
-        js = ('js/bootstrap-datetimepicker.js', 'js/registrations.js')
+        js = ()

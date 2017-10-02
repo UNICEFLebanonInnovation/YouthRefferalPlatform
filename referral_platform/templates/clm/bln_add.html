@@ -6,7 +6,7 @@
 
 {% block extra_head %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.12.1.css' %}">
+    {% comment %}<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.12.1.css' %}">{% endcomment %}
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 {% endblock %}
@@ -29,7 +29,6 @@
         <section class="inner-section light bg-color01">
             <div class="container-fluid nopadding">
 
-                {{ form.errors }}
                 {% crispy form 'bootstrap4' %}
 
             </div>
@@ -41,9 +40,9 @@
 
 {% block extra_js %}
 
-    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+   {% comment %} <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>{% endcomment %}
 
 
 {% endblock %}

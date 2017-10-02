@@ -6,7 +6,9 @@
 
 {% block extra_head %}
 
+{% comment %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.12.1.css' %}">
+{% endcomment %}
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 {% endblock %}
@@ -22,7 +24,6 @@
                     data-animation-duration="400"
                     data-animation-delay="100"
                     data-animation-distance="50px">{% trans "Registration" %}</h2>
-
             </div>
         </section>
 

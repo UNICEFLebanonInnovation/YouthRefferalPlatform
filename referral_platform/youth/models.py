@@ -8,7 +8,7 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import pre_save
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 from model_utils import Choices
@@ -21,7 +21,7 @@ from .utils import *
 
 
 class Nationality(models.Model):
-    name = models.CharField(max_length=45, unique=True)
+    name = models.CharField(max_length=45, unique=True, verbose_name=_('Nationality'))
     code = models.CharField(max_length=5, null=True)
 
     class Meta:
@@ -83,7 +83,6 @@ class Sport(models.Model):
 
 
 class Disability(models.Model):
-
     name = models.CharField(max_length=100)
 
     class Meta:
@@ -94,7 +93,6 @@ class Disability(models.Model):
 
 
 class Person(TimeStampedModel):
-
     MONTHS = Choices(
         ('1', _('January')),
         ('2', _('February')),
@@ -114,18 +112,19 @@ class Person(TimeStampedModel):
         ('Male', _('Male')),
         ('Female', _('Female')),
     )
-    arabic_validator = RegexValidator(r'^[\u0600-\u065F\u066E-\u06FF ]*$', 'Only Arabic characters are allowed.')
+    arabic_validator = RegexValidator(r'^[\u0600-\u065F\u066E-\u06FF ]*$', _('Only Arabic characters are allowed.') )
 
-    first_name = models.CharField(max_length=75, validators=[arabic_validator])
-    last_name = models.CharField(max_length=75, validators=[arabic_validator])
-    father_name = models.CharField(max_length=75, validators=[arabic_validator])
-    full_name = models.CharField(max_length=225, blank=True, null=True)
+    first_name = models.CharField(max_length=75, validators=[arabic_validator], verbose_name=_('first name'))
+    last_name = models.CharField(max_length=75, validators=[arabic_validator], verbose_name=_('last name'))
+    father_name = models.CharField(max_length=75, validators=[arabic_validator], verbose_name=_('Father Name'))
+    full_name = models.CharField(max_length=225, blank=True, null=True, verbose_name=_('full name'))
     mother_fullname = models.CharField(max_length=255, blank=True, null=True)
     mother_firstname = models.CharField(max_length=75, blank=True, null=True)
     mother_lastname = models.CharField(max_length=75, blank=True, null=True)
     sex = models.CharField(
         max_length=50,
         choices=GENDER,
+        verbose_name=_('Gender')
     )
     from datetime import datetime
     print datetime.today().year
@@ -134,23 +133,26 @@ class Person(TimeStampedModel):
         max_length=4,
         blank=False,
         null=False,
-        choices=((str(x), x) for x in range(current_year -26 , current_year-6 ))
+        choices=((str(x), x) for x in range(current_year - 26, current_year - 6)),
+        verbose_name=_('birthday year')
     )
     birthday_month = models.CharField(
         max_length=2,
         blank=False,
         null=False,
         default=0,
-        choices=MONTHS
+        choices=MONTHS,
+        verbose_name=_('birthday month')
     )
     birthday_day = models.CharField(
         max_length=2,
         blank=False,
         null=False,
         default=0,
-        choices=((str(x), x) for x in range(1, 32))
+        choices=((str(x), x) for x in range(1, 32)),
+        verbose_name=_('birthday day')
     )
-    age = models.CharField(max_length=4, blank=True, null=True)
+    age = models.CharField(max_length=4, blank=True, null=True, verbose_name=_('age'))
     phone = models.CharField(max_length=64, blank=True, null=True)
     phone_prefix = models.CharField(max_length=10, blank=True, null=True)
     id_number = models.CharField(max_length=45, blank=True, null=True)
@@ -161,7 +163,8 @@ class Person(TimeStampedModel):
     )
     nationality = models.ForeignKey(
         Nationality,
-        related_name='+'
+        related_name='+',
+        verbose_name=_('Nationality')
     )
     mother_nationality = models.ForeignKey(
         Nationality,
@@ -170,7 +173,8 @@ class Person(TimeStampedModel):
     )
     address = models.TextField(
         blank=True,
-        null=True
+        null=True,
+        verbose_name=_('address')
     )
     number = models.CharField(max_length=45, blank=True, null=True)
 
@@ -202,13 +206,13 @@ class Person(TimeStampedModel):
         if self.age:
             return self.age
         current_year = datetime.datetime.now().year
-        return int(current_year)-int(self.birthday_year)
+        return int(current_year) - int(self.birthday_year)
 
     @property
     def calc_age(self):
         current_year = datetime.datetime.now().year
         if self.birthday_year:
-            return int(current_year)-int(self.birthday_year)
+            return int(current_year) - int(self.birthday_year)
         return 0
 
     @property
@@ -244,7 +248,6 @@ class Person(TimeStampedModel):
 
 
 class YoungPerson(Person):
-
     MARITAL_STATUS = Choices(
         ('married', _('Married')),
         ('engaged', _('Engaged')),
@@ -255,13 +258,14 @@ class YoungPerson(Person):
 
     # user = models.OneToOneField(User, related_name='profile')
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
-    location = models.ForeignKey(Location, blank=True, null=True)
+    location = models.ForeignKey(Location, blank=True, null=True, verbose_name=_('Location'))
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
         max_length=50,
         choices=MARITAL_STATUS,
         blank=False, null=False,
+        verbose_name=_('marital status')
     )
 
     education_status = models.CharField(

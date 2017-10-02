@@ -1206,7 +1206,7 @@ msgstr ""
 #: referral_platform/templates/base.html:127
 #: referral_platform/templates/base.html:165
 msgid "Arabic"
-msgstr ""
+msgstr "العربية"
 
 #: referral_platform/templates/base.html:128
 msgid "French"
@@ -1765,3 +1765,4 @@ msgstr ""
 #: referral_platform/youth/models.py:366
 msgid "I don't want follow up"
 msgstr ""
+
