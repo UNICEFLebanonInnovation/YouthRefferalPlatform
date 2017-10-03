@@ -43,10 +43,15 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',  # registration
     #'allauth.socialaccount.providers.facebook',
 
+    'rest_framework',
+    'rest_framework_swagger',
+    'rest_framework.authtoken',
+
     'bootstrap3',
     'bootstrap3_datetime',
     'import_export',
     'prettyjson',
+    'django_tables2',
 )
 
 # Apps specific for this project go here.
@@ -59,6 +64,8 @@ LOCAL_APPS = (
     'referral_platform.youth',
     'referral_platform.courses',
     'referral_platform.initiatives',
+    'referral_platform.clm',
+
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -114,7 +121,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db('DATABASE_URL', default='postgres:///referral_platform'),
+    'default': env.db('DATABASE_URL', default='postgis://postgres:postgres@localhost:5432/referral_platform'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
@@ -272,7 +279,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET ='ee205f6f25da8aa856ec90b39d7d61fd'
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'youth:home'
+LOGIN_REDIRECT_URL = 'youth:list'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
