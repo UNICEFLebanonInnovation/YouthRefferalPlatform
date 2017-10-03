@@ -43,7 +43,7 @@ class PlatformUserAdmin(admin.ModelAdmin):
         (_('Personal info'), {'fields': ('first_name', 'last_name', )}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (_(''), {'fields': ('partner',)}),
+        (_('Partner'), {'fields': ('partner',)}),
     )
     list_display = ('first_name', 'is_superuser')
     search_fields = ['first_name', 'last_name']

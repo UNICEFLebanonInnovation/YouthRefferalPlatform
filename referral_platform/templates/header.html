@@ -1,0 +1,88 @@
+{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load util_tags %}
+
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand mr-15" href="\">
+        <img src="{% static 'images/logo.png' %}" style="float: left; width: 30px; height: 30px;" class="mr-10"/>
+        {% trans "EMS" %} 1.0
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        {% if request.user.is_authenticated %}
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                {% if request.user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
+                    </li>
+                {% endif %}
+                {% if request.user|has_group:"CLM" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'clm:index' %}">{% trans "CLM tools" %}</a>
+                    </li>
+                {% endif %}
+                {% if request.user|has_group:"SCHOOL" or request.user|has_group:"DIRECTOR" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'enrollments:list' %}">{% trans "2nd shift registration" %}</a>
+                    </li>
+                {% endif %}
+                {% if request.user|has_group:"TEST_MANAGER" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'alp:post_test' %}">{% trans "ALP Post Test" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'alp:pre_test' %}">{% trans "ALP Pre Test" %}</a>
+                    </li>
+                {% endif %}
+                {% if request.user|has_group:"PARTNER" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'alp:outreach' %}">{% trans "ALP data collecting" %}</a>
+                    </li>
+                {% endif %}
+                {% if request.user|has_group:"ALP_SCHOOL" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'alp:list' %}">{% trans "ALP Registrations" %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+
+        <ul class="navbar-nav pull-xs-right">
+            {% if request.user.is_authenticated %}
+                {% if request.user|has_group:"SCHOOL" or request.user|has_group:"ALP_SCHOOL" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'schools:profile' %}">{% trans "Profile" %}</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_change_password' %}">{% trans "Change password" %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Logout" %}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:set_language' 'en-us' %}"
+                       class="nav-link{% if LANGUAGE_CODE == 'en-us' %} active{% endif %}">
+                        {% trans 'English' %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:set_language' 'ar-ar' %}"
+                       class="nav-link{% if LANGUAGE_CODE == 'ar-ar' %} active{% endif %}">
+                        {% trans 'Arabic' %}
+                    </a>
+                </li>
+
+            {% else %}
+                <li class="nav-item">
+                    <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Log In" %}</a>
+                </li>
+            {% endif %}
+            {% block header %}{% endblock %}
+        </ul>
+    </div>
+</nav>

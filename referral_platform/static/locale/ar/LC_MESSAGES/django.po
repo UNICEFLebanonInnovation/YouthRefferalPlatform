@@ -1065,6 +1065,9 @@ msgstr "هل نسيت كلمة السر؟"
 msgid "Sign Out"
 msgstr "تسجيل الخروج"
 
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
 #: referral_platform/templates/account/logout.html:10
 msgid "Are you sure you want to sign out?"
 msgstr "هل انت متأكد انك تريد تسجيل الخروج؟"
@@ -1271,7 +1274,7 @@ msgstr "تحميل السيرة الذاتية"
 #: referral_platform/templates/base.html:126
 #: referral_platform/templates/base.html:160
 msgid "English"
-msgstr "الانكليزية"
+msgstr "English"
 
 #: referral_platform/templates/base.html:127
 #: referral_platform/templates/base.html:165
@@ -1863,3 +1866,51 @@ msgstr "ابحث عن عمل"
 
 msgid "Details"
 msgstr "التفاصيل"
+
+msgid "birthday year"
+msgstr "سنة الميلاد"
+
+msgid "birthday month"
+msgstr "شهر الميلاد"
+
+msgid "birthday day"
+msgstr "يوم الميلاد"
+
+msgid "address"
+msgstr "العنوان"
+
+msgid "marital status"
+msgstr "الحالة الاجتماعية"
+
+msgid "Location Information"
+msgstr "معلومات الموقع"
+
+msgid "Personal Details"
+msgstr "تفاصيل شخصية"
+
+msgid "governorate"
+msgstr "محافظة"
+
+msgid "Edit student"
+msgstr "تعديل"
+
+msgid "Edit"
+msgstr "تعديل"
+
+msgid "Age"
+msgstr "عمر"
+
+msgid "Birthday"
+msgstr "عيد الميلاد"
+
+msgid "Filter"
+msgstr "ابحث"
+
+msgid "Only Arabic characters are allowed."
+msgstr "يسمح فقط بالأحرف العربية."
+
+msgid "Add new beneficiary"
+msgstr "إضافة مستفيد جديد"
+
+
+

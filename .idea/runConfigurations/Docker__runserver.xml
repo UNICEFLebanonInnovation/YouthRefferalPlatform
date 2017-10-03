@@ -11,10 +11,10 @@
     <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
-    <module name="referral_platform" />
+    <module name="YouthRefferalPlatform" />
     <option name="launchJavascriptDebuger" value="false" />
-    <option name="port" value="8000" />
-    <option name="host" value="0.0.0.0" />
+    <option name="port" value="8888" />
+    <option name="host" value="127.0.0.1" />
     <option name="additionalOptions" value="" />
     <option name="browserUrl" value="" />
     <option name="runTestServer" value="false" />
