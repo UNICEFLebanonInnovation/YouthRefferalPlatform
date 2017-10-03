@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles i18n %}
 {% load crispy_forms_tags %}
 
 {% block head_title %}Registration{% endblock %}
@@ -13,7 +14,7 @@
                     data-animation-origin="right"
                     data-animation-duration="400"
                     data-animation-delay="100"
-                    data-animation-distance="50px">Registration</h2>
+                    data-animation-distance="50px">{% trans "Registration" %}</h2>
 
             </div>
         </section>

@@ -30,8 +30,8 @@ DJANGO_APPS = (
 
     # Useful template tags:
     # 'django.contrib.humanize',
-    # 'dal',
-    # 'dal_select2',
+    'dal',
+    'dal_select2',
     # Admin
     'suit',
     'django.contrib.admin',
@@ -43,8 +43,10 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',  # registration
     #'allauth.socialaccount.providers.facebook',
 
+    'bootstrap3',
     'bootstrap3_datetime',
     'import_export',
+    'prettyjson',
 )
 
 # Apps specific for this project go here.
@@ -84,7 +86,7 @@ MIGRATION_MODULES = {
 # DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool('DJANGO_DEBUG', False)
+DEBUG = env.bool('DJANGO_DEBUG', True)
 
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -126,6 +128,7 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 TIME_ZONE = 'Asia/Beirut'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+# LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'ar-ar'
 LANGUAGE_COOKIE_NAME = 'default_language'
 LANGUAGE_QUERY_PARAMETER = 'language'
@@ -135,7 +138,7 @@ LANGUAGES = (
     ('en-us', 'English'),
 )
 
-LANGUAGES_BIDI = ["en-us"]
+LANGUAGES_BIDI = ["ar-ar"]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
@@ -230,11 +233,11 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Some really nice defaults
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_SIGNUP_FORM_CLASS = "referral_platform.users.admin.PlatformUserCreationForm"
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
@@ -330,6 +333,16 @@ SUIT_CONFIG = {
     },
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU_EXCLUDE': ('auth', 'sites'),
+    'MENU': (
+        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/partners/profile"},
+        {'app': 'auth', 'label': 'Groups', 'icon': 'icon-user'},
+        {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
+        {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
+        {'app': 'partners', 'label': 'Partners', 'icon': 'icon-user'},
+        {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
+        {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
+
+    )
     # 'MENU': (
     #     'sites',
     #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},

@@ -46,6 +46,7 @@ class IDType(models.Model):
     class Meta:
         ordering = ['id']
         verbose_name = _("ID Type")
+        verbose_name_plural = _("ID Type")
 
     def __unicode__(self):
         return self.name
@@ -58,6 +59,7 @@ class EducationLevel(models.Model):
     class Meta:
         ordering = ['id']
         verbose_name = _("ALP Level")
+        verbose_name_plural = _("ALP Level")
 
     def __unicode__(self):
         return self.name
@@ -134,9 +136,11 @@ class Person(TimeStampedModel):
     age = models.CharField(max_length=4, blank=True, null=True)
     phone = models.CharField(max_length=64, blank=True, null=True)
     phone_prefix = models.CharField(max_length=10, blank=True, null=True)
-    id_number = models.CharField(max_length=45)
+    id_number = models.CharField(max_length=45, blank=True, null=True)
     id_type = models.ForeignKey(
         IDType,
+        blank=True,
+        null=True
     )
     nationality = models.ForeignKey(
         Nationality,
@@ -244,13 +248,15 @@ class YoungPerson(Person):
         choices=Choices(
             ('non-formal', _('Non formal Education')),
             ('formal', _('Formal Education')),
-        )
+        ),
+        blank=True,
+        null=True,
     )
-    education_level = models.ForeignKey(EducationLevel)
+    education_level = models.ForeignKey(EducationLevel, blank=True, null=True)
     education_grade = models.ForeignKey(Grade, blank=True, null=True)
     leaving_education_reasons = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
@@ -266,14 +272,19 @@ class YoungPerson(Person):
             ('summer_only', _('Work in Summer Only')),
             ('unemployed', _('Currently Unemployed')),
             ('never_worked', _('Never worked')),
-        )
+            ('looking_for_work', _('Looking for a work')),
+        ),
+        blank=False,
+        null=False,
     )
     employment_sectors = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
+        blank=True,
+        null=True,
     )
     looking_for_work = models.BooleanField()
     through_whom = ArrayField(
@@ -287,15 +298,17 @@ class YoungPerson(Person):
     )
     obstacles_for_work = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
+        blank=True,
+        null=True,
     )
     supporting_family = models.NullBooleanField()
     household_composition = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
@@ -319,7 +332,7 @@ class YoungPerson(Person):
     )
     safety_reasons = ArrayField(
         models.CharField(
-            max_length=50,
+            max_length=200,
             blank=True,
             null=True,
         ),
@@ -367,3 +380,13 @@ class YoungPerson(Person):
         ),
         blank=True, null=True
     )
+
+    communication_channel = models.CharField(
+        max_length=50,
+        blank=True, null=True
+    )
+
+    class Meta:
+        ordering = ['first_name']
+        verbose_name = _("Youth")
+        verbose_name_plural = _("Youth")

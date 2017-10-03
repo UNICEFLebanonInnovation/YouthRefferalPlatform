@@ -23,12 +23,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     start_date = forms.DateField(
         widget=DateTimePicker(
             options={
-                "format": "DD/MM/YYYY",
+                "format": "mm/dd/yyyy",
                 "pickTime": False
             }),
         required=True
     )
-
 
     needs_resources = forms.TypedChoiceField(
         coerce=lambda x: x == 'True',

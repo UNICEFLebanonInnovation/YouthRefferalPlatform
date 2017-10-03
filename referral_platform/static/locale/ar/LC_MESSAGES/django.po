@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-25 13:49+0300\n"
+"POT-Creation-Date: 2017-04-26 13:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -291,13 +291,13 @@ msgid "Part 8: Healthy LifeStyle"
 msgstr "القسم 8: نمط حياة صحّي"
 
 #: referral_platform/courses/forms.py:245
-#: referral_platform/courses/forms.py:488
+#: referral_platform/courses/forms.py:490
 #: referral_platform/initiatives/forms.py:120
 msgid "Save"
 msgstr "حفظ"
 
 #: referral_platform/courses/forms.py:246
-#: referral_platform/courses/forms.py:489
+#: referral_platform/courses/forms.py:491
 #: referral_platform/initiatives/forms.py:121
 #: referral_platform/youth/forms.py:279
 msgid "Cancel"
@@ -348,7 +348,7 @@ msgstr "لا يوجد الكثير من أجهزة الكمبيوتر المتا
 #: referral_platform/initiatives/models.py:106
 #: referral_platform/youth/forms.py:41 referral_platform/youth/forms.py:75
 msgid "Other"
-msgstr "غير ذلك (يرجى التحديد)"
+msgstr "غير ذلك "
 
 #: referral_platform/courses/forms.py:282
 msgid "Social networks & Forums"
@@ -518,7 +518,17 @@ msgid ""
 "Develop digital resources such as Main page, About Us and Contact us, Etc..."
 msgstr "تطوير مواد لموقع رقمي (الصفحة الرئيسية، عن الموقع، اتصل بنا، ...)"
 
+#: referral_platform/courses/forms.py:430
+msgid "Do you know how to use personal computers?"
+msgstr ""
+
 #: referral_platform/courses/forms.py:432
+#, fuzzy
+#| msgid "I don't have a computer at home"
+msgid "If you don't use a computer, why not?"
+msgstr "اذا كنت لا تملك جهاز كمبيوتر في المنزل، لماذا؟"
+
+#: referral_platform/courses/forms.py:434
 msgid ""
 "If you have used a computer before, please continue answering the questions "
 "below. If you have not please STOP here."
@@ -526,27 +536,27 @@ msgstr ""
 "إذا كنت قد استخدمت جهاز كمبيوتر من قبل، يرجى مواصلة الإجابة على الأسئلة "
 "أدناه . أو الرجاء التوقف هنا"
 
-#: referral_platform/courses/forms.py:436
+#: referral_platform/courses/forms.py:438
 msgid "ICT Literacy"
 msgstr "محو الأمية التكنولوجية )تكنولوجيا المعلومات والاتصالات("
 
-#: referral_platform/courses/forms.py:452
+#: referral_platform/courses/forms.py:454
 msgid "Graphic skills"
 msgstr "مهارات الرسم على الكمبيوتر"
 
-#: referral_platform/courses/forms.py:462
+#: referral_platform/courses/forms.py:464
 msgid "Social communication skills"
 msgstr "مهارات استخدام وسائل التواصل الاجتماعي"
 
-#: referral_platform/courses/forms.py:470
+#: referral_platform/courses/forms.py:472
 msgid "Audiovisual skills"
 msgstr "مهارات استخدام وسائل الوسائط السمعية والبصرية الرقمية"
 
-#: referral_platform/courses/forms.py:476
+#: referral_platform/courses/forms.py:478
 msgid "Entrepreneurial skills"
 msgstr "مهارات ريادة الأعمال"
 
-#: referral_platform/courses/forms.py:483
+#: referral_platform/courses/forms.py:485
 msgid "Website skills"
 msgstr "مهارات انشاء المواقع الالكترونية"
 
@@ -900,9 +910,6 @@ msgid "Reached all of the direct beneficiaries planned (100%)"
 msgstr "تم الوصول إلى جميع المستفيدين المباشرين المقرّرين (100٪)"
 
 #: referral_platform/initiatives/models.py:200
-#, fuzzy, python-format
-#| msgid ""
-#| "Reached more than half of the direct beneficiaries planned (50% or more)"
 msgid ""
 "Reached more than half of the direct beneficiaries planned (50% or more)"
 msgstr "تم الوصول إلى أكثر من نصف المستفيدين المباشرين (50٪ أو أكثر)"
@@ -971,7 +978,9 @@ msgstr "تحزير"
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
-msgstr "ليس لديك حاليا أي عنوان بريد إلكتروني معد. يجب عليك إضافة عنوان بريد إلكتروني حتى تتمكن من تلقي إشعارات، وإعادة تعيين كلمة المرور، وما إلى ذلك."
+msgstr ""
+"ليس لديك حاليا أي عنوان بريد إلكتروني معد. يجب عليك إضافة عنوان بريد "
+"إلكتروني حتى تتمكن من تلقي إشعارات، وإعادة تعيين كلمة المرور، وما إلى ذلك."
 
 #: referral_platform/templates/account/email.html:49
 msgid "Add E-mail Address"
@@ -1008,8 +1017,9 @@ msgstr "تأكيد"
 msgid ""
 "This e-mail confirmation link expired or is invalid. Please <a href="
 "\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr "انتهت صلاحية رابط تأكيد البريد الالكتروني هذا او انه غير صالح. الرجاء"
- "<a href=\"%(email_url)s\">إصدار طلب تأكيد بريد إلكتروني جديد</a>."
+msgstr ""
+"انتهت صلاحية رابط تأكيد البريد الالكتروني هذا او انه غير صالح. الرجاء<a href="
+"\"%(email_url)s\">إصدار طلب تأكيد بريد إلكتروني جديد</a>."
 
 #: referral_platform/templates/account/login.html:7
 #: referral_platform/templates/account/login.html:11
@@ -1018,12 +1028,19 @@ msgid "Sign In"
 msgstr "تسجيل الدخول"
 
 #: referral_platform/templates/account/login.html:16
-msgid "Please sign in with one of your existing third party accounts. Or,"
- "<a href=\"%(signup_url)s\">sign up</a> "
- "for a %(site_name)s account and sign in below:"
-msgstr "الرجاء تسجيل الدخول باستخدام أحد حسابات الجهات الخارجية الحالية. او"
- "<a href=\"%(signup_url)s\"> قم بالتسجيل </a> "
- "لحساب %(site_name) وسجل الدخول أدناه:"
+#, fuzzy, python-format
+#| msgid ""
+#| "Please sign in with one of your existing third party accounts. Or,<a href="
+#| "\"%(signup_url)s\">sign up</a> for a %(site_name)s account and sign in "
+#| "below:"
+msgid ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
+"up</a>\n"
+"for a %(site_name)s account and sign in below:"
+msgstr ""
+"الرجاء تسجيل الدخول باستخدام أحد حسابات الجهات الخارجية الحالية. او<a href="
+"\"%(signup_url)s\"> قم بالتسجيل </a> لحساب %(site_name) وسجل الدخول أدناه:"
 
 #: referral_platform/templates/account/login.html:26
 msgid "or"
@@ -1034,9 +1051,9 @@ msgstr "او"
 msgid ""
 "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr "إذا لم تكن قد أنشأت حسابا بعد، فالرجاء"
-"<a href=\"%(signup_url)s\">سجل الدخول</a>"
-"اولا."
+msgstr ""
+"إذا لم تكن قد أنشأت حسابا بعد، فالرجاء<a href=\"%(signup_url)s\">سجل الدخول</"
+"a>اولا."
 
 #: referral_platform/templates/account/login.html:43
 msgid "Forgot Password?"
@@ -1104,9 +1121,10 @@ msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
 "a>."
-msgstr "رابط إعادة تعيين كلمة المرور غير صالح، ربما لأنه قد تم استخدامه بالفعل"
-"الرجاء اعادة طلب "
-"<a href=\"%(passwd_reset_url)s\">إعادة تعيين كلمة المرور الجديدة</a>"
+msgstr ""
+"رابط إعادة تعيين كلمة المرور غير صالح، ربما لأنه قد تم استخدامه بالفعلالرجاء "
+"اعادة طلب <a href=\"%(passwd_reset_url)s\">إعادة تعيين كلمة المرور الجديدة</"
+"a>"
 
 #: referral_platform/templates/account/password_reset_from_key.html:18
 msgid "change password"
@@ -1136,8 +1154,8 @@ msgstr "سجل"
 #, python-format
 msgid ""
 "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr "هل لديك حساب بالفعل؟ لذلك الرجاء"
-"<a href=\"%(login_url)s\">ادخل الى حسابك</a>."
+msgstr ""
+"هل لديك حساب بالفعل؟ لذلك الرجاء<a href=\"%(login_url)s\">ادخل الى حسابك</a>."
 
 #: referral_platform/templates/account/signup.html:21
 msgid ""
@@ -1155,10 +1173,15 @@ msgid ""
 "            By Clicking Sign Up you are giving us your consent to collect "
 "your bio-data and enroll you on our platform.\n"
 "            "
-
 msgstr ""
 "\n"
-"هذه منصة رقمية ليستخدمها الشباب والشركاء تنفيذ الأنشطة الشباب لتسجيل البيانات الحيوية، والانخراط في الدورات، وتتبع التقدم المحرز من خلال. ولضمان تنسيق الحماية والمساعدة المطلوبتين، قد نحتاج إلى تبادل المعلومات التي تم جمعها، بما في ذلك بياناتك الشخصية، مع وكالات إنسانية أخرى. وفي جميع الحالات، ستتخذ تدابير لمنع النشر غير المصرح به لبياناتك الشخصية بما يتوافق مع المعايير الدولية لحماية البيانات. عن طريق النقر على تسجيل دخول تعطي لنا موافقتك على جمع البيانات الحيوية الخاصة بك وتسجيل لك على منصة لدينا"
+"هذه منصة رقمية ليستخدمها الشباب والشركاء تنفيذ الأنشطة الشباب لتسجيل "
+"البيانات الحيوية، والانخراط في الدورات، وتتبع التقدم المحرز من خلال. ولضمان "
+"تنسيق الحماية والمساعدة المطلوبتين، قد نحتاج إلى تبادل المعلومات التي تم "
+"جمعها، بما في ذلك بياناتك الشخصية، مع وكالات إنسانية أخرى. وفي جميع الحالات، "
+"ستتخذ تدابير لمنع النشر غير المصرح به لبياناتك الشخصية بما يتوافق مع "
+"المعايير الدولية لحماية البيانات. عن طريق النقر على تسجيل دخول تعطي لنا "
+"موافقتك على جمع البيانات الحيوية الخاصة بك وتسجيل لك على منصة لدينا"
 
 #: referral_platform/templates/account/signup_closed.html:5
 #: referral_platform/templates/account/signup_closed.html:8
@@ -1181,21 +1204,28 @@ msgid ""
 "We have sent an e-mail to you for verification. Follow the link provided to "
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
-msgstr "لقد أرسلنا رسالة إلكترونية إليك للتحقق. اتبع الرابط المقدم لوضع اللمسات الأخيرة على عملية الاشتراك. يرجى الاتصال بنا إذا كنت لا تحصل عليه في غضون بضع دقائق."
+msgstr ""
+"لقد أرسلنا رسالة إلكترونية إليك للتحقق. اتبع الرابط المقدم لوضع اللمسات "
+"الأخيرة على عملية الاشتراك. يرجى الاتصال بنا إذا كنت لا تحصل عليه في غضون "
+"بضع دقائق."
 
 #: referral_platform/templates/account/verified_email_required.html:12
 msgid ""
 "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your e-mail address. "
-msgstr "يتطلب هذا الجزء من الموقع التحقق من أنك أنت الذي تدعي أنه. لهذا الغرض، نطلب منك إثبات ملكية عنوان بريدك الإلكتروني."
+msgstr ""
+"يتطلب هذا الجزء من الموقع التحقق من أنك أنت الذي تدعي أنه. لهذا الغرض، نطلب "
+"منك إثبات ملكية عنوان بريدك الإلكتروني."
 
 #: referral_platform/templates/account/verified_email_required.html:16
 msgid ""
 "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
 "contact us if you do not receive it within a few minutes."
-msgstr "لقد أرسلنا رسالة إلكترونية إليك للتحقق. يرجى النقر على الرابط داخل هذا البريد الإلكتروني. يرجى الاتصال بنا إذا كنت لا تحصل عليه في غضون بضع دقائق."
+msgstr ""
+"لقد أرسلنا رسالة إلكترونية إليك للتحقق. يرجى النقر على الرابط داخل هذا "
+"البريد الإلكتروني. يرجى الاتصال بنا إذا كنت لا تحصل عليه في غضون بضع دقائق."
 
 #: referral_platform/templates/account/verified_email_required.html:20
 #, python-format
@@ -1203,9 +1233,8 @@ msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
 "mail address</a>."
 msgstr ""
-"<strong> :ملاحظة</strong>"
-"لا يزال يمكنك"
-"<a href=\"%(email_url)s\"> تغيير عنوانك الالكتوني </a>"
+"<strong> :ملاحظة</strong>لا يزال يمكنك<a href=\"%(email_url)s\"> تغيير "
+"عنوانك الالكتوني </a>"
 
 #: referral_platform/templates/base.html:70
 msgid "home"
@@ -1272,6 +1301,10 @@ msgstr "موافق"
 #: referral_platform/templates/base.html:142
 msgid "Follow us"
 msgstr "تابعنا على القنوات التالية"
+
+#: referral_platform/templates/pages/registration.html:17
+msgid "Registration"
+msgstr "التسجيل"
 
 #: referral_platform/users/models.py:20
 msgid "email address"
@@ -1517,11 +1550,11 @@ msgstr "شهرة الام"
 
 #: referral_platform/youth/forms.py:163
 msgid "ID Number"
-msgstr "رقم (إن وجد) "
+msgstr "رقم الهوية "
 
-#: referral_platform/youth/forms.py:168 referral_platform/youth/models.py:337
+#: referral_platform/youth/forms.py:168 referral_platform/youth/models.py:338
 msgid "Disability"
-msgstr "إعاقة"
+msgstr "لديك اي احتياجات خاصة؟"
 
 #: referral_platform/youth/forms.py:170
 msgid "Birthdate"
@@ -1529,7 +1562,7 @@ msgstr "تاريخ الولادة "
 
 #: referral_platform/youth/forms.py:175
 msgid "Phone Number"
-msgstr "رقم هاتف الشاب"
+msgstr "رقم هاتف الشخصي"
 
 #: referral_platform/youth/forms.py:176
 msgid "Parents Phone Number"
@@ -1576,11 +1609,11 @@ msgstr "3. إذا كنت لا تعمل حالياً، هل تبحث عن عمل 
 
 #: referral_platform/youth/forms.py:224
 msgid "3.a If yes, through whom? (select multiple)"
-msgstr "3.أ. إذا كانت الإجابة بنعم، فمن خلال من؟ (اختيار أكثر من جواب)"
+msgstr "3.أ. فمن خلال من؟ (اختيار أكثر من جواب)"
 
 #: referral_platform/youth/forms.py:231
 msgid "4. What are the obstacles in searching for/or having work?"
-msgstr "4. ما هي العقبات في البحث عن / أو العمل؟ * (مرتبط)"
+msgstr "4. ما هي العقبات في البحث عن / أو العمل؟ * "
 
 #: referral_platform/youth/forms.py:235
 msgid "4.a Do you participate in supporting your family financially?"
@@ -1631,179 +1664,179 @@ msgstr "الجنسيات"
 msgid "ALP Level"
 msgstr "مستوى التعليم غير نظامي"
 
-#: referral_platform/youth/models.py:82
+#: referral_platform/youth/models.py:83
 msgid "January"
 msgstr "كانون الثاني"
 
-#: referral_platform/youth/models.py:83
+#: referral_platform/youth/models.py:84
 msgid "February"
 msgstr "شباط"
 
-#: referral_platform/youth/models.py:84
+#: referral_platform/youth/models.py:85
 msgid "March"
 msgstr "آذار"
 
-#: referral_platform/youth/models.py:85
+#: referral_platform/youth/models.py:86
 msgid "April"
 msgstr "نيسان"
 
-#: referral_platform/youth/models.py:86
+#: referral_platform/youth/models.py:87
 msgid "May"
 msgstr "ايار"
 
-#: referral_platform/youth/models.py:87
+#: referral_platform/youth/models.py:88
 msgid "June"
 msgstr "حزيران"
 
-#: referral_platform/youth/models.py:88
+#: referral_platform/youth/models.py:89
 msgid "July"
 msgstr "تموز"
 
-#: referral_platform/youth/models.py:89
+#: referral_platform/youth/models.py:90
 msgid "August"
 msgstr "آب"
 
-#: referral_platform/youth/models.py:90
+#: referral_platform/youth/models.py:91
 msgid "September"
 msgstr "ايلول"
 
-#: referral_platform/youth/models.py:91
+#: referral_platform/youth/models.py:92
 msgid "October"
 msgstr "تشرين اول"
 
-#: referral_platform/youth/models.py:92
+#: referral_platform/youth/models.py:93
 msgid "November"
 msgstr "تشرين ثاني"
 
-#: referral_platform/youth/models.py:93
+#: referral_platform/youth/models.py:94
 msgid "December"
 msgstr "كانون اول"
 
-#: referral_platform/youth/models.py:97
+#: referral_platform/youth/models.py:98
 msgid "Male"
 msgstr "ذكر"
 
-#: referral_platform/youth/models.py:98
+#: referral_platform/youth/models.py:99
 msgid "Female"
 msgstr "انثى"
 
-#: referral_platform/youth/models.py:235
+#: referral_platform/youth/models.py:236
 msgid "Yes, I am currently studying"
 msgstr "نعم، أنا أدرس حالياً"
 
-#: referral_platform/youth/models.py:236
+#: referral_platform/youth/models.py:237
 msgid "Yes, but I stopped studying"
 msgstr "نعم، ولكن توقّفت عن الدراسة"
 
-#: referral_platform/youth/models.py:237
+#: referral_platform/youth/models.py:238
 msgid "Never been to an educational institution"
 msgstr "لا، لم أذهب أبداً إلى أي مؤسسة أكاديمية"
 
-#: referral_platform/youth/models.py:238
+#: referral_platform/youth/models.py:239
 msgid "NA"
 msgstr "غير محدد"
 
-#: referral_platform/youth/models.py:244
-msgid "Non formal Education"
-msgstr "'تعليم غير نظامي"
-
 #: referral_platform/youth/models.py:245
+msgid "Non formal Education"
+msgstr "تعليم غير نظامي"
+
+#: referral_platform/youth/models.py:246
 msgid "Formal Education"
 msgstr "تعليم نظامي"
 
-#: referral_platform/youth/models.py:263
+#: referral_platform/youth/models.py:264
 msgid "Currently Working - full time"
 msgstr "أعمل حالياً - بدوام كامل"
 
-#: referral_platform/youth/models.py:264
+#: referral_platform/youth/models.py:265
 msgid "Currently Working - part time"
 msgstr "أعمل حالياً - بدوام جزئي"
 
-#: referral_platform/youth/models.py:265
+#: referral_platform/youth/models.py:266
 msgid "Work in Summer Only"
 msgstr "أعمل في فصل الصيف فقط"
 
-#: referral_platform/youth/models.py:266
+#: referral_platform/youth/models.py:267
 msgid "Currently Unemployed"
 msgstr "حالياً عاطل عن العمل"
 
-#: referral_platform/youth/models.py:267
+#: referral_platform/youth/models.py:268
 msgid "Never worked"
 msgstr "لم تعمل"
 
-#: referral_platform/youth/models.py:311
+#: referral_platform/youth/models.py:312
 msgid " I always feel totally safe in my community "
 msgstr "أشعر دائماً بأمان تام في مجتمعي"
 
-#: referral_platform/youth/models.py:312
+#: referral_platform/youth/models.py:313
 msgid "Most of the days I feel safe in my community"
 msgstr "أشعر في معظم الأيام بأمان في مجتمعي"
 
-#: referral_platform/youth/models.py:313
+#: referral_platform/youth/models.py:314
 msgid "Most of the days I don't feel safe in my community "
 msgstr "لا أشعر في معظم الأيام بأمان في مجتمعي"
 
-#: referral_platform/youth/models.py:314
+#: referral_platform/youth/models.py:315
 msgid "I never feel safe in my community"
 msgstr "لم أشعر بالأمان في مجتمعي يوماً "
 
-#: referral_platform/youth/models.py:333
+#: referral_platform/youth/models.py:334
 msgid "No Interest"
 msgstr "قلة اهتمام"
 
-#: referral_platform/youth/models.py:334
+#: referral_platform/youth/models.py:335
 msgid "Financial barrier"
 msgstr "عائق مالي"
 
-#: referral_platform/youth/models.py:335
+#: referral_platform/youth/models.py:336
 msgid "Family pressure"
 msgstr "ضغط الأسرة"
 
-#: referral_platform/youth/models.py:336
+#: referral_platform/youth/models.py:337
 msgid "Discrimination"
 msgstr "التمييز"
 
-#: referral_platform/youth/models.py:338
+#: referral_platform/youth/models.py:339
 msgid "Distance"
 msgstr " المسافة"
 
-#: referral_platform/youth/models.py:339
+#: referral_platform/youth/models.py:340
 msgid "Safety"
 msgstr "السلامة"
 
-#: referral_platform/youth/models.py:351
+#: referral_platform/youth/models.py:352
 msgid "Through an NGO"
 msgstr "من خلال منظمة غير حكومية أخرى"
 
-#: referral_platform/youth/models.py:352
+#: referral_platform/youth/models.py:353
 msgid "Through a Sports Club/NGO"
 msgstr "من خلال نادٍ رياضي / منظمة غير حكومية"
 
-#: referral_platform/youth/models.py:353
+#: referral_platform/youth/models.py:354
 msgid "Through friends"
 msgstr "من خلال الأصدقاء"
 
-#: referral_platform/youth/models.py:354
+#: referral_platform/youth/models.py:355
 msgid "Others"
 msgstr "وسائل أخرى"
 
-#: referral_platform/youth/models.py:361
+#: referral_platform/youth/models.py:362
 msgid "Facebook"
 msgstr "فايسبوك، وإذا كان الأمر كذلك، يرجى تدوين اسم حسابك"
 
-#: referral_platform/youth/models.py:362
+#: referral_platform/youth/models.py:363
 msgid "E-mail"
 msgstr "البريد الإلكتروني، وإذا كان الأمر كذلك، يرجى تدوينه"
 
-#: referral_platform/youth/models.py:363
+#: referral_platform/youth/models.py:364
 msgid "Mobile"
 msgstr "الهاتف المحمول"
 
-#: referral_platform/youth/models.py:364
+#: referral_platform/youth/models.py:365
 msgid "Through the NGO partner"
 msgstr "من خلال شريك المنظمة غير الحكومية"
 
-#: referral_platform/youth/models.py:365
+#: referral_platform/youth/models.py:366
 msgid "I don't want follow up"
 msgstr "أنا لا أريد المتابعة "
 
@@ -1818,3 +1851,15 @@ msgstr "أنا لا أريد المتابعة "
 
 #~ msgid "harassment/violence in the school"
 #~ msgstr "التحرش / عنف في المدرسة"
+
+#msgid "Youth"
+#msgstr "الشباب"
+
+msgid "Training center"
+msgstr "الموقع / مركز التسجيل"
+
+msgid "Looking for a work"
+msgstr "ابحث عن عمل"
+
+msgid "Details"
+msgstr "التفاصيل"

@@ -1,0 +1,73 @@
+{% extends "courses/base.html" %}
+{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block head_title %}{{ path.name }}{% endblock %}
+
+{% block path_title %}{{ path.name }}{% endblock %}
+
+{% block courses %}
+
+    <section class="inner-section light bg-color01">
+        <div class="row">
+            {% for course in path.courses.all %}
+                <div class="col-md-3 infoblock text-center"
+                     data-animation-origin="top"
+                     data-animation-duration="400"
+                     data-animation-delay="1100"
+                     data-animation-distance="50px">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="dividewhite1"></div>
+                            <h5 class="font-accident-two-bold uppercase">{{ course.name }}</h5>
+                            <p class="small">
+                                {{ course.overview }}
+                            </p>
+                        </div>
+                        {% if enrollment.status == 'enrolled' %}
+                            <button type="button" class="btn btn-info btn-lg">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Enrolled
+                            </button>
+                        {% elif enrollment.status == 'pre_test' %}
+                            <a href="{% url 'courses:assessment' path.slug course.slug %}?location={{ enrollment.location_id }}">
+                            <button type="button" class="btn btn-warning btn-lg">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Take Post Test
+                            </button>
+                            </a>
+                        {% elif enrollment.status == 'post_test' %}
+                            <a href="{% url 'courses:assessment' path.slug course.slug %}?location={{ enrollment.location_id }}">
+                            <button type="button" class="btn btn-success btn-lg">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Complete
+                            </button>
+                            </a>
+                        {% else %}
+                            <select class="partner_location" id="enroll-{{ course.slug }}-location">
+                                <option selected disabled>{% trans "Select a location" %}</option>
+                                {% for l in locations.all %}
+                                    <option value="{% url 'courses:assessment' path.slug course.slug %}?location={{ l.id }}">{{ l }}</option>
+                                {% endfor %}
+                            </select>
+                            <button id="enroll-{{ course.slug }}" type="button" class="btn btn-primary btn-lg enroll-course">
+                                <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Enroll
+                            </button>
+                        {% endif %}
+                    </div>
+                    <div class="dividewhite2"></div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.enroll-course').click(function(){
+                var location = '#'+$(this).attr('id')+'-location';
+                if($(location).val()){
+                    window.location = $(location).val();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+
