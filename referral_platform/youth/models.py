@@ -5,7 +5,6 @@ import datetime
 
 from django.contrib.gis.db import models
 from django.core.validators import RegexValidator
-from django.db.models.signals import pre_save
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
@@ -127,7 +126,7 @@ class Person(TimeStampedModel):
         verbose_name=_('Gender')
     )
     from datetime import datetime
-    print datetime.today().year
+
     current_year = datetime.today().year
     birthday_year = models.CharField(
         max_length=4,

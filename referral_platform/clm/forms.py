@@ -1,28 +1,17 @@
 from __future__ import unicode_literals, absolute_import, division
 
-from django.http import request
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
 from django import forms
 from django.core.urlresolvers import reverse
-
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions, InlineRadios
-from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, HTML
-
+from crispy_forms.bootstrap import FormActions
+from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
 from referral_platform.youth.models import YoungPerson
 from referral_platform.locations.models import Location
 from .models import (
     Assessment
 )
-
-YES_NO_CHOICE = ((1, "Yes"), (0, "No"))
-
-YEARS = list(((str(x), x) for x in range(1990, 2017)))
-YEARS.append(('', _('---------')))
-
-DAYS = list(((str(x), x) for x in range(1, 32)))
-DAYS.append(('', _('---------')))
 
 
 class CommonForm(forms.ModelForm):
@@ -39,7 +28,6 @@ class CommonForm(forms.ModelForm):
         required=False, to_field_name='id',
         initial=0
     )
-
 
     class Meta:
         model = YoungPerson
@@ -62,19 +50,17 @@ class CommonForm(forms.ModelForm):
 
     class Media:
         js = (
-            #'js/jquery-1.12.3.min.js',
-            #'js/jquery-ui-1.12.1.js',
-            #'js/validator.js',
-            #'js/registrations.js',
         )
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(CommonForm, self).__init__(*args, **kwargs)
-
         instance = kwargs['instance'] if 'instance' in kwargs else ''
+        initials = kwargs['initial'] if 'initial' in kwargs else ''
+        locations = initials['locations'] if 'locations' in initials else ''
         form_action = reverse('youth:add')
 
+        self.fields['governorate'].queryset = Location.objects.filter(parent__in=locations)
         if instance:
             form_action = reverse('youth:edit', kwargs={'pk': instance.id})
 
@@ -93,8 +79,8 @@ class CommonForm(forms.ModelForm):
                     new_forms[specific_form.name] = {}
 
                 new_forms[specific_form.name][specific_form.id] = {'title': specific_form.name,
-                                                                           'form': formtxt,
-                                                                           'overview': specific_form.overview}
+                                                                   'form': formtxt,
+                                                                   'overview': specific_form.overview}
 
             assessment_fieldset = []
             for name in new_forms:
@@ -111,7 +97,8 @@ class CommonForm(forms.ModelForm):
                 testFieldset = Fieldset(
                     None,
                     Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order]['overview'] + '</h4>')
+                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
+                            'overview'] + '</h4>')
                     ),
                     assessment_div,
                     Div(
@@ -133,7 +120,7 @@ class CommonForm(forms.ModelForm):
             Fieldset(
                 None,
                 Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">'+_('Location Information')+'</h4>')
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _('Location Information') + '</h4>')
                 ),
                 Div(
                     HTML('<span class="badge badge-default">1</span>'),
@@ -150,7 +137,7 @@ class CommonForm(forms.ModelForm):
             Fieldset(
                 None,
                 Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">'+_('Personal Details')+'</h4>')
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _('Personal Details') + '</h4>')
                 ),
                 Div(
                     HTML('<span class="badge badge-default">1</span>'),
@@ -195,8 +182,6 @@ class CommonForm(forms.ModelForm):
         self.helper.layout.append(
             FormActions(
                 Submit('save', _('Save')),
-                HTML('<a class="btn btn-info" href="/youth/">'+_('Cancel')+'</a>'),
+                HTML('<a class="btn btn-info" href="/youth/">' + _('Cancel') + '</a>'),
             )
         )
-
-

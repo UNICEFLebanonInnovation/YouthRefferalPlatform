@@ -1,7 +1,6 @@
 from __future__ import unicode_literals, absolute_import, division
 
 from django.db import models
-from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -38,3 +37,11 @@ class Location(MPTTModel):
     class Meta:
         unique_together = ('name', 'type', 'p_code')
         ordering = ['name']
+
+    def __iter__(self):
+        return iter([self.name,
+                self.type,
+                self.latitude,
+                self.longitude,
+                self.p_code,
+                self.parent])
