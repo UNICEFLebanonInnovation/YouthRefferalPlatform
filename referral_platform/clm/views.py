@@ -51,6 +51,7 @@ class YouthAddView(LoginRequiredMixin, CreateView):
         initial = data
         return initial
 
+
 class YouthEditView(LoginRequiredMixin, UpdateView):
 
     template_name = 'clm/bln_edit.html'

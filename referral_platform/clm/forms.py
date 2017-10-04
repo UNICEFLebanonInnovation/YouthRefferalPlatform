@@ -77,19 +77,20 @@ class CommonForm(forms.ModelForm):
                 )
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = {}
-
-                new_forms[specific_form.name][specific_form.id] = {'title': specific_form.name,
+                new_forms[specific_form.name][specific_form.order] = {'title': specific_form.overview,
                                                                    'form': formtxt,
-                                                                   'overview': specific_form.overview}
+                                                                   'overview': specific_form.name}
+
 
             assessment_fieldset = []
             for name in new_forms:
                 test_html = ""
+
                 for test_order in new_forms[name]:
+
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success" href="' + \
                                 new_forms[name][test_order]['form'] + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '
-
                 assessment_div = Div(
                     HTML(test_html),
                     css_class='row'

@@ -133,7 +133,8 @@ class Person(TimeStampedModel):
         blank=False,
         null=False,
         choices=((str(x), x) for x in range(current_year - 26, current_year - 6)),
-        verbose_name=_('birthday year')
+        verbose_name=_('birthday year'),
+        default=current_year - 26
     )
     birthday_month = models.CharField(
         max_length=2,
@@ -264,7 +265,8 @@ class YoungPerson(Person):
         max_length=50,
         choices=MARITAL_STATUS,
         blank=False, null=False,
-        verbose_name=_('marital status')
+        verbose_name=_('marital status'),
+        default='single'
     )
 
     education_status = models.CharField(
