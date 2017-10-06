@@ -34,7 +34,7 @@ class YouthListView(LoginRequiredMixin,
     filterset_class = BLNFilter
 
     def get_queryset(self):
-        return YoungPerson.objects.all()
+        return YoungPerson.objects.filter(partner_organization = self.request.user.partner)
 
 
 class YouthAddView(LoginRequiredMixin, CreateView):
@@ -47,9 +47,15 @@ class YouthAddView(LoginRequiredMixin, CreateView):
     def get_initial(self):
         data = dict()
         if self.request.user.partner:
-            data['locations'] = self.request.user.partner.locations.all()
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
         initial = data
         return initial
+
+    def form_valid(self, form):
+        form.save(self.request)
+        print form.partner_organization
+        return super(YouthAddView, self).form_valid(form)
 
 
 class YouthEditView(LoginRequiredMixin, UpdateView):
@@ -62,29 +68,15 @@ class YouthEditView(LoginRequiredMixin, UpdateView):
     def get_initial(self):
         data = dict()
         if self.request.user.partner:
-            data['locations'] = self.request.user.partner.locations.all()
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
         initial = data
         return initial
-    # def get_context_data(self, **kwargs):
-    #     # force_default_language(self.request)
-    #     """Insert the form into the context dict."""
-    #     if 'form' not in kwargs:
-    #         kwargs['form'] = self.get_form()
-    #     return super(YouthEditView, self).get_context_data(**kwargs)
 
-    # def get_form(self, form_class=None):
-    #     instance = BLN.objects.get(id=self.kwargs['pk'])
-    #     if self.request.method == "POST":
-    #         return BLNForm(self.request.POST, instance=instance, request=self.request)
-    #     else:
-    #         data = BLNSerializer(instance).data
-    #         data['student_nationality'] = data['student_nationality_id']
-    #         return BLNForm(data, instance=instance, request=self.request)
-    #
-    # def form_valid(self, form):
-    #     instance = BLN.objects.get(id=self.kwargs['pk'])
-    #     form.save(request=self.request, instance=instance)
-    #     return super(YouthEditView, self).form_valid(form)
+    def form_valid(self, form):
+        form.save(self.request)
+        print form.partner_organization
+        return super(YouthEditView, self).form_valid(form)
 
 
 class YouthAssessment(SingleObjectMixin, RedirectView):

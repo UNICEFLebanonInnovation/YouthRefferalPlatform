@@ -310,8 +310,8 @@ class YoungPerson(Person):
             ('never_worked', _('Never worked')),
             ('looking_for_work', _('Looking for a work')),
         ),
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
     )
     employment_sectors = ArrayField(
         models.CharField(

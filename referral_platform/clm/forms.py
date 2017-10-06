@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
+from referral_platform.partners.models import PartnerOrganization
 from referral_platform.youth.models import YoungPerson
 from referral_platform.locations.models import Location
 from .models import (
@@ -19,6 +20,12 @@ class CommonForm(forms.ModelForm):
     governorate = forms.ModelChoiceField(
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         empty_label=__('governorate'),
+        required=True, to_field_name='id',
+    )
+
+    partner_organization = forms.ModelChoiceField(
+        queryset=PartnerOrganization.objects.all(), widget=forms.Select,
+        empty_label=__('partner_organization'),
         required=True, to_field_name='id',
     )
 
@@ -44,6 +51,7 @@ class CommonForm(forms.ModelForm):
             'nationality',
             'address',
             'marital_status',
+            'partner_organization',
         )
         initial_fields = fields
         widgets = {}
@@ -53,14 +61,23 @@ class CommonForm(forms.ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
+        global dynamic_fields
         self.request = kwargs.pop('request', None)
         super(CommonForm, self).__init__(*args, **kwargs)
         instance = kwargs['instance'] if 'instance' in kwargs else ''
         initials = kwargs['initial'] if 'initial' in kwargs else ''
-        locations = initials['locations'] if 'locations' in initials else ''
+        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else ''
+        partner = initials['partner'] if 'partner' in initials else ''
+        self.partner_organization = partner
         form_action = reverse('youth:add')
 
-        self.fields['governorate'].queryset = Location.objects.filter(parent__in=locations)
+        self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+
+        self.fields['partner_organization'] = forms.ModelChoiceField(label="", required=False,
+                                                                     widget=forms.HiddenInput(
+                                                                         attrs={'value': partner.id})
+                                                                     , queryset=PartnerOrganization.objects.all())
+
         if instance:
             form_action = reverse('youth:edit', kwargs={'pk': instance.id})
 
