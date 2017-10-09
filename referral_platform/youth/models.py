@@ -258,7 +258,7 @@ class YoungPerson(Person):
 
     # user = models.OneToOneField(User, related_name='profile')
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
-    location = models.ForeignKey(Location, blank=True, null=True, verbose_name=_('Location'))
+    location = models.CharField(max_length=50, blank=True, null=True)
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(

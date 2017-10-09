@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
-from referral_platform.partners.models import PartnerOrganization
 from referral_platform.youth.models import YoungPerson
 from referral_platform.locations.models import Location
 from .models import (
@@ -20,13 +19,6 @@ class CommonForm(forms.ModelForm):
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         empty_label=__('governorate'),
         required=True, to_field_name='id',
-    )
-
-    location = forms.ModelChoiceField(
-        queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-        empty_label=__('Location'),
-        required=False, to_field_name='id',
-        initial=0
     )
 
     class Meta:
