@@ -296,7 +296,6 @@ else:
     CELERY_RESULT_BACKEND = BROKER_URL
 ########## END CELERY
 
-
 # django-compressor
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ("compressor", )
