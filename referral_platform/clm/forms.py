@@ -16,16 +16,9 @@ from .models import (
 
 
 class CommonForm(forms.ModelForm):
-
     governorate = forms.ModelChoiceField(
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         empty_label=__('governorate'),
-        required=True, to_field_name='id',
-    )
-
-    partner_organization = forms.ModelChoiceField(
-        queryset=PartnerOrganization.objects.all(), widget=forms.Select,
-        empty_label=__('partner_organization'),
         required=True, to_field_name='id',
     )
 
@@ -51,7 +44,6 @@ class CommonForm(forms.ModelForm):
             'nationality',
             'address',
             'marital_status',
-            'partner_organization',
         )
         initial_fields = fields
         widgets = {}
@@ -61,28 +53,20 @@ class CommonForm(forms.ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
-        global dynamic_fields
         self.request = kwargs.pop('request', None)
         super(CommonForm, self).__init__(*args, **kwargs)
-        instance = kwargs['instance'] if 'instance' in kwargs else ''
-        initials = kwargs['initial'] if 'initial' in kwargs else ''
+
+        instance = kwargs.get('instance', '')
+        initials = kwargs.get('initial', '')
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else ''
-        partner = initials['partner'] if 'partner' in initials else ''
-        self.partner_organization = partner
-        form_action = reverse('youth:add')
-
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+        self.dynamic_fields = []
 
-        self.fields['partner_organization'] = forms.ModelChoiceField(label="", required=False,
-                                                                     widget=forms.HiddenInput(
-                                                                         attrs={'value': partner.id})
-                                                                     , queryset=PartnerOrganization.objects.all())
-
+        form_action = reverse('youth:add')
         if instance:
             form_action = reverse('youth:edit', kwargs={'pk': instance.id})
 
             all_forms = Assessment.objects.all()
-            dynamic_fields = []
 
             new_forms = {}
 
@@ -94,17 +78,16 @@ class CommonForm(forms.ModelForm):
                 )
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = {}
-                new_forms[specific_form.name][specific_form.order] = {'title': specific_form.overview,
-                                                                   'form': formtxt,
-                                                                   'overview': specific_form.name}
-
-
+                new_forms[specific_form.name][specific_form.order] = {
+                    'title': specific_form.overview,
+                    'form': formtxt,
+                    'overview': specific_form.name
+                }
             assessment_fieldset = []
             for name in new_forms:
                 test_html = ""
 
                 for test_order in new_forms[name]:
-
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success" href="' + \
                                 new_forms[name][test_order]['form'] + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '
@@ -127,8 +110,7 @@ class CommonForm(forms.ModelForm):
                 )
                 assessment_fieldset.append(testFieldset)
 
-                dynamic_fields = assessment_fieldset
-
+                self.dynamic_fields = assessment_fieldset
 
         self.helper = FormHelper()
         self.helper.form_show_labels = True
@@ -191,11 +173,12 @@ class CommonForm(forms.ModelForm):
                 ),
                 css_class='bd-callout bd-callout-warning'
             ),
+            (form for form in self.dynamic_fields)
         )
 
-        if instance:
-            for myflds in dynamic_fields:
-                self.helper.layout.append(myflds)
+        # if instance:
+        #     for myflds in self.dynamic_fields:
+        #         self.helper.layout.append(myflds)
 
         self.helper.layout.append(
             FormActions(
