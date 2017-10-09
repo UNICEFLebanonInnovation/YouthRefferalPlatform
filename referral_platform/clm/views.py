@@ -48,13 +48,15 @@ class YouthAddView(LoginRequiredMixin, CreateView):
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner'] = self.request.user.partner
         initial = data
         return initial
 
     def form_valid(self, form):
-        form.save(self.request)
-        print form.partner_organization
+
+        instance = form.save(self.request)
+        instance.partner_organization = self.request.user.partner
+        instance.save()
+
         return super(YouthAddView, self).form_valid(form)
 
 
