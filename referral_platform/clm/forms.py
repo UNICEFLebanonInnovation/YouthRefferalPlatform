@@ -173,12 +173,10 @@ class CommonForm(forms.ModelForm):
                 ),
                 css_class='bd-callout bd-callout-warning'
             ),
-            (form for form in self.dynamic_fields)
         )
 
-        # if instance:
-        #     for myflds in self.dynamic_fields:
-        #         self.helper.layout.append(myflds)
+        for myflds in self.dynamic_fields:
+            self.helper.layout.append(myflds)
 
         self.helper.layout.append(
             FormActions(
