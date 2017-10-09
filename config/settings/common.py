@@ -247,7 +247,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_SIGNUP_FORM_CLASS = "referral_platform.users.admin.PlatformUserCreationForm"
 
-ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
+ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', False)
 ACCOUNT_ADAPTER = 'referral_platform.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'referral_platform.users.adapters.SocialAccountAdapter'
 
@@ -295,7 +295,6 @@ if BROKER_URL == 'django://':
 else:
     CELERY_RESULT_BACKEND = BROKER_URL
 ########## END CELERY
-
 
 # django-compressor
 # ------------------------------------------------------------------------------

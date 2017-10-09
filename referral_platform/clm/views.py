@@ -11,15 +11,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import RedirectView
-
-
 from django_filters.views import FilterView
-from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
+from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
-
 from referral_platform.youth.models import YoungPerson
 from .filters import BLNFilter
-from .tables import BootstrapTable, CommonTable
+from .tables import CommonTable
 from .forms import CommonForm
 from .models import Assessment, AssessmentSubmission
 
@@ -37,7 +34,7 @@ class YouthListView(LoginRequiredMixin,
     filterset_class = BLNFilter
 
     def get_queryset(self):
-        return YoungPerson.objects.all()
+        return YoungPerson.objects.filter(partner_organization = self.request.user.partner)
 
 
 class YouthAddView(LoginRequiredMixin, CreateView):
@@ -47,22 +44,20 @@ class YouthAddView(LoginRequiredMixin, CreateView):
     model = YoungPerson
     success_url = '/youth/'
 
-    # def get_initial(self):
-    #     initial = super(YouthAddView, self).get_initial()
-    #     data = []
-    #     if self.request.GET.get('enrollment_id'):
-    #         instance = BLN.objects.get(id=self.request.GET.get('enrollment_id'))
-    #         data = BLNSerializer(instance).data
-    #     if self.request.GET.get('student_outreach_child'):
-    #         instance = Child.objects.get(id=int(self.request.GET.get('student_outreach_child')))
-    #         data = ChildSerializer(instance).data
-    #     initial = data
-    #
-    #     return initial
-    #
-    # def form_valid(self, form):
-    #     form.save(self.request)
-    #     return super(YouthAddView, self).form_valid(form)
+    def get_initial(self):
+        data = dict()
+        if self.request.user.partner:
+            data['partner_locations'] = self.request.user.partner.locations.all()
+        initial = data
+        return initial
+
+    def form_valid(self, form):
+
+        instance = form.save(self.request)
+        instance.partner_organization = self.request.user.partner
+        instance.save()
+
+        return super(YouthAddView, self).form_valid(form)
 
 
 class YouthEditView(LoginRequiredMixin, UpdateView):
@@ -72,26 +67,17 @@ class YouthEditView(LoginRequiredMixin, UpdateView):
     model = YoungPerson
     success_url = '/youth/'
 
-    # def get_context_data(self, **kwargs):
-    #     # force_default_language(self.request)
-    #     """Insert the form into the context dict."""
-    #     if 'form' not in kwargs:
-    #         kwargs['form'] = self.get_form()
-    #     return super(YouthEditView, self).get_context_data(**kwargs)
+    def get_initial(self):
+        data = dict()
+        if self.request.user.partner:
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
+        initial = data
+        return initial
 
-    # def get_form(self, form_class=None):
-    #     instance = BLN.objects.get(id=self.kwargs['pk'])
-    #     if self.request.method == "POST":
-    #         return BLNForm(self.request.POST, instance=instance, request=self.request)
-    #     else:
-    #         data = BLNSerializer(instance).data
-    #         data['student_nationality'] = data['student_nationality_id']
-    #         return BLNForm(data, instance=instance, request=self.request)
-    #
-    # def form_valid(self, form):
-    #     instance = BLN.objects.get(id=self.kwargs['pk'])
-    #     form.save(request=self.request, instance=instance)
-    #     return super(YouthEditView, self).form_valid(form)
+    def form_valid(self, form):
+        form.save(self.request)
+        return super(YouthEditView, self).form_valid(form)
 
 
 class YouthAssessment(SingleObjectMixin, RedirectView):

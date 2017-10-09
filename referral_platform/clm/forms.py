@@ -1,45 +1,25 @@
 from __future__ import unicode_literals, absolute_import, division
 
-from django.http import request
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
 from django import forms
 from django.core.urlresolvers import reverse
-
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions, InlineRadios
-from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, HTML
-
+from crispy_forms.bootstrap import FormActions
+from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
 from referral_platform.youth.models import YoungPerson
 from referral_platform.locations.models import Location
 from .models import (
     Assessment
 )
 
-YES_NO_CHOICE = ((1, "Yes"), (0, "No"))
-
-YEARS = list(((str(x), x) for x in range(1990, 2017)))
-YEARS.append(('', _('---------')))
-
-DAYS = list(((str(x), x) for x in range(1, 32)))
-DAYS.append(('', _('---------')))
-
 
 class CommonForm(forms.ModelForm):
-
     governorate = forms.ModelChoiceField(
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         empty_label=__('governorate'),
         required=True, to_field_name='id',
     )
-
-    location = forms.ModelChoiceField(
-        queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-        empty_label=__('Location'),
-        required=False, to_field_name='id',
-        initial=0
-    )
-
 
     class Meta:
         model = YoungPerson
@@ -62,24 +42,23 @@ class CommonForm(forms.ModelForm):
 
     class Media:
         js = (
-            #'js/jquery-1.12.3.min.js',
-            #'js/jquery-ui-1.12.1.js',
-            #'js/validator.js',
-            #'js/registrations.js',
         )
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(CommonForm, self).__init__(*args, **kwargs)
 
-        instance = kwargs['instance'] if 'instance' in kwargs else ''
-        form_action = reverse('youth:add')
+        instance = kwargs.get('instance', '')
+        initials = kwargs.get('initial', '')
+        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else ''
+        self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+        self.dynamic_fields = []
 
+        form_action = reverse('youth:add')
         if instance:
             form_action = reverse('youth:edit', kwargs={'pk': instance.id})
 
             all_forms = Assessment.objects.all()
-            dynamic_fields = []
 
             new_forms = {}
 
@@ -91,19 +70,19 @@ class CommonForm(forms.ModelForm):
                 )
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = {}
-
-                new_forms[specific_form.name][specific_form.id] = {'title': specific_form.name,
-                                                                           'form': formtxt,
-                                                                           'overview': specific_form.overview}
-
+                new_forms[specific_form.name][specific_form.order] = {
+                    'title': specific_form.overview,
+                    'form': formtxt,
+                    'overview': specific_form.name
+                }
             assessment_fieldset = []
             for name in new_forms:
                 test_html = ""
+
                 for test_order in new_forms[name]:
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success" href="' + \
                                 new_forms[name][test_order]['form'] + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '
-
                 assessment_div = Div(
                     HTML(test_html),
                     css_class='row'
@@ -111,7 +90,8 @@ class CommonForm(forms.ModelForm):
                 testFieldset = Fieldset(
                     None,
                     Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order]['overview'] + '</h4>')
+                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
+                            'overview'] + '</h4>')
                     ),
                     assessment_div,
                     Div(
@@ -122,8 +102,7 @@ class CommonForm(forms.ModelForm):
                 )
                 assessment_fieldset.append(testFieldset)
 
-                dynamic_fields = assessment_fieldset
-
+                self.dynamic_fields = assessment_fieldset
 
         self.helper = FormHelper()
         self.helper.form_show_labels = True
@@ -133,7 +112,7 @@ class CommonForm(forms.ModelForm):
             Fieldset(
                 None,
                 Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">'+_('Location Information')+'</h4>')
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _('Location Information') + '</h4>')
                 ),
                 Div(
                     HTML('<span class="badge badge-default">1</span>'),
@@ -150,7 +129,7 @@ class CommonForm(forms.ModelForm):
             Fieldset(
                 None,
                 Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">'+_('Personal Details')+'</h4>')
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _('Personal Details') + '</h4>')
                 ),
                 Div(
                     HTML('<span class="badge badge-default">1</span>'),
@@ -188,15 +167,12 @@ class CommonForm(forms.ModelForm):
             ),
         )
 
-        if instance:
-            for myflds in dynamic_fields:
-                self.helper.layout.append(myflds)
+        for myflds in self.dynamic_fields:
+            self.helper.layout.append(myflds)
 
         self.helper.layout.append(
             FormActions(
                 Submit('save', _('Save')),
-                HTML('<a class="btn btn-info" href="/youth/">'+_('Cancel')+'</a>'),
+                HTML('<a class="btn btn-info" href="/youth/">' + _('Cancel') + '</a>'),
             )
         )
-
-

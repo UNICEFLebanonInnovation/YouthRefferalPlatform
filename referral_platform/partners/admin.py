@@ -31,8 +31,6 @@ class PartnerOrganizationAdmin(ImportExportModelAdmin):
 
     def get_queryset(self, request):
         qs = super(PartnerOrganizationAdmin, self).get_queryset(request)
-        if request.user.partner:
-            return qs.filter(id=request.user.partner.id)
         return qs
 
 

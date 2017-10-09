@@ -21,12 +21,13 @@ class Assessment(models.Model):
     end_date = models.DateField(blank=True, null=True)
     capacity = models.IntegerField(blank=True, null=True)
     assessment_form = models.URLField(blank=True, null=True)
+    order = models.TextField(blank=False, null=False, default=1)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['order']
 
     def __unicode__(self):
-        return self.name
+        return self.overview
 
 
 class AssessmentSubmission(models.Model):

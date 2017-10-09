@@ -5,7 +5,6 @@ import datetime
 
 from django.contrib.gis.db import models
 from django.core.validators import RegexValidator
-from django.db.models.signals import pre_save
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
@@ -127,14 +126,15 @@ class Person(TimeStampedModel):
         verbose_name=_('Gender')
     )
     from datetime import datetime
-    print datetime.today().year
+
     current_year = datetime.today().year
     birthday_year = models.CharField(
         max_length=4,
         blank=False,
         null=False,
         choices=((str(x), x) for x in range(current_year - 26, current_year - 6)),
-        verbose_name=_('birthday year')
+        verbose_name=_('birthday year'),
+        default=current_year - 26
     )
     birthday_month = models.CharField(
         max_length=2,
@@ -258,14 +258,15 @@ class YoungPerson(Person):
 
     # user = models.OneToOneField(User, related_name='profile')
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
-    location = models.ForeignKey(Location, blank=True, null=True, verbose_name=_('Location'))
+    location = models.CharField(max_length=50, blank=True, null=True)
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
         max_length=50,
         choices=MARITAL_STATUS,
         blank=False, null=False,
-        verbose_name=_('marital status')
+        verbose_name=_('marital status'),
+        default='single'
     )
 
     education_status = models.CharField(
@@ -309,8 +310,8 @@ class YoungPerson(Person):
             ('never_worked', _('Never worked')),
             ('looking_for_work', _('Looking for a work')),
         ),
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
     )
     employment_sectors = ArrayField(
         models.CharField(

@@ -18,9 +18,6 @@ class CommonTable(tables.Table):
     edit_column = tables.TemplateColumn(verbose_name=_('Edit student'),
                                         template_name='django_tables2/edit_column.html',)
 
-    #student_age = tables.Column(verbose_name=_('Age'), accessor='student.age')
-    #student_birthday = tables.Column(verbose_name=_('Birthday'), accessor='student.birthday')
-
     class Meta:
         model = YoungPerson
         template = 'django_tables2/bootstrap.html'
@@ -29,9 +26,6 @@ class CommonTable(tables.Table):
             'first_name',
             'father_name',
             'last_name',
-            'sex',
-            #'student_age',
-            #'student_birthday',
             'nationality',
             'address',
             'location',
