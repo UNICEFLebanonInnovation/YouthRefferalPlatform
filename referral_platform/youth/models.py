@@ -14,7 +14,7 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 from referral_platform.users.models import User
-from referral_platform.partners.models import PartnerOrganization
+from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 from .utils import *
 
@@ -260,6 +260,7 @@ class YoungPerson(Person):
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
     location = models.CharField(max_length=50, blank=True, null=True)
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
+    center = models.ForeignKey(Center, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
         max_length=50,

@@ -21,3 +21,16 @@ class PartnerOrganization(models.Model):
     def __unicode__(self):
         return self.name
 
+
+class Center(models.Model):
+    name = models.CharField(max_length=64L, unique=True)
+    partner_organization = models.ForeignKey(PartnerOrganization, blank=False, null=False)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Center'
+
+    def __unicode__(self):
+        return self.name
+
+
