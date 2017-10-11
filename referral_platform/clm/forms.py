@@ -2,6 +2,9 @@ from __future__ import unicode_literals, absolute_import, division
 
 from collections import OrderedDict
 
+from boto.dynamodb2.types import NULL
+from coreschema import Null
+from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
 from django import forms
@@ -132,7 +135,7 @@ class CommonForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('youth:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.all()
+            all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
             new_forms = OrderedDict()
 
             for specific_form in all_forms:

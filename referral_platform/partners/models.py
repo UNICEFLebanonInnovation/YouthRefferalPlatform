@@ -21,6 +21,13 @@ class PartnerOrganization(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __iter__(self):
+        return iter([self.name,
+                self.phone_number,
+                self.email,
+                self.overview,
+                self.locations])
+
 
 class Center(models.Model):
     name = models.CharField(max_length=64L, unique=True)
