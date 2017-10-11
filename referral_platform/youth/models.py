@@ -270,6 +270,8 @@ class YoungPerson(Person):
         default='single'
     )
 
+    trainer = models.CharField(max_length=50, blank=True, null=True)
+    bayanati = models.CharField(max_length=50, blank=True, null=True)
     education_status = models.CharField(
         max_length=50,
         choices=Choices(

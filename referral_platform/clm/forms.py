@@ -36,6 +36,8 @@ class CommonForm(forms.ModelForm):
             'governorate',
             'location',
             'center',
+            'trainer',
+            'bayanati',
             'first_name',
             'father_name',
             'last_name',
@@ -66,8 +68,21 @@ class CommonForm(forms.ModelForm):
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
 
         myFields = OrderedDict()
-        myFields['Location Information'] = ['governorate', 'center', 'location']
-        if self.fields['center'].queryset.count() <1:
+        myFields['Location Information'] = ['governorate', 'center', 'trainer', 'location']
+
+        # Add Trainer name to Jordan
+        jordanLocation = Location.objects.get(name="Jordan")
+        if jordanLocation not in partner_locations:
+            del self.fields['trainer']
+            myFields['Location Information'].remove('trainer')
+        else:
+            self.fields['bayanati'].required = True
+            self.fields['trainer'].required = True
+            myFields['Bayanati Information'] = ['bayanati', ]
+
+
+        # Add Centers for the partner having ones (For now only Jordan)
+        if self.fields['center'].queryset.count() < 1:
             del self.fields['center']
             myFields['Location Information'].remove('center')
 
@@ -92,7 +107,6 @@ class CommonForm(forms.ModelForm):
             mainDiv = Div(css_class='row')
 
             # Title Div
-            print title
             maindFieldset.fields.append(
                 Div(
                     HTML('<h4 id="alternatives-to-hidden-labels">' + _(title) + '</h4>')
@@ -115,7 +129,7 @@ class CommonForm(forms.ModelForm):
             maindFieldset.css_class = 'bd-callout bd-callout-warning'
             self.helper.layout.append(maindFieldset)
 
-        #Rendering the assessments
+        # Rendering the assessments
         if instance:
             form_action = reverse('youth:edit', kwargs={'pk': instance.id})
             all_forms = Assessment.objects.all()
