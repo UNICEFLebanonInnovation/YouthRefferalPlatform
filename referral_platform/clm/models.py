@@ -8,6 +8,7 @@ from django.contrib.postgres.fields import ArrayField, JSONField
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
+from referral_platform.partners.models import PartnerOrganization
 from referral_platform.youth.models import YoungPerson, Disability, EducationLevel
 from referral_platform.locations.models import Location
 
@@ -22,12 +23,25 @@ class Assessment(models.Model):
     capacity = models.IntegerField(blank=True, null=True)
     assessment_form = models.URLField(blank=True, null=True)
     order = models.TextField(blank=False, null=False, default=1)
+    partner = models.ForeignKey(PartnerOrganization, null=True, blank=True,)
 
     class Meta:
         ordering = ['order']
 
     def __unicode__(self):
         return self.overview
+
+    def __iter__(self):
+        return iter([self.name,
+                self.slug,
+                self.overview,
+                self.start_date,
+                self.end_date,
+                self.capacity,
+                self.assessment_form,
+                self.order,
+                self.partner])
+
 
 
 class AssessmentSubmission(models.Model):
@@ -253,4 +267,5 @@ class CLM(TimeStampedModel):
 
     class Meta:
         abstract = True
+
 
