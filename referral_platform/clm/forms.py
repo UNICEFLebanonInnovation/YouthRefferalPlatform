@@ -35,7 +35,7 @@ class CommonForm(forms.ModelForm):
             'location',
             'center',
             'trainer',
-            'bayanati',
+            'bayanati_ID',
             'first_name',
             'father_name',
             'last_name',
@@ -72,11 +72,12 @@ class CommonForm(forms.ModelForm):
         jordan_location = Location.objects.get(name="Jordan")
         if jordan_location not in partner_locations:
             del self.fields['trainer']
+            del self.fields['bayanati_ID']
             my_fields['Location Information'].remove('trainer')
         else:
-            self.fields['bayanati'].required = True
+            self.fields['bayanati_ID'].required = True
             self.fields['trainer'].required = True
-            my_fields['Bayanati Information'] = ['bayanati', ]
+            my_fields['Bayanati Information'] = ['bayanati_ID', ]
 
         # Add Centers for the partner having ones (For now only Jordan)
         if self.fields['center'].queryset.count() < 1:

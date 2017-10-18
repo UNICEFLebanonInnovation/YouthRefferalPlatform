@@ -237,11 +237,11 @@ class Person(TimeStampedModel):
                 self.first_name,
                 self.father_name,
                 self.last_name,
-                self.mother_fullname if self.mother_fullname else "",
                 self.sex,
                 self.birthday_day,
                 self.birthday_month,
-                self.birthday_year
+                self.birthday_year,
+                self.mother_fullname if self.mother_fullname else ""
             )
 
         super(Person, self).save(**kwargs)
@@ -271,7 +271,9 @@ class YoungPerson(Person):
     )
 
     trainer = models.CharField(max_length=50, blank=True, null=True)
-    bayanati = models.CharField(max_length=50, blank=True, null=True)
+
+    bayanati_ID_validator = RegexValidator(r'^[0-9]{6}$', _('Bayanati ID should be composed of exactly 6 numbers .'))
+    bayanati_ID = models.CharField(max_length=50, validators=[bayanati_ID_validator], blank=True, null=True)
     education_status = models.CharField(
         max_length=50,
         choices=Choices(
