@@ -21,3 +21,23 @@ class PartnerOrganization(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __iter__(self):
+        return iter([self.name,
+                self.phone_number,
+                self.email,
+                self.overview,
+                self.locations])
+
+
+class Center(models.Model):
+    name = models.CharField(max_length=64, unique=True)
+    partner_organization = models.ForeignKey(PartnerOrganization, blank=False, null=False)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Center'
+
+    def __unicode__(self):
+        return self.name
+
+

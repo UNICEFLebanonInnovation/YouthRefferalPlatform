@@ -48,6 +48,7 @@ class YouthAddView(LoginRequiredMixin, CreateView):
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
         initial = data
         return initial
 

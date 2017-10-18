@@ -14,7 +14,7 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 from referral_platform.users.models import User
-from referral_platform.partners.models import PartnerOrganization
+from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 from .utils import *
 
@@ -237,11 +237,11 @@ class Person(TimeStampedModel):
                 self.first_name,
                 self.father_name,
                 self.last_name,
-                self.mother_fullname if self.mother_fullname else "",
                 self.sex,
                 self.birthday_day,
                 self.birthday_month,
-                self.birthday_year
+                self.birthday_year,
+                self.mother_fullname if self.mother_fullname else ""
             )
 
         super(Person, self).save(**kwargs)
@@ -260,6 +260,7 @@ class YoungPerson(Person):
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
     location = models.CharField(max_length=50, blank=True, null=True)
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
+    center = models.ForeignKey(Center, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
         max_length=50,
@@ -269,6 +270,10 @@ class YoungPerson(Person):
         default='single'
     )
 
+    trainer = models.CharField(max_length=50, blank=True, null=True)
+
+    bayanati_ID_validator = RegexValidator(r'^[0-9]{6}$', _('Bayanati ID should be composed of exactly 6 numbers .'))
+    bayanati_ID = models.CharField(max_length=50, validators=[bayanati_ID_validator], blank=True, null=True)
     education_status = models.CharField(
         max_length=50,
         choices=Choices(

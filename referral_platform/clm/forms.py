@@ -1,14 +1,16 @@
 from __future__ import unicode_literals, absolute_import, division
 
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as __
+from collections import OrderedDict
+from crispy_forms.bootstrap import FormActions
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
 from django import forms
 from django.core.urlresolvers import reverse
-from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions
-from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
-from referral_platform.youth.models import YoungPerson
+from django.db.models import Q
+from django.utils.translation import ugettext as _, ugettext_lazy as __
 from referral_platform.locations.models import Location
+from referral_platform.partners.models import Center
+from referral_platform.youth.models import YoungPerson
 from .models import (
     Assessment
 )
@@ -20,12 +22,20 @@ class CommonForm(forms.ModelForm):
         empty_label=__('governorate'),
         required=True, to_field_name='id',
     )
+    center = forms.ModelChoiceField(
+        queryset=Center.objects.all(), widget=forms.Select,
+        empty_label=__('center'),
+        required=True, to_field_name='id',
+    )
 
     class Meta:
         model = YoungPerson
         fields = (
             'governorate',
             'location',
+            'center',
+            'trainer',
+            'bayanati_ID',
             'first_name',
             'father_name',
             'last_name',
@@ -51,16 +61,77 @@ class CommonForm(forms.ModelForm):
         instance = kwargs.get('instance', '')
         initials = kwargs.get('initial', '')
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else ''
+        partner = initials['partner'] if 'partner' in initials else ''
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-        self.dynamic_fields = []
+        self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
 
+        my_fields = OrderedDict()
+        my_fields['Location Information'] = ['governorate', 'center', 'trainer', 'location']
+
+        # Add Trainer name to Jordan
+        jordan_location = Location.objects.get(name="Jordan")
+        if jordan_location not in partner_locations:
+            del self.fields['trainer']
+            del self.fields['bayanati_ID']
+            my_fields['Location Information'].remove('trainer')
+        else:
+            self.fields['bayanati_ID'].required = True
+            self.fields['trainer'].required = True
+            my_fields['Bayanati Information'] = ['bayanati_ID', ]
+
+        # Add Centers for the partner having ones (For now only Jordan)
+        if self.fields['center'].queryset.count() < 1:
+            del self.fields['center']
+            my_fields['Location Information'].remove('center')
+
+        my_fields['Personal Details'] = ['first_name',
+                                         'father_name',
+                                         'last_name',
+                                         'birthday_day',
+                                         'birthday_month',
+                                         'birthday_year',
+                                         'sex',
+                                         'nationality',
+                                         'marital_status',
+                                         'address', ]
+
+        self.helper = FormHelper()
+        self.helper.form_show_labels = True
         form_action = reverse('youth:add')
+        self.helper.layout = Layout()
+
+        for title in my_fields:
+            main_fieldset = Fieldset(None)
+            main_div = Div(css_class='row')
+
+            # Title Div
+            main_fieldset.fields.append(
+                Div(
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _(title) + '</h4>')
+                )
+            )
+            # remaining fields, every 3 on a row
+            for myField in my_fields[title]:
+                index = my_fields[title].index(myField) + 1
+                main_div.append(
+                    HTML('<span class="badge badge-default">' + str(index) + '</span>'),
+                )
+                main_div.append(
+                    Div(myField, css_class='col-md-3'),
+                )
+                # to keep every 3 on a row, or the last field in the list
+                if index % 3 == 0 or len(my_fields[title]) == index:
+                    main_fieldset.fields.append(main_div)
+                    main_div = Div(css_class='row')
+
+            main_fieldset.css_class = 'bd-callout bd-callout-warning'
+            self.helper.layout.append(main_fieldset)
+
+        # Rendering the assessments
         if instance:
             form_action = reverse('youth:edit', kwargs={'pk': instance.id})
-
-            all_forms = Assessment.objects.all()
-
-            new_forms = {}
+            all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
+            new_forms = OrderedDict()
 
             for specific_form in all_forms:
                 formtxt = '{assessment}?youth_id={youth_id}&status={status}'.format(
@@ -69,7 +140,7 @@ class CommonForm(forms.ModelForm):
                     status='registration',
                 )
                 if specific_form.name not in new_forms:
-                    new_forms[specific_form.name] = {}
+                    new_forms[specific_form.name] = OrderedDict()
                 new_forms[specific_form.name][specific_form.order] = {
                     'title': specific_form.overview,
                     'form': formtxt,
@@ -87,7 +158,7 @@ class CommonForm(forms.ModelForm):
                     HTML(test_html),
                     css_class='row'
                 )
-                testFieldset = Fieldset(
+                test_fieldset = Fieldset(
                     None,
                     Div(
                         HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
@@ -100,75 +171,11 @@ class CommonForm(forms.ModelForm):
                     ),
                     css_class='bd-callout bd-callout-warning'
                 )
-                assessment_fieldset.append(testFieldset)
+                assessment_fieldset.append(test_fieldset)
+            for myflds in assessment_fieldset:
+                self.helper.layout.append(myflds)
 
-                self.dynamic_fields = assessment_fieldset
-
-        self.helper = FormHelper()
-        self.helper.form_show_labels = True
         self.helper.form_action = form_action
-        self.helper.layout = Layout(
-
-            Fieldset(
-                None,
-                Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">' + _('Location Information') + '</h4>')
-                ),
-                Div(
-                    HTML('<span class="badge badge-default">1</span>'),
-                    Div('governorate', css_class='col-md-3'),
-                    css_class='row',
-                ),
-                Div(
-                    HTML('<span class="badge badge-default">2</span>'),
-                    Div('location', css_class='col-md-3'),
-                    css_class='row',
-                ),
-                css_class='bd-callout bd-callout-warning'
-            ),
-            Fieldset(
-                None,
-                Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">' + _('Personal Details') + '</h4>')
-                ),
-                Div(
-                    HTML('<span class="badge badge-default">1</span>'),
-                    Div('first_name', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">2</span>'),
-                    Div('father_name', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">3</span>'),
-                    Div('last_name', css_class='col-md-3'),
-                    css_class='row',
-                ),
-                Div(
-                    HTML('<span class="badge badge-default">4</span>'),
-                    Div('birthday_year', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">5</span>'),
-                    Div('birthday_month', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">6</span>'),
-                    Div('birthday_day', css_class='col-md-3'),
-                    css_class='row',
-                ),
-                Div(
-                    HTML('<span class="badge badge-default">7</span>'),
-                    Div('sex', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">8</span>'),
-                    Div('nationality', css_class='col-md-3'),
-                    HTML('<span class="badge badge-default">9</span>'),
-                    Div('marital_status', css_class='col-md-3'),
-                    css_class='row',
-                ),
-                Div(
-                    HTML('<span class="badge badge-default">10</span>'),
-                    Div('address', css_class='col-md-3'),
-                    css_class='row',
-                ),
-                css_class='bd-callout bd-callout-warning'
-            ),
-        )
-
-        for myflds in self.dynamic_fields:
-            self.helper.layout.append(myflds)
 
         self.helper.layout.append(
             FormActions(
