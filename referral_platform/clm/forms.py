@@ -1,21 +1,16 @@
 from __future__ import unicode_literals, absolute_import, division
 
 from collections import OrderedDict
-
-from boto.dynamodb2.types import NULL
-from coreschema import Null
-from django.db.models import Q
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as __
+from crispy_forms.bootstrap import FormActions
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
 from django import forms
 from django.core.urlresolvers import reverse
-from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions
-from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
-
+from django.db.models import Q
+from django.utils.translation import ugettext as _, ugettext_lazy as __
+from referral_platform.locations.models import Location
 from referral_platform.partners.models import Center
 from referral_platform.youth.models import YoungPerson
-from referral_platform.locations.models import Location
 from .models import (
     Assessment
 )
@@ -70,67 +65,66 @@ class CommonForm(forms.ModelForm):
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
 
-        myFields = OrderedDict()
-        myFields['Location Information'] = ['governorate', 'center', 'trainer', 'location']
+        my_fields = OrderedDict()
+        my_fields['Location Information'] = ['governorate', 'center', 'trainer', 'location']
 
         # Add Trainer name to Jordan
-        jordanLocation = Location.objects.get(name="Jordan")
-        if jordanLocation not in partner_locations:
+        jordan_location = Location.objects.get(name="Jordan")
+        if jordan_location not in partner_locations:
             del self.fields['trainer']
-            myFields['Location Information'].remove('trainer')
+            my_fields['Location Information'].remove('trainer')
         else:
             self.fields['bayanati'].required = True
             self.fields['trainer'].required = True
-            myFields['Bayanati Information'] = ['bayanati', ]
-
+            my_fields['Bayanati Information'] = ['bayanati', ]
 
         # Add Centers for the partner having ones (For now only Jordan)
         if self.fields['center'].queryset.count() < 1:
             del self.fields['center']
-            myFields['Location Information'].remove('center')
+            my_fields['Location Information'].remove('center')
 
-        myFields['Personal Details'] = ['first_name',
-                                        'father_name',
-                                        'last_name',
-                                        'birthday_day',
-                                        'birthday_month',
-                                        'birthday_year',
-                                        'sex',
-                                        'nationality',
-                                        'marital_status',
-                                        'address', ]
+        my_fields['Personal Details'] = ['first_name',
+                                         'father_name',
+                                         'last_name',
+                                         'birthday_day',
+                                         'birthday_month',
+                                         'birthday_year',
+                                         'sex',
+                                         'nationality',
+                                         'marital_status',
+                                         'address', ]
 
         self.helper = FormHelper()
         self.helper.form_show_labels = True
         form_action = reverse('youth:add')
         self.helper.layout = Layout()
 
-        for title in myFields:
-            maindFieldset = Fieldset(None)
-            mainDiv = Div(css_class='row')
+        for title in my_fields:
+            main_fieldset = Fieldset(None)
+            main_div = Div(css_class='row')
 
             # Title Div
-            maindFieldset.fields.append(
+            main_fieldset.fields.append(
                 Div(
                     HTML('<h4 id="alternatives-to-hidden-labels">' + _(title) + '</h4>')
                 )
             )
             # remaining fields, every 3 on a row
-            for myField in myFields[title]:
-                index = myFields[title].index(myField) + 1
-                mainDiv.append(
+            for myField in my_fields[title]:
+                index = my_fields[title].index(myField) + 1
+                main_div.append(
                     HTML('<span class="badge badge-default">' + str(index) + '</span>'),
                 )
-                mainDiv.append(
+                main_div.append(
                     Div(myField, css_class='col-md-3'),
                 )
                 # to keep every 3 on a row, or the last field in the list
-                if index % 3 == 0 or len(myFields[title]) == index:
-                    maindFieldset.fields.append(mainDiv)
-                    mainDiv = Div(css_class='row')
+                if index % 3 == 0 or len(my_fields[title]) == index:
+                    main_fieldset.fields.append(main_div)
+                    main_div = Div(css_class='row')
 
-            maindFieldset.css_class = 'bd-callout bd-callout-warning'
-            self.helper.layout.append(maindFieldset)
+            main_fieldset.css_class = 'bd-callout bd-callout-warning'
+            self.helper.layout.append(main_fieldset)
 
         # Rendering the assessments
         if instance:
@@ -163,7 +157,7 @@ class CommonForm(forms.ModelForm):
                     HTML(test_html),
                     css_class='row'
                 )
-                testFieldset = Fieldset(
+                test_fieldset = Fieldset(
                     None,
                     Div(
                         HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
@@ -176,7 +170,7 @@ class CommonForm(forms.ModelForm):
                     ),
                     css_class='bd-callout bd-callout-warning'
                 )
-                assessment_fieldset.append(testFieldset)
+                assessment_fieldset.append(test_fieldset)
             for myflds in assessment_fieldset:
                 self.helper.layout.append(myflds)
 
