@@ -30,7 +30,7 @@ class PartnerOrganization(models.Model):
 
 
 class Center(models.Model):
-    name = models.CharField(max_length=64L, unique=True)
+    name = models.CharField(max_length=64, unique=True)
     partner_organization = models.ForeignKey(PartnerOrganization, blank=False, null=False)
 
     class Meta:
