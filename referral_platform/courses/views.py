@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import json
-
+from pprint import pprint
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic.detail import SingleObjectMixin
@@ -64,7 +64,8 @@ class CourseAssessmentSubmission(SingleObjectMixin, View):
     slug_url_kwarg = 'course'
 
     def post(self, request, *args, **kwargs):
-
+        print("ray123")
+        pprint(request.body)
         if 'youth_id' not in request.body or 'status' not in request.body:
             return HttpResponseBadRequest()
 
