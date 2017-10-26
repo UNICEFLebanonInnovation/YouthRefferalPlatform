@@ -89,11 +89,26 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
         assessment = self.get_object()
         youth = YoungPerson.objects.get(number=self.request.GET.get('youth_id'))
+        print(youth.governorate.parent.name)
 
-        url = '{form}?d[form_slug]={slug}&d[youth_id]={id}&d[status]={status}&returnURL={callback}'.format(
+        url = '{form}??d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[first]={first}' \
+              '&d[last]={last}&d[father]={father}&d[nationality]={nationality}&d[gender]={gender}&d[birthdate]={birthdate}' \
+              '&d[youth_id]={youth_id}&d[marital]={marital}&d[bayanati]={bayanati_id}&d[slug]={slug}&d[status]=enrolled&returnURL={callback}'.format(
             form = assessment.assessment_form,
             slug = assessment.slug,
-            id = youth.number,
+            country=youth.governorate.parent.name,
+            governorate = youth.governorate.name,
+            partner = youth.partner_organization.name,
+            center = youth.center.name,
+            first = youth.first_name,
+            father = youth.father_name,
+            last = youth.last_name,
+            nationality = youth.nationality.name,
+            gender = youth.sex,
+            marital = youth.marital_status,
+            birthdate = youth.birthday_year + "-" + '{0:0>2}'.format(len(youth.birthday_month)) + "-" + '{0:0>2}'.format(len(youth.birthday_day)),
+            youth_id = youth.number,
+            bayanati_id = youth.bayanati_ID,
             status = self.request.GET.get('status'),
             callback = self.request.META.get('HTTP_REFERER', youth.get_absolute_url())
         )
