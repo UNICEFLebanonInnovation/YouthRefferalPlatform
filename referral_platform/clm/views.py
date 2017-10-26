@@ -19,7 +19,7 @@ from .filters import BLNFilter
 from .tables import CommonTable
 from .forms import CommonForm
 from .models import Assessment, AssessmentSubmission
-
+from pprint import pprint
 
 class YouthListView(LoginRequiredMixin,
                     FilterView,
@@ -104,7 +104,8 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 class YouthAssessmentSubmission(SingleObjectMixin, View):
 
     def post(self, request, *args, **kwargs):
-
+        print("Submission")
+        pprint(request.body)
         if 'youth_id' not in request.body or 'status' not in request.body:
             return HttpResponseBadRequest()
 
