@@ -9,7 +9,6 @@ urlpatterns = [
 
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^registration$', RegistrationView.as_view(), name='registration'),
-    url(r'^(?P<path>[-\w]+)/assessment/submission/$', YouthAssessmentSubmission.as_view()),
 ]
 
 
