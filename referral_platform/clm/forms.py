@@ -1,6 +1,8 @@
 from __future__ import unicode_literals, absolute_import, division
 
 from collections import OrderedDict
+from pprint import pprint
+
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
@@ -12,8 +14,8 @@ from referral_platform.locations.models import Location
 from referral_platform.partners.models import Center
 from referral_platform.youth.models import YoungPerson
 from .models import (
-    Assessment
-)
+    Assessment,
+    AssessmentSubmission)
 
 
 class CommonForm(forms.ModelForm):
@@ -133,26 +135,64 @@ class CommonForm(forms.ModelForm):
             all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
             new_forms = OrderedDict()
 
+            registration_form = Assessment.objects.get(slug="registration")
+
+            check_youth_registered = AssessmentSubmission.objects.filter(
+                Q(assessment_id=registration_form.id) & Q(youth_id=instance.id)
+            ).count()
+            youth_registered = (check_youth_registered >0)
+
             for specific_form in all_forms:
                 formtxt = '{assessment}?youth_id={youth_id}&status={status}'.format(
                     assessment=reverse('youth:assessment', kwargs={'slug': specific_form.slug}),
                     youth_id=instance.number,
-                    status='registration',
+                    status='enrolled',
                 )
+                disabled = ""
+                order = specific_form.order[2:]
+
+                if youth_registered:
+                    if specific_form.slug == "registration":
+                        disabled = "disabled"
+                    #check if the pre is already filled
+                    else:
+                        if(order==1):
+                            #If the user filled the form disable it
+                            submission_count = AssessmentSubmission.objects.filter(
+                                Q(assessment_id=specific_form.id) & Q(youth_id=instance.id)).count()
+                            if (submission_count > 0):
+                                disabled = "disabled"
+                        else:
+                            #make sure the user filled the form behind this one in order to enable it
+                            if previous_status == "disabled":
+                                submission_count = AssessmentSubmission.objects.filter(
+                                    Q(assessment_id=specific_form.id) & Q(youth_id=instance.id)).count()
+                                if (submission_count > 0):
+                                    disabled = "disabled"
+                            else:
+                                disabled = "disabled"
+                else:
+                    if specific_form.slug != "registration":
+                        disabled = "disabled"
+
+
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
                 new_forms[specific_form.name][specific_form.order] = {
                     'title': specific_form.overview,
                     'form': formtxt,
-                    'overview': specific_form.name
+                    'overview': specific_form.name,
+                    'disabled': disabled
                 }
+                previous_status = disabled
             assessment_fieldset = []
             for name in new_forms:
                 test_html = ""
 
                 for test_order in new_forms[name]:
-                    test_html = test_html + '<div class="col-md-3"><a class="btn btn-success" href="' + \
-                                new_forms[name][test_order]['form'] + '">' + new_forms[name][test_order][
+                    test_html = test_html + '<div class="col-md-3"><a class="btn btn-success '\
+                                +new_forms[name][test_order]['disabled'] +'" href="' +new_forms[name][test_order]['form']\
+                                + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '
                 assessment_div = Div(
                     HTML(test_html),

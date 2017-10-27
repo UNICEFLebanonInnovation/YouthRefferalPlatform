@@ -1,6 +1,7 @@
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
+from mptt.admin import MPTTModelAdmin
 
 from .models import PartnerOrganization, Center
 
@@ -8,7 +9,11 @@ from .models import PartnerOrganization, Center
 class PartnerOrganizationResource(resources.ModelResource):
     class Meta:
         model = PartnerOrganization
-        fields = ()
+        fields = (
+            'name',
+            'phone_number',
+            'email',
+        )
         export_order = fields
 
 
@@ -27,30 +32,28 @@ class PartnerOrganizationAdmin(ImportExportModelAdmin):
     )
     filter_horizontal = ('locations',)
 
-    def get_queryset(self, request):
-        qs = super(PartnerOrganizationAdmin, self).get_queryset(request)
-        return qs
 
-
-class CenterResource(ImportExportModelAdmin):
+class CenterResource(resources.ModelResource):
     class Meta:
         model = Center
-        fields = ()
+        fields = (
+            'id',
+            'name',
+            'partner_organization',
+        )
         export_order = fields
 
 
 class CenterAdmin(ImportExportModelAdmin):
     resource_class = CenterResource
     list_display = (
+        'id',
         'name',
+        'partner_organization',
     )
     list_filter = (
         'partner_organization',
     )
-
-    def get_queryset(self, request):
-        qs = super(CenterAdmin, self).get_queryset(request)
-        return qs
 
 
 admin.site.register(PartnerOrganization, PartnerOrganizationAdmin)

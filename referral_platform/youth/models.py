@@ -108,8 +108,8 @@ class Person(TimeStampedModel):
     )
 
     GENDER = Choices(
-        ('Male', _('Male')),
-        ('Female', _('Female')),
+        ('male', _('Male')),
+        ('female', _('Female')),
     )
     arabic_validator = RegexValidator(r'^[\u0600-\u065F\u066E-\u06FF ]*$', _('Only Arabic characters are allowed.') )
 
