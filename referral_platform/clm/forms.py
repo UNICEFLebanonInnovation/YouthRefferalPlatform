@@ -137,10 +137,9 @@ class CommonForm(forms.ModelForm):
 
             registration_form = Assessment.objects.get(slug="registration")
 
-            check_youth_registered = AssessmentSubmission.objects.filter(
+            youth_registered = AssessmentSubmission.objects.filter(
                 Q(assessment_id=registration_form.id) & Q(youth_id=instance.id)
-            ).count()
-            youth_registered = (check_youth_registered >0)
+            ).exists()
 
             for specific_form in all_forms:
                 formtxt = '{assessment}?youth_id={youth_id}&status={status}'.format(
@@ -156,25 +155,24 @@ class CommonForm(forms.ModelForm):
                         disabled = "disabled"
                     #check if the pre is already filled
                     else:
-                        if(order==1):
+                        if order==1:
                             #If the user filled the form disable it
-                            submission_count = AssessmentSubmission.objects.filter(
-                                Q(assessment_id=specific_form.id) & Q(youth_id=instance.id)).count()
-                            if (submission_count > 0):
+                            form_submitted = AssessmentSubmission.objects.filter(
+                                assessment_id=specific_form.id, youth_id=instance.id).exists()
+                            if form_submitted:
                                 disabled = "disabled"
                         else:
                             #make sure the user filled the form behind this one in order to enable it
                             if previous_status == "disabled":
-                                submission_count = AssessmentSubmission.objects.filter(
-                                    Q(assessment_id=specific_form.id) & Q(youth_id=instance.id)).count()
-                                if (submission_count > 0):
+                                previous_submitted = AssessmentSubmission.objects.filter(
+                                    assessment_id =specific_form.id, youth_id=instance.id).exists()
+                                if previous_submitted:
                                     disabled = "disabled"
                             else:
                                 disabled = "disabled"
                 else:
                     if specific_form.slug != "registration":
                         disabled = "disabled"
-
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
