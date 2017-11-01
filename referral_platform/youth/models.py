@@ -108,8 +108,8 @@ class Person(TimeStampedModel):
     )
 
     GENDER = Choices(
-        ('Male', _('Male')),
-        ('Female', _('Female')),
+        ('male', _('Male')),
+        ('female', _('Female')),
     )
     arabic_validator = RegexValidator(r'^[\u0600-\u065F\u066E-\u06FF ]*$', _('Only Arabic characters are allowed.') )
 
@@ -260,6 +260,7 @@ class YoungPerson(Person):
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
     location = models.CharField(max_length=50, blank=True, null=True)
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
+    governorate = models.ForeignKey(Location, verbose_name=_('Governorate'),default='39')
     center = models.ForeignKey(Center, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
