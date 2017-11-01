@@ -95,7 +95,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             country=youth.governorate.parent.name,
             governorate=youth.governorate.name,
             partner=youth.partner_organization.name,
-            center=youth.center.name,
+            center=youth.center.name if youth.center else "",
             first=youth.first_name,
             father=youth.father_name,
             last=youth.last_name,
@@ -105,7 +105,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             birthdate=youth.birthday_year + "-" + '{0:0>2}'.format(len(youth.birthday_month)) + "-" + '{0:0>2}'.format(
                 len(youth.birthday_day)),
             youth_id=youth.number,
-            bayanati_id=youth.bayanati_ID,
+            bayanati_id=youth.bayanati_ID if youth.bayanati_ID else "",
             status=self.request.GET.get('status'),
             callback=self.request.META.get('HTTP_REFERER', youth.get_absolute_url())
         )
