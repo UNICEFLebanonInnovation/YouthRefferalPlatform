@@ -149,6 +149,8 @@ class CommonForm(forms.ModelForm):
                 )
                 disabled = ""
                 order = specific_form.order[2:]
+                if order == 1:
+                    previous_status = disabled
 
                 if youth_registered:
                     if specific_form.slug == "registration":
