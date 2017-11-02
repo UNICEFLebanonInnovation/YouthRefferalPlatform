@@ -155,7 +155,7 @@ class CommonForm(forms.ModelForm):
                         disabled = "disabled"
                     #check if the pre is already filled
                     else:
-                        order = specific_form.order.split(".")[1]
+                        order = int(specific_form.order.split(".")[1])
                         print(order)
                         if order==1:
                             print("d1")
