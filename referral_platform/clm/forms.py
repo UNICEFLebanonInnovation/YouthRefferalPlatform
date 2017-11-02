@@ -148,32 +148,36 @@ class CommonForm(forms.ModelForm):
                     status='enrolled',
                 )
                 disabled = ""
-                order = specific_form.order[2:]
-                if order == 1:
-                    previous_status = disabled
-
+                order = specific_form.order[specific_form.order.find("."):]
+                print(specific_form.slug)
                 if youth_registered:
                     if specific_form.slug == "registration":
                         disabled = "disabled"
                     #check if the pre is already filled
                     else:
                         if order==1:
+                            print("d1")
                             #If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
                                 assessment_id=specific_form.id, youth_id=instance.id).exists()
                             if form_submitted:
                                 disabled = "disabled"
+                                print("d2")
                         else:
                             #make sure the user filled the form behind this one in order to enable it
                             if previous_status == "disabled":
+                                print("d3")
                                 previous_submitted = AssessmentSubmission.objects.filter(
                                     assessment_id =specific_form.id, youth_id=instance.id).exists()
                                 if previous_submitted:
+                                    print("d4")
                                     disabled = "disabled"
                             else:
+                                print("d5")
                                 disabled = "disabled"
                 else:
                     if specific_form.slug != "registration":
+                        print("d6")
                         disabled = "disabled"
 
                 if specific_form.name not in new_forms:
