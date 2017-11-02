@@ -148,14 +148,15 @@ class CommonForm(forms.ModelForm):
                     status='enrolled',
                 )
                 disabled = ""
-                order = int(specific_form.order[specific_form.order.find("."):]) +1
+                
                 print(specific_form.slug)
-                print(order)
                 if youth_registered:
                     if specific_form.slug == "registration":
                         disabled = "disabled"
                     #check if the pre is already filled
                     else:
+                        order = specific_form.order.split(".")[1]
+                        print(order)
                         if order==1:
                             print("d1")
                             #If the user filled the form disable it
