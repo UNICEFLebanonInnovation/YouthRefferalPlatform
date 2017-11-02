@@ -148,7 +148,7 @@ class CommonForm(forms.ModelForm):
                     status='enrolled',
                 )
                 disabled = ""
-                order = specific_form.order[specific_form.order.find("."):] +1
+                order = int(specific_form.order[specific_form.order.find("."):]) +1
                 print(specific_form.slug)
                 print(order)
                 if youth_registered:
