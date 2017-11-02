@@ -150,6 +150,7 @@ class CommonForm(forms.ModelForm):
                 disabled = ""
                 order = specific_form.order[specific_form.order.find("."):]
                 print(specific_form.slug)
+                print(order)
                 if youth_registered:
                     if specific_form.slug == "registration":
                         disabled = "disabled"
