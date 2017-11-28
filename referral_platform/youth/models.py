@@ -258,23 +258,28 @@ class YoungPerson(Person):
 
     # user = models.OneToOneField(User, related_name='profile')
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
-    location = models.CharField(max_length=50, blank=True, null=True)
+    location = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Location'))
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
-    governorate = models.ForeignKey(Location, verbose_name=_('Governorate'),default='39')
+    governorate = models.ForeignKey(Location, verbose_name=_('Governorate'), default='39')
     center = models.ForeignKey(Center, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
         max_length=50,
         choices=MARITAL_STATUS,
         blank=False, null=False,
-        verbose_name=_('marital status'),
+        verbose_name=_('Marital status'),
         default='single'
     )
 
-    trainer = models.CharField(max_length=50, blank=True, null=True)
+    trainer = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Trainer'))
 
     bayanati_ID_validator = RegexValidator(r'^[0-9]{6}$', _('Bayanati ID should be composed of exactly 6 numbers .'))
-    bayanati_ID = models.CharField(max_length=50, validators=[bayanati_ID_validator], blank=True, null=True)
+    bayanati_ID = models.CharField(
+        max_length=50,
+        validators=[bayanati_ID_validator],
+        blank=True, null=True,
+        verbose_name=_('Bayanati ID')
+    )
     education_status = models.CharField(
         max_length=50,
         choices=Choices(

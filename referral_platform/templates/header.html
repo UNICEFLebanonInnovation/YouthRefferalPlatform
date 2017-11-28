@@ -20,44 +20,14 @@
                         <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
                     </li>
                 {% endif %}
-                {% if request.user|has_group:"CLM" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'clm:index' %}">{% trans "CLM tools" %}</a>
-                    </li>
-                {% endif %}
-                {% if request.user|has_group:"SCHOOL" or request.user|has_group:"DIRECTOR" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'enrollments:list' %}">{% trans "2nd shift registration" %}</a>
-                    </li>
-                {% endif %}
-                {% if request.user|has_group:"TEST_MANAGER" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'alp:post_test' %}">{% trans "ALP Post Test" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'alp:pre_test' %}">{% trans "ALP Pre Test" %}</a>
-                    </li>
-                {% endif %}
-                {% if request.user|has_group:"PARTNER" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'alp:outreach' %}">{% trans "ALP data collecting" %}</a>
-                    </li>
-                {% endif %}
-                {% if request.user|has_group:"ALP_SCHOOL" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'alp:list' %}">{% trans "ALP Registrations" %}</a>
-                    </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "youth:list" %}">{% trans "Youth Registration" %}</a>
+                </li>
             </ul>
         {% endif %}
 
         <ul class="navbar-nav pull-xs-right">
             {% if request.user.is_authenticated %}
-                {% if request.user|has_group:"SCHOOL" or request.user|has_group:"ALP_SCHOOL" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'schools:profile' %}">{% trans "Profile" %}</a>
-                    </li>
-                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'account_change_password' %}">{% trans "Change password" %}</a>
                 </li>

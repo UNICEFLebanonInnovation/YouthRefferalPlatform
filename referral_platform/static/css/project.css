@@ -1,69 +1,203 @@
 /* These styles are generated from project.scss. */
 
-.alert-debug {
-  color: black;
-  background-color: white;
-  border-color: #d6e9c6;
-}
-
-.alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
-}
-
-/* This is a fix for the bootstrap4 alpha release */
-@media (max-width: 47.9em) {
-  .navbar-nav .nav-item {
-    float: none;
-    width: 100%;
-    display: inline-block;
-  }
-
-  .navbar-nav .nav-item + .nav-item {
-    margin-left: 0;
-  }
-
-  .nav.navbar-nav.pull-xs-right {
-    float: none !important;
-  }
-}
-
-/* Display django-debug-toolbar.
-   See https://github.com/django-debug-toolbar/django-debug-toolbar/issues/742
-   and https://github.com/pydanny/cookiecutter-django/issues/317
-*/
 [hidden][style="display: block;"] {
   display: block !important;
+}
+[class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("../images/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+}
+.icon-white {
+    background-image: url("../images/glyphicons-halflings-white.png");
+}
+.icon-trash {
+    background-position: -456px 0;
+}
+.icon-delete {
+    background-position: -312px 0;
+}
+.icon-edit-sign {
+  background-position: 0px -72px;
+}
+.icon-plus-sign {
+    background-position: -408px -96px;
+}
+.icon-synch-sign {
+    background-position: -216px -24px;
+}
+.icon-info-sign {
+   background-position: -96px -95px;
+}
+.icon-export-sign {
+   background-position: -96px -24px;
+}
+.icon-validation-sign {
+  background-position: -288px 0px;
+}
+.icon-clear-sign {
+  background-position: -313px 0px;
+}
+.icon-next-sign {
+  background-position: -455px -71px;
+}
+.icon-prev-sign {
+  background-position: -430px -71px;
+}
+.icon-edit {
+    background-position: -95px -71px;
+}
+.icon-Male {
+  background-position: 0px 0px;
+  width: 55px;
+  height: 55px;
+  vertical-align: middle;
+  background-image: url("../images/icon-Male.png");
+}
+.icon-Female {
+  background-position: 0px 0px;
+  width: 55px;
+  height: 55px;
+  vertical-align: middle;
+  background-image: url("../images/icon-Female.png");
+}
+.icon-check {
+  background-position: 0px 0px;
+  width: 70px;
+  height: 70px;
+  vertical-align: middle;
+  background-image: url("../images/icon-check.png");
+  background-size: 70px 70px;
+  background-repeat: no-repeat;
+}
+.icon-exam-check {
+  background-position: 0px 0px;
+  width: 70px;
+  height: 70px;
+  vertical-align: middle;
+  background-image: url("../images/icon-exam-check.png");
+  background-size: 70px 70px;
+  background-repeat: no-repeat;
+}
+.icon-2-check {
+  background-position: 0px 0px;
+  width: 70px;
+  height: 70px;
+  vertical-align: middle;
+  background-image: url("../images/icon-2-check.png");
+  background-size: 70px 70px;
+  background-repeat: no-repeat;
+}
+.icon-pending-check {
+  background-position: 0px 0px;
+  width: 70px;
+  height: 70px;
+  vertical-align: middle;
+  background-image: url("../images/icon-pending-check.png");
+  background-size: 70px 70px;
+  background-repeat: no-repeat;
+}
+.icon-date-time {
+  background-position: 0px 0px;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  background-image: url("../images/icon-date-time.png");
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+.icon-school {
+  background-position: 0px 0px;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  background-image: url("../images/icon-school.png");
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+.icon-class-section {
+  background-position: 0px 0px;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  background-image: url("../images/icon-class-section.png");
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+.icon-students {
+  background-position: 0px 0px;
+  width: 50px;
+  height: 39px;
+  vertical-align: middle;
+  background-image: url("../images/icon-students.png");
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+.icon-mother {
+  background-position: 0px 0px;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  background-image: url("../images/icon-mother.png");
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+.icon-age {
+  background-position: 0px 0px;
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  background-image: url("../images/icon-age.png");
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+}
+.icon-student {
+  background-position: 0px 0px;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  background-image: url("../images/icon-student.png");
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+.icon-student-Male {
+  background-position: 0px 0px;
+  width: 60px;
+  height: 65px;
+  vertical-align: middle;
+  background-image: url("../images/icon-student-Male.png");
+  background-size: 65px 65px;
+  background-repeat: no-repeat;
+}
+.icon-student-Female {
+  background-position: 0px 0px;
+  width: 60px;
+  height: 65px;
+  vertical-align: middle;
+  background-image: url("../images/icon-student-Female.png");
+  background-size: 65px 65px;
+  background-repeat: no-repeat;
 }
 
 .badge {
     margin-top: 3px;
-    width: 25px;
+    width: auto;
     height: 22px;
 }
-.bd-callout:lang(en) {
+.bd-callout {
     padding: 1.25rem;
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
     border: 1px solid #eee;
     border-left-width: .25rem;
     border-radius: .25rem;
-    border-left-color: #f0ad4e;
 }
-.bd-callout-warning:lang(en) {
-    border-left-color: #f0ad4e;
-}
-.bd-callout:lang(ar) {
-    padding: 1.25rem;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    border: 1px solid #eee;
-    border-right-width: .25rem;
-    border-radius: .25rem;
-    border-right-color: #f0ad4e;
-}
-.bd-callout-warning:lang(ar) {
+.bd-callout-warning {
     border-left-color: #f0ad4e;
 }
 .bd-callout-warning h4 {
@@ -72,4 +206,168 @@
 .bd-callout h4 {
     margin-top: 0;
     margin-bottom: 2rem;
+}
+.table-container thead {
+    /*background: rgba(255,255,255,.5) !important;*/
+    /*color: rgba(255,255,255,.5);*/
+}
+tr.odd {
+    background-color: #eceeef;
+}
+.absolute-top-7 {
+    position: absolute;
+    top: 7px;
+}
+.absolute-top-15 {
+    position: absolute;
+    top: 15px;
+}
+.absolute-right-30 {
+    position: absolute;
+    right: 30px;
+}
+.absolute-right-15 {
+    position: absolute;
+    right: 15px;
+}
+.absolute-right-200 {
+    position: absolute;
+    right: 200px;
+}
+.absolute-right-270 {
+    position: absolute;
+    right: 270px;
+}
+.absolute-right-310 {
+    position: absolute;
+    right: 310px;
+}
+.breadcrumb {
+    position: relative;
+}
+.row-class  {
+    max-height:75px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0px;
+    cursor: pointer;
+    background: #f5f5f5; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #f5f5f5, #EDEFF1); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(left top, #f5f5f5, #EDEFF1); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(left top, #f5f5f5, #EDEFF1); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(left top, #f5f5f5, #EDEFF1); /* Standard syntax */
+    box-shadow: 1px 1px 5px #888888;
+}
+.row-class:hover {
+    text-decoration: none;
+}
+.row-class .s-col {
+    height: 75px;
+    max-height: 75px;
+}
+.row-class .progress-success {
+    color: #5cb85c !important;
+    border: 1px solid #5cb85c;
+}
+.progress-bar.progress-bar-success {
+    background: #5cb85c;
+}
+.progress-bar.progress-bar-danger {
+    background: #d9534f;
+}
+.row-class .progress-danger {
+    color: #d9534f !important;
+    border: 1px solid #d9534f;
+}
+.row-class .progress .progress-bar {
+    color: #0b0b0b;
+}
+.row-class.disabled {
+    pointer-events: none;
+    cursor: not-allowed !important;
+    opacity: .65;
+}
+.row-student  {
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0px;
+    background: #f5f5f5; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #f5f5f5, #EDEFF1); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(left top, #f5f5f5, #EDEFF1); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(left top, #f5f5f5, #EDEFF1); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(left top, #f5f5f5, #EDEFF1); /* Standard syntax */
+    box-shadow: 1px 1px 5px #888888;
+}
+.row-student .s-col {
+    padding-top: 15px;
+}
+.row-student .absence-reasons label {
+    font-style: italic;
+    padding-right: 5px;
+}
+.row-student .absence-reasons input {
+    margin-right: 10px;
+}
+.btn-attendance-day.active {
+    background-color: #2aabd2;
+    color: red;
+}
+.s-lft div {
+    padding-top: 5px;
+    margin-top: 5px;
+}
+.s-rgt {
+    border-radius: 0 8px 8px 0;
+    background: #2aabd2;
+}
+.row-class .s-progs {
+    padding-top: 5px;
+}
+.s-progs .progress {
+    margin-top: 10px;
+}
+/*input[required] {*/
+    /*border: 1px solid red;*/
+/*}*/
+.asteriskField {
+    color: red;
+}
+#id_search_barcode, #id_outreach_barcode,
+#id_student_phone, #id_student_phone_prefix,
+#id_student_id_number {
+    direction: ltr;
+}
+#search_moved_student {
+    direction: rtl;
+}
+.container-full-page .breadcrumb {
+    direction: ltr;
+}
+.table-container .table th {
+    background-color: #025aa5;
+    color: #EBFFD8 !important;
+    opacity: 0.8;
+}
+.table-container .table th a {
+    color: white !important;
+}
+.table-container .table th {
+    border-left: 1px solid;
+}
+.table-container .table td {
+    border-left: 1px solid #eceeef;
+}
+.list-filter .form-group {
+    margin: 5px;
+    width: 150px;
+}
+.list-filter .btn {
+    margin: 5px;
+    width: 70px;
+}
+
+.list-filter .form-group input, .list-filter .form-group select {
+    width: 150px;
+}
+.nav-link.btn.btn-outline-secondary {
+    margin-left: 10px;
+    margin-right: 10px;
 }
