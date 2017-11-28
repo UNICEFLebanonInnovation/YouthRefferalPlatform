@@ -24,96 +24,52 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         (None, {
             'classes': ('suit-tab', 'suit-tab-general',),
             'fields': [
+                'partner_organization',
+                'governorate',
+                'trainer',
+                'location',
                 'first_name',
                 'father_name',
                 'last_name',
-                'mother_firstname',
-                'mother_lastname',
+                'birthday_year',
+                'birthday_month',
+                'birthday_day',
                 'sex',
-                'disability',
-                # 'birthday_year',
-                # 'birthday_month',
-                # 'birthday_day',
-                'phone',
-                # 'phone_prefix',
-                'parents_phone_number',
-                'id_type',
-                'id_number',
                 'nationality',
-                'mother_nationality',
-                'location',
-                'partner_organization',
-                # 'address',
+                'marital_status',
+                'address',
             ]
-        }),
-        (None, {
-            'classes': ('suit-tab', 'suit-tab-educations',),
-            'fields': [
-                'education_status',
-                'education_type',
-                'education_level',
-                'education_grade',
-                'leaving_education_reasons',
-            ]
-        }),
-        (None, {
-            'classes': ('suit-tab', 'suit-tab-employments',),
-            'fields': [
-                'employment_status',
-                'employment_sectors',
-                'looking_for_work',
-                'through_whom',
-                'obstacles_for_work',
-                'supporting_family',
-                'household_composition',
-                'household_working',
-                'safety',
-                'safety_reasons',
-            ]
-        }),
-        (None, {
-            'classes': ('suit-tab', 'suit-tab-followup',),
-            'fields': [
-                'trained_before',
-                'not_trained_reason',
-                'referred_by',
-                'communication_preference',
-            ]
-        }),
+        })
     ]
 
     suit_form_tabs = (
                       ('general', 'Basic Data'),
-                      ('educations', 'Educational Information'),
-                      ('employments', 'Livelihood Information'),
-                      ('followup', 'Follow-up Availability'),
-
                     )
 
     list_display = (
-        '__unicode__',
-        'mother_fullname',
-        'birthday',
-        'calc_age',
+        'partner_organization',
+        'governorate',
+        'trainer',
+        'location',
+        'first_name',
+        'father_name',
+        'last_name',
+        'birthday_year',
+        'birthday_month',
+        'birthday_day',
         'sex',
         'nationality',
-        'location',
-        'partner_organization',
-        'education_status',
-        'education_type',
-        'education_level',
-        'education_grade',
+        'marital_status',
+        'address',
         'created',
         'modified',
     )
     list_filter = (
+        'partner_organization',
+        'governorate',
         'sex',
         'nationality',
-        'location',
-        'education_status',
-        'education_type',
-        'education_level',
-        'education_grade',
+        'marital_status',
         'created',
         'modified',
     )

@@ -1392,7 +1392,7 @@ msgstr ""
 #: referral_platform/templates/django_tables2/delete_column.html:5
 #: referral_platform/youth/tables.py:21
 msgid "Delete"
-msgstr "حذ"
+msgstr "حذف"
 
 #: referral_platform/templates/django_tables2/edit_column.html:4
 #: referral_platform/youth/tables.py:18
