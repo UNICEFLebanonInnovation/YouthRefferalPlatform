@@ -29,29 +29,6 @@ from .tables import BootstrapTable, CommonTable
 from .forms import CommonForm, RegistrationForm
 
 
-class HomeView(UserRegisteredMixin, TemplateView):
-
-    template_name = 'pages/home.html'
-
-
-class RegistrationView(LoginRequiredMixin, FormView):
-
-    template_name = 'pages/registration.html'
-    form_class = RegistrationForm
-    success_url = '/'
-
-    def get_context_data(self, **kwargs):
-        force_default_language(self.request)
-        """Insert the form into the context dict."""
-        if 'form' not in kwargs:
-            kwargs['form'] = self.get_form()
-        return super(RegistrationView, self).get_context_data(**kwargs)
-
-    def form_valid(self, form):
-        form.save(self.request.user)
-        return super(RegistrationView, self).form_valid(form)
-
-
 class ListingView(LoginRequiredMixin,
                   FilterView,
                   ExportMixin,
@@ -191,9 +168,9 @@ class ExportView(LoginRequiredMixin, ListView):
             _('Father name'),
             _('Last name'),
             _('Sex'),
-            _('Birthday day'),
-            _('Birthday month'),
-            _('Birthday year'),
+            _('birthday day'),
+            _('birthday month'),
+            _('birthday year'),
             _('age'),
             _('Birthday'),
             _('Nationality'),

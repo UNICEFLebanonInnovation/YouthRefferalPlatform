@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-28 15:32+0200\n"
+"POT-Creation-Date: 2017-11-28 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1178,20 +1178,6 @@ msgstr ""
 msgid "or"
 msgstr "او"
 
-#: referral_platform/templates/account/login.html:33
-#, python-format
-msgid ""
-"If you have not created an account yet, then please\n"
-"    <u class=\"text-uppercase\"><a href=\"%(signup_url)s\" style=\"color: "
-"#3498db;\">sign up</a></u> first."
-msgstr ""
-"إذا لم تكن قد أنشأت حسابا بعد، فالرجاء<a href=\"%(signup_url)s\">سجل الدخول</"
-"a>اولا."
-
-#: referral_platform/templates/account/login.html:43
-msgid "Forgot Password?"
-msgstr "هل نسيت كلمة السر؟"
-
 #: referral_platform/templates/account/logout.html:5
 #: referral_platform/templates/account/logout.html:8
 #: referral_platform/templates/account/logout.html:17
@@ -1403,14 +1389,10 @@ msgstr ""
 msgid "fill in"
 msgstr ""
 
-#: referral_platform/templates/django_tables2/delete_column.html:6
+#: referral_platform/templates/django_tables2/delete_column.html:5
 #: referral_platform/youth/tables.py:21
 msgid "Delete"
-msgstr "حذف"
-
-#: referral_platform/templates/django_tables2/delete_column.html:9
-msgid "Not allowed"
-msgstr ""
+msgstr "حذ"
 
 #: referral_platform/templates/django_tables2/edit_column.html:4
 #: referral_platform/youth/tables.py:18
@@ -1437,31 +1419,33 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: referral_platform/templates/header.html:25
-msgid "CLM tools"
-msgstr ""
+#: referral_platform/templates/header.html:24
+#, fuzzy
+#| msgid "Registration"
+msgid "Youth Registration"
+msgstr "التسجيل"
 
-#: referral_platform/templates/header.html:34
+#: referral_platform/templates/header.html:32
 msgid "Change password"
 msgstr "تغيير كلمة السر"
 
-#: referral_platform/templates/header.html:37
+#: referral_platform/templates/header.html:35
 msgid "Logout"
 msgstr "تسجيل الخروج"
 
-#: referral_platform/templates/header.html:42
+#: referral_platform/templates/header.html:40
 #: referral_platform/templates/youth/base.html:146
 #: referral_platform/templates/youth/base.html:180
 msgid "English"
 msgstr "English"
 
-#: referral_platform/templates/header.html:48
+#: referral_platform/templates/header.html:46
 #: referral_platform/templates/youth/base.html:147
 #: referral_platform/templates/youth/base.html:185
 msgid "Arabic"
 msgstr "العربية"
 
-#: referral_platform/templates/header.html:54
+#: referral_platform/templates/header.html:52
 msgid "Log In"
 msgstr ""
 
@@ -1521,11 +1505,17 @@ msgstr "موافق"
 msgid "Follow us"
 msgstr "تابعنا على القنوات التالية"
 
-#: referral_platform/templates/youth/list.html:36
+#: referral_platform/templates/youth/list.html:34
+#, fuzzy
+#| msgid "support"
+msgid "Export"
+msgstr "الدعم"
+
+#: referral_platform/templates/youth/list.html:42
 msgid "filter"
 msgstr "ابحث"
 
-#: referral_platform/templates/youth/list.html:37
+#: referral_platform/templates/youth/list.html:43
 msgid "reset"
 msgstr "الغاء "
 
@@ -1585,11 +1575,12 @@ msgstr "المستخدمين"
 
 #: referral_platform/youth/filters.py:10 referral_platform/youth/forms.py:38
 #: referral_platform/youth/forms.py:40 referral_platform/youth/models.py:263
+#: referral_platform/youth/views.py:163
 msgid "Governorate"
 msgstr "المحافظة"
 
 #: referral_platform/youth/filters.py:11 referral_platform/youth/models.py:23
-#: referral_platform/youth/models.py:167
+#: referral_platform/youth/models.py:167 referral_platform/youth/views.py:176
 msgid "Nationality"
 msgstr "الجنسية"
 
@@ -1685,23 +1676,24 @@ msgstr "الاسم الثلاثي"
 msgid "Gender"
 msgstr "الجنس"
 
-#: referral_platform/youth/models.py:136
+#: referral_platform/youth/models.py:136 referral_platform/youth/views.py:173
 msgid "birthday year"
 msgstr "سنة الميلاد"
 
-#: referral_platform/youth/models.py:145
+#: referral_platform/youth/models.py:145 referral_platform/youth/views.py:172
 msgid "birthday month"
 msgstr "شهر الميلاد"
 
-#: referral_platform/youth/models.py:153
+#: referral_platform/youth/models.py:153 referral_platform/youth/views.py:171
 msgid "birthday day"
 msgstr "يوم الميلاد"
 
 #: referral_platform/youth/models.py:155 referral_platform/youth/tables.py:24
+#: referral_platform/youth/views.py:174
 msgid "age"
 msgstr "العمر"
 
-#: referral_platform/youth/models.py:177
+#: referral_platform/youth/models.py:177 referral_platform/youth/views.py:178
 msgid "address"
 msgstr "العنوان"
 
@@ -1725,15 +1717,15 @@ msgstr "ارمل/ارملة"
 msgid "Single"
 msgstr "اعزب/عزباء"
 
-#: referral_platform/youth/models.py:261
+#: referral_platform/youth/models.py:261 referral_platform/youth/views.py:165
 msgid "Location"
 msgstr "الموقع الجغرافي"
 
-#: referral_platform/youth/models.py:270
+#: referral_platform/youth/models.py:270 referral_platform/youth/views.py:177
 msgid "Marital status"
 msgstr "الحالة الاجتماعية"
 
-#: referral_platform/youth/models.py:274
+#: referral_platform/youth/models.py:274 referral_platform/youth/views.py:164
 msgid "Trainer"
 msgstr "المدرب"
 
@@ -1741,7 +1733,7 @@ msgstr "المدرب"
 msgid "Bayanati ID should be composed of exactly 6 numbers ."
 msgstr ""
 
-#: referral_platform/youth/models.py:281
+#: referral_platform/youth/models.py:281 referral_platform/youth/views.py:166
 msgid "Bayanati ID"
 msgstr ""
 
@@ -1877,247 +1869,28 @@ msgstr "أنا لا أريد المتابعة "
 msgid "Youth"
 msgstr ""
 
-#: referral_platform/youth/tables.py:25
+#: referral_platform/youth/tables.py:25 referral_platform/youth/views.py:175
 msgid "Birthday"
-msgstr "يوم الميلاد"
-
-#~ msgid "Password change"
-#~ msgstr "إعادة تعيين كلمة السر"
-
-#~ msgid "Password change successful"
-#~ msgstr "إعادة تعيين كلمة السر"
-
-#~ msgid "Designates whether the user can log into this admin site."
-#~ msgstr "يحدد ما إذا كان يمكن للمستخدم تسجيل الدخول إلى هذا الموقع المشرف"
-
-#~ msgid "To help my family in house chores"
-#~ msgstr "لمساعدة عائلتي في الأعمال المنزلية"
-
-#~ msgid "To help my family in breadwinning"
-#~ msgstr "لمساعدة عائلتي في كسب العيش"
-
-#~ msgid "I got low grades or did not pass my exams"
-#~ msgstr "حصلت على علامات متدنّية أو لم أنجح في امتحاناتي"
-
-#~ msgid "I have/had physical or mental health problems"
-#~ msgstr "لدي / كانت لدي مشاكل في الصحة البدنية أو العقلية"
-
-#~ msgid "School was too far away"
-#~ msgstr "كانت المدرسة بعيدة جداً"
-
-#~ msgid "School was too expensive"
-#~ msgstr "كانت المدرسة مكلفة للغاية"
-
-#~ msgid "School was unsafe due to community conflict"
-#~ msgstr "كانت المدرسة غير آمنة بسبب الصراع المجتمعي "
-
-#~ msgid "School was boring/not appealing to me"
-#~ msgstr "كانت المدرسة مملة / لم تستهويني"
-
-#~ msgid "I felt discriminated against at school"
-#~ msgstr "شعرت بالتمييز في المدرسة"
-
-#~ msgid "Markets and shops"
-#~ msgstr "الأسواق والمحلات التجارية"
-
-#~ msgid "Handicrafts and art crafts (carpentry, wood works, etc)"
-#~ msgstr "الحرف اليدوية والحرف الفنية (النجارة، والأعمال الخشبية ... الخ)"
-
-#~ msgid "Manufacturing, factory and machinery"
-#~ msgstr "التصنيع، المصانع والآلات"
-
-#~ msgid "construction and associated industries (plumbing, electrician)"
-#~ msgstr "البناء والصناعات المرتبطة بها (السباكة، الكهرباء، ...) "
-
-#~ msgid ""
-#~ "Unskilled labor and basic occupations (shoe cleaners, street sellers, "
-#~ "domestic help, etc)"
-#~ msgstr ""
-#~ "العمالة غير الماهرة والمهن الأساسية (ماسحو أحذية، باعة في الشوارع، أعمال "
-#~ "مساعدة منزلية ... الخ)"
-
-#~ msgid "Civil Society"
-#~ msgstr "المجتمع المدني"
-
-#~ msgid "I don't want to answer"
-#~ msgstr "لا أريد الإجابة "
-
-#~ msgid "Through family and friends"
-#~ msgstr " من خلال العائلة والأصدقاء"
-
-#~ msgid "Through an employment office"
-#~ msgstr " من خلال مكتب توظيف"
-
-#~ msgid "Through a trainer"
-#~ msgstr "من خلال مدرّب"
-
-#~ msgid "Through an NGO that you were trained with"
-#~ msgstr " من خلال منظمة غير حكومية تدرّبت لديها"
-
-#~ msgid "Through the Internet"
-#~ msgstr " عبر الانترنت"
-
-#~ msgid "The workplace was in an unsafe location"
-#~ msgstr "مكان العمل في مكان غير آمن"
-
-#~ msgid "Low Salary Offered"
-#~ msgstr "تدنّي الرواتب المقدمة"
-
-#~ msgid "Mental or Physical Disability"
-#~ msgstr "الإعاقة الذهنية أو البدنية"
-
-#~ msgid "Low Education Level"
-#~ msgstr "مستوى التعليم المتدنّي"
-
-#~ msgid "Foreign Language"
-#~ msgstr "اللغة الأجنبية"
-
-#~ msgid "Few Job Opportunities"
-#~ msgstr "ندرة فرص العمل"
-
-#~ msgid "Lack of Skills for the job"
-#~ msgstr "الافتقاد إلى المهارات لشغل هذه الوظيفة"
-
-#~ msgid "Rigid Labour Laws"
-#~ msgstr "قوانين العمل الصارمة"
-
-#~ msgid "Mother (check)"
-#~ msgstr "الأم (ضع علامة)"
-
-#~ msgid "Father (check)"
-#~ msgstr "الأب (ضع علامة)"
-
-#~ msgid "Sister - # 1, 2, 3"
-#~ msgstr "الأخوات. العدد 1، 2، 3"
-
-#~ msgid "Brother - # 1, 2, 3"
-#~ msgstr "الإخوة. العدد 1، 2، 3"
-
-#~ msgid "Other relatives"
-#~ msgstr "أقارب آخرون"
-
-#~ msgid "No response"
-#~ msgstr "لا جواب"
-
-#~ msgid "Are you currently studying?"
-#~ msgstr "هل تدرس حاليا؟"
-
-#~ msgid "Type of education?"
-#~ msgstr "نوع التعليم"
-
-#~ msgid "Current education level?"
-#~ msgstr "مستوى التعليم الحالي"
-
-#~ msgid "Basic Data"
-#~ msgstr " البيانات الشخصية"
-
-#~ msgid "First Name"
-#~ msgstr "الاسم الأول "
-
-#~ msgid "Last Name"
-#~ msgstr " اسم العائلة"
-
-#~ msgid "Mother First Name"
-#~ msgstr "اسم الام"
-
-#~ msgid "Mother Last Name"
-#~ msgstr "شهرة الام"
-
-#~ msgid "ID Number"
-#~ msgstr "رقم الهوية "
-
-#~ msgid "Birthdate"
-#~ msgstr "تاريخ الولادة "
-
-#~ msgid "Phone Number"
-#~ msgstr "رقم هاتف الشخصي"
-
-#~ msgid "Parents Phone Number"
-#~ msgstr " رقم هاتف الوالدين"
-
-#~ msgid "Educational Information"
-#~ msgstr "الجزء الثاني: معلومات تربوية"
-
-#~ msgid "1. Have you ever attended school or other training programs?"
-#~ msgstr "1. هل سبق لك أن ذهبت إلى مدرسة أو تابعت برامج تدريبية أخرى؟"
-
-#~ msgid "1.a What type of education are/were you enrolled in?"
-#~ msgstr "1.أ. إذا كنت مسجلاً حالياً، ففي أي نوع من التعليم أنت مسجل؟ *"
-
-#~ msgid "1.b What is the level of education you have successfully completed?"
-#~ msgstr "1.ب. إذا توقفت عن الدراسة، فما نوع التعليم الذي أكملته؟"
-
-#~ msgid ""
-#~ "2. What were your reason(s) for stopping studying? Please tick all that "
-#~ "apply?"
-#~ msgstr ""
-#~ "2. ما هو سبب (أسباب) التوقف عن الدراسة؟ يرجى وضع علامة على كل ما ينطبق *؟"
-
-#~ msgid "Livelihood Information"
-#~ msgstr "معلومات حول سبل العيش"
-
-#~ msgid "1. Relationship with Labour Market"
-#~ msgstr "1. العلاقة مع سوق العمل *  "
-
-#~ msgid "2. What is the sector(s) you worked in / or are working in?"
-#~ msgstr "2. ما هو القطاع (القطاعات) التي عملت / أو تعمل فيها؟ * (مرتبط)"
-
-#~ msgid "3. If you are currently not working, are you searching for work now?"
-#~ msgstr "3. إذا كنت لا تعمل حالياً، هل تبحث عن عمل الآن؟ * (مرتبط)"
-
-#~ msgid "3.a If yes, through whom? (select multiple)"
-#~ msgstr "3.أ. فمن خلال من؟ (اختيار أكثر من جواب)"
-
-#~ msgid "4. What are the obstacles in searching for/or having work?"
-#~ msgstr "4. ما هي العقبات في البحث عن / أو العمل؟ * "
-
-#~ msgid "4.a Do you participate in supporting your family financially?"
-#~ msgstr "4.أ. هل تشارك في دعم عائلتك مالياً؟ "
-
-#~ msgid ""
-#~ "5. Please check all the choice(s) that best describes your household "
-#~ "composition"
-#~ msgstr "5. ضع علامة على جميع الخيارات التي تصف تركيبة أسرتك بالشكل الأفضل"
-
-#~ msgid "6. How many members in your household work?"
-#~ msgstr "6. كم عدد أفراد أسرتك؟"
-
-#~ msgid "Follow-up Availability"
-#~ msgstr " توافر المتابعة"
-
-#~ msgid "1. Have you attended any kind of training before?"
-#~ msgstr ""
-#~ "1. هل تابعت أي نوع من التدريب مع هذه المنظمة / المنظمة غير الحكومية من "
-#~ "قبل؟"
-
-#~ msgid "1.a If not, why?"
-#~ msgstr "1.أ.  إذا لم يكن كذلك، فلماذا؟"
-
-#~ msgid "How did you know about this program?"
-#~ msgstr "3. كيف عرفت بهذا البرنامج والمنظمة؟"
-
-#~ msgid ""
-#~ "4. We would like to follow up with you after the training, what is your "
-#~ "preferred method of communication?"
-#~ msgstr "4. نود المتابعة معك بعد التدريب، ما هي طريقة التواصل المفضلة لديك؟"
-
-#~ msgid "Save changes"
-#~ msgstr "حفظ"
-
-#~ msgid "conflict-related"
-#~ msgstr "ذات صلة بالنزاع"
-
-#~ msgid "violence at home"
-#~ msgstr "عنف في المنزل"
-
-#~ msgid "harassment/violence by the neighborhood"
-#~ msgstr "التحرش / عنف من قبل الحي"
-
-#~ msgid "harassment/violence in the school"
-#~ msgstr "التحرش / عنف في المدرسة"
-
-#~ msgid "Details"
-#~ msgstr "التفاصيل"
-
-#~ msgid "Location Information"
-#~ msgstr "معلومات الموقع"
+msgstr "تاريخ الميلاد"
+
+#: referral_platform/youth/views.py:167
+#, fuzzy
+#| msgid "first name"
+msgid "First name"
+msgstr "الاسم الاول"
+
+#: referral_platform/youth/views.py:168
+#, fuzzy
+#| msgid "Father Name"
+msgid "Father name"
+msgstr " اسم الأب"
+
+#: referral_platform/youth/views.py:169
+#, fuzzy
+#| msgid "last name"
+msgid "Last name"
+msgstr "اسم العائلة"
+
+#: referral_platform/youth/views.py:170
+msgid "Sex"
+msgstr ""

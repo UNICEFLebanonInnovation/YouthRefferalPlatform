@@ -2,13 +2,9 @@
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
-from .views import HomeView, RegistrationView
 from . import views
 
 urlpatterns = [
-
-    # url(r'^$', HomeView.as_view(), name='home'),
-    # url(r'^registration$', RegistrationView.as_view(), name='registration'),
 
     url(
         regex=r'^add/$',

@@ -108,6 +108,7 @@ class Person(TimeStampedModel):
     )
 
     GENDER = Choices(
+        ('', _('Gender')),
         ('male', _('Male')),
         ('female', _('Female')),
     )
@@ -249,6 +250,7 @@ class Person(TimeStampedModel):
 
 class YoungPerson(Person):
     MARITAL_STATUS = Choices(
+        ('', _('Marital status')),
         ('married', _('Married')),
         ('engaged', _('Engaged')),
         ('divorced', _('Divorced')),

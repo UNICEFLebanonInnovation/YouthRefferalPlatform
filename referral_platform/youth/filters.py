@@ -17,10 +17,13 @@ class YouthFilter(CommonFilter):
         model = YoungPerson
         fields = {
             'bayanati_ID': ['contains'],
+            'location': ['contains'],
+            'trainer': ['contains'],
             'first_name': ['contains'],
             'father_name': ['contains'],
             'last_name': ['contains'],
             'nationality': ['exact'],
             'governorate': ['exact'],
             'marital_status': ['exact'],
+            'sex': ['exact'],
         }
