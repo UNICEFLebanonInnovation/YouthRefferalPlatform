@@ -24,30 +24,11 @@ class CommonTable(tables.Table):
     age = tables.Column(verbose_name=_('age'), orderable=False, accessor='calc_age')
     birthday = tables.Column(verbose_name=_('Birthday'), orderable=False, accessor='birthday')
 
-    # pre_assessment_result = tables.Column(verbose_name=_('Academic Result - Pre'), orderable=False,
-    #                                       accessor='pre_test_score')
-    # post_assessment_result = tables.Column(verbose_name=_('Academic Result - Post'), orderable=False,
-    #                                        accessor='post_test_score')
-    #
-    # arabic_improvement = tables.Column(verbose_name=_('Arabic - Improvement'), orderable=False,
-    #                                    accessor='arabic_improvement')
-    # english_improvement = tables.Column(verbose_name=_('English - Improvement'), orderable=False,
-    #                                     accessor='english_improvement')
-    # french_improvement = tables.Column(verbose_name=_('French - Improvement'), orderable=False,
-    #                                    accessor='french_improvement')
-    # math_improvement = tables.Column(verbose_name=_('Math - Improvement'), orderable=False,
-    #                                  accessor='math_improvement')
-    #
-    # assessment_improvement = tables.Column(verbose_name=_('Academic Result - Improvement'), orderable=False,
-    #                                        accessor='assessment_improvement')
-
     class Meta:
         model = YoungPerson
         fields = (
             'edit_column',
             'delete_column',
-            # 'round',
-            # 'cycle',
             'governorate',
             'trainer',
             'location',
@@ -60,18 +41,5 @@ class CommonTable(tables.Table):
             'birthday',
             'nationality',
             'marital_status',
-            # 'pre_assessment_result',
-            # 'post_assessment_result',
-            # 'arabic_improvement',
-            # 'english_improvement',
-            # 'french_improvement',
-            # 'math_improvement',
-            # 'assessment_improvement',
-            # 'participation',
-            # 'learning_result',
-            # 'owner',
-            # 'modified_by',
-            # 'created',
-            # 'modified',
-            # 'comments',
+            'address',
         )
