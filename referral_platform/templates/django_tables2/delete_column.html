@@ -1,6 +1,6 @@
 {% load staticfiles i18n %}
-<button class="btn btn-danger delete-registration-row" itemscope="{{ record.id }}"
+<button class="btn btn-danger delete-registration-row" translation="Are you sure you want to delete?" itemscope="{{ record.id }}"
         data-action="{{ column.attrs.url }}">
     <i class="icon-trash icon-white"></i>
-    {% trans "Delete" %}
+    {% trans "Delete"  %}
 </button>

@@ -20,7 +20,7 @@ class CommonTable(tables.Table):
                                         attrs={'url': '/clm/bln-edit/'})
     delete_column = tables.TemplateColumn(verbose_name=_('Delete'), orderable=False,
                                           template_name='django_tables2/delete_column.html',
-                                          attrs={'url': '/api/clm-bln/'})
+                                          attrs={'url': '/youth/delete/'})
     age = tables.Column(verbose_name=_('age'), orderable=False, accessor='calc_age')
     birthday = tables.Column(verbose_name=_('Birthday'), orderable=False, accessor='birthday')
 

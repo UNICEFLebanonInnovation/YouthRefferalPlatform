@@ -10,10 +10,14 @@ from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import RedirectView
 from django.utils.translation import ugettext as _
 
+from rest_framework import status
+from rest_framework import viewsets, mixins, permissions
+
+from rest_framework.generics import DestroyAPIView
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
@@ -71,6 +75,17 @@ class AddView(LoginRequiredMixin, CreateView):
         instance.save()
 
         return super(AddView, self).form_valid(form)
+
+
+class DeleteYouthView(DestroyAPIView):
+    """
+    Provides API operations around a Enrollment record
+    """
+    queryset = YoungPerson.objects.all()
+
+    @csrf_exempt
+    def delete(self, request, *args, **kwargs):
+        return super(DeleteYouthView, self).delete(request, *args, **kwargs)
 
 
 class EditView(LoginRequiredMixin, UpdateView):

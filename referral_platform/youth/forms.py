@@ -237,6 +237,11 @@ class CommonForm(forms.ModelForm):
             FormActions(
                 Submit('save', _('Save')),
                 Submit('save_add_another', _('Save and add another')),
+                # HTML("""{% if object %}
+                # <a
+                # class="btn btn-outline-danger pull-right">
+                # Delete <i class="fa fa-trash-o" aria-hidden="true"></i></button></a>
+                # {% endif %}"""),
                 HTML('<a class="btn btn-info" href="/youth/">' + _('Cancel') + '</a>'),
             )
         )

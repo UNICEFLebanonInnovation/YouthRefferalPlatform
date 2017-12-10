@@ -17,6 +17,11 @@ urlpatterns = [
         name='edit'
     ),
     url(
+        regex=r'^delete/(?P<pk>[\w.@+-]+)/$',
+        view=views.DeleteYouthView.as_view(),
+        name='delete'
+    ),
+    url(
         regex=r'^assessment/list/(?P<slug>[\w.@+-]+)/$',
         view=views.YouthAssessment.as_view(),
         name='assessment'
