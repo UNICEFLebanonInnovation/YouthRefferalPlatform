@@ -2,8 +2,8 @@
   "name": "referral_platform",
   "version": "0.1.0",
   "description": "referral_platform",
-  "engines" : {
-    "node" : ">=4"
+  "engines": {
+    "node": ">=4"
   },
   "main": "referral_platform/static/referral_platform/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "dev": "NODE_ENV=local npm run babel -- ./node_modules/.bin/webpack-dev-server --progress --hot",
     "python": "python manage.py runserver",
     "start": "npm run dev & npm run python"
-    },
+  },
   "author": "James Cranwell-Ward",
   "license": "GPLv3",
   "dependencies": {
