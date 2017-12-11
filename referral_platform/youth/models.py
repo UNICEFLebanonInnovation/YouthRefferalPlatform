@@ -275,10 +275,10 @@ class YoungPerson(Person):
 
     trainer = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Trainer'))
 
-    bayanati_ID_validator = RegexValidator(r'^[0-9]{6}$', _('Bayanati ID should be composed of exactly 6 numbers .'))
+    #bayanati_ID_validator = RegexValidator(r'^[0-9]{6}$', _('Bayanati ID should be composed of exactly 6 numbers .'))
     bayanati_ID = models.CharField(
         max_length=50,
-        validators=[bayanati_ID_validator],
+        #validators=[bayanati_ID_validator],
         blank=True, null=True,
         verbose_name=_('Bayanati ID')
     )
