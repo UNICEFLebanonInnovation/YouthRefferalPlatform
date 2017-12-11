@@ -13,6 +13,11 @@ from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
 from referral_platform.locations.models import Location
 from referral_platform.partners.models import Center
 from referral_platform.clm.models import Assessment, AssessmentSubmission
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+
+
+
 from .models import (
     YoungPerson
 )
@@ -68,6 +73,7 @@ class CommonForm(forms.ModelForm):
         )
         initial_fields = fields
         widgets = {}
+
 
     class Media:
         js = (
@@ -245,3 +251,32 @@ class CommonForm(forms.ModelForm):
                 HTML('<a class="btn btn-info" href="/youth/">' + _('Cancel') + '</a>'),
             )
         )
+    def clean(self):
+        cleaned_data = super(CommonForm, self).clean()
+        birthday_year = cleaned_data.get('birthday_year')
+        birthday_day = cleaned_data.get('birthday_day')
+        birthday_month = cleaned_data.get('birthday_month')
+        nationality = cleaned_data.get('nationality')
+        sex = cleaned_data.get('sex')
+        first_name = cleaned_data.get('first_name')
+        last_name = cleaned_data.get('last_name')
+        father_name = cleaned_data.get('father_name')
+        form_str = first_name + ' ' + father_name + ' ' + last_name
+        is_matching = False
+
+        filtered_results = YoungPerson.objects.filter(birthday_year=birthday_year,birthday_day=birthday_day,birthday_month=birthday_month,nationality=nationality,sex=sex)
+        for result in filtered_results:
+            result_str = result.first_name+' '+result.father_name+' '+result.last_name
+            fuzzy_match = fuzz.ratio(form_str, result_str)
+            if fuzzy_match > 85:
+                is_matching = True
+                break
+
+        if is_matching:
+            raise forms.ValidationError(
+                "Values are matching"
+            )
+
+
+
+

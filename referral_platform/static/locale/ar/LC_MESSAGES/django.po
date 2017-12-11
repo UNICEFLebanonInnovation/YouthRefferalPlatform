@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-28 16:52+0200\n"
+"POT-Creation-Date: 2017-12-11 15:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "حفظ"
 #: referral_platform/clm/forms.py:221 referral_platform/courses/forms.py:246
 #: referral_platform/courses/forms.py:491
 #: referral_platform/initiatives/forms.py:120
-#: referral_platform/youth/forms.py:240
+#: referral_platform/youth/forms.py:245
 msgid "Cancel"
 msgstr "الغاء"
 
@@ -1266,6 +1266,7 @@ msgstr "سجل"
 
 #: referral_platform/templates/account/signup.html:9
 #: referral_platform/templates/account/signup.html:29
+#: referral_platform/templates/header.html:55
 msgid "Sign Up"
 msgstr "سجل"
 
@@ -1519,31 +1520,27 @@ msgstr "ابحث"
 msgid "reset"
 msgstr "الغاء "
 
-#: referral_platform/users/admin.py:43
+#: referral_platform/users/admin.py:52 referral_platform/users/admin.py:61
 msgid "Personal info"
 msgstr "تفاصيل شخصية"
 
-#: referral_platform/users/admin.py:44
+#: referral_platform/users/admin.py:53 referral_platform/users/admin.py:62
 msgid "Permissions"
 msgstr ""
 
-#: referral_platform/users/admin.py:45
+#: referral_platform/users/admin.py:55 referral_platform/users/admin.py:64
 msgid "Important dates"
 msgstr ""
-
-#: referral_platform/users/admin.py:46
-msgid "Partner"
-msgstr "الجمعية"
 
 #: referral_platform/users/models.py:20
 msgid "email address"
 msgstr "عنوان البريد الإلكتروني "
 
-#: referral_platform/users/models.py:21 referral_platform/youth/models.py:116
+#: referral_platform/users/models.py:21 referral_platform/youth/models.py:117
 msgid "first name"
 msgstr "الاسم الاول"
 
-#: referral_platform/users/models.py:22 referral_platform/youth/models.py:117
+#: referral_platform/users/models.py:22 referral_platform/youth/models.py:118
 msgid "last name"
 msgstr "اسم العائلة"
 
@@ -1574,13 +1571,13 @@ msgid "users"
 msgstr "المستخدمين"
 
 #: referral_platform/youth/filters.py:10 referral_platform/youth/forms.py:38
-#: referral_platform/youth/forms.py:40 referral_platform/youth/models.py:263
-#: referral_platform/youth/views.py:163
+#: referral_platform/youth/forms.py:40 referral_platform/youth/models.py:265
+#: referral_platform/youth/views.py:184
 msgid "Governorate"
 msgstr "المحافظة"
 
 #: referral_platform/youth/filters.py:11 referral_platform/youth/models.py:23
-#: referral_platform/youth/models.py:167 referral_platform/youth/views.py:176
+#: referral_platform/youth/models.py:168 referral_platform/youth/views.py:197
 msgid "Nationality"
 msgstr "الجنسية"
 
@@ -1652,245 +1649,245 @@ msgstr "تشرين ثاني"
 msgid "December"
 msgstr "كانون اول"
 
-#: referral_platform/youth/models.py:111
-msgid "Male"
-msgstr "ذكر"
-
-#: referral_platform/youth/models.py:112
-msgid "Female"
-msgstr "انثى"
-
-#: referral_platform/youth/models.py:114
-msgid "Only Arabic characters are allowed."
-msgstr "يسمح فقط بالأحرف العربية."
-
-#: referral_platform/youth/models.py:118
-msgid "Father Name"
-msgstr " اسم الأب"
-
-#: referral_platform/youth/models.py:119
-msgid "full name"
-msgstr "الاسم الثلاثي"
-
-#: referral_platform/youth/models.py:126
+#: referral_platform/youth/models.py:111 referral_platform/youth/models.py:127
 msgid "Gender"
 msgstr "الجنس"
 
-#: referral_platform/youth/models.py:136 referral_platform/youth/views.py:173
+#: referral_platform/youth/models.py:112
+msgid "Male"
+msgstr "ذكر"
+
+#: referral_platform/youth/models.py:113
+msgid "Female"
+msgstr "انثى"
+
+#: referral_platform/youth/models.py:115
+msgid "Only Arabic characters are allowed."
+msgstr "يسمح فقط بالأحرف العربية."
+
+#: referral_platform/youth/models.py:119
+msgid "Father Name"
+msgstr " اسم الأب"
+
+#: referral_platform/youth/models.py:120
+msgid "full name"
+msgstr "الاسم الثلاثي"
+
+#: referral_platform/youth/models.py:137 referral_platform/youth/views.py:194
 msgid "birthday year"
 msgstr "سنة الميلاد"
 
-#: referral_platform/youth/models.py:145 referral_platform/youth/views.py:172
+#: referral_platform/youth/models.py:146 referral_platform/youth/views.py:193
 msgid "birthday month"
 msgstr "شهر الميلاد"
 
-#: referral_platform/youth/models.py:153 referral_platform/youth/views.py:171
+#: referral_platform/youth/models.py:154 referral_platform/youth/views.py:192
 msgid "birthday day"
 msgstr "يوم الميلاد"
 
-#: referral_platform/youth/models.py:155 referral_platform/youth/tables.py:24
-#: referral_platform/youth/views.py:174
+#: referral_platform/youth/models.py:156 referral_platform/youth/tables.py:24
+#: referral_platform/youth/views.py:195
 msgid "age"
 msgstr "العمر"
 
-#: referral_platform/youth/models.py:177 referral_platform/youth/views.py:178
+#: referral_platform/youth/models.py:178 referral_platform/youth/views.py:199
 msgid "address"
 msgstr "العنوان"
 
-#: referral_platform/youth/models.py:252
-msgid "Married"
-msgstr "متزوج/متزوجة"
-
-#: referral_platform/youth/models.py:253
-msgid "Engaged"
-msgstr "مرتبط/مرتبطة"
-
-#: referral_platform/youth/models.py:254
-msgid "Divorced"
-msgstr "مطلق/مطلقة"
-
-#: referral_platform/youth/models.py:255
-msgid "Widower"
-msgstr "ارمل/ارملة"
-
-#: referral_platform/youth/models.py:256
-msgid "Single"
-msgstr "اعزب/عزباء"
-
-#: referral_platform/youth/models.py:261 referral_platform/youth/views.py:165
-msgid "Location"
-msgstr "الموقع الجغرافي"
-
-#: referral_platform/youth/models.py:270 referral_platform/youth/views.py:177
+#: referral_platform/youth/models.py:253 referral_platform/youth/models.py:272
+#: referral_platform/youth/views.py:198
 msgid "Marital status"
 msgstr "الحالة الاجتماعية"
 
-#: referral_platform/youth/models.py:274 referral_platform/youth/views.py:164
+#: referral_platform/youth/models.py:254
+msgid "Married"
+msgstr "متزوج/متزوجة"
+
+#: referral_platform/youth/models.py:255
+msgid "Engaged"
+msgstr "مرتبط/مرتبطة"
+
+#: referral_platform/youth/models.py:256
+msgid "Divorced"
+msgstr "مطلق/مطلقة"
+
+#: referral_platform/youth/models.py:257
+msgid "Widower"
+msgstr "ارمل/ارملة"
+
+#: referral_platform/youth/models.py:258
+msgid "Single"
+msgstr "اعزب/عزباء"
+
+#: referral_platform/youth/models.py:263 referral_platform/youth/views.py:186
+msgid "Location"
+msgstr "الموقع الجغرافي"
+
+#: referral_platform/youth/models.py:276 referral_platform/youth/views.py:185
 msgid "Trainer"
 msgstr "المدرب"
 
-#: referral_platform/youth/models.py:276
-msgid "Bayanati ID should be composed of exactly 6 numbers ."
-msgstr ""
-
-#: referral_platform/youth/models.py:281 referral_platform/youth/views.py:166
+#: referral_platform/youth/models.py:283 referral_platform/youth/views.py:187
 msgid "Bayanati ID"
 msgstr ""
 
-#: referral_platform/youth/models.py:286
+#: referral_platform/youth/models.py:288
 msgid "Yes, I am currently studying"
 msgstr "نعم، أنا أدرس حالياً"
 
-#: referral_platform/youth/models.py:287
+#: referral_platform/youth/models.py:289
 msgid "Yes, but I stopped studying"
 msgstr "نعم، ولكن توقّفت عن الدراسة"
 
-#: referral_platform/youth/models.py:288
+#: referral_platform/youth/models.py:290
 msgid "Never been to an educational institution"
 msgstr "لا، لم أذهب أبداً إلى أي مؤسسة أكاديمية"
 
-#: referral_platform/youth/models.py:289
+#: referral_platform/youth/models.py:291
 msgid "NA"
 msgstr "غير محدد"
 
-#: referral_platform/youth/models.py:296
+#: referral_platform/youth/models.py:298
 msgid "Non formal Education"
 msgstr "تعليم غير نظامي"
 
-#: referral_platform/youth/models.py:297
+#: referral_platform/youth/models.py:299
 msgid "Formal Education"
 msgstr "تعليم نظامي"
 
-#: referral_platform/youth/models.py:317
+#: referral_platform/youth/models.py:319
 msgid "Currently Working - full time"
 msgstr "أعمل حالياً - بدوام كامل"
 
-#: referral_platform/youth/models.py:318
+#: referral_platform/youth/models.py:320
 msgid "Currently Working - part time"
 msgstr "أعمل حالياً - بدوام جزئي"
 
-#: referral_platform/youth/models.py:319
+#: referral_platform/youth/models.py:321
 msgid "Work in Summer Only"
 msgstr "أعمل في فصل الصيف فقط"
 
-#: referral_platform/youth/models.py:320
+#: referral_platform/youth/models.py:322
 msgid "Currently Unemployed"
 msgstr "حالياً عاطل عن العمل"
 
-#: referral_platform/youth/models.py:321
+#: referral_platform/youth/models.py:323
 msgid "Never worked"
 msgstr "لم تعمل"
 
-#: referral_platform/youth/models.py:322
+#: referral_platform/youth/models.py:324
 msgid "Looking for a work"
 msgstr "ابحث عن عمل"
 
-#: referral_platform/youth/models.py:372
+#: referral_platform/youth/models.py:374
 msgid " I always feel totally safe in my community "
 msgstr "أشعر دائماً بأمان تام في مجتمعي"
 
-#: referral_platform/youth/models.py:373
+#: referral_platform/youth/models.py:375
 msgid "Most of the days I feel safe in my community"
 msgstr "أشعر في معظم الأيام بأمان في مجتمعي"
 
-#: referral_platform/youth/models.py:374
+#: referral_platform/youth/models.py:376
 msgid "Most of the days I don't feel safe in my community "
 msgstr "لا أشعر في معظم الأيام بأمان في مجتمعي"
 
-#: referral_platform/youth/models.py:375
+#: referral_platform/youth/models.py:377
 msgid "I never feel safe in my community"
 msgstr "لم أشعر بالأمان في مجتمعي يوماً "
 
-#: referral_platform/youth/models.py:394
+#: referral_platform/youth/models.py:396
 msgid "No Interest"
 msgstr "قلة اهتمام"
 
-#: referral_platform/youth/models.py:395
+#: referral_platform/youth/models.py:397
 msgid "Financial barrier"
 msgstr "عائق مالي"
 
-#: referral_platform/youth/models.py:396
+#: referral_platform/youth/models.py:398
 msgid "Family pressure"
 msgstr "ضغط الأسرة"
 
-#: referral_platform/youth/models.py:397
+#: referral_platform/youth/models.py:399
 msgid "Discrimination"
 msgstr "التمييز"
 
-#: referral_platform/youth/models.py:398
+#: referral_platform/youth/models.py:400
 msgid "Disability"
 msgstr "لديك اي احتياجات خاصة؟"
 
-#: referral_platform/youth/models.py:399
+#: referral_platform/youth/models.py:401
 msgid "Distance"
 msgstr " المسافة"
 
-#: referral_platform/youth/models.py:400
+#: referral_platform/youth/models.py:402
 msgid "Safety"
 msgstr "السلامة"
 
-#: referral_platform/youth/models.py:412
+#: referral_platform/youth/models.py:414
 msgid "Through an NGO"
 msgstr "من خلال منظمة غير حكومية أخرى"
 
-#: referral_platform/youth/models.py:413
+#: referral_platform/youth/models.py:415
 msgid "Through a Sports Club/NGO"
 msgstr "من خلال نادٍ رياضي / منظمة غير حكومية"
 
-#: referral_platform/youth/models.py:414
+#: referral_platform/youth/models.py:416
 msgid "Through friends"
 msgstr "من خلال الأصدقاء"
 
-#: referral_platform/youth/models.py:415
+#: referral_platform/youth/models.py:417
 msgid "Others"
 msgstr "وسائل أخرى"
 
-#: referral_platform/youth/models.py:422
+#: referral_platform/youth/models.py:424
 msgid "Facebook"
 msgstr "فايسبوك، وإذا كان الأمر كذلك، يرجى تدوين اسم حسابك"
 
-#: referral_platform/youth/models.py:423
+#: referral_platform/youth/models.py:425
 msgid "E-mail"
 msgstr "البريد الإلكتروني، وإذا كان الأمر كذلك، يرجى تدوينه"
 
-#: referral_platform/youth/models.py:424
+#: referral_platform/youth/models.py:426
 msgid "Mobile"
 msgstr "الهاتف المحمول"
 
-#: referral_platform/youth/models.py:425
+#: referral_platform/youth/models.py:427
 msgid "Through the NGO partner"
 msgstr "من خلال شريك المنظمة غير الحكومية"
 
-#: referral_platform/youth/models.py:426
+#: referral_platform/youth/models.py:428
 msgid "I don't want follow up"
 msgstr "أنا لا أريد المتابعة "
 
-#: referral_platform/youth/models.py:438 referral_platform/youth/models.py:439
+#: referral_platform/youth/models.py:440 referral_platform/youth/models.py:441
 msgid "Youth"
 msgstr ""
 
-#: referral_platform/youth/tables.py:25 referral_platform/youth/views.py:175
+#: referral_platform/youth/tables.py:25 referral_platform/youth/views.py:196
 msgid "Birthday"
 msgstr "تاريخ الميلاد"
 
-#: referral_platform/youth/views.py:167
+#: referral_platform/youth/views.py:188
 #, fuzzy
 #| msgid "first name"
 msgid "First name"
 msgstr "الاسم الاول"
 
-#: referral_platform/youth/views.py:168
+#: referral_platform/youth/views.py:189
 #, fuzzy
 #| msgid "Father Name"
 msgid "Father name"
 msgstr " اسم الأب"
 
-#: referral_platform/youth/views.py:169
+#: referral_platform/youth/views.py:190
 #, fuzzy
 #| msgid "last name"
 msgid "Last name"
 msgstr "اسم العائلة"
 
-#: referral_platform/youth/views.py:170
+#: referral_platform/youth/views.py:191
 msgid "Sex"
 msgstr ""
+
+#~ msgid "Partner"
+#~ msgstr "الجمعية"
