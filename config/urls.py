@@ -8,6 +8,17 @@ from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 from django.views import defaults as default_views
 
+from rest_framework_nested import routers
+from rest_framework_swagger.views import get_swagger_view
+
+from referral_platform.youth.views import YoungPersonViewSet
+
+api = routers.SimpleRouter()
+api.register(r'young-person', YoungPersonViewSet, base_name='young-person')
+
+
+schema_view = get_swagger_view(title='EMS API')
+
 urlpatterns = [
 
     # url(r'^', include('referral_platform.youth.urls', namespace='youth')),
@@ -30,6 +41,11 @@ urlpatterns = [
     url(r'^youth/', include('referral_platform.youth.urls', namespace='youth')),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
+
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/docs/', schema_view),
+
+    url(r'^api/', include(api.urls)),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
