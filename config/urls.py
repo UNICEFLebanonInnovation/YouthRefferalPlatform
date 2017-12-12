@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^partners/', include('referral_platform.partners.urls', namespace='partners')),
     url(r'^locations/', include('referral_platform.locations.urls', namespace='locations')),
     url(r'^youth/', include('referral_platform.youth.urls', namespace='youth')),
+    url(r'^registrations/', include('referral_platform.registrations.urls', namespace='registrations')),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 

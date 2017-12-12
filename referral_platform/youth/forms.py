@@ -12,11 +12,9 @@ from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
 
 from referral_platform.locations.models import Location
 from referral_platform.partners.models import Center
-from referral_platform.clm.models import Assessment, AssessmentSubmission
+from referral_platform.registrations.models import Assessment, AssessmentSubmission
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-
-
 
 from .models import (
     YoungPerson

@@ -26,7 +26,7 @@ from import_export.formats import base_formats
 
 from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
-from referral_platform.clm.models import Assessment, AssessmentSubmission
+from referral_platform.registrations.models import Assessment, AssessmentSubmission
 from .models import YoungPerson
 from .filters import YouthFilter
 from .tables import BootstrapTable, CommonTable
