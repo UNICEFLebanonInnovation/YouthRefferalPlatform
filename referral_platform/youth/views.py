@@ -77,9 +77,15 @@ class AddView(LoginRequiredMixin, CreateView):
         return super(AddView, self).form_valid(form)
 
 
-class DeleteYouthView(DestroyAPIView):
+class DeleteYouthView(mixins.RetrieveModelMixin,
+                 mixins.ListModelMixin,
+                 mixins.CreateModelMixin,
+                 mixins.UpdateModelMixin,
+                 #viewsets.GenericViewSet,
+                 DestroyAPIView):
     """
     Provides API operations around a Enrollment record
+    TAREK NOTES: REVERT THIS TO USE API MODULE to USE FULL CRUD OPERATIONS.
     """
     queryset = YoungPerson.objects.all()
 

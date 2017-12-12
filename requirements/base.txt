@@ -61,3 +61,8 @@ djangorestframework==3.6.3
 django-rest-swagger==2.1.2
 django-tables2==1.10.0
 django-filter==0.13.0
+
+fuzzywuzzy==0.15.1
+#fuzzywuzzy[speedup]=0.15.1
+
+
