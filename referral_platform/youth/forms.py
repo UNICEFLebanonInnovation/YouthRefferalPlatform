@@ -77,6 +77,7 @@ class CommonForm(forms.ModelForm):
 
     class Media:
         js = (
+
         )
 
     def __init__(self, *args, **kwargs):
@@ -253,6 +254,7 @@ class CommonForm(forms.ModelForm):
         )
 
     def clean(self):
+
         cleaned_data = super(CommonForm, self).clean()
         birthday_year = cleaned_data.get('birthday_year')
         birthday_day = cleaned_data.get('birthday_day')
@@ -270,6 +272,7 @@ class CommonForm(forms.ModelForm):
                                                       birthday_month=birthday_month,
                                                       nationality=nationality,
                                                       sex=sex)
+
         for result in filtered_results:
             result_str = result.first_name+' '+result.father_name+' '+result.last_name
             fuzzy_match = fuzz.ratio(form_str, result_str)
@@ -277,10 +280,10 @@ class CommonForm(forms.ModelForm):
                 is_matching = True
                 break
 
-        if is_matching:
-            raise forms.ValidationError(
-                "Values are matching"
-            )
+        # if is_matching:
+        #     raise forms.ValidationError(
+        #         "Values are matching"
+        #     )
 
 
 

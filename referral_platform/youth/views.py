@@ -46,6 +46,16 @@ class ListingView(LoginRequiredMixin,
 
     filterset_class = YouthFilter
 
+    # def get_table_class(self):
+    #     locations = [g.p_code for g in self.request.user.partner.locations.all()];
+    #     if "PALESTINE" in locations:
+    #         print("in like flynn")
+    #         return YouthPLFilter
+    #     elif "SYRIA" in locations:
+    #         return YouthSYFilter
+    #     elif "JORDAN" in locations:
+    #         return CommonTable
+
     def get_queryset(self):
         return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
 
