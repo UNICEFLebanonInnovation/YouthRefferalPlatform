@@ -249,7 +249,7 @@ class ExportView(LoginRequiredMixin, ListView):
             book.add_sheet(data)
         file_format = base_formats.XLS()
         response = HttpResponse(
-            file_format.export_data(book),
+            file_format.export_data(data),
             #book.export('xlsx'),
             content_type='application/vnd.ms-excel',
         )
