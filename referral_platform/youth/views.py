@@ -28,7 +28,7 @@ from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
 from referral_platform.clm.models import Assessment, AssessmentSubmission
 from .models import YoungPerson
-from .filters import YouthFilter
+from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable
 from .forms import CommonForm, RegistrationForm
 
@@ -48,6 +48,17 @@ class ListingView(LoginRequiredMixin,
 
     def get_queryset(self):
         return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+
+    def get_filterset_class(self):
+        locations = [g.p_code for g in self.request.user.partner.locations.all()];
+        if "PALESTINE" in locations:
+            print("in like flynn")
+            return YouthPLFilter
+        elif "SYRIA" in locations:
+            return YouthSYFilter
+        elif "JORDAN" in locations:
+            return YouthFilter
+
 
 
 class AddView(LoginRequiredMixin, CreateView):
@@ -174,12 +185,15 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
 class ExportView(LoginRequiredMixin, ListView):
 
-    model = YoungPerson
-    queryset = YoungPerson.objects.all()
+    model = AssessmentSubmission #YoungPerson
+    queryset = AssessmentSubmission.objects.all() #YoungPerson.objects.all()
+
 
     def get(self, request, *args, **kwargs):
 
+        book = tablib.Databook()
         data = tablib.Dataset()
+        data.title = "TEST"
         data.headers = [
             _('Governorate'),
             _('Trainer'),
@@ -199,33 +213,34 @@ class ExportView(LoginRequiredMixin, ListView):
             _('address'),
         ]
 
-        queryset = self.queryset.filter(partner_organization=self.request.user.partner)
+        queryset = self.queryset.filter(youth__partner_organization=self.request.user.partner)
 
         content = []
         for line in queryset:
             content = [
-                line.governorate.name,
-                line.trainer,
-                line.location,
-                line.bayanati_ID,
-                line.first_name,
-                line.father_name,
-                line.last_name,
-                line.sex,
-                line.birthday_day,
-                line.birthday_month,
-                line.birthday_year,
-                line.calc_age,
-                line.birthday,
-                line.nationality.name,
-                line.marital_status,
-                line.address
+                line.youth.governorate.name,
+                line.youth.trainer,
+                line.youth.location,
+                line.youth.bayanati_ID,
+                line.youth.first_name,
+                line.youth.father_name,
+                line.youth.last_name,
+                line.youth.sex,
+                line.youth.birthday_day,
+                line.youth.birthday_month,
+                line.youth.birthday_year,
+                line.youth.calc_age,
+                line.youth.birthday,
+                line.youth.nationality.name,
+                line.youth.marital_status,
+                line.youth.address,
             ]
             data.append(content)
-
-        file_format = base_formats.XLS()
+            book.add_sheet(data)
+        #file_format = base_formats.XLS()
         response = HttpResponse(
-            file_format.export_data(data),
+            #file_format.export_data(book),
+            book.export('xlsx'),
             content_type='application/vnd.ms-excel',
         )
         response['Content-Disposition'] = 'attachment; filename=youth_list.xls'
