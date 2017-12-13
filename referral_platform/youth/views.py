@@ -247,10 +247,10 @@ class ExportView(LoginRequiredMixin, ListView):
             ]
             data.append(content)
             book.add_sheet(data)
-        #file_format = base_formats.XLS()
+        file_format = base_formats.XLS()
         response = HttpResponse(
-            #file_format.export_data(book),
-            book.export('xlsx'),
+            file_format.export_data(book),
+            #book.export('xlsx'),
             content_type='application/vnd.ms-excel',
         )
         response['Content-Disposition'] = 'attachment; filename=youth_list.xls'
