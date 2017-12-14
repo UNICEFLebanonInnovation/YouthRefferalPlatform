@@ -77,6 +77,7 @@ class CommonForm(forms.ModelForm):
 
     class Media:
         js = (
+
         )
 
     def __init__(self, *args, **kwargs):
@@ -253,6 +254,7 @@ class CommonForm(forms.ModelForm):
         )
 
     def clean(self):
+
         cleaned_data = super(CommonForm, self).clean()
         birthday_year = cleaned_data.get('birthday_year')
         birthday_day = cleaned_data.get('birthday_day')
@@ -264,14 +266,19 @@ class CommonForm(forms.ModelForm):
         father_name = cleaned_data.get('father_name')
         form_str = '{} {} {}'.format(first_name, father_name, last_name)
         is_matching = False
+        queryset = YoungPerson.objects.all()
 
-        filtered_results = YoungPerson.objects.filter(birthday_year=birthday_year,
+        if self.instance.id:
+            queryset = queryset.exclude(id=self.instance.id)
+
+        filtered_results = queryset.filter(birthday_year=birthday_year,
                                                       birthday_day=birthday_day,
                                                       birthday_month=birthday_month,
                                                       nationality=nationality,
                                                       sex=sex)
+
         for result in filtered_results:
-            result_str = result.first_name+' '+result.father_name+' '+result.last_name
+            result_str = '{} {} {}'.format(result.first_name, result.father_name, result.last_name)
             fuzzy_match = fuzz.ratio(form_str, result_str)
             if fuzzy_match > 85:
                 is_matching = True
