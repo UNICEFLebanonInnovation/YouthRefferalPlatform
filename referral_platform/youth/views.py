@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 import json
 import tablib
 
+
 from django.views.generic import ListView, FormView, TemplateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
@@ -28,7 +29,7 @@ from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
 from referral_platform.registrations.models import Assessment, AssessmentSubmission
 from .models import YoungPerson
-from .filters import YouthFilter
+from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable
 from .forms import CommonForm, RegistrationForm
 
@@ -46,8 +47,29 @@ class ListingView(LoginRequiredMixin,
 
     filterset_class = YouthFilter
 
+    # def get_table_class(self):
+    #     locations = [g.p_code for g in self.request.user.partner.locations.all()];
+    #     if "PALESTINE" in locations:
+    #         print("in like flynn")
+    #         return YouthPLFilter
+    #     elif "SYRIA" in locations:
+    #         return YouthSYFilter
+    #     elif "JORDAN" in locations:
+    #         return CommonTable
+
     def get_queryset(self):
         return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+
+    def get_filterset_class(self):
+        locations = [g.p_code for g in self.request.user.partner.locations.all()];
+        if "PALESTINE" in locations:
+            print("in like flynn")
+            return YouthPLFilter
+        elif "SYRIA" in locations:
+            return YouthSYFilter
+        elif "JORDAN" in locations:
+            return YouthFilter
+
 
 
 class AddView(LoginRequiredMixin, CreateView):
@@ -177,9 +199,13 @@ class ExportView(LoginRequiredMixin, ListView):
     model = YoungPerson
     queryset = YoungPerson.objects.all()
 
+
     def get(self, request, *args, **kwargs):
 
+
+        book = tablib.Databook()
         data = tablib.Dataset()
+        data.title = "TEST"
         data.headers = [
             _('Governorate'),
             _('Trainer'),
@@ -199,7 +225,7 @@ class ExportView(LoginRequiredMixin, ListView):
             _('address'),
         ]
 
-        queryset = self.queryset.filter(partner_organization=self.request.user.partner)
+        queryset = self.queryset.filter(youth__partner_organization=self.request.user.partner)
 
         content = []
         for line in queryset:
@@ -219,13 +245,13 @@ class ExportView(LoginRequiredMixin, ListView):
                 line.birthday,
                 line.nationality.name,
                 line.marital_status,
-                line.address
+                line.address,
             ]
             data.append(content)
+        book.add_sheet(data)
 
-        file_format = base_formats.XLS()
         response = HttpResponse(
-            file_format.export_data(data),
+            book.export("xls"),
             content_type='application/vnd.ms-excel',
         )
         response['Content-Disposition'] = 'attachment; filename=youth_list.xls'
