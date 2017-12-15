@@ -71,7 +71,6 @@ class ListingView(LoginRequiredMixin,
             return YouthFilter
 
 
-
 class AddView(LoginRequiredMixin, CreateView):
     template_name = 'youth/form.html'
     form_class = CommonForm
@@ -114,6 +113,26 @@ class DeleteYouthView(mixins.RetrieveModelMixin,
     @csrf_exempt
     def delete(self, request, *args, **kwargs):
         return super(DeleteYouthView, self).delete(request, *args, **kwargs)
+
+
+class YoungPersonViewSet(mixins.RetrieveModelMixin,
+                         mixins.ListModelMixin,
+                         mixins.CreateModelMixin,
+                         mixins.UpdateModelMixin,
+                         viewsets.GenericViewSet):
+
+    model = YoungPerson
+    queryset = YoungPerson.objects.all()
+    serializer_class = YoungPersonSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+
+    def delete(self, request, *args, **kwargs):
+        instance = self.model.objects.get(id=kwargs['pk'])
+        instance.delete()
+        return JsonResponse({'status': status.HTTP_200_OK})
 
 
 class EditView(LoginRequiredMixin, UpdateView):

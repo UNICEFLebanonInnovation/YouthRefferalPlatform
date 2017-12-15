@@ -43,20 +43,6 @@ class Assessment(models.Model):
                      self.partner])
 
 
-class AssessmentSubmission(models.Model):
-
-    STATUS = Choices(
-        'enrolled',
-        'pre_test',
-        'post_test'
-    )
-
-    youth = models.ForeignKey(YoungPerson)
-    assessment = models.ForeignKey(Assessment)
-    status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
-    data = JSONField(blank=True, null=True, default=dict)
-
-
 class Registration(TimeStampedModel):
 
     location = models.CharField(
@@ -110,3 +96,18 @@ class Registration(TimeStampedModel):
         ordering = ['pk']
         verbose_name = _("Registration")
         verbose_name_plural = _("Registrations")
+
+
+class AssessmentSubmission(models.Model):
+
+    STATUS = Choices(
+        'enrolled',
+        'pre_test',
+        'post_test'
+    )
+
+    registration = models.ForeignKey(Registration)
+    youth = models.ForeignKey(YoungPerson)
+    assessment = models.ForeignKey(Assessment)
+    status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
+    data = JSONField(blank=True, null=True, default=dict)

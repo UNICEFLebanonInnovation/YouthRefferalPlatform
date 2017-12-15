@@ -134,7 +134,7 @@ class Person(TimeStampedModel):
         blank=False,
         null=False,
         choices=((str(x), x) for x in range(current_year - 26, current_year - 6)),
-        verbose_name=_('birthday year'),
+        verbose_name=_('Birthday year'),
         default=current_year - 26
     )
     birthday_month = models.CharField(
@@ -143,7 +143,7 @@ class Person(TimeStampedModel):
         null=False,
         default=0,
         choices=MONTHS,
-        verbose_name=_('birthday month')
+        verbose_name=_('Birthday month')
     )
     birthday_day = models.CharField(
         max_length=2,
@@ -151,7 +151,7 @@ class Person(TimeStampedModel):
         null=False,
         default=0,
         choices=((str(x), x) for x in range(1, 32)),
-        verbose_name=_('birthday day')
+        verbose_name=_('Birthday day')
     )
     age = models.CharField(max_length=4, blank=True, null=True, verbose_name=_('age'))
     phone = models.CharField(max_length=64, blank=True, null=True)
@@ -175,7 +175,7 @@ class Person(TimeStampedModel):
     address = models.TextField(
         blank=True,
         null=True,
-        verbose_name=_('address')
+        verbose_name=_('Address')
     )
     number = models.CharField(max_length=45, blank=True, null=True)
 
@@ -281,158 +281,6 @@ class YoungPerson(Person):
         #validators=[bayanati_ID_validator],
         blank=True, null=True,
         verbose_name=_('Bayanati ID')
-    )
-    education_status = models.CharField(
-        max_length=50,
-        choices=Choices(
-            ('currently_studying', _('Yes, I am currently studying')),
-            ('stopped_studying', _('Yes, but I stopped studying')),
-            ('never_studied', _('Never been to an educational institution')),
-            ('na', _('NA')),
-        ),
-        blank=True, null=True
-    )
-    education_type = models.CharField(
-        max_length=50,
-        choices=Choices(
-            ('non-formal', _('Non formal Education')),
-            ('formal', _('Formal Education')),
-        ),
-        blank=True,
-        null=True,
-    )
-    education_level = models.ForeignKey(EducationLevel, blank=True, null=True)
-    education_grade = models.ForeignKey(Grade, blank=True, null=True)
-    leaving_education_reasons = ArrayField(
-        models.CharField(
-            max_length=200,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-
-    employment_status = models.CharField(
-        max_length=50,
-        choices=Choices(
-            ('full_time', _('Currently Working - full time')),
-            ('part_time', _('Currently Working - part time')),
-            ('summer_only', _('Work in Summer Only')),
-            ('unemployed', _('Currently Unemployed')),
-            ('never_worked', _('Never worked')),
-            ('looking_for_work', _('Looking for a work')),
-        ),
-        blank=True,
-        null=True,
-    )
-    employment_sectors = ArrayField(
-        models.CharField(
-            max_length=200,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-    looking_for_work = models.NullBooleanField()
-    through_whom = ArrayField(
-        models.CharField(
-            max_length=50,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-    obstacles_for_work = ArrayField(
-        models.CharField(
-            max_length=200,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-    supporting_family = models.NullBooleanField()
-    household_composition = ArrayField(
-        models.CharField(
-            max_length=200,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-    household_working = models.IntegerField(
-        blank=True,
-        null=True,
-    )
-    safety = models.CharField(
-        max_length=50,
-        choices=Choices(
-            ('safe', _(' I always feel totally safe in my community ')),
-            ('mostly_safe', _('Most of the days I feel safe in my community')),
-            ('mostly_unsafe', _("Most of the days I don't feel safe in my community ")),
-            ('unsafe', _('I never feel safe in my community')),
-        ),
-        blank=True,
-        null=True,
-    )
-    safety_reasons = ArrayField(
-        models.CharField(
-            max_length=200,
-            blank=True,
-            null=True,
-        ),
-        blank=True,
-        null=True,
-    )
-
-    trained_before = models.BooleanField(default=False)
-    not_trained_reason = models.CharField(
-        max_length=50,
-        choices=Choices(
-            ('no_interest', _('No Interest')),
-            ('no_money', _('Financial barrier')),
-            ('family_pressure', _("Family pressure")),
-            ('discrimination', _('Discrimination')),
-            ('disability', _('Disability')),
-            ('distance', _('Distance')),
-            ('safety', _('Safety')),
-        ),
-        blank=True,
-        null=True,
-    )
-
-    sports_group = models.BooleanField(default=False)
-    sport_type = models.ForeignKey(Sport, blank=True, null=True)
-
-    referred_by = models.CharField(
-        max_length=50,
-        choices=Choices(
-            ('ngo', _('Through an NGO')),
-            ('sports_ngo', _('Through a Sports Club/NGO')),
-            ('friends', _("Through friends")),
-            ('others', _("Others")),
-        ),
-        blank=True, null=True
-    )
-    communication_preference = models.CharField(
-        max_length=50,
-        choices=Choices(
-            ('facebook', _('Facebook')),
-            ('email', _('E-mail')),
-            ('mobile', _("Mobile")),
-            ('ngo', _("Through the NGO partner")),
-            ('none', _("I don't want follow up")),
-        ),
-        blank=True, null=True
-    )
-
-    communication_channel = models.CharField(
-        max_length=50,
-        blank=True, null=True
     )
 
     class Meta:
