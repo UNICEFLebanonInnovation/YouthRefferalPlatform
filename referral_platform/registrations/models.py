@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.contrib.postgres.fields import ArrayField, JSONField
+from django.core.urlresolvers import reverse
 
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
@@ -96,6 +97,9 @@ class Registration(TimeStampedModel):
         ordering = ['pk']
         verbose_name = _("Registration")
         verbose_name_plural = _("Registrations")
+
+    def get_absolute_url(self):
+        return reverse('registrations:edit', kwargs={'pk': self.id})
 
 
 class AssessmentSubmission(models.Model):

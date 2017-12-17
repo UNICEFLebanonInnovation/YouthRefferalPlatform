@@ -18,7 +18,7 @@ from referral_platform.registrations.models import Assessment, AssessmentSubmiss
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
-from referral_platform.youth.models import YoungPerson
+from referral_platform.youth.models import YoungPerson, Nationality, Center
 from .serializers import RegistrationSerializer
 from .models import Registration
 
@@ -36,7 +36,6 @@ class CommonForm(forms.ModelForm):
     governorate = forms.ModelChoiceField(
         label=_('Governorate'),
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-        empty_label=_('Governorate'),
         required=True, to_field_name='id',
     )
     center = forms.ModelChoiceField(
@@ -44,6 +43,10 @@ class CommonForm(forms.ModelForm):
         queryset=Center.objects.all(), widget=forms.Select,
         empty_label=_('Center'),
         required=True, to_field_name='id',
+    )
+    youth_bayanati_ID = forms.CharField(
+        label=_('Bayanati ID'),
+        widget=forms.TextInput, required=False
     )
     youth_first_name = forms.CharField(
         label=_("First name"),
@@ -62,8 +65,8 @@ class CommonForm(forms.ModelForm):
         widget=forms.Select, required=True,
         choices=(
             ('', '----------'),
-            ('Male', _('Male')),
-            ('Female', _('Female')),
+            ('male', _('Male')),
+            ('female', _('Female')),
         )
     )
     youth_birthday_year = forms.ChoiceField(
@@ -100,12 +103,13 @@ class CommonForm(forms.ModelForm):
         queryset=Nationality.objects.all(), widget=forms.Select,
         required=True, to_field_name='id',
     )
-    youth_address = forms.ChoiceField(
+    youth_address = forms.CharField(
         label=_("Address"),
-        widget=forms.Text, required=True,
+        widget=forms.Textarea, required=True,
     )
-    youth_marital_status = models.CharField(
+    youth_marital_status = forms.ChoiceField(
         label=_('Marital status'),
+        widget=forms.Select,
         choices=(
             ('married', _('Married')),
             ('engaged', _('Engaged')),
@@ -148,9 +152,12 @@ class CommonForm(forms.ModelForm):
         super(CommonForm, self).__init__(*args, **kwargs)
 
         instance = kwargs.get('instance', '')
-        initials = kwargs.get('initial', '')
-        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else ''
-        partner = initials['partner'] if 'partner' in initials else ''
+        if instance:
+            initials = args[0]
+        else:
+            initials = kwargs.get('initial', '')
+        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
+        partner = initials['partner'] if 'partner' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
 
@@ -161,32 +168,32 @@ class CommonForm(forms.ModelForm):
         jordan_location = Location.objects.get(name="Jordan")
         if jordan_location not in partner_locations:
             del self.fields['trainer']
-            del self.fields['bayanati_ID']
+            del self.fields['youth_bayanati_ID']
             my_fields['Location Information'].remove('trainer')
         else:
-            self.fields['bayanati_ID'].required = True
+            self.fields['youth_bayanati_ID'].required = True
             self.fields['trainer'].required = True
-            my_fields['Bayanati Information'] = ['bayanati_ID', ]
+            my_fields['Bayanati Information'] = ['youth_bayanati_ID', ]
 
         # Add Centers for the partner having ones (For now only Jordan)
         if self.fields['center'].queryset.count() < 1:
             del self.fields['center']
             my_fields['Location Information'].remove('center')
 
-        my_fields['Personal Details'] = ['first_name',
-                                         'father_name',
-                                         'last_name',
-                                         'birthday_day',
-                                         'birthday_month',
-                                         'birthday_year',
-                                         'sex',
-                                         'nationality',
-                                         'marital_status',
-                                         'address', ]
+        my_fields['Personal Details'] = ['youth_first_name',
+                                         'youth_father_name',
+                                         'youth_last_name',
+                                         'youth_birthday_day',
+                                         'youth_birthday_month',
+                                         'youth_birthday_year',
+                                         'youth_sex',
+                                         'youth_nationality',
+                                         'youth_marital_status',
+                                         'youth_address', ]
 
         self.helper = FormHelper()
         self.helper.form_show_labels = True
-        form_action = reverse('youth:add')
+        form_action = reverse('registrations:add')
         self.helper.layout = Layout()
 
         for title in my_fields:
@@ -218,7 +225,7 @@ class CommonForm(forms.ModelForm):
 
         # Rendering the assessments
         if instance:
-            form_action = reverse('youth:edit', kwargs={'pk': instance.id})
+            form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
             all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
             new_forms = OrderedDict()
 
@@ -229,9 +236,10 @@ class CommonForm(forms.ModelForm):
             ).exists()
 
             for specific_form in all_forms:
-                formtxt = '{assessment}?youth_id={youth_id}&status={status}'.format(
-                    assessment=reverse('youth:assessment', kwargs={'slug': specific_form.slug}),
-                    youth_id=instance.number,
+                formtxt = '{assessment}?registry={registry}&youth_id={youth_id}&status={status}'.format(
+                    assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
+                    youth_id=instance.youth.number,
+                    registry=instance.id,
                     status='enrolled',
                 )
                 disabled = ""
@@ -241,7 +249,7 @@ class CommonForm(forms.ModelForm):
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
-                        order = int(specific_form.order.split(".")[1])
+                        order = 1  # int(specific_form.order.split(".")[1])
                         if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
@@ -271,6 +279,7 @@ class CommonForm(forms.ModelForm):
                 }
                 previous_status = disabled
             assessment_fieldset = []
+
             for name in new_forms:
                 test_html = ""
 
@@ -307,12 +316,7 @@ class CommonForm(forms.ModelForm):
             FormActions(
                 Submit('save', _('Save')),
                 Submit('save_add_another', _('Save and add another')),
-                # HTML("""{% if object %}
-                # <a
-                # class="btn btn-outline-danger pull-right">
-                # Delete <i class="fa fa-trash-o" aria-hidden="true"></i></button></a>
-                # {% endif %}"""),
-                HTML('<a class="btn btn-info" href="/youth/">' + _('Cancel') + '</a>'),
+                HTML('<a class="btn btn-info" href="/registrations/list/">' + _('Cancel') + '</a>'),
             )
         )
 

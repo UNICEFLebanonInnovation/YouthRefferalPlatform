@@ -5,9 +5,9 @@ from .models import Registration
 
 class RegistrationSerializer(serializers.ModelSerializer):
 
-    youth_id = serializers.IntegerField(source='youth.id', required=False)
+    governorate_id = serializers.IntegerField(source='governorate.id', required=False)
 
-    youth_bayanati_ID = serializers.CharField(source='youth.bayanati_ID')
+    youth_bayanati_ID = serializers.CharField(source='youth.bayanati_ID', required=False)
     youth_first_name = serializers.CharField(source='youth.first_name')
     youth_father_name = serializers.CharField(source='youth.father_name')
     youth_last_name = serializers.CharField(source='youth.last_name')
@@ -21,7 +21,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
     youth_marital_status = serializers.CharField(source='youth.marital_status', required=False)
 
     youth_nationality_id = serializers.CharField(source='youth.nationality.id', read_only=True)
-    youth_age = serializers.CharField(source='youth.age', read_only=True)
     csrfmiddlewaretoken = serializers.IntegerField(source='owner.id', read_only=True)
     save = serializers.IntegerField(source='owner.id', read_only=True)
 
@@ -36,8 +35,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
         youth_serializer.instance = youth_serializer.save()
 
         try:
+            validated_data['youth_id'] = youth_serializer.instance.id
             instance = Registration.objects.create(**validated_data)
-            instance.youth = youth_serializer.instance
             instance.save()
 
         except Exception as ex:
@@ -69,10 +68,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return instance
 
     class Meta:
-        model = Enrollment
+        model = Registration
         fields = (
             'id',
-            'youth_id',
             'governorate',
             'location',
             'center',

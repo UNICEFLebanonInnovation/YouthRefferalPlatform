@@ -43,7 +43,7 @@ class ListingView(LoginRequiredMixin,
 
     table_class = CommonTable
     model = Registration
-    template_name = 'registration/list.html'
+    template_name = 'registrations/list.html'
     table = BootstrapTable(Registration.objects.all(), order_by='id')
 
     filterset_class = YouthFilter
@@ -51,10 +51,19 @@ class ListingView(LoginRequiredMixin,
     def get_queryset(self):
         return Registration.objects.filter(partner_organization=self.request.user.partner)
 
+    def get_table_class(self):
+        locations = [g.p_code for g in self.request.user.partner.locations.all()]
+        return CommonTable
+        # if "PALESTINE" in locations:
+        #     return YouthPLFilter
+        # elif "SYRIA" in locations:
+        #     return YouthSYFilter
+        # elif "JORDAN" in locations:
+        #     return YouthFilter
+
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()]
         if "PALESTINE" in locations:
-            print("in like flynn")
             return YouthPLFilter
         elif "SYRIA" in locations:
             return YouthSYFilter
@@ -62,15 +71,15 @@ class ListingView(LoginRequiredMixin,
             return YouthFilter
 
 
-class AddView(LoginRequiredMixin, CreateView):
-    template_name = 'registration/form.html'
+class AddView(LoginRequiredMixin, FormView):
+    template_name = 'registrations/form.html'
     form_class = CommonForm
     model = Registration
-    success_url = '/registration/list/'
+    success_url = '/registrations/list/'
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return '/registration/add/'
+            return '/registrations/add/'
         return self.success_url
 
     def get_initial(self):
@@ -82,19 +91,19 @@ class AddView(LoginRequiredMixin, CreateView):
         return initial
 
     def form_valid(self, form):
-        form.save(self.request)
+        form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
 
 class EditView(LoginRequiredMixin, UpdateView):
-    template_name = 'registration/form.html'
+    template_name = 'registrations/form.html'
     form_class = CommonForm
     model = Registration
-    success_url = '/registration/list/'
+    success_url = '/registrations/list/'
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return '/registration/add/'
+            return '/registrations/add/'
         return self.success_url
 
     def get_initial(self):
@@ -106,12 +115,14 @@ class EditView(LoginRequiredMixin, UpdateView):
         return initial
 
     def get_form(self, form_class=None):
-        instance = Enrollment.objects.get(id=self.kwargs['pk'])
+        instance = Registration.objects.get(id=self.kwargs['pk'])
         if self.request.method == "POST":
             return CommonForm(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
-            data['student_nationality'] = data['student_nationality_id']
+            data['youth_nationality'] = data['youth_nationality_id']
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
             return CommonForm(data, instance=instance)
 
     def form_valid(self, form):
@@ -125,7 +136,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
-        registry = Registration.objects.get(id=self.request.GET.get('registration'))
+        registry = Registration.objects.get(id=self.request.GET.get('registry'))
         youth = registry.youth
 
         url = '{form}?d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[' \

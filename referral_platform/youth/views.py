@@ -29,6 +29,7 @@ from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
 from referral_platform.registrations.models import Assessment, AssessmentSubmission
 from .models import YoungPerson
+from .serializers import YoungPersonSerializer
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable
 from .forms import CommonForm, RegistrationForm

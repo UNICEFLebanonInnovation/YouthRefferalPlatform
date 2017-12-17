@@ -24,7 +24,7 @@ schema_view = get_swagger_view(title='EMS API')
 urlpatterns = [
 
     # url(r'^', include('referral_platform.youth.urls', namespace='youth')),
-    url(r'^$', RedirectView.as_view(pattern_name='youth:list')),
+    url(r'^home/$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^courses/', include('referral_platform.courses.urls', namespace='courses')),
     url(r'^initiatives/', include('referral_platform.initiatives.urls', namespace='initiatives')),
 
