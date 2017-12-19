@@ -199,17 +199,14 @@ class ExportView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
-        book = tablib.Databook()
-        data = tablib.Dataset()
-        data.title = "Beneficiary List"
-        data.headers = [
+        common_headers = [
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
             _('Governorate'),
             _('Trainer'),
             _('Location'),
             _('Bayanati ID'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
             _('Sex'),
             _('birthday day'),
             _('birthday month'),
@@ -221,18 +218,23 @@ class ExportView(LoginRequiredMixin, ListView):
             _('address'),
         ]
 
+        book = tablib.Databook()
+        data = tablib.Dataset()
+        data.title = "Beneficiary List"
+        data.headers = common_headers
+
         queryset = self.queryset.filter(partner_organization=self.request.user.partner)
 
         content = []
         for line in queryset:
             content = [
+                line.first_name,
+                line.father_name,
+                line.last_name,
                 line.governorate.name,
                 line.trainer,
                 line.location,
                 line.bayanati_ID,
-                line.first_name,
-                line.father_name,
-                line.last_name,
                 line.sex,
                 line.birthday_day,
                 line.birthday_month,
@@ -251,13 +253,13 @@ class ExportView(LoginRequiredMixin, ListView):
         data2 = tablib.Dataset()
         data2.title = "Registrations List"
         data2.headers = [
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
             _('Governorate'),
             _('Trainer'),
             _('Location'),
             _('Bayanati ID'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
             _('Sex'),
             _('birthday day'),
             _('birthday month'),
@@ -308,13 +310,13 @@ class ExportView(LoginRequiredMixin, ListView):
         data3 = tablib.Dataset()
         data3.title = "Pre-Assessment"
         data3.headers = [
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
             _('Governorate'),
             _('Trainer'),
             _('Location'),
             _('Bayanati ID'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
             _('Sex'),
             _('birthday day'),
             _('birthday month'),
@@ -343,13 +345,13 @@ class ExportView(LoginRequiredMixin, ListView):
         data4 = tablib.Dataset()
         data4.title = "Post-Assessment"
         data4.headers = [
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
             _('Governorate'),
             _('Trainer'),
             _('Location'),
             _('Bayanati ID'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
             _('Sex'),
             _('birthday day'),
             _('birthday month'),
@@ -379,13 +381,13 @@ class ExportView(LoginRequiredMixin, ListView):
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
         data5.headers = [
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
             _('Governorate'),
             _('Trainer'),
             _('Location'),
             _('Bayanati ID'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
             _('Sex'),
             _('birthday day'),
             _('birthday month'),
@@ -420,13 +422,13 @@ class ExportView(LoginRequiredMixin, ListView):
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
         data6.headers = [
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
             _('Governorate'),
             _('Trainer'),
             _('Location'),
             _('Bayanati ID'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
             _('Sex'),
             _('birthday day'),
             _('birthday month'),
@@ -471,13 +473,13 @@ class ExportView(LoginRequiredMixin, ListView):
             if line2.data["slug"] == 'registration':
 
                 content = [
+                            line2.youth.first_name,
+                            line2.youth.father_name,
+                            line2.youth.last_name,
                             line2.youth.governorate.name,
                             line2.youth.trainer,
                             line2.youth.location,
                             line2.youth.bayanati_ID,
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
                             line2.youth.sex,
                             line2.youth.birthday_day,
                             line2.youth.birthday_month,
@@ -527,13 +529,13 @@ class ExportView(LoginRequiredMixin, ListView):
             if line2.data["slug"] == 'pre_assessment':
 
                 content = [
+                            line2.youth.first_name,
+                            line2.youth.father_name,
+                            line2.youth.last_name,
                             line2.youth.governorate.name,
                             line2.youth.trainer,
                             line2.youth.location,
                             line2.youth.bayanati_ID,
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
                             line2.youth.sex,
                             line2.youth.birthday_day,
                             line2.youth.birthday_month,
@@ -563,13 +565,13 @@ class ExportView(LoginRequiredMixin, ListView):
             if line2.data["slug"] == 'post_assessment':
 
                 content = [
+                            line2.youth.first_name,
+                            line2.youth.father_name,
+                            line2.youth.last_name,
                             line2.youth.governorate.name,
                             line2.youth.trainer,
                             line2.youth.location,
                             line2.youth.bayanati_ID,
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
                             line2.youth.sex,
                             line2.youth.birthday_day,
                             line2.youth.birthday_month,
@@ -599,13 +601,13 @@ class ExportView(LoginRequiredMixin, ListView):
             if line2.data["slug"] == 'pre_entrepreneurship':
 
                 content = [
+                            line2.youth.first_name,
+                            line2.youth.father_name,
+                            line2.youth.last_name,
                             line2.youth.governorate.name,
                             line2.youth.trainer,
                             line2.youth.location,
                             line2.youth.bayanati_ID,
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
                             line2.youth.sex,
                             line2.youth.birthday_day,
                             line2.youth.birthday_month,
@@ -641,13 +643,13 @@ class ExportView(LoginRequiredMixin, ListView):
             if line2.data["slug"] == 'post_entrepreneurship':
 
                 content = [
+                            line2.youth.first_name,
+                            line2.youth.father_name,
+                            line2.youth.last_name,
                             line2.youth.governorate.name,
                             line2.youth.trainer,
                             line2.youth.location,
                             line2.youth.bayanati_ID,
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
                             line2.youth.sex,
                             line2.youth.birthday_day,
                             line2.youth.birthday_month,
