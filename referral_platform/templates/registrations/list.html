@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load staticfiles i18n %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load bootstrap3 %}
+{% load util_tags %}
+{% bootstrap_css %}
+
+{% block extra_head %}
+    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content-full-page %}
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">
+        {{ request.user.partner }}
+      </li>
+      <li class="breadcrumb-item active">
+        {{ request.user }}
+      </li>
+    </ol>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+            <a href="{% url "registrations:add" %}" class="btn btn-success">
+                <i class="icon-plus-sign icon-white"></i>
+                {% trans "Add new beneficiary" %}
+            </a>
+        </li>
+        <li class="breadcrumb-item active">
+            <a href="{% url "registrations:export" %}" class="btn btn-primary" target="_blank">
+                <i class="icon-export-sign icon-white"></i>
+                {% trans "Export" %}
+            </a>
+        </li>
+    </ol>
+
+    <div class="pb-5 pr-5 list-filter">
+        <form action="" method="get" class="form form-inline">
+            {% bootstrap_form filter.form layout='inline' %}
+            {% bootstrap_button _('filter') button_class="btn-primary" %}
+            {% bootstrap_button _('reset') button_type="link" button_class="btn-warning" href='/registrations/list/' %}
+        </form>
+    </div>
+    <div class="col-sm-10">
+        {% csrf_token %}
+        {% render_table table 'django_tables2/bootstrap.html' %}
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    {% get_user_token request.user.id as user_token %}
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>
+    <script>
+        var user_token = '{{ user_token }}';
+        var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+    </script>
+{% endblock %}

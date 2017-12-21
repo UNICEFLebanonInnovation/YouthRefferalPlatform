@@ -27,12 +27,12 @@ from import_export.formats import base_formats
 
 from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
-from referral_platform.registrations.models import Assessment, AssessmentSubmission
-from .models import YoungPerson
-from .serializers import YoungPersonSerializer
+from referral_platform.youth.models import YoungPerson
+from .serializers import RegistrationSerializer
+from .models import Registration, Assessment, AssessmentSubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable
-from .forms import CommonForm, RegistrationForm
+from .forms import CommonForm
 
 
 class ListingView(LoginRequiredMixin,
@@ -42,29 +42,28 @@ class ListingView(LoginRequiredMixin,
                   RequestConfig):
 
     table_class = CommonTable
-    model = YoungPerson
-    template_name = 'youth/list.html'
-    table = BootstrapTable(YoungPerson.objects.all(), order_by='id')
+    model = Registration
+    template_name = 'registrations/list.html'
+    table = BootstrapTable(Registration.objects.all(), order_by='id')
 
     filterset_class = YouthFilter
 
-    # def get_table_class(self):
-    #     locations = [g.p_code for g in self.request.user.partner.locations.all()];
-    #     if "PALESTINE" in locations:
-    #         print("in like flynn")
-    #         return YouthPLFilter
-    #     elif "SYRIA" in locations:
-    #         return YouthSYFilter
-    #     elif "JORDAN" in locations:
-    #         return CommonTable
-
     def get_queryset(self):
-        return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+        return Registration.objects.filter(partner_organization=self.request.user.partner)
+
+    def get_table_class(self):
+        locations = [g.p_code for g in self.request.user.partner.locations.all()]
+        return CommonTable
+        # if "PALESTINE" in locations:
+        #     return YouthPLFilter
+        # elif "SYRIA" in locations:
+        #     return YouthSYFilter
+        # elif "JORDAN" in locations:
+        #     return YouthFilter
 
     def get_filterset_class(self):
-        locations = [g.p_code for g in self.request.user.partner.locations.all()];
+        locations = [g.p_code for g in self.request.user.partner.locations.all()]
         if "PALESTINE" in locations:
-            print("in like flynn")
             return YouthPLFilter
         elif "SYRIA" in locations:
             return YouthSYFilter
@@ -72,15 +71,15 @@ class ListingView(LoginRequiredMixin,
             return YouthFilter
 
 
-class AddView(LoginRequiredMixin, CreateView):
-    template_name = 'youth/form.html'
+class AddView(LoginRequiredMixin, FormView):
+    template_name = 'registrations/form.html'
     form_class = CommonForm
-    model = YoungPerson
-    success_url = '/youth/'
+    model = Registration
+    success_url = '/registrations/list/'
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return '/youth/add/'
+            return '/registrations/add/'
         return self.success_url
 
     def get_initial(self):
@@ -92,59 +91,19 @@ class AddView(LoginRequiredMixin, CreateView):
         return initial
 
     def form_valid(self, form):
-        instance = form.save(self.request)
-        instance.partner_organization = self.request.user.partner
-        instance.save()
-
+        form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
 
-class DeleteYouthView(mixins.RetrieveModelMixin,
-                 mixins.ListModelMixin,
-                 mixins.CreateModelMixin,
-                 mixins.UpdateModelMixin,
-                 #viewsets.GenericViewSet,
-                 DestroyAPIView):
-    """
-    Provides API operations around a Enrollment record
-    TAREK NOTES: REVERT THIS TO USE API MODULE to USE FULL CRUD OPERATIONS.
-    """
-    queryset = YoungPerson.objects.all()
-
-    @csrf_exempt
-    def delete(self, request, *args, **kwargs):
-        return super(DeleteYouthView, self).delete(request, *args, **kwargs)
-
-
-class YoungPersonViewSet(mixins.RetrieveModelMixin,
-                         mixins.ListModelMixin,
-                         mixins.CreateModelMixin,
-                         mixins.UpdateModelMixin,
-                         viewsets.GenericViewSet):
-
-    model = YoungPerson
-    queryset = YoungPerson.objects.all()
-    serializer_class = YoungPersonSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def get_queryset(self):
-        return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
-
-    def delete(self, request, *args, **kwargs):
-        instance = self.model.objects.get(id=kwargs['pk'])
-        instance.delete()
-        return JsonResponse({'status': status.HTTP_200_OK})
-
-
 class EditView(LoginRequiredMixin, UpdateView):
-    template_name = 'youth/form.html'
+    template_name = 'registrations/form.html'
     form_class = CommonForm
-    model = YoungPerson
-    success_url = '/youth/'
+    model = Registration
+    success_url = '/registrations/list/'
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return '/youth/add/'
+            return '/registrations/add/'
         return self.success_url
 
     def get_initial(self):
@@ -155,8 +114,20 @@ class EditView(LoginRequiredMixin, UpdateView):
         initial = data
         return initial
 
+    def get_form(self, form_class=None):
+        instance = Registration.objects.get(id=self.kwargs['pk'])
+        if self.request.method == "POST":
+            return CommonForm(self.request.POST, instance=instance)
+        else:
+            data = RegistrationSerializer(instance).data
+            data['youth_nationality'] = data['youth_nationality_id']
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
+            return CommonForm(data, instance=instance)
+
     def form_valid(self, form):
-        form.save(self.request)
+        instance = Registration.objects.get(id=self.kwargs['pk'])
+        form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
 
 
@@ -165,18 +136,19 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
-        youth = YoungPerson.objects.get(number=self.request.GET.get('youth_id'))
+        registry = Registration.objects.get(id=self.request.GET.get('registry'))
+        youth = registry.youth
 
         url = '{form}?d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[' \
               'first]={first}&d[last]={last}&d[father]={father}&d[nationality]={nationality}&d[gender]={gender}&d[' \
-              'birthdate]={birthdate}&d[youth_id]={youth_id}&d[marital]={marital}&d[bayanati]={bayanati_id}&d[slug]={' \
+              'birthdate]={birthdate}&d[youth_id]={youth_id}&d[registry]={registry}&d[marital]={marital}&d[bayanati]={bayanati_id}&d[slug]={' \
               'slug}&d[status]=enrolled&returnURL={callback}'.format(
             form=assessment.assessment_form,
             slug=assessment.slug,
-            country=youth.governorate.parent.name,
-            governorate=youth.governorate.p_code,
-            partner=youth.partner_organization.name,
-            center=youth.center.name if youth.center else "",
+            country=registry.governorate.parent.name,
+            governorate=registry.governorate.p_code,
+            partner=registry.partner_organization.name,
+            center=registry.center.name if youth.center else "",
             first=youth.first_name,
             father=youth.father_name,
             last=youth.last_name,
@@ -186,6 +158,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             birthdate=youth.birthday_year + "-" + '{0:0>2}'.format(len(youth.birthday_month)) + "-" + '{0:0>2}'.format(
                 len(youth.birthday_day)),
             youth_id=youth.number,
+            registry=registry.id,
             bayanati_id=youth.bayanati_ID if youth.bayanati_ID else "",
             status=self.request.GET.get('status'),
             callback=self.request.META.get('HTTP_REFERER', youth.get_absolute_url())
@@ -201,10 +174,11 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
         payload = json.loads(request.body.decode('utf-8'))
 
-        youth = YoungPerson.objects.get(number=payload['youth_id'])
+        registration = Registration.objects.get(id=payload['registry'])
         assessment = Assessment.objects.get(slug=payload['slug'])
         submission, new = AssessmentSubmission.objects.get_or_create(
-            youth=youth,
+            registration=registration,
+            youth=registration.youth,
             assessment=assessment,
             status=payload['status']
         )
@@ -212,6 +186,26 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         submission.save()
 
         return HttpResponse()
+
+
+class RegistrationViewSet(mixins.RetrieveModelMixin,
+                         mixins.ListModelMixin,
+                         mixins.CreateModelMixin,
+                         mixins.UpdateModelMixin,
+                         viewsets.GenericViewSet):
+
+    model = Registration
+    queryset = Registration.objects.all()
+    serializer_class = RegistrationSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return self.queryset.filter(partner_organization=self.request.user.partner)
+
+    def delete(self, request, *args, **kwargs):
+        instance = self.model.objects.get(id=kwargs['pk'])
+        instance.delete()
+        return JsonResponse({'status': status.HTTP_200_OK})
 
 
 

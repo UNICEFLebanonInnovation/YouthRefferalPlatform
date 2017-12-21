@@ -64,7 +64,7 @@ LOCAL_APPS = (
     'referral_platform.youth',
     'referral_platform.courses',
     'referral_platform.initiatives',
-    'referral_platform.clm',
+    'referral_platform.registrations',
 
 )
 
@@ -279,7 +279,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET ='ee205f6f25da8aa856ec90b39d7d61fd'
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'youth:list'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
@@ -323,7 +323,7 @@ WEBPACK_LOADER = {
 # Django Suit configuration example
 SUIT_CONFIG = {
     # header
-    'ADMIN_NAME': 'Youth Platform - Partner Portal',
+    'ADMIN_NAME': 'EMS',
     'HEADER_DATE_FORMAT': 'l, j. F Y',
     'HEADER_TIME_FORMAT': 'H:i',
 
@@ -340,7 +340,8 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU_EXCLUDE': ('auth', 'sites'),
     'MENU': (
-        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/partners/profile"},
+        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/"},
+        {'app': 'registrations', 'label': 'Registration', 'icon': 'icon-list'},
         {'app': 'auth', 'label': 'Groups', 'icon': 'icon-user'},
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
         {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
@@ -349,15 +350,20 @@ SUIT_CONFIG = {
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
 
     )
-    # 'MENU': (
-    #     'sites',
-    #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
-    #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
-    #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
-    # ),
-
-    # misc
-    # 'LIST_PER_PAGE': 15
 }
 
-# Your common stuff: Below this line define 3rd party library settings
+REST_FRAMEWORK = {
+    # this setting fixes the bug where user can be logged in as AnonymousUser
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
