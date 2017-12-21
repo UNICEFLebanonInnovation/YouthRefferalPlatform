@@ -21,7 +21,7 @@ from .utils import *
 
 class Nationality(models.Model):
     name = models.CharField(max_length=45, unique=True, verbose_name=_('Nationality'))
-    code = models.CharField(max_length=5, null=True)
+    code = models.CharField(max_length=45, null=True)
 
     class Meta:
         ordering = ['id']
