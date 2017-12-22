@@ -10,7 +10,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('partners', '0004_center'),
         ('locations', '0002_remove_location_pilot_in_use'),
         ('youth', '0014_remove_youngperson_user'),
     ]
@@ -102,11 +101,6 @@ class Migration(migrations.Migration):
             model_name='youngperson',
             name='last_name',
             field=models.CharField(max_length=75, validators=[django.core.validators.RegexValidator('^[\u0600-\u065f\u066e-\u06ff ]*$', 'Only Arabic characters are allowed.')], verbose_name='last name'),
-        ),
-        migrations.AlterField(
-            model_name='youngperson',
-            name='location',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='Location'),
         ),
         migrations.AlterField(
             model_name='youngperson',
