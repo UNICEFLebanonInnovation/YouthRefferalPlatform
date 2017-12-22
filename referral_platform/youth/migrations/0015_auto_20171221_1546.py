@@ -28,26 +28,6 @@ class Migration(migrations.Migration):
             name='nationality',
             options={'ordering': ['id'], 'verbose_name_plural': 'Nationalities'},
         ),
-        migrations.AddField(
-            model_name='youngperson',
-            name='bayanati_ID',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='Bayanati ID'),
-        ),
-        migrations.AddField(
-            model_name='youngperson',
-            name='center',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='partners.Center'),
-        ),
-        migrations.AddField(
-            model_name='youngperson',
-            name='governorate',
-            field=models.ForeignKey(default='39', on_delete=django.db.models.deletion.CASCADE, to='locations.Location', verbose_name='Governorate'),
-        ),
-        migrations.AddField(
-            model_name='youngperson',
-            name='trainer',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='Trainer'),
-        ),
         migrations.AlterField(
             model_name='nationality',
             name='code',
