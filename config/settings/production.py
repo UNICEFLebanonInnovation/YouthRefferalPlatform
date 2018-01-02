@@ -230,4 +230,8 @@ WEBPACK_LOADER = {
 }
 
 
+# DEBUG
+# SET DEBUG TO FALSE
+DEBUG = env.bool('DJANGO_DEBUG', False)
+
 # Your production stuff: Below this line define 3rd party library settings
