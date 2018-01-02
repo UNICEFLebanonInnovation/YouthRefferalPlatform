@@ -37,12 +37,38 @@ class CommonTable(tables.Table):
             'father_name',
             'last_name',
             'sex',
-            'birthday_day',
-            'birthday_month',
-            'birthday_year',
             'age',
             'birthday',
             'nationality',
             'marital_status',
             'address',
         )
+
+#Creating Alternative table for Palestine and Syria
+class CommonTableAlt(tables.Table):
+            edit_column = tables.TemplateColumn(verbose_name=_('Edit'), orderable=False,
+                                                template_name='django_tables2/edit_column.html',
+                                                attrs={'url': '/clm/bln-edit/'})
+            delete_column = tables.TemplateColumn(verbose_name=_('Delete'), orderable=False,
+                                                  template_name='django_tables2/delete_column.html',
+                                                  attrs={'url': '/youth/delete/'})
+            age = tables.Column(verbose_name=_('age'), orderable=False, accessor='calc_age')
+            birthday = tables.Column(verbose_name=_('Birthday'), orderable=False, accessor='birthday')
+
+            class Meta:
+                model = YoungPerson
+                fields = (
+                    'edit_column',
+                    'delete_column',
+                    'governorate',
+                    'location',
+                    'first_name',
+                    'father_name',
+                    'last_name',
+                    'sex',
+                    'age',
+                    'birthday',
+                    'nationality',
+                    'marital_status',
+                    'address',
+                )

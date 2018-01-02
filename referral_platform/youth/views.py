@@ -30,7 +30,7 @@ from referral_platform.users.utils import force_default_language
 from referral_platform.clm.models import Assessment, AssessmentSubmission
 from .models import YoungPerson
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
-from .tables import BootstrapTable, CommonTable
+from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, RegistrationForm
 
 
@@ -68,6 +68,16 @@ class ListingView(LoginRequiredMixin,
             return YouthSYFilter
         elif "JORDAN" in locations:
             return YouthFilter
+
+    def get_table_class(self):
+        locations = [g.p_code for g in self.request.user.partner.locations.all()]
+        if "PALESTINE" in locations:
+            return CommonTableAlt
+        elif "SYRIA" in locations:
+            return CommonTableAlt
+        elif "JORDAN" in locations:
+            return CommonTable
+
 
 
 
