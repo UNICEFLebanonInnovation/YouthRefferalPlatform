@@ -19,7 +19,7 @@ from .filters import BLNFilter
 from .tables import CommonTable
 from .forms import CommonForm
 from .models import Assessment, AssessmentSubmission
-from pprint import pprint
+
 
 
 class YouthListView(LoginRequiredMixin,
@@ -84,7 +84,6 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
         youth = YoungPerson.objects.get(number=self.request.GET.get('youth_id'))
-        print(youth.governorate.parent.name)
 
         url = '{form}?d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[' \
               'first]={first}&d[last]={last}&d[father]={father}&d[nationality]={nationality}&d[gender]={gender}&d[' \
@@ -115,12 +114,11 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 @method_decorator(csrf_exempt, name='dispatch')
 class YouthAssessmentSubmission(SingleObjectMixin, View):
     def post(self, request, *args, **kwargs):
-        print("Submission")
-        pprint(request.body)
         if 'youth_id' not in request.body or 'status' not in request.body:
             return HttpResponseBadRequest()
 
         payload = json.loads(request.body.decode('utf-8'))
+
 
         youth = YoungPerson.objects.get(number=payload['youth_id'])
         assessment = Assessment.objects.get(slug=payload['slug'])
