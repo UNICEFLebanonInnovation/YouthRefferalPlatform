@@ -1,10 +1,14 @@
 from __future__ import unicode_literals
 
+from datetime import date
+import datetime
+
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.urlresolvers import reverse
+
 
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
@@ -100,6 +104,21 @@ class Registration(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('registrations:edit', kwargs={'pk': self.id})
+
+    @property
+    def calc_age(self):
+        youth_current_year = datetime.datetime.now().year
+        if self.youth.birthday_year:
+            return int(youth_current_year) - int(self.youth.birthday_year)
+        return 0
+
+    @property
+    def birthday(self):
+        return u'{}/{}/{}'.format(
+            self.youth.birthday_day,
+            self.youth.birthday_month,
+            self.youth.birthday_year,
+        )
 
 
 class AssessmentSubmission(models.Model):

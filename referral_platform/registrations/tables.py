@@ -12,7 +12,6 @@ class BootstrapTable(tables.Table):
         template = 'django_tables2/bootstrap.html'
         attrs = {'class': 'table table-bordered table-striped table-hover'}
 
-
 class CommonTable(tables.Table):
 
     edit_column = tables.TemplateColumn(verbose_name=_('Edit'), orderable=False,

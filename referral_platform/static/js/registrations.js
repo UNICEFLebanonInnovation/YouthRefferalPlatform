@@ -29,6 +29,55 @@ $(document).ready(function() {
   $('select#id_communication_preference').change(function() {
     change_communication_preference($(this).val());
   });
+
+
+  if ($(document).find('#id_search_youth').length == 1) {
+
+    $('#id_search_youth').autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: '/api/young-person/',
+          dataType: 'json',
+          data: {
+            term: request.term,
+          },
+          success: function(data) {
+            response(data);
+          },
+        });
+      },
+      minLength: 3,
+      select: function(event, ui) {
+        let registry_id = 0;
+        console.log(ui.item)
+        registry_id = ui.item.id;
+        let params = {
+          youth_id: registry_id,
+        };
+        let str = '?' + jQuery.param(params);
+        window.location = $(document).find('form').attr('action') + str;
+        return false;
+      },
+    }).autocomplete('instance')._renderMenu = function(ul, items) {
+      let that = this;
+      $.each(items, function(index, item) {
+        that._renderItemData(ul, item);
+      });
+      $(ul).find('li:odd').addClass('odd');
+    };
+
+    $('#id_search_youth').autocomplete('instance')._renderItem = function(ul, item) {
+      return $('<li>')
+                .append("<div style='border: 1px solid;'>"
+                   + '<b>Base Data:</b>' + item.last_name + ' ' + item.father_name + ' ' + item.first_name
+                    + '<br/> <b>Gender - Birthday:</b> ' + item.sex + ' - ' + item.birthday_day+ '/' + item.birthday_month + '/' + item.birthday_year
+                    + '</div>')
+                .appendTo(ul);
+    };
+  }
+
+
+
 });
 
 function change_education_status(value) {

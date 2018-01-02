@@ -28,6 +28,7 @@ from import_export.formats import base_formats
 from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
 from referral_platform.youth.models import YoungPerson
+from referral_platform.youth.serializers import YoungPersonSerializer
 from .serializers import RegistrationSerializer
 from .models import Registration, Assessment, AssessmentSubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
@@ -72,6 +73,7 @@ class ListingView(LoginRequiredMixin,
 
 
 class AddView(LoginRequiredMixin, FormView):
+
     template_name = 'registrations/form.html'
     form_class = CommonForm
     model = Registration
@@ -87,6 +89,20 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+
+        if self.request.GET.get('youth_id'):
+                instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
+                data['youth_id'] = instance.id
+                data['youth_first_name'] = instance.first_name
+                data['youth_father_name'] = instance.father_name
+                data['youth_last_name'] = instance.last_name
+                data['youth_birthday_day'] = instance.birthday_day
+                data['youth_birthday_month'] = instance.birthday_month
+                data['youth_birthday_year'] = instance.birthday_year
+                data['youth_sex'] = instance.sex
+                data['youth_nationality'] = instance.nationality
+                data['youth_marital_status'] = instance.marital_status
+
         initial = data
         return initial
 

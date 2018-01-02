@@ -21,6 +21,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     youth_marital_status = serializers.CharField(source='youth.marital_status', required=False)
 
     youth_nationality_id = serializers.CharField(source='youth.nationality.id', read_only=True)
+    youth_id = serializers.IntegerField(source='youth.id', required=False)
     csrfmiddlewaretoken = serializers.IntegerField(source='owner.id', read_only=True)
     save = serializers.IntegerField(source='owner.id', read_only=True)
 
@@ -28,11 +29,19 @@ class RegistrationSerializer(serializers.ModelSerializer):
         from referral_platform.youth.serializers import YoungPersonSerializer
         from referral_platform.youth.models import YoungPerson
 
+        print(validated_data)
         youth_data = validated_data.pop('youth', None)
-
-        youth_serializer = YoungPersonSerializer(data=youth_data)
-        youth_serializer.is_valid(raise_exception=True)
-        youth_serializer.instance = youth_serializer.save()
+        print(youth_data)
+        if 'id' in youth_data and youth_data['id']:
+            print("TRUE")
+            youth_serializer = YoungPersonSerializer(YoungPerson.objects.get(id=youth_data['id']), data=youth_data)
+            youth_serializer.is_valid(raise_exception=True)
+            youth_serializer.instance = youth_serializer.save()
+        else:
+            print("FALSE")
+            youth_serializer = YoungPersonSerializer(data=youth_data)
+            youth_serializer.is_valid(raise_exception=True)
+            youth_serializer.instance = youth_serializer.save()
 
         try:
             validated_data['youth_id'] = youth_serializer.instance.id
@@ -75,6 +84,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'location',
             'center',
             'trainer',
+            'youth_id',
             'youth_bayanati_ID',
             'youth_first_name',
             'youth_father_name',
