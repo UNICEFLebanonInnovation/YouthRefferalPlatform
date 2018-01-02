@@ -32,7 +32,7 @@ from referral_platform.youth.serializers import YoungPersonSerializer
 from .serializers import RegistrationSerializer
 from .models import Registration, Assessment, AssessmentSubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
-from .tables import BootstrapTable, CommonTable
+from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
 
 
@@ -70,6 +70,15 @@ class ListingView(LoginRequiredMixin,
             return YouthSYFilter
         elif "JORDAN" in locations:
             return YouthFilter
+
+    def get_table_class(self):
+            locations = [g.p_code for g in self.request.user.partner.locations.all()]
+            if "PALESTINE" in locations:
+                return CommonTableAlt
+            elif "SYRIA" in locations:
+                return CommonTableAlt
+            elif "JORDAN" in locations:
+                return CommonTable
 
 
 class AddView(LoginRequiredMixin, FormView):

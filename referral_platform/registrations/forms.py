@@ -359,8 +359,7 @@ class CommonForm(forms.ModelForm):
         if exists:
             raise forms.ValidationError(
                 "Youth is already registered with current partner"
-            )   
-
+            )
 
         if self.instance.id:
             queryset = queryset.exclude(id=self.instance.id)
