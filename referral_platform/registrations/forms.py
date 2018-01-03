@@ -379,7 +379,8 @@ class CommonForm(forms.ModelForm):
         if not youth_id:
             if is_matching:
                 raise forms.ValidationError(
-                    mark_safe("Youth is already registered with another partner, please check which one would you like to add:<br/>"+matching_results)
+                    mark_safe("Youth (born on:"+birthday_day+"/"+birthday_month+"/"+birthday_year+" - Gender:"+sex+") "
+                              "is already registered with another partner, please check which one would you like to add:<br/>"+matching_results)
                 )
 
     def save(self, request=None, instance=None):
