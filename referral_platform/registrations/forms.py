@@ -166,7 +166,6 @@ class CommonForm(forms.ModelForm):
         instance = kwargs.get('instance', '')
         if instance:
             initials = args[0]
-            print(instance)
         else:
             initials = kwargs.get('initial', '')
 

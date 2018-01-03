@@ -29,16 +29,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
         from referral_platform.youth.serializers import YoungPersonSerializer
         from referral_platform.youth.models import YoungPerson
 
-        print(validated_data)
         youth_data = validated_data.pop('youth', None)
         print(youth_data)
         if 'id' in youth_data and youth_data['id']:
-            print("TRUE")
             youth_serializer = YoungPersonSerializer(YoungPerson.objects.get(id=youth_data['id']), data=youth_data)
             youth_serializer.is_valid(raise_exception=True)
             youth_serializer.instance = youth_serializer.save()
         else:
-            print("FALSE")
             youth_serializer = YoungPersonSerializer(data=youth_data)
             youth_serializer.is_valid(raise_exception=True)
             youth_serializer.instance = youth_serializer.save()

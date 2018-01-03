@@ -64,7 +64,6 @@ class ListingView(LoginRequiredMixin,
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()];
         if "PALESTINE" in locations:
-            print("in like flynn")
             return YouthPLFilter
         elif "SYRIA" in locations:
             return YouthSYFilter

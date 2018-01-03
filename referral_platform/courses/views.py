@@ -64,8 +64,6 @@ class CourseAssessmentSubmission(SingleObjectMixin, View):
     slug_url_kwarg = 'course'
 
     def post(self, request, *args, **kwargs):
-        print("ray123")
-        pprint(request.body)
         if 'youth_id' not in request.body or 'status' not in request.body:
             return HttpResponseBadRequest()
 
