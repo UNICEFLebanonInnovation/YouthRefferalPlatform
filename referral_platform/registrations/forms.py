@@ -51,7 +51,6 @@ class CommonForm(forms.ModelForm):
         required=True, to_field_name='id',
     )
     youth_id = forms.IntegerField(
-        label=_("Youth Id"),
         widget=forms.HiddenInput,
         required=False
     )
