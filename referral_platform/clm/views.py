@@ -116,11 +116,12 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 class YouthAssessmentSubmission(SingleObjectMixin, View):
     def post(self, request, *args, **kwargs):
         print("Submission")
-        pprint(request.body)
+        print(request.body)
         if 'youth_id' not in request.body or 'status' not in request.body:
             return HttpResponseBadRequest()
 
         payload = json.loads(request.body.decode('utf-8'))
+
 
         youth = YoungPerson.objects.get(number=payload['youth_id'])
         assessment = Assessment.objects.get(slug=payload['slug'])
