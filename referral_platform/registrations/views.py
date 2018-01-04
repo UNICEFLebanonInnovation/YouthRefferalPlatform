@@ -109,7 +109,7 @@ class AddView(LoginRequiredMixin, FormView):
                 data['youth_birthday_month'] = instance.birthday_month
                 data['youth_birthday_year'] = instance.birthday_year
                 data['youth_sex'] = instance.sex
-                data['youth_nationality'] = instance.nationality
+                data['youth_nationality'] = instance.nationality_id
                 data['youth_marital_status'] = instance.marital_status
 
         initial = data
