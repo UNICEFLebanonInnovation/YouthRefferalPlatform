@@ -17,7 +17,7 @@ class CommonTable(tables.Table):
 
     edit_column = tables.TemplateColumn(verbose_name=_('Edit'), orderable=False,
                                         template_name='django_tables2/edit_column.html',
-                                        attrs={'url': '/clm/bln-edit/'})
+                                        attrs={'url': '/youth/edit/'})
     delete_column = tables.TemplateColumn(verbose_name=_('Delete'), orderable=False,
                                           template_name='django_tables2/delete_column.html',
                                           attrs={'url': '/youth/delete/'})
@@ -48,7 +48,7 @@ class CommonTable(tables.Table):
 class CommonTableAlt(tables.Table):
             edit_column = tables.TemplateColumn(verbose_name=_('Edit'), orderable=False,
                                                 template_name='django_tables2/edit_column.html',
-                                                attrs={'url': '/clm/bln-edit/'})
+                                                attrs={'url': '/youth/edit/'})
             delete_column = tables.TemplateColumn(verbose_name=_('Delete'), orderable=False,
                                                   template_name='django_tables2/delete_column.html',
                                                   attrs={'url': '/youth/delete/'})
