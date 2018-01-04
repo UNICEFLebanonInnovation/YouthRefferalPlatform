@@ -49,7 +49,7 @@ $(document).ready(function() {
       minLength: 3,
       select: function(event, ui) {
         let registry_id = 0;
-        console.log(ui.item)
+        console.log(ui.item);
         registry_id = ui.item.id;
         let params = {
           youth_id: registry_id,
@@ -70,11 +70,20 @@ $(document).ready(function() {
       return $('<li>')
                 .append("<div style='border: 1px solid;'>"
                    + '<b>Base Data:</b>' + item.last_name + ' ' + item.father_name + ' ' + item.first_name
-                    + '<br/> <b>Gender - Birthday:</b> ' + item.sex + ' - ' + item.birthday_day+ '/' + item.birthday_month + '/' + item.birthday_year
+                    + '<br/> <b>Gender - Birthday:</b> ' + item.sex + ' - ' + item.birthday_day + '/' + item.birthday_month + '/' + item.birthday_year
                     + '</div>')
                 .appendTo(ul);
     };
+
+    $('#continue').click(function() {
+        console.log("clicked");
+        $('#id_override_submit').attr('value',1);
+        $('form').submit();
+    });
+
+
   }
+
 
 
 

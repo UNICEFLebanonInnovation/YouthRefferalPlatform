@@ -54,6 +54,10 @@ class CommonForm(forms.ModelForm):
         widget=forms.HiddenInput,
         required=False
     )
+    override_submit = forms.IntegerField(
+        widget=forms.HiddenInput,
+        required=False
+    )
     youth_bayanati_ID = forms.CharField(
         label=_('Bayanati ID'),
         widget=forms.TextInput, required=False
@@ -149,6 +153,7 @@ class CommonForm(forms.ModelForm):
             'youth_nationality',
             'youth_address',
             'youth_marital_status',
+            'override_submit',
         )
         initial_fields = fields
         widgets = {}
@@ -346,10 +351,12 @@ class CommonForm(forms.ModelForm):
         first_name = cleaned_data.get('youth_first_name')
         last_name = cleaned_data.get('youth_last_name')
         father_name = cleaned_data.get('youth_father_name')
+        override_submit = cleaned_data.get('override_submit')
         form_str = '{} {} {}'.format(first_name, father_name, last_name)
         is_matching = False
         exists = False
         queryset = Registration.objects.all()
+        continue_button = '<br/><button  class="btn btn-info" type="button" name="continue" value="continue" id="continue">Continue</button>'
 
         if youth_id:
             if queryset.filter(youth_id=youth_id, partner_organization=self.initial["partner"]).exists():
@@ -360,28 +367,29 @@ class CommonForm(forms.ModelForm):
                 "Youth is already registered with current partner"
             )
 
-        if self.instance.id:
-            queryset = queryset.exclude(id=self.instance.id, partner_organization=self.initial["partner"])
+        if not override_submit:
+            if self.instance.id:
+                queryset = queryset.exclude(id=self.instance.id, partner_organization=self.initial["partner"])
 
-        filtered_results = queryset.filter(youth__birthday_year=birthday_year,
-                                           youth__birthday_day=birthday_day,
-                                           youth__birthday_month=birthday_month,
-                                           youth__sex=sex)
+            filtered_results = queryset.filter(youth__birthday_year=birthday_year,
+                                               youth__birthday_day=birthday_day,
+                                               youth__birthday_month=birthday_month,
+                                               youth__sex=sex)
 
-        matching_results = ''
-        for result in filtered_results:
-            result_str = '{} {} {}'.format(result.youth.first_name, result.youth.father_name, result.youth.last_name)
-            fuzzy_match = fuzz.ratio(form_str, result_str)
-            if fuzzy_match > 85:
-                matching_results = matching_results + "<a href='/registrations/add/?youth_id="+str(result.youth_id)+"'>"+result_str+"</a><br/>"
-                is_matching = True
+            matching_results = ''
+            for result in filtered_results:
+                result_str = '{} {} {}'.format(result.youth.first_name, result.youth.father_name, result.youth.last_name)
+                fuzzy_match = fuzz.ratio(form_str, result_str)
+                if fuzzy_match > 85:
+                    matching_results = matching_results + "<a href='/registrations/add/?youth_id="+str(result.youth_id)+"'>"+result_str+" - birthday:"+birthday_day+"/"+birthday_month+"/"+birthday_year+" - gender:"+sex+"</a><br/>"
+                    is_matching = True
 
-        if not youth_id:
-            if is_matching:
-                raise forms.ValidationError(
-                    mark_safe("Youth (born on:"+birthday_day+"/"+birthday_month+"/"+birthday_year+" - Gender:"+sex+") "
-                              "is already registered with another partner, please check which one would you like to add:<br/>"+matching_results)
-                )
+            if not youth_id:
+                if is_matching:
+                    raise forms.ValidationError(
+                        mark_safe("Youth is already registered with another partner, "
+                                  "please check which one would you like to add:<br/>"+matching_results+continue_button)
+                    )
 
     def save(self, request=None, instance=None):
         if instance:
