@@ -28,7 +28,7 @@ from import_export.formats import base_formats
 from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
 from referral_platform.youth.models import YoungPerson
-from .serializers import RegistrationSerializer
+from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, AssessmentSubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable
@@ -189,10 +189,10 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
 
 class RegistrationViewSet(mixins.RetrieveModelMixin,
-                         mixins.ListModelMixin,
-                         mixins.CreateModelMixin,
-                         mixins.UpdateModelMixin,
-                         viewsets.GenericViewSet):
+                          mixins.ListModelMixin,
+                          mixins.CreateModelMixin,
+                          mixins.UpdateModelMixin,
+                          viewsets.GenericViewSet):
 
     model = Registration
     queryset = Registration.objects.all()
@@ -207,6 +207,15 @@ class RegistrationViewSet(mixins.RetrieveModelMixin,
         instance.delete()
         return JsonResponse({'status': status.HTTP_200_OK})
 
+
+class AssessmentSubmissionViewSet(mixins.CreateModelMixin,
+                                  mixins.UpdateModelMixin,
+                                  viewsets.GenericViewSet):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+    serializer_class = AssessmentSubmission
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class ExportView(LoginRequiredMixin, ListView):
@@ -394,7 +403,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
         ]
 
-
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
         data5.headers = [
@@ -434,7 +442,6 @@ class ExportView(LoginRequiredMixin, ListView):
             _('easiest_solution'),
             _('problem_solving'),
         ]
-
 
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
@@ -578,7 +585,6 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data3.append(content)
 
-
             if line2.data["slug"] == 'post_assessment':
 
                 content = [
@@ -613,7 +619,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
                             ]
                 data4.append(content)
-
 
             if line2.data["slug"] == 'pre_entrepreneurship':
 
@@ -705,8 +710,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
                             ]
                 data6.append(content)
-
-
 
         book.add_sheet(data)
         book.add_sheet(data2)
