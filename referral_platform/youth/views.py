@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 import json
 import tablib
-
+from django.db.models import Q
 
 from django.views.generic import ListView, FormView, TemplateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -51,7 +51,6 @@ class ListingView(LoginRequiredMixin,
     # def get_table_class(self):
     #     locations = [g.p_code for g in self.request.user.partner.locations.all()];
     #     if "PALESTINE" in locations:
-    #         print("in like flynn")
     #         return YouthPLFilter
     #     elif "SYRIA" in locations:
     #         return YouthSYFilter
@@ -127,7 +126,19 @@ class YoungPersonViewSet(mixins.RetrieveModelMixin,
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+        #return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+        if self.request.method in ["PATCH", "POST", "PUT"]:
+            return self.queryset
+        terms = self.request.GET.get('term', 0)
+        if terms:
+            for term in terms.split():
+                qs = self.queryset.filter(
+                    Q(first_name__contains=term) |
+                    Q(father_name__contains=term) |
+                    Q(last_name__contains=term) |
+                    Q(id_number__contains=term)
+                ).distinct()
+            return qs
 
     def delete(self, request, *args, **kwargs):
         instance = self.model.objects.get(id=kwargs['pk'])

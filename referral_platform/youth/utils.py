@@ -58,5 +58,4 @@ def generate_id(
         return result
 
     except Exception as exp:
-        print exp.message
         return ''
