@@ -392,7 +392,7 @@ class CommonForm(forms.ModelForm):
                 if is_matching:
                     raise forms.ValidationError(
                         mark_safe("Youth is already registered with another partner, "
-                                  "please check which one would you like to add:<br/>"+matching_results++continue_button)
+                                  "please check which one would you like to add:<br/>"+matching_results+"<br/> Or if new Youth click on continue:<br/>"+continue_button)
                         )
 
     def save(self, request=None, instance=None):
