@@ -61,7 +61,7 @@ class ListingView(LoginRequiredMixin,
         return YoungPerson.objects.filter(partner_organization=self.request.user.partner)
 
     def get_filterset_class(self):
-        locations = [g.p_code for g in self.request.user.partner.locations.all()];
+        locations = [g.p_code for g in self.request.user.partner.locations.all()]
         if "PALESTINE" in locations:
             return YouthPLFilter
         elif "SYRIA" in locations:
@@ -210,7 +210,6 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             return HttpResponseBadRequest()
 
         payload = json.loads(request.body.decode('utf-8'))
-
         youth = YoungPerson.objects.get(number=payload['youth_id'])
         assessment = Assessment.objects.get(slug=payload['slug'])
         submission, new = AssessmentSubmission.objects.get_or_create(

@@ -118,6 +118,7 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
         payload = json.loads(request.body.decode('utf-8'))
 
+
         youth = YoungPerson.objects.get(number=payload['youth_id'])
         assessment = Assessment.objects.get(slug=payload['slug'])
         submission, new = AssessmentSubmission.objects.get_or_create(
