@@ -65,6 +65,7 @@ LOCAL_APPS = (
     'referral_platform.courses',
     'referral_platform.initiatives',
     'referral_platform.registrations',
+    'referral_platform.clm',
 
 )
 
