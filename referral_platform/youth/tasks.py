@@ -34,7 +34,7 @@ def create_assessment_submission():
         assessment = AssessmentSubmission.objects.create(
             youth=old_ass.youth,
             registration=registry,
-            assessment=old_ass.assessment,
+            assessment_id=old_ass.assessment_id,
             data=old_ass.data
         )
         assessment.save()
