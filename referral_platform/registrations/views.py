@@ -120,7 +120,7 @@ class AddView(LoginRequiredMixin, FormView):
         return super(AddView, self).form_valid(form)
 
 
-class EditView(LoginRequiredMixin, UpdateView):
+class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     form_class = CommonForm
     model = Registration
@@ -173,7 +173,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             country=registry.governorate.parent.name,
             governorate=registry.governorate.p_code,
             partner=registry.partner_organization.name,
-            center=registry.center.name if youth.center else "",
+            center=registry.center.name if registry.center else "",
             first=youth.first_name,
             father=youth.father_name,
             last=youth.last_name,
