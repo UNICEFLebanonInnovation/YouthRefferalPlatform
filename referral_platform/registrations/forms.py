@@ -21,6 +21,7 @@ from fuzzywuzzy import process
 from referral_platform.youth.models import YoungPerson, Nationality, Center
 from .serializers import RegistrationSerializer
 from .models import Registration
+from django.utils.safestring import mark_safe
 
 current_year = datetime.today().year
 
@@ -33,6 +34,11 @@ DAYS.insert(0, ('', '---------'))
 
 class CommonForm(forms.ModelForm):
 
+    search_youth = forms.CharField(
+        label=_("Search for youth by name or id"),
+        widget=forms.TextInput,
+        required=False
+    )
     governorate = forms.ModelChoiceField(
         label=_('Governorate'),
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
@@ -43,6 +49,14 @@ class CommonForm(forms.ModelForm):
         queryset=Center.objects.all(), widget=forms.Select,
         empty_label=_('Center'),
         required=True, to_field_name='id',
+    )
+    youth_id = forms.IntegerField(
+        widget=forms.HiddenInput,
+        required=False
+    )
+    override_submit = forms.IntegerField(
+        widget=forms.HiddenInput,
+        required=False
     )
     youth_bayanati_ID = forms.CharField(
         label=_('Bayanati ID'),
@@ -105,7 +119,7 @@ class CommonForm(forms.ModelForm):
     )
     youth_address = forms.CharField(
         label=_("Address"),
-        widget=forms.Textarea, required=True,
+        widget=forms.Textarea, required=False,
     )
     youth_marital_status = forms.ChoiceField(
         label=_('Marital status'),
@@ -128,6 +142,7 @@ class CommonForm(forms.ModelForm):
             'center',
             'trainer',
             'youth_bayanati_ID',
+            'youth_id',
             'youth_first_name',
             'youth_father_name',
             'youth_last_name',
@@ -138,6 +153,7 @@ class CommonForm(forms.ModelForm):
             'youth_nationality',
             'youth_address',
             'youth_marital_status',
+            'override_submit',
         )
         initial_fields = fields
         widgets = {}
@@ -153,15 +169,22 @@ class CommonForm(forms.ModelForm):
 
         instance = kwargs.get('instance', '')
         if instance:
-            initials = args[0]
+            initials = {}
+            initials['partner_locations'] = instance.partner_organization.locations.all()
+            initials['partner'] = instance.partner_organization
+
         else:
             initials = kwargs.get('initial', '')
+
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner = initials['partner'] if 'partner' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
-
         my_fields = OrderedDict()
+
+        if not instance:
+            my_fields['Search Youth'] = ['search_youth']
+
         my_fields['Location Information'] = ['governorate', 'center', 'trainer', 'location']
 
         # Add Trainer name to Jordan
@@ -323,6 +346,8 @@ class CommonForm(forms.ModelForm):
     def clean(self):
 
         cleaned_data = super(CommonForm, self).clean()
+        youth_id = cleaned_data.get('youth_search_id')
+        youth_id_edit = cleaned_data.get('youth_id')
         birthday_year = cleaned_data.get('youth_birthday_year')
         birthday_day = cleaned_data.get('youth_birthday_day')
         birthday_month = cleaned_data.get('youth_birthday_month')
@@ -331,29 +356,44 @@ class CommonForm(forms.ModelForm):
         first_name = cleaned_data.get('youth_first_name')
         last_name = cleaned_data.get('youth_last_name')
         father_name = cleaned_data.get('youth_father_name')
+        override_submit = cleaned_data.get('override_submit')
         form_str = '{} {} {}'.format(first_name, father_name, last_name)
         is_matching = False
+        exists = False
         queryset = Registration.objects.all()
+        continue_button = '<br/><button  class="btn btn-info" type="button" name="continue" value="continue" id="continue">Continue</button>'
 
-        if self.instance.id:
-            queryset = queryset.exclude(id=self.instance.id)
+        if not override_submit:
+            if youth_id:
+                if queryset.filter(youth_id=youth_id, partner_organization=self.initial["partner"]).exists():
+                    exists = True
 
-        filtered_results = queryset.filter(youth__birthday_year=birthday_year,
-                                           youth__birthday_day=birthday_day,
-                                           youth__birthday_month=birthday_month,
-                                           youth__sex=sex)
+            if exists:
+                raise forms.ValidationError(
+                    "Youth is already registered with current partner"
+                )
 
-        for result in filtered_results:
-            result_str = '{} {} {}'.format(result.first_name, result.father_name, result.last_name)
-            fuzzy_match = fuzz.ratio(form_str, result_str)
-            if fuzzy_match > 85:
-                is_matching = True
-                break
+            if self.instance.id:
+                queryset = queryset.exclude(id=self.instance.id, partner_organization=self.instance.partner_organization)
 
-        if is_matching:
-            raise forms.ValidationError(
-                "Values are matching"
-            )
+            filtered_results = queryset.filter(youth__birthday_year=birthday_year,
+                                                   youth__birthday_day=birthday_day,
+                                                   youth__birthday_month=birthday_month,
+                                                   youth__sex=sex)
+            if not youth_id_edit:
+                matching_results = ''
+                for result in filtered_results:
+                    result_str = '{} {} {}'.format(result.youth.first_name, result.youth.father_name, result.youth.last_name)
+                    fuzzy_match = fuzz.ratio(form_str, result_str)
+                    if fuzzy_match > 85:
+                        matching_results = matching_results + "<a href='/registrations/add/?youth_id="+str(result.youth_id)+"'>"+result_str+" - birthday:"+birthday_day+"/"+birthday_month+"/"+birthday_year+" - gender:"+sex+"</a><br/>"
+                        is_matching = True
+
+                if is_matching:
+                    raise forms.ValidationError(
+                        mark_safe("Youth is already registered with another partner, "
+                                  "please check which one would you like to add:<br/>"+matching_results+"<br/> Or if new Youth click on continue:<br/>"+continue_button)
+                        )
 
     def save(self, request=None, instance=None):
         if instance:

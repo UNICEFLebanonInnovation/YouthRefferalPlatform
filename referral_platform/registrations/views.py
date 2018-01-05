@@ -28,10 +28,11 @@ from import_export.formats import base_formats
 from referral_platform.users.views import UserRegisteredMixin
 from referral_platform.users.utils import force_default_language
 from referral_platform.youth.models import YoungPerson
+from referral_platform.youth.serializers import YoungPersonSerializer
 from .serializers import RegistrationSerializer
 from .models import Registration, Assessment, AssessmentSubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
-from .tables import BootstrapTable, CommonTable
+from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
 
 
@@ -70,8 +71,18 @@ class ListingView(LoginRequiredMixin,
         elif "JORDAN" in locations:
             return YouthFilter
 
+    def get_table_class(self):
+            locations = [g.p_code for g in self.request.user.partner.locations.all()]
+            if "PALESTINE" in locations:
+                return CommonTableAlt
+            elif "SYRIA" in locations:
+                return CommonTableAlt
+            elif "JORDAN" in locations:
+                return CommonTable
+
 
 class AddView(LoginRequiredMixin, FormView):
+
     template_name = 'registrations/form.html'
     form_class = CommonForm
     model = Registration
@@ -87,6 +98,20 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+
+        if self.request.GET.get('youth_id'):
+                instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
+                data['youth_id'] = instance.id
+                data['youth_first_name'] = instance.first_name
+                data['youth_father_name'] = instance.father_name
+                data['youth_last_name'] = instance.last_name
+                data['youth_birthday_day'] = instance.birthday_day
+                data['youth_birthday_month'] = instance.birthday_month
+                data['youth_birthday_year'] = instance.birthday_year
+                data['youth_sex'] = instance.sex
+                data['youth_nationality'] = instance.nationality_id
+                data['youth_marital_status'] = instance.marital_status
+
         initial = data
         return initial
 
@@ -95,7 +120,7 @@ class AddView(LoginRequiredMixin, FormView):
         return super(AddView, self).form_valid(form)
 
 
-class EditView(LoginRequiredMixin, UpdateView):
+class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     form_class = CommonForm
     model = Registration
@@ -146,13 +171,13 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             form=assessment.assessment_form,
             slug=assessment.slug,
             country=registry.governorate.parent.name,
-            governorate=registry.governorate.name,
+            governorate=registry.governorate.p_code,
             partner=registry.partner_organization.name,
-            center=registry.center.name if youth.center else "",
+            center=registry.center.name if registry.center else "",
             first=youth.first_name,
             father=youth.father_name,
             last=youth.last_name,
-            nationality=youth.nationality.name,
+            nationality=youth.nationality.code,
             gender=youth.sex,
             marital=youth.marital_status,
             birthdate=youth.birthday_year + "-" + '{0:0>2}'.format(len(youth.birthday_month)) + "-" + '{0:0>2}'.format(
