@@ -8,5 +8,5 @@ from .models import (
 
 admin.site.register(Assessment)
 admin.site.register(AssessmentSubmission)
-admin.site.register(Disability)
+# admin.site.register(Disability)
 

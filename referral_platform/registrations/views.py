@@ -214,7 +214,7 @@ class AssessmentSubmissionViewSet(mixins.CreateModelMixin,
 
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.all()
-    serializer_class = AssessmentSubmission
+    serializer_class = AssessmentSubmissionSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
 
