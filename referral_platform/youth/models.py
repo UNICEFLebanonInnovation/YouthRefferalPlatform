@@ -133,7 +133,7 @@ class Person(TimeStampedModel):
         max_length=4,
         blank=False,
         null=False,
-        choices=((str(x), x) for x in range(current_year - 26, current_year - 6)),
+        choices=((str(x), x) for x in range(current_year - 50, current_year - 4)),
         verbose_name=_('Birthday year'),
         default=current_year - 26
     )

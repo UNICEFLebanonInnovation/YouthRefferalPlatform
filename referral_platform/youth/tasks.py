@@ -19,3 +19,22 @@ def create_youth_registration():
             trainer=youth.trainer,
         )
         registry.save()
+
+
+@app.task
+def create_assessment_submission():
+
+    from referral_platform.clm.models import AssessmentSubmission as CLMAssessment
+    from referral_platform.registrations.models import Registration, AssessmentSubmission
+
+    old_assessments = CLMAssessment.objects.all()
+    for old_ass in old_assessments:
+        youth = old_ass.youth
+        registry = youth.registrations.all().first()
+        assessment = AssessmentSubmission.objects.create(
+            youth=old_ass.youth,
+            registration=registry,
+            assessment_id=old_ass.assessment_id,
+            data=old_ass.data
+        )
+        assessment.save()

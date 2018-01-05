@@ -80,7 +80,23 @@ class YoungPersonAdmin(ImportExportModelAdmin):
     )
 
 
+class NationalityResource(resources.ModelResource):
+
+    class Meta:
+        model = Nationality
+        fields = (
+            'id',
+            'name',
+            'code',
+        )
+        export_order = fields
+
+
+class NationalityAdmin(ImportExportModelAdmin):
+    resource_class = NationalityResource
+
+
 admin.site.register(YoungPerson, YoungPersonAdmin)
-admin.site.register(EducationLevel)
-admin.site.register(Nationality)
-admin.site.register(IDType)
+# admin.site.register(EducationLevel)
+admin.site.register(Nationality, NationalityAdmin)
+# admin.site.register(IDType)

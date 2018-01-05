@@ -1,6 +1,13 @@
 
 from rest_framework import serializers
-from .models import Registration
+from .models import Registration, AssessmentSubmission
+
+
+class AssessmentSubmissionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssessmentSubmission
+        fields = '__all__'
 
 
 class RegistrationSerializer(serializers.ModelSerializer):

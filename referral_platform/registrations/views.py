@@ -18,18 +18,12 @@ from django.utils.translation import ugettext as _
 from rest_framework import status
 from rest_framework import viewsets, mixins, permissions
 
-from rest_framework.generics import DestroyAPIView
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 
-from import_export.formats import base_formats
-
-from referral_platform.users.views import UserRegisteredMixin
-from referral_platform.users.utils import force_default_language
 from referral_platform.youth.models import YoungPerson
-from referral_platform.youth.serializers import YoungPersonSerializer
-from .serializers import RegistrationSerializer
+from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, AssessmentSubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
@@ -51,16 +45,6 @@ class ListingView(LoginRequiredMixin,
 
     def get_queryset(self):
         return Registration.objects.filter(partner_organization=self.request.user.partner)
-
-    def get_table_class(self):
-        locations = [g.p_code for g in self.request.user.partner.locations.all()]
-        return CommonTable
-        # if "PALESTINE" in locations:
-        #     return YouthPLFilter
-        # elif "SYRIA" in locations:
-        #     return YouthSYFilter
-        # elif "JORDAN" in locations:
-        #     return YouthFilter
 
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -214,10 +198,10 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
 
 class RegistrationViewSet(mixins.RetrieveModelMixin,
-                         mixins.ListModelMixin,
-                         mixins.CreateModelMixin,
-                         mixins.UpdateModelMixin,
-                         viewsets.GenericViewSet):
+                          mixins.ListModelMixin,
+                          mixins.CreateModelMixin,
+                          mixins.UpdateModelMixin,
+                          viewsets.GenericViewSet):
 
     model = Registration
     queryset = Registration.objects.all()
@@ -232,6 +216,15 @@ class RegistrationViewSet(mixins.RetrieveModelMixin,
         instance.delete()
         return JsonResponse({'status': status.HTTP_200_OK})
 
+
+class AssessmentSubmissionViewSet(mixins.CreateModelMixin,
+                                  mixins.UpdateModelMixin,
+                                  viewsets.GenericViewSet):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+    serializer_class = AssessmentSubmissionSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class ExportView(LoginRequiredMixin, ListView):
@@ -419,7 +412,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
         ]
 
-
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
         data5.headers = [
@@ -459,7 +451,6 @@ class ExportView(LoginRequiredMixin, ListView):
             _('easiest_solution'),
             _('problem_solving'),
         ]
-
 
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
@@ -603,7 +594,6 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data3.append(content)
 
-
             if line2.data["slug"] == 'post_assessment':
 
                 content = [
@@ -638,7 +628,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
                             ]
                 data4.append(content)
-
 
             if line2.data["slug"] == 'pre_entrepreneurship':
 
@@ -730,8 +719,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
                             ]
                 data6.append(content)
-
-
 
         book.add_sheet(data)
         book.add_sheet(data2)

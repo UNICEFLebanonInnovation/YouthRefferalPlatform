@@ -54,6 +54,9 @@ class CenterAdmin(ImportExportModelAdmin):
     list_filter = (
         'partner_organization',
     )
+    search_fields = (
+        'name',
+    )
 
 
 admin.site.register(PartnerOrganization, PartnerOrganizationAdmin)
