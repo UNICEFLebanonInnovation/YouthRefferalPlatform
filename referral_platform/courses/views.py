@@ -1,7 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
 import json
-from pprint import pprint
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic.detail import SingleObjectMixin

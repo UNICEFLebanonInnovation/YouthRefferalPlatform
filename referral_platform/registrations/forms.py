@@ -358,16 +358,16 @@ class CommonForm(forms.ModelForm):
         queryset = Registration.objects.all()
         continue_button = '<br/><button  class="btn btn-info" type="button" name="continue" value="continue" id="continue">Continue</button>'
 
-        if youth_id:
-            if queryset.filter(youth_id=youth_id, partner_organization=self.initial["partner"]).exists():
-                exists = True
-
-        if exists:
-            raise forms.ValidationError(
-                "Youth is already registered with current partner"
-            )
-
         if not override_submit:
+            if youth_id:
+                if queryset.filter(youth_id=youth_id, partner_organization=self.initial["partner"]).exists():
+                    exists = True
+
+            if exists:
+                raise forms.ValidationError(
+                    "Youth is already registered with current partner"
+                )
+
             if self.instance.id:
                 queryset = queryset.exclude(id=self.instance.id, partner_organization=self.initial["partner"])
 

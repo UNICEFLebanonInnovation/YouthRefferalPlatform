@@ -76,7 +76,6 @@ $(document).ready(function() {
     };
 
     $('#continue').click(function() {
-        console.log("clicked");
         $('#id_override_submit').attr('value',1);
         $('form').submit();
     });
