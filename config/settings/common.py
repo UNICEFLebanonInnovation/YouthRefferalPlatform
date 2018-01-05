@@ -361,3 +361,18 @@ SUIT_CONFIG = {
 }
 
 # Your common stuff: Below this line define 3rd party library settings
+
+REST_FRAMEWORK = {
+    # this setting fixes the bug where user can be logged in as AnonymousUser
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
