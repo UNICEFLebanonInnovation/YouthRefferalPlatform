@@ -396,7 +396,7 @@ class CommonForm(forms.ModelForm):
     #                     )
 
     def save(self, request=None, instance=None):
-        if instance.id:
+        if instance:
             serializer = RegistrationSerializer(instance, data=request.POST)
             if serializer.is_valid():
                 serializer.update(validated_data=serializer.validated_data, instance=instance)
