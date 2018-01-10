@@ -13,6 +13,7 @@ class AssessmentSubmissionSerializer(serializers.ModelSerializer):
 class RegistrationSerializer(serializers.ModelSerializer):
 
     governorate_id = serializers.IntegerField(source='governorate.id', required=False)
+    partner_organization = serializers.IntegerField(source='partner_organization_id', required=False)
 
     youth_bayanati_ID = serializers.CharField(source='youth.bayanati_ID', required=False)
     youth_first_name = serializers.CharField(source='youth.first_name')
@@ -87,6 +88,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'location',
             'center',
             'trainer',
+            'partner_organization',
             'youth_id',
             'youth_bayanati_ID',
             'youth_first_name',
