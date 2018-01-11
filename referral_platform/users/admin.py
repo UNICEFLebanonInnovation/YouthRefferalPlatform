@@ -66,6 +66,13 @@ class PlatformUserAdmin(AuthUserAdmin):
     )
 
     ordering = ('email',)
-    list_display = ('first_name', 'is_superuser')
-    search_fields = ['first_name', 'last_name']
+    list_display = (
+        'email',
+        'first_name',
+        'last_name',
+        'partner',
+        'is_superuser',
+        'is_staff',
+    )
+    search_fields = ['first_name', 'last_name', 'email']
     filter_horizontal = ('groups', 'user_permissions', )
