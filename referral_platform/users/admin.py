@@ -53,7 +53,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner',)})
+        (None, {'fields': ('partner', 'country',)})
     )
 
     add_fieldsets = (
@@ -62,7 +62,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner',)})
+        (None, {'fields': ('partner', 'country',)})
     )
 
     ordering = ('email',)
