@@ -288,5 +288,15 @@ class YoungPerson(Person):
         verbose_name = _("Youth")
         verbose_name_plural = _("Youth")
 
+    def __unicode__(self):
+        if not self.first_name:
+            return 'No name'
+
+        return u'{} {} {}'.format(
+            self.first_name,
+            self.father_name,
+            self.last_name,
+        )
+
     def get_absolute_url(self):
         return reverse('youth:edit', kwargs={'pk': self.id})

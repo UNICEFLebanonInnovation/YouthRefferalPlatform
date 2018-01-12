@@ -38,6 +38,7 @@ class YoungPersonAdmin(ImportExportModelAdmin):
                 'nationality',
                 'marital_status',
                 'address',
+                'number',
             ]
         })
     ]
@@ -47,10 +48,6 @@ class YoungPersonAdmin(ImportExportModelAdmin):
                     )
 
     list_display = (
-        'partner_organization',
-        'governorate',
-        'trainer',
-        'location',
         'first_name',
         'father_name',
         'last_name',
@@ -63,6 +60,10 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         'address',
         'created',
         'modified',
+        'partner_organization',
+        'governorate',
+        'trainer',
+        'location',
     )
     list_filter = (
         'partner_organization',

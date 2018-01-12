@@ -34,7 +34,7 @@ class Assessment(models.Model):
         ordering = ['order']
 
     def __unicode__(self):
-        return self.overview
+        return '{} - {}'.format(self.name, self.overview)
 
     def __iter__(self):
         return iter([self.name,
@@ -101,6 +101,9 @@ class Registration(TimeStampedModel):
         ordering = ['pk']
         verbose_name = _("Registration")
         verbose_name_plural = _("Registrations")
+
+    def __unicode__(self):
+        return '{} - {}'.format(self.partner_organization, self.youth)
 
     def get_absolute_url(self):
         return reverse('registrations:edit', kwargs={'pk': self.id})

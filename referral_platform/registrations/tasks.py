@@ -7,6 +7,7 @@ import datetime
 from time import mktime
 from django.core.serializers.json import DjangoJSONEncoder
 from openpyxl import load_workbook
+from referral_platform.youth.utils import generate_id
 
 
 @app.task
@@ -30,7 +31,7 @@ def import_registrations(filename, base_url, token, protocol='HTTPS'):
             # not for use 1, 2, 3, 4
             data['youth_nationality'] = int(row[5].value) if row[5].value else None
             data['governorate'] = int(row[6].value) if row[6].value else None
-            data['partner_organisation'] = int(row[7].value) if row[7].value else None
+            data['partner_organization'] = int(row[7].value) if row[7].value else None
             # training type 8
             # center type 9
             if row[10].value or not row[10].value == 'na':
@@ -70,7 +71,7 @@ def import_registrations(filename, base_url, token, protocol='HTTPS'):
             result = post_data(protocol=protocol, url=base_url, apifunc='/api/registration/', token=token, data=data)
             registry = json.loads(result)
 
-            submit_assessment(header, row, registry, base_url, token, protocol)
+            submit_assessment(header, row, 1, registry, base_url, token, protocol)
 
         except Exception as ex:
             print("---------------")
@@ -80,7 +81,7 @@ def import_registrations(filename, base_url, token, protocol='HTTPS'):
             pass
 
 
-def submit_assessment(header, row, registry, base_url, token, protocol='HTTPS'):
+def submit_assessment(header, row, assessment_id, registry, base_url, token, protocol='HTTPS'):
     try:
         assessment_data = {}
         for key, value in header:
@@ -89,7 +90,7 @@ def submit_assessment(header, row, registry, base_url, token, protocol='HTTPS'):
         assessment = {}
         assessment['registration'] = registry['id']
         assessment['youth'] = registry['youth_id']
-        assessment['assessment'] = 1
+        assessment['assessment'] = assessment_id
         assessment['data'] = assessment_data
         post_data(protocol=protocol, url=base_url, apifunc='/api/assessment-submission/', token=token, data=assessment)
 
@@ -99,6 +100,71 @@ def submit_assessment(header, row, registry, base_url, token, protocol='HTTPS'):
         print(json.dumps(assessment, cls=DjangoJSONEncoder))
         print("---------------")
         pass
+
+
+@app.task
+def import_assessments(assessment, filename, base_url, token, protocol='HTTPS'):
+
+    from referral_platform.registrations.models import Registration
+
+    wb = load_workbook(filename=filename, read_only=True)
+    ws = wb['Sheet2']
+    data = {}
+    header = []
+    index = 0
+    for row in ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            header.append((index, cell.value))
+            index += 1
+
+    for row in ws.rows:
+        try:
+            if row[0].value == 'start':
+                continue
+            registry = {}
+            data = {}
+
+            if not row[17].value == 'Yes':
+                continue
+
+            birthday_day = ''
+            birthday_month = ''
+            birthday_year = ''
+            if row[14].value:
+                birthday = row[14].value.split('-')
+                birthday_year = int(birthday[0])
+                birthday_month = int(birthday[1])
+                birthday_day = int(birthday[2])
+
+            # id_number = generate_id(
+            #     row[6].value,
+            #     row[8].value,
+            #     row[7].value,
+            #     row[9].value,
+            #     birthday_day,
+            #     birthday_month,
+            #     birthday_year,
+            #     ""
+            # )
+
+            matched_registred_youth = Registration.objects.filter(
+                youth__first_name=row[6].value,
+                youth__father_name=row[8].value,
+                youth__last_name=row[7].value,
+                youth__sex=row[9].value,
+                youth__birthday_year=birthday_year
+            ).first()
+            registry['id'] = matched_registred_youth.id
+            registry['youth_id'] = matched_registred_youth.youth_id
+
+            submit_assessment(header, row, assessment, registry, base_url, token, protocol)
+
+        except Exception as ex:
+            print("---------------")
+            print("error: ", ex.message)
+            print(json.dumps(data, cls=DjangoJSONEncoder))
+            print("---------------")
+            pass
 
 
 class MyEncoder(json.JSONEncoder):

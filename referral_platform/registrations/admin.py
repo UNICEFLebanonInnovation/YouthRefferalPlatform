@@ -27,16 +27,7 @@ class RegistrationAdmin(ImportExportModelAdmin):
                 'governorate',
                 'trainer',
                 'location',
-                'youth__first_name',
-                'youth__father_name',
-                'youth__last_name',
-                'youth__birthday_year',
-                'youth__birthday_month',
-                'youth__birthday_day',
-                'youth__sex',
-                'youth__nationality',
-                'youth__marital_status',
-                'youth__address',
+                'youth',
             ]
         })
     ]
@@ -91,6 +82,36 @@ class RegistrationAdmin(ImportExportModelAdmin):
         return True
 
 
+class AssessmentAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'name',
+        'slug',
+        'overview',
+        'order',
+    )
+    list_filter = (
+    )
+    search_fields = (
+    )
+
+
+class AssessmentSubmissionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'assessment',
+        'youth',
+        'registration',
+    )
+    list_filter = (
+        'assessment__name',
+        'assessment__overview',
+        'registration__partner_organization'
+    )
+    search_fields = (
+    )
+
+
 admin.site.register(Registration, RegistrationAdmin)
-admin.site.register(Assessment)
-admin.site.register(AssessmentSubmission)
+admin.site.register(Assessment, AssessmentAdmin)
+admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
