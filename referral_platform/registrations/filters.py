@@ -9,7 +9,7 @@ from .models import Registration
 
 class CommonFilter(FilterSet):
 
-    registration__governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__isnull=False),
+    governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__isnull=False),
                                     empty_label=_('Governorate'))
 
     # nationality = ModelChoiceFilter(queryset=Nationality.objects.all(), empty_label=_('Nationality'))
@@ -35,7 +35,7 @@ class YouthFilter(CommonFilter):
 
 class YouthPLFilter(FilterSet):
 
-    registration__governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__p_code="PALESTINE"),
+    governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__p_code="PALESTINE"),
                                     empty_label=_('Governorate'))
 
     # nationality = ModelChoiceFilter(queryset=Nationality.objects.all(), empty_label=_('Nationality'))
@@ -55,8 +55,8 @@ class YouthPLFilter(FilterSet):
 
 
 class YouthSYFilter(FilterSet):
-    
-    registration__governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__p_code="SYRIA"),
+
+    governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__p_code="SYRIA"),
                                     empty_label=_('Governorate'))
 
     # nationality = ModelChoiceFilter(queryset=Nationality.objects.all(), empty_label=_('Nationality'))
