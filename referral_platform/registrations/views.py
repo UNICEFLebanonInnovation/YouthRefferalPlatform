@@ -257,9 +257,9 @@ class ExportView(LoginRequiredMixin, ListView):
         data = tablib.Dataset()
         data.title = "Beneficiary List"
         data.headers = common_headers
-        print(self.request.user.partner)
+
         queryset = self.queryset.filter(partner_organization=self.request.user.partner)
-        print(queryset)
+
         content = []
         for line in queryset:
             content = [
