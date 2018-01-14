@@ -20,16 +20,16 @@ class YouthFilter(CommonFilter):
     class Meta:
         model = Registration
         fields = {
-            'registration__youth__bayanati_ID': ['contains'],
-            'registration__location': ['contains'],
-            'registration__trainer': ['contains'],
-            'registration__youth__first_name': ['contains'],
-            'registration__youth__father_name': ['contains'],
-            'registration__youth__last_name': ['contains'],
+            'youth__bayanati_ID': ['contains'],
+            'location': ['contains'],
+            'trainer': ['contains'],
+            'youth__first_name': ['contains'],
+            'youth__father_name': ['contains'],
+            'youth__last_name': ['contains'],
             # 'nationality': ['exact'],
-            'registration__governorate': ['exact'],
-            'registration__youth__marital_status': ['exact'],
-            'registration__youth__sex': ['exact'],
+            'governorate': ['exact'],
+            'youth__marital_status': ['exact'],
+            'youth__sex': ['exact'],
         }
 
 
@@ -43,12 +43,12 @@ class YouthPLFilter(FilterSet):
     class Meta:
         model = Registration
         fields = {
-            'registration__location': ['contains'],
-            'registration__youth__first_name': ['contains'],
-            'registration__youth__father_name': ['contains'],
-            'registration__youth__last_name': ['contains'],
+            'location': ['contains'],
+            'youth__first_name': ['contains'],
+            'youth__father_name': ['contains'],
+            'youth__last_name': ['contains'],
             # 'youth__nationality': ['exact'],
-            'registration__governorate': ['exact'],
+            'governorate': ['exact'],
             'youth__marital_status': ['exact'],
             'youth__sex': ['exact'],
         }
@@ -64,12 +64,12 @@ class YouthSYFilter(FilterSet):
     class Meta:
         model = Registration
         fields = {
-            'registration__location': ['contains'],
-            'registration__youth__first_name': ['contains'],
-            'registration__youth__father_name': ['contains'],
-            'registration__youth__last_name': ['contains'],
+            'location': ['contains'],
+            'youth__first_name': ['contains'],
+            'youth__father_name': ['contains'],
+            'youth__last_name': ['contains'],
             # 'youth__nationality': ['exact'],
-            'registration__governorate': ['exact'],
-            'registration__youth__marital_status': ['exact'],
-            'registration__youth__sex': ['exact'],
+            'governorate': ['exact'],
+            'youth__marital_status': ['exact'],
+            'youth__sex': ['exact'],
         }
