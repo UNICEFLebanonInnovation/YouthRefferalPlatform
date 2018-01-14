@@ -52,7 +52,7 @@ $(document).ready(function() {
         console.log(ui.item);
         registry_id = ui.item.id;
         let params = {
-          youth_search_id: registry_id,
+          youth_id: registry_id,
         };
         let str = '?' + jQuery.param(params);
         window.location = $(document).find('form').attr('action') + str;
