@@ -229,8 +229,8 @@ class AssessmentSubmissionViewSet(mixins.CreateModelMixin,
 
 class ExportView(LoginRequiredMixin, ListView):
 
-    model = YoungPerson
-    queryset = YoungPerson.objects.all()
+    model = Registration
+    queryset = Registration.objects.all()
 
     def get(self, request, *args, **kwargs):
 
@@ -263,27 +263,27 @@ class ExportView(LoginRequiredMixin, ListView):
         content = []
         for line in queryset:
             content = [
-                line.first_name,
-                line.father_name,
-                line.last_name,
+                line.youth.first_name,
+                line.youth.father_name,
+                line.youth.last_name,
                 line.governorate.name,
                 line.trainer,
                 line.location,
-                line.bayanati_ID,
-                line.sex,
-                line.birthday_day,
-                line.birthday_month,
-                line.birthday_year,
-                line.calc_age,
-                line.birthday,
-                line.nationality.name,
-                line.marital_status,
-                line.address,
+                line.youth.bayanati_ID,
+                line.youth.sex,
+                line.youth.birthday_day,
+                line.youth.birthday_month,
+                line.youth.birthday_year,
+                line.youth.calc_age,
+                line.youth.birthday,
+                line.youth.nationality.name,
+                line.youth.marital_status,
+                line.youth.address,
             ]
             data.append(content)
         #### GET ASSESSMENT_SUBMISSIONS
 
-        submission_set = AssessmentSubmission.objects.filter(youth__partner_organization=self.request.user.partner)
+        submission_set = AssessmentSubmission.objects.filter(registration__partner_organization=self.request.user.partner)
 
         data2 = tablib.Dataset()
         data2.title = "Registrations List"
@@ -412,6 +412,7 @@ class ExportView(LoginRequiredMixin, ListView):
 
         ]
 
+
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
         data5.headers = [
@@ -451,6 +452,7 @@ class ExportView(LoginRequiredMixin, ListView):
             _('easiest_solution'),
             _('problem_solving'),
         ]
+
 
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
@@ -500,18 +502,17 @@ class ExportView(LoginRequiredMixin, ListView):
 
 
         ]
-
         for line2 in submission_set:
             content = []
-            if line2.data["slug"] == 'registration':
+            if ('slug' in line2.data and line2.data["slug"] == 'registration') or line2.data['__version__'] == 'vhi7pe6TonRqiDdWwAbnMS':
 
                 content = [
                             line2.youth.first_name,
                             line2.youth.father_name,
                             line2.youth.last_name,
-                            line2.youth.governorate.name,
-                            line2.youth.trainer,
-                            line2.youth.location,
+                            line.governorate.name,
+                            line.trainer,
+                            line.location,
                             line2.youth.bayanati_ID,
                             line2.youth.sex,
                             line2.youth.birthday_day,
@@ -559,15 +560,15 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data2.append(content)
 
-            if line2.data["slug"] == 'pre_assessment':
+            if 'slug' in line2.data and line2.data["slug"] == 'pre_assessment' or line2.data['_id'] == 'vdYpCGKVBtvQMnmoMfN6t9':
 
                 content = [
                             line2.youth.first_name,
                             line2.youth.father_name,
                             line2.youth.last_name,
-                            line2.youth.governorate.name,
-                            line2.youth.trainer,
-                            line2.youth.location,
+                            line.governorate.name,
+                            line.trainer,
+                            line.location,
                             line2.youth.bayanati_ID,
                             line2.youth.sex,
                             line2.youth.birthday_day,
@@ -594,15 +595,16 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data3.append(content)
 
-            if line2.data["slug"] == 'post_assessment':
+
+            if ('slug' in line2.data and line2.data["slug"] == 'post_assessment') or line2.data['_ic'] == 'vW5gvr9EuV4siMxk37cRez':
 
                 content = [
                             line2.youth.first_name,
                             line2.youth.father_name,
                             line2.youth.last_name,
-                            line2.youth.governorate.name,
-                            line2.youth.trainer,
-                            line2.youth.location,
+                            line.governorate.name,
+                            line.trainer,
+                            line.location,
                             line2.youth.bayanati_ID,
                             line2.youth.sex,
                             line2.youth.birthday_day,
@@ -629,15 +631,16 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data4.append(content)
 
-            if line2.data["slug"] == 'pre_entrepreneurship':
+
+            if ('slug' in line2.data and line2.data["slug"] == 'pre_entrepreneurship') or line2.data['_id'] == 'vYoMCRsCcmN3d6vZiXUisF':
 
                 content = [
                             line2.youth.first_name,
                             line2.youth.father_name,
                             line2.youth.last_name,
-                            line2.youth.governorate.name,
-                            line2.youth.trainer,
-                            line2.youth.location,
+                            line.governorate.name,
+                            line.trainer,
+                            line.location,
                             line2.youth.bayanati_ID,
                             line2.youth.sex,
                             line2.youth.birthday_day,
@@ -671,15 +674,15 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data5.append(content)
 
-            if line2.data["slug"] == 'post_entrepreneurship':
+            if ('slug' in line2.data and line2.data["slug"] == 'post_entrepreneurship') or line2.data['_id'] == 'vfL4n2LJXAQ8HzPCVa3hwV':
 
                 content = [
                             line2.youth.first_name,
                             line2.youth.father_name,
                             line2.youth.last_name,
-                            line2.youth.governorate.name,
-                            line2.youth.trainer,
-                            line2.youth.location,
+                            line.governorate.name,
+                            line.trainer,
+                            line.location,
                             line2.youth.bayanati_ID,
                             line2.youth.sex,
                             line2.youth.birthday_day,
@@ -719,6 +722,8 @@ class ExportView(LoginRequiredMixin, ListView):
 
                             ]
                 data6.append(content)
+
+
 
         book.add_sheet(data)
         book.add_sheet(data2)
