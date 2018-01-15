@@ -255,7 +255,8 @@ class CommonForm(forms.ModelForm):
             registration_form = Assessment.objects.get(slug="registration")
 
             youth_registered = AssessmentSubmission.objects.filter(
-                Q(assessment_id=registration_form.id) & Q(youth_id=instance.id)
+                assessment_id=registration_form.id,
+                registration_id=instance.id
             ).exists()
 
             for specific_form in all_forms:
@@ -276,14 +277,14 @@ class CommonForm(forms.ModelForm):
                         if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
-                                assessment_id=specific_form.id, youth_id=instance.id).exists()
+                                assessment_id=specific_form.id, registration_id=instance.id).exists()
                             if form_submitted:
                                 disabled = "disabled"
                         else:
                             # make sure the user filled the form behind this one in order to enable it
                             if previous_status == "disabled":
                                 previous_submitted = AssessmentSubmission.objects.filter(
-                                    assessment_id=specific_form.id, youth_id=instance.id).exists()
+                                    assessment_id=specific_form.id, registration_id=instance.id).exists()
                                 if previous_submitted:
                                     disabled = "disabled"
                             else:

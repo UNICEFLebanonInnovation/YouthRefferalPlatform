@@ -100,15 +100,20 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
 
     list_display = (
         'assessment',
-        'youth',
         'registration',
+        'data',
     )
     list_filter = (
         'assessment__name',
         'assessment__overview',
+        'assessment__slug',
         'registration__partner_organization'
     )
     search_fields = (
+        'youth__first_name',
+        'youth__last_name',
+        'youth__father_name',
+        'youth__bayanati_ID'
     )
 
 

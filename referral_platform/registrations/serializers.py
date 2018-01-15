@@ -16,6 +16,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     partner_organization = serializers.IntegerField(source='partner_organization_id', required=False)
 
     youth_bayanati_ID = serializers.CharField(source='youth.bayanati_ID', required=False)
+    youth_id_number = serializers.CharField(source='youth.id_number', required=False)
     youth_first_name = serializers.CharField(source='youth.first_name')
     youth_father_name = serializers.CharField(source='youth.father_name')
     youth_last_name = serializers.CharField(source='youth.last_name')
@@ -91,6 +92,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'partner_organization',
             'youth_id',
             'youth_bayanati_ID',
+            'youth_id_number',
             'youth_first_name',
             'youth_father_name',
             'youth_last_name',

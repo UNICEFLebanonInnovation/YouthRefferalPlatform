@@ -170,7 +170,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             registry=registry.id,
             bayanati_id=youth.bayanati_ID if youth.bayanati_ID else "",
             status=self.request.GET.get('status'),
-            callback=self.request.META.get('HTTP_REFERER', youth.get_absolute_url())
+            callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
         return url
 
@@ -209,6 +209,8 @@ class RegistrationViewSet(mixins.RetrieveModelMixin,
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
+        if self.request.method in ["PATCH", "POST", "PUT"]:
+            return self.queryset
         return self.queryset.filter(partner_organization=self.request.user.partner)
 
     def delete(self, request, *args, **kwargs):
@@ -262,23 +264,24 @@ class ExportView(LoginRequiredMixin, ListView):
 
         content = []
         for line in queryset:
+            youth = line.youth
             content = [
-                line.youth.first_name,
-                line.youth.father_name,
-                line.youth.last_name,
+                youth.first_name,
+                youth.father_name,
+                youth.last_name,
                 line.governorate.name,
                 line.trainer,
                 line.location,
-                line.youth.bayanati_ID,
-                line.youth.sex,
-                line.youth.birthday_day,
-                line.youth.birthday_month,
-                line.youth.birthday_year,
-                line.youth.calc_age,
-                line.youth.birthday,
-                line.youth.nationality.name,
-                line.youth.marital_status,
-                line.youth.address,
+                youth.bayanati_ID,
+                youth.sex,
+                youth.birthday_day,
+                youth.birthday_month,
+                youth.birthday_year,
+                youth.calc_age,
+                youth.birthday,
+                youth.nationality.name,
+                youth.marital_status,
+                youth.address,
             ]
             data.append(content)
         #### GET ASSESSMENT_SUBMISSIONS
@@ -412,7 +415,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
         ]
 
-
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
         data5.headers = [
@@ -452,7 +454,6 @@ class ExportView(LoginRequiredMixin, ListView):
             _('easiest_solution'),
             _('problem_solving'),
         ]
-
 
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
@@ -505,24 +506,26 @@ class ExportView(LoginRequiredMixin, ListView):
         for line2 in submission_set:
             content = []
             if ('slug' in line2.data and line2.data["slug"] == 'registration') or line2.data['__version__'] == 'vhi7pe6TonRqiDdWwAbnMS':
-
+                youth = line2.youth
+                registry = line2.registration
                 content = [
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
-                            line2.governorate.name,
-                            line2.trainer,
-                            line2.location,
-                            line2.youth.bayanati_ID,
-                            line2.youth.sex,
-                            line2.youth.birthday_day,
-                            line2.youth.birthday_month,
-                            line2.youth.birthday_year,
-                            line2.youth.calc_age,
-                            line2.youth.birthday,
-                            line2.youth.nationality.name,
-                            line2.youth.marital_status,
-                            line2.youth.address,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.governorate.name if registry.governorate else '',
+                            registry.trainer,
+                            registry.location,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
+
                             line2.data.get('training_type', ''),
                             line2.data.get('center_type', ''),
                             line2.data.get('concent_paper', ''),
@@ -561,24 +564,26 @@ class ExportView(LoginRequiredMixin, ListView):
                 data2.append(content)
 
             if 'slug' in line2.data and line2.data["slug"] == 'pre_assessment' or line2.data['_id'] == 'vdYpCGKVBtvQMnmoMfN6t9':
-
+                youth = line2.youth
+                registry = line2.registration
                 content = [
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
-                            line2.governorate.name,
-                            line2.trainer,
-                            line2.location,
-                            line2.youth.bayanati_ID,
-                            line2.youth.sex,
-                            line2.youth.birthday_day,
-                            line2.youth.birthday_month,
-                            line2.youth.birthday_year,
-                            line2.youth.calc_age,
-                            line2.youth.birthday,
-                            line2.youth.nationality.name,
-                            line2.youth.marital_status,
-                            line2.youth.address,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.governorate.name if registry.governorate else '',
+                            registry.trainer,
+                            registry.location,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
+
                             line2.data.get('_4_articulate_thoughts', ''),
                             line2.data.get('_1_express_opinion', ''),
                             line2.data.get('discuss_before_decision', ''),
@@ -595,26 +600,27 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data3.append(content)
 
-
             if ('slug' in line2.data and line2.data["slug"] == 'post_assessment') or line2.data['_id'] == 'vW5gvr9EuV4siMxk37cRez':
-
+                youth = line2.youth
+                registry = line2.registration
                 content = [
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
-                            line2.governorate.name,
-                            line2.trainer,
-                            line2.location,
-                            line2.youth.bayanati_ID,
-                            line2.youth.sex,
-                            line2.youth.birthday_day,
-                            line2.youth.birthday_month,
-                            line2.youth.birthday_year,
-                            line2.youth.calc_age,
-                            line2.youth.birthday,
-                            line2.youth.nationality.name,
-                            line2.youth.marital_status,
-                            line2.youth.address,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.governorate.name if registry.governorate else '',
+                            registry.trainer,
+                            registry.location,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
+
                             line2.data.get('_4_articulate_thoughts', ''),
                             line2.data.get('_1_express_opinion', ''),
                             line2.data.get('_20_discussions_with_peers_before_', ''),
@@ -631,26 +637,26 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data4.append(content)
 
-
             if ('slug' in line2.data and line2.data["slug"] == 'pre_entrepreneurship') or line2.data['_id'] == 'vYoMCRsCcmN3d6vZiXUisF':
-
+                youth = line2.youth
+                registry = line2.registration
                 content = [
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
-                            line2.governorate.name,
-                            line2.trainer,
-                            line2.location,
-                            line2.youth.bayanati_ID,
-                            line2.youth.sex,
-                            line2.youth.birthday_day,
-                            line2.youth.birthday_month,
-                            line2.youth.birthday_year,
-                            line2.youth.calc_age,
-                            line2.youth.birthday,
-                            line2.youth.nationality.name,
-                            line2.youth.marital_status,
-                            line2.youth.address,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.governorate.name if registry.governorate else '',
+                            registry.trainer,
+                            registry.location,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
 
                             line2.data.get('can_plan_personal', ''),
                             line2.data.get('can_plan_career', ''),
@@ -675,24 +681,25 @@ class ExportView(LoginRequiredMixin, ListView):
                 data5.append(content)
 
             if ('slug' in line2.data and line2.data["slug"] == 'post_entrepreneurship') or line2.data['_id'] == 'vfL4n2LJXAQ8HzPCVa3hwV':
-
+                youth = line2.youth
+                registry = line2.registration
                 content = [
-                            line2.youth.first_name,
-                            line2.youth.father_name,
-                            line2.youth.last_name,
-                            line2.governorate.name,
-                            line2.trainer,
-                            line2.location,
-                            line2.youth.bayanati_ID,
-                            line2.youth.sex,
-                            line2.youth.birthday_day,
-                            line2.youth.birthday_month,
-                            line2.youth.birthday_year,
-                            line2.youth.calc_age,
-                            line2.youth.birthday,
-                            line2.youth.nationality.name,
-                            line2.youth.marital_status,
-                            line2.youth.address,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.governorate.name if registry.governorate else '',
+                            registry.trainer,
+                            registry.location,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
 
                             line2.data.get('can_plan_personal', ''),
                             line2.data.get('can_plan_career', ''),
@@ -722,8 +729,6 @@ class ExportView(LoginRequiredMixin, ListView):
 
                             ]
                 data6.append(content)
-
-
 
         book.add_sheet(data)
         book.add_sheet(data2)

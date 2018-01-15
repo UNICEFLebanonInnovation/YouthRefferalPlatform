@@ -13,12 +13,9 @@
 {% block content-full-page %}
 
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active">
-        {{ request.user.partner }}
-      </li>
-      <li class="breadcrumb-item active">
-        {{ request.user }}
-      </li>
+      <li class="breadcrumb-item"><span class="badge badge-primary">{{ table.rows|length }}</span></li>
+      <li class="breadcrumb-item active">{{ request.user.partner }}</li>
+      <li class="breadcrumb-item active">{{ request.user }}</li>
     </ol>
 
     <ol class="breadcrumb">
