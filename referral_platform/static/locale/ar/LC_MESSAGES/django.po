@@ -1718,7 +1718,7 @@ msgstr ""
 #: referral_platform/templates/registrations/list.html:34
 #: referral_platform/templates/youth/list.html:34
 msgid "Export"
-msgstr ""
+msgstr "استخراج المعلومات"
 
 #: referral_platform/templates/registrations/list.html:42
 #: referral_platform/templates/youth/list.html:42
