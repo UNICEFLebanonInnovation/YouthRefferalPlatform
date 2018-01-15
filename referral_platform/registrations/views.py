@@ -596,7 +596,7 @@ class ExportView(LoginRequiredMixin, ListView):
                 data3.append(content)
 
 
-            if ('slug' in line2.data and line2.data["slug"] == 'post_assessment') or line2.data['_ic'] == 'vW5gvr9EuV4siMxk37cRez':
+            if ('slug' in line2.data and line2.data["slug"] == 'post_assessment') or line2.data['_id'] == 'vW5gvr9EuV4siMxk37cRez':
 
                 content = [
                             line2.youth.first_name,
