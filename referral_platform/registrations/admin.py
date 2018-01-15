@@ -19,6 +19,22 @@ class RegistrationResource(resources.ModelResource):
 
 class RegistrationAdmin(ImportExportModelAdmin):
     resource_class = RegistrationResource
+    readonly_fields = (
+        'youth',
+        'youth_bayanati_ID',
+        'youth_birthday',
+        'youth_age',
+        'youth_nationality',
+        'youth_marital_status',
+        'youth_address',
+        'registration_assessment',
+        'pre_civic_engagement',
+        'post_civic_engagement',
+        'initiative_registration',
+        'initiative_implementation',
+        'pre_entrepreneurship',
+        'post_entrepreneurship',
+    )
     fieldsets = [
         (None, {
             'classes': ('suit-tab', 'suit-tab-general',),
@@ -26,14 +42,34 @@ class RegistrationAdmin(ImportExportModelAdmin):
                 'partner_organization',
                 'governorate',
                 'trainer',
+                'center',
                 'location',
                 'youth',
+                'youth_bayanati_ID',
+                'youth_birthday',
+                'youth_age',
+                'youth_nationality',
+                'youth_marital_status',
+                'youth_address',
             ]
+        }),
+        (None, {
+            'classes': ('suit-tab', 'suit-tab-assessment',),
+            'fields': [
+                'registration_assessment',
+                'pre_civic_engagement',
+                'post_civic_engagement',
+                'initiative_registration',
+                'initiative_implementation',
+                'pre_entrepreneurship',
+                'post_entrepreneurship',
+                ]
         })
     ]
 
     suit_form_tabs = (
                       ('general', 'Basic Data'),
+                      ('assessment', 'Assessments'),
                     )
 
     list_display = (
@@ -97,6 +133,11 @@ class AssessmentAdmin(admin.ModelAdmin):
 
 
 class AssessmentSubmissionAdmin(admin.ModelAdmin):
+
+    readonly_fields = (
+        'youth',
+        'registration'
+    )
 
     list_display = (
         'assessment',

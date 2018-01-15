@@ -105,6 +105,64 @@ class Registration(TimeStampedModel):
     def __unicode__(self):
         return '{} - {}'.format(self.partner_organization, self.youth)
 
+    def get_assessment(self, slug):
+        assessment = self.assessmentsubmission_set.filter(assessment__slug=slug).first()
+        if assessment:
+            return assessment.data
+        return '------'
+
+    @property
+    def youth_birthday(self):
+        return self.youth.birthday
+
+    @property
+    def youth_age(self):
+        return self.youth.calc_age
+
+    @property
+    def youth_bayanati_ID(self):
+        return self.youth.bayanati_ID
+
+    @property
+    def youth_nationality(self):
+        return self.youth.nationality
+
+    @property
+    def youth_marital_status(self):
+        return self.youth.marital_status
+
+    @property
+    def youth_address(self):
+        return self.youth.address
+
+    @property
+    def registration_assessment(self):
+        return self.get_assessment('registration')
+
+    @property
+    def pre_civic_engagement(self):
+        return self.get_assessment('pre_assessment')
+
+    @property
+    def post_civic_engagement(self):
+        return self.get_assessment('post_assessment')
+
+    @property
+    def initiative_registration(self):
+        return self.get_assessment('init_registration')
+
+    @property
+    def initiative_implementation(self):
+        return self.get_assessment('init_exec')
+
+    @property
+    def pre_entrepreneurship(self):
+        return self.get_assessment('pre_entrepreneurship')
+
+    @property
+    def post_entrepreneurship(self):
+        return self.get_assessment('post_entrepreneurship')
+
     def get_absolute_url(self):
         return reverse('registrations:edit', kwargs={'pk': self.id})
 
