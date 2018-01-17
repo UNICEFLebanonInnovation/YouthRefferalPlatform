@@ -99,18 +99,36 @@ class RegistrationAdmin(ImportExportModelAdmin):
     def get_queryset(self, request):
         qs = super(RegistrationAdmin, self).get_queryset(request)
         if has_group(request.user, 'UNICEF_CO'):
-            return qs.filter(partner_organization__location=request.user.country)
+            return qs.filter(partner_organization__locations=request.user.country.id)
         return qs
+
+    def has_module_permission(self, request):
+        return True
 
     def has_add_permission(self, request):
         if has_group(request.user, 'UNICEF_CO'):
             return False
         return True
 
-    def has_change_permission(self, request, obj=None):
+    def change_view(self, request, object_id, extra_context=None):
+        self.save_as_continue = False
         if has_group(request.user, 'UNICEF_CO'):
-            return False
-        return True
+            self.save_as_continue = False
+            extra_context = extra_context or {}
+            extra_context['readonly'] = True
+
+        return super(RegistrationAdmin, self).change_view(request, object_id, extra_context=extra_context)
+
+    def get_readonly_fields(self, request, obj=None):
+        if has_group(request.user, 'UNICEF_CO'):
+            return self.readonly_fields + (
+                'partner_organization',
+                'governorate',
+                'trainer',
+                'center',
+                'location',
+            )
+        return self.readonly_fields
 
     def has_delete_permission(self, request, obj=None):
         if has_group(request.user, 'UNICEF_CO'):

@@ -2,7 +2,7 @@
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
-from . import views
+from referral_platform.registrations import views
 
 urlpatterns = [
 
@@ -26,11 +26,11 @@ urlpatterns = [
     #     view=views.YouthAssessment.as_view(),
     #     name='assessment'
     # ),
-    # url(
-    #     regex=r'^assessment/submission/$',
-    #     view=views.YouthAssessmentSubmission.as_view(),
-    #     name='submission'
-    # ),
+    url(
+        regex=r'^assessment/submission/$',
+        view=views.YouthAssessmentSubmission.as_view(),
+        name='submission'
+    ),
     # url(
     #     regex=r'^$',
     #     view=views.ListingView.as_view(),
