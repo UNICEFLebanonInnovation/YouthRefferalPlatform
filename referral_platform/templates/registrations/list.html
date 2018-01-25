@@ -28,9 +28,27 @@
         <li class="breadcrumb-item active">
             <a href="{% url "registrations:export" %}" class="btn btn-primary" target="_blank">
                 <i class="icon-export-sign icon-white"></i>
-                {% trans "Export" %}
+                {% trans "Export Beneficiary Registration data" %}
             </a>
         </li>
+
+        <li class="breadcrumb-item active">
+            <a href="{% url "registrations:export_assessments" %}" class="btn btn-primary" target="_blank">
+                <i class="icon-export-sign icon-white"></i>
+                {% trans "Export Assessments data" %}
+            </a>
+        </li>
+
+        <!--<li class="nav-item dropdown breadcrumb-item">-->
+          <!--<a class="nav-link dropdown-toggle btn btn-primary" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+            <!--{% trans "Export" %}-->
+          <!--</a>-->
+          <!--<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
+            <!--<a class="dropdown-item btn btn-primary" href="{% url 'registrations:export' %}">{% trans "Export Beneficiary" %}</a>-->
+            <!--<a class="dropdown-item btn btn-primary" href="{% url 'registrations:export_assessments' %}">{% trans "Export Assessments" %}</a>-->
+          <!--</div>-->
+        <!--</li>-->
+
     </ol>
 
     <div class="pb-5 pr-5 list-filter">

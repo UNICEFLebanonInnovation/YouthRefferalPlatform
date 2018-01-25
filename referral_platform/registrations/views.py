@@ -237,6 +237,7 @@ class ExportView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
 
         common_headers = [
+            _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
@@ -266,6 +267,7 @@ class ExportView(LoginRequiredMixin, ListView):
         for line in queryset:
             youth = line.youth
             content = [
+                youth.number,
                 youth.first_name,
                 youth.father_name,
                 youth.last_name,
@@ -284,13 +286,13 @@ class ExportView(LoginRequiredMixin, ListView):
                 youth.address,
             ]
             data.append(content)
-        #### GET ASSESSMENT_SUBMISSIONS
 
         submission_set = AssessmentSubmission.objects.filter(registration__partner_organization=self.request.user.partner)
 
         data2 = tablib.Dataset()
-        data2.title = "Registrations List"
+        data2.title = "Registration Assessment"
         data2.headers = [
+            _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
@@ -345,9 +347,93 @@ class ExportView(LoginRequiredMixin, ListView):
 
         ]
 
+        for line2 in submission_set:
+            content = []
+            if ('slug' in line2.data and line2.data["slug"] == 'registration') or line2.data['__version__'] == 'vhi7pe6TonRqiDdWwAbnMS':
+                youth = line2.youth
+                registry = line2.registration
+                content = [
+                    youth.number,
+                    youth.first_name,
+                    youth.father_name,
+                    youth.last_name,
+                    registry.governorate.name if registry.governorate else '',
+                    registry.trainer,
+                    registry.location,
+                    youth.bayanati_ID,
+                    youth.sex,
+                    youth.birthday_day,
+                    youth.birthday_month,
+                    youth.birthday_year,
+                    youth.calc_age,
+                    youth.birthday,
+                    youth.nationality.name if youth.nationality else '',
+                    youth.marital_status,
+                    youth.address,
+
+                    line2.data.get('training_type', ''),
+                    line2.data.get('center_type', ''),
+                    line2.data.get('concent_paper', ''),
+                    line2.data.get('If_you_answered_Othe_the_name_of_the_NGO', ''),
+                    line2.data.get('UNHCR_ID', ''),
+                    line2.data.get('Jordanian_ID', ''),
+                    line2.data.get('training_date', ''),
+                    line2.data.get('training_end_date', ''),
+                    line2.data.get('educational_status', ''),
+                    line2.data.get('school_level', ''),
+                    line2.data.get('School_type', ''),
+                    line2.data.get('School_name', ''),
+                    line2.data.get('how_many_times_skipped_school', ''),
+                    line2.data.get('reason_for_skipping_class', ''),
+                    line2.data.get('educ_level_stopped', ''),
+                    line2.data.get('Reason_stop_study', ''),
+                    line2.data.get('other_five', ''),
+                    line2.data.get('Relation_with_labor_market', ''),
+                    line2.data.get('occupation_type', ''),
+                    line2.data.get('what_electronics_do_you_own', ''),
+                    line2.data.get('family_present', ''),
+                    line2.data.get('family_not_present', ''),
+                    line2.data.get('not_present_where', ''),
+                    line2.data.get('other_family_not_present', ''),
+                    line2.data.get('drugs_substance_use', ''),
+                    line2.data.get('feeling_of_safety_security', ''),
+                    line2.data.get('reasons_for_not_feeling_safe_a', ''),
+                    line2.data.get('Accommodation_type', ''),
+                    line2.data.get('how_many_times_displaced', ''),
+                    line2.data.get('family_steady_income', ''),
+                    line2.data.get('desired_method_for_follow_up', ''),
+                    line2.data.get('text_39911992', ''),
+                    line2.data.get('text_d45750c6', ''),
+                    line2.data.get('text_4c6fe6c9', ''),
+                ]
+                data2.append(content)
+
+        book.add_sheet(data)
+        book.add_sheet(data2)
+
+        response = HttpResponse(
+            book.export("xls"),
+            content_type='application/vnd.ms-excel',
+        )
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_list.xls'
+        return response
+
+
+class ExportAssessmentsView(LoginRequiredMixin, ListView):
+
+    model = Registration
+    queryset = Registration.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        book = tablib.Databook()
+
+        submission_set = AssessmentSubmission.objects.filter(registration__partner_organization=self.request.user.partner)
+
         data3 = tablib.Dataset()
         data3.title = "Pre-Assessment"
         data3.headers = [
+            _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
@@ -383,6 +469,7 @@ class ExportView(LoginRequiredMixin, ListView):
         data4 = tablib.Dataset()
         data4.title = "Post-Assessment"
         data4.headers = [
+            _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
@@ -418,6 +505,7 @@ class ExportView(LoginRequiredMixin, ListView):
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
         data5.headers = [
+            _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
@@ -458,6 +546,7 @@ class ExportView(LoginRequiredMixin, ListView):
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
         data6.headers = [
+            _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
@@ -504,69 +593,12 @@ class ExportView(LoginRequiredMixin, ListView):
 
         ]
         for line2 in submission_set:
-            content = []
-            if ('slug' in line2.data and line2.data["slug"] == 'registration') or line2.data['__version__'] == 'vhi7pe6TonRqiDdWwAbnMS':
-                youth = line2.youth
-                registry = line2.registration
-                content = [
-                            youth.first_name,
-                            youth.father_name,
-                            youth.last_name,
-                            registry.governorate.name if registry.governorate else '',
-                            registry.trainer,
-                            registry.location,
-                            youth.bayanati_ID,
-                            youth.sex,
-                            youth.birthday_day,
-                            youth.birthday_month,
-                            youth.birthday_year,
-                            youth.calc_age,
-                            youth.birthday,
-                            youth.nationality.name if youth.nationality else '',
-                            youth.marital_status,
-                            youth.address,
-
-                            line2.data.get('training_type', ''),
-                            line2.data.get('center_type', ''),
-                            line2.data.get('concent_paper', ''),
-                            line2.data.get('If_you_answered_Othe_the_name_of_the_NGO', ''),
-                            line2.data.get('UNHCR_ID', ''),
-                            line2.data.get('Jordanian_ID', ''),
-                            line2.data.get('training_date', ''),
-                            line2.data.get('training_end_date', ''),
-                            line2.data.get('educational_status', ''),
-                            line2.data.get('school_level', ''),
-                            line2.data.get('School_type', ''),
-                            line2.data.get('School_name', ''),
-                            line2.data.get('how_many_times_skipped_school', ''),
-                            line2.data.get('reason_for_skipping_class', ''),
-                            line2.data.get('educ_level_stopped', ''),
-                            line2.data.get('Reason_stop_study', ''),
-                            line2.data.get('other_five', ''),
-                            line2.data.get('Relation_with_labor_market', ''),
-                            line2.data.get('occupation_type', ''),
-                            line2.data.get('what_electronics_do_you_own', ''),
-                            line2.data.get('family_present', ''),
-                            line2.data.get('family_not_present', ''),
-                            line2.data.get('not_present_where', ''),
-                            line2.data.get('other_family_not_present', ''),
-                            line2.data.get('drugs_substance_use', ''),
-                            line2.data.get('feeling_of_safety_security', ''),
-                            line2.data.get('reasons_for_not_feeling_safe_a', ''),
-                            line2.data.get('Accommodation_type', ''),
-                            line2.data.get('how_many_times_displaced', ''),
-                            line2.data.get('family_steady_income', ''),
-                            line2.data.get('desired_method_for_follow_up', ''),
-                            line2.data.get('text_39911992', ''),
-                            line2.data.get('text_d45750c6', ''),
-                            line2.data.get('text_4c6fe6c9', ''),
-                            ]
-                data2.append(content)
 
             if 'slug' in line2.data and line2.data["slug"] == 'pre_assessment' or line2.data['_id'] == 'vdYpCGKVBtvQMnmoMfN6t9':
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
@@ -604,6 +636,7 @@ class ExportView(LoginRequiredMixin, ListView):
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
@@ -641,6 +674,7 @@ class ExportView(LoginRequiredMixin, ListView):
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
@@ -684,6 +718,7 @@ class ExportView(LoginRequiredMixin, ListView):
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
@@ -730,8 +765,6 @@ class ExportView(LoginRequiredMixin, ListView):
                             ]
                 data6.append(content)
 
-        book.add_sheet(data)
-        book.add_sheet(data2)
         book.add_sheet(data3)
         book.add_sheet(data4)
         book.add_sheet(data5)
@@ -741,5 +774,5 @@ class ExportView(LoginRequiredMixin, ListView):
             book.export("xls"),
             content_type='application/vnd.ms-excel',
         )
-        response['Content-Disposition'] = 'attachment; filename=youth_list.xls'
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Assessments.xls'
         return response
