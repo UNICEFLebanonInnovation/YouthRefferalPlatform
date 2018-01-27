@@ -25,29 +25,31 @@
                 {% trans "Add new beneficiary" %}
             </a>
         </li>
-        <li class="breadcrumb-item active">
-            <a href="{% url "registrations:export" %}" class="btn btn-primary" target="_blank">
-                <i class="icon-export-sign icon-white"></i>
-                {% trans "Export Beneficiary Registration data" %}
-            </a>
-        </li>
-
-        <li class="breadcrumb-item active">
-            <a href="{% url "registrations:export_assessments" %}" class="btn btn-primary" target="_blank">
-                <i class="icon-export-sign icon-white"></i>
-                {% trans "Export Assessments data" %}
-            </a>
-        </li>
-
-        <!--<li class="nav-item dropdown breadcrumb-item">-->
-          <!--<a class="nav-link dropdown-toggle btn btn-primary" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-            <!--{% trans "Export" %}-->
-          <!--</a>-->
-          <!--<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
-            <!--<a class="dropdown-item btn btn-primary" href="{% url 'registrations:export' %}">{% trans "Export Beneficiary" %}</a>-->
-            <!--<a class="dropdown-item btn btn-primary" href="{% url 'registrations:export_assessments' %}">{% trans "Export Assessments" %}</a>-->
-          <!--</div>-->
+        <!--<li class="breadcrumb-item active">-->
+            <!--<a href="{% url "registrations:export" %}" class="btn btn-primary" target="_blank">-->
+                <!--<i class="icon-export-sign icon-white"></i>-->
+                <!--{% trans "Export Beneficiary Registration data" %}-->
+            <!--</a>-->
         <!--</li>-->
+
+        <!--<li class="breadcrumb-item active">-->
+            <!--<a href="{% url "registrations:export_assessments" %}" class="btn btn-primary" target="_blank">-->
+                <!--<i class="icon-export-sign icon-white"></i>-->
+                <!--{% trans "Export Assessments data" %}-->
+            <!--</a>-->
+        <!--</li>-->
+
+        <li class="breadcrumb-item dropdown">
+          <a class="btn btn-primary dropdown-toggle" id="navbarDropdownMenuLink" style="color: white"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% trans "Export data" %}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item btn btn-primary" href="{% url 'registrations:export' %}">{% trans "Export Beneficiary data" %}</a>
+            <a class="dropdown-item btn btn-primary" href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration assessments data" %}</a>
+            <a class="dropdown-item btn btn-primary" href="{% url 'registrations:export_assessments' %}">{% trans "Export other Assessments data" %}</a>
+          </div>
+        </li>
 
     </ol>
 

@@ -287,7 +287,26 @@ class ExportView(LoginRequiredMixin, ListView):
             ]
             data.append(content)
 
-        submission_set = AssessmentSubmission.objects.filter(registration__partner_organization=self.request.user.partner)
+        book.add_sheet(data)
+
+        response = HttpResponse(
+            book.export("xls"),
+            content_type='application/vnd.ms-excel',
+        )
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_list.xls'
+        return response
+
+
+class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        book = tablib.Databook()
+
+        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
         data2 = tablib.Dataset()
         data2.title = "Registration Assessment"
@@ -344,7 +363,6 @@ class ExportView(LoginRequiredMixin, ListView):
             _('text_39911992'),
             _('text_d45750c6'),
             _('text_4c6fe6c9'),
-
         ]
 
         for line2 in submission_set:
@@ -408,27 +426,26 @@ class ExportView(LoginRequiredMixin, ListView):
                 ]
                 data2.append(content)
 
-        book.add_sheet(data)
         book.add_sheet(data2)
 
         response = HttpResponse(
             book.export("xls"),
             content_type='application/vnd.ms-excel',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_list.xls'
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Registration_Assessments.xls'
         return response
 
 
 class ExportAssessmentsView(LoginRequiredMixin, ListView):
 
-    model = Registration
-    queryset = Registration.objects.all()
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
 
     def get(self, request, *args, **kwargs):
 
         book = tablib.Databook()
 
-        submission_set = AssessmentSubmission.objects.filter(registration__partner_organization=self.request.user.partner)
+        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
         data3 = tablib.Dataset()
         data3.title = "Pre-Assessment"

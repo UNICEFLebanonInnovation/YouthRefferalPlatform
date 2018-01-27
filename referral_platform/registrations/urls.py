@@ -38,6 +38,12 @@ urlpatterns = [
     ),
 
     url(
+        regex=r'^export-registry-assessments/$',
+        view=views.ExportRegistryAssessmentsView.as_view(),
+        name='export_registry_assessments'
+    ),
+
+    url(
         regex=r'^export-assessments/$',
         view=views.ExportAssessmentsView.as_view(),
         name='export_assessments'
