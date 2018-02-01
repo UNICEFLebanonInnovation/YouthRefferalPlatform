@@ -147,6 +147,57 @@ def update_registrations(filename, base_url, token, protocol='HTTPS'):
             pass
 
 
+def import_assessments_as_registrations(filename, base_url, token, protocol='HTTPS'):
+
+    wb = load_workbook(filename=filename, read_only=True)
+    ws = wb['Sheet2']
+    data = {}
+    header = []
+    index = 0
+    for row in ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            header.append((index, cell.value))
+            index += 1
+
+    for row in ws.rows:
+        try:
+            if row[0].value == 'start':
+                continue
+            data = {}
+
+            data['governorate'] = int(row[3].value) if row[3].value else None
+            data['partner_organization'] = int(row[4].value) if row[4].value else None
+
+            data['youth_first_name'] = row[6].value
+            data['youth_last_name'] = row[7].value
+            data['youth_father_name'] = row[8].value
+            data['youth_sex'] = row[9].value
+
+            if row[10].value:
+                data['youth_nationality'] = int(row[10].value)
+
+            data['youth_birthday_year'] = ''
+            data['youth_birthday_month'] = ''
+            data['youth_birthday_day'] = ''
+            if row[15].value:
+                birthday = row[15].value.split('-')
+                data['youth_birthday_year'] = int(birthday[0])
+                data['youth_birthday_month'] = int(birthday[1])
+                data['youth_birthday_day'] = int(birthday[2])
+
+            result = post_data(protocol=protocol, url=base_url, apifunc='/api/registration/', token=token, data=data)
+            registry = json.loads(result)
+
+            submit_assessment(header, row, 2, registry, base_url, token, protocol)
+
+        except Exception as ex:
+            print("---------------")
+            print("error: ", ex.message)
+            print(json.dumps(data, cls=DjangoJSONEncoder))
+            print("---------------")
+            pass
+
+
 def submit_assessment(header, row, assessment_id, registry, base_url, token, protocol='HTTPS'):
     try:
         assessment_data = {}

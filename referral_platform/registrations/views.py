@@ -236,6 +236,11 @@ class ExportView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
+        queryset = self.queryset.filter(partner_organization=self.request.user.partner)
+        gov = self.request.GET.get('governorate', 0)
+        if gov:
+            queryset = queryset.filter(governorate_id=int(gov))
+
         common_headers = [
             _('Unique number'),
             _('First name'),
@@ -260,8 +265,6 @@ class ExportView(LoginRequiredMixin, ListView):
         data = tablib.Dataset()
         data.title = "Beneficiary List"
         data.headers = common_headers
-
-        queryset = self.queryset.filter(partner_organization=self.request.user.partner)
 
         content = []
         for line in queryset:
@@ -307,6 +310,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         book = tablib.Databook()
 
         submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        gov = self.request.GET.get('governorate', 0)
+        if gov:
+            submission_set = submission_set.filter(registration__governorate_id=int(gov))
 
         data2 = tablib.Dataset()
         data2.title = "Registration Assessment"
@@ -446,6 +452,9 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
         book = tablib.Databook()
 
         submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        gov = self.request.GET.get('governorate', 0)
+        if gov:
+            submission_set = submission_set.filter(registration__governorate_id=int(gov))
 
         data3 = tablib.Dataset()
         data3.title = "Pre-Assessment"

@@ -45,9 +45,9 @@
             {% trans "Export data" %}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item btn btn-primary" href="{% url 'registrations:export' %}">{% trans "Export Beneficiary data" %}</a>
-            <a class="dropdown-item btn btn-primary" href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration assessments data" %}</a>
-            <a class="dropdown-item btn btn-primary" href="{% url 'registrations:export_assessments' %}">{% trans "Export other Assessments data" %}</a>
+            <a class="dropdown-item btn btn-primary export-1" href="{% url 'registrations:export' %}">{% trans "Export Beneficiary data" %}</a>
+            <a class="dropdown-item btn btn-primary export-2" href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration assessments data" %}</a>
+            <a class="dropdown-item btn btn-primary export-3" href="{% url 'registrations:export_assessments' %}">{% trans "Export other Assessments data" %}</a>
           </div>
         </li>
 
@@ -75,5 +75,14 @@
     <script>
         var user_token = '{{ user_token }}';
         var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+        var export_1 = '{% url "registrations:export" %}';
+        var export_2 = '{% url "registrations:export_registry_assessments" %}';
+        var export_3 = '{% url "registrations:export_assessments" %}';
+        $(document).ready(function(){
+            var params = '?governorate='+$('select#id_governorate').val();
+            $('a.export-1').attr('href', export_1+params);
+            $('a.export-2').attr('href', export_2+params);
+            $('a.export-3').attr('href', export_3+params);
+        });
     </script>
 {% endblock %}
