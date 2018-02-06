@@ -1,7 +1,8 @@
 from __future__ import unicode_literals, absolute_import, division
 
 from datetime import date
-import datetime
+from datetime import datetime
+# import datetime
 
 from django.contrib.gis.db import models
 from django.core.validators import RegexValidator
@@ -18,6 +19,7 @@ from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 from .utils import *
 
+current_year = datetime.today().year
 
 class Nationality(models.Model):
     name = models.CharField(max_length=45, unique=True, verbose_name=_('Nationality'))
@@ -126,9 +128,7 @@ class Person(TimeStampedModel):
         choices=GENDER,
         verbose_name=_('Gender')
     )
-    from datetime import datetime
 
-    current_year = datetime.today().year
     birthday_year = models.CharField(
         max_length=4,
         blank=False,

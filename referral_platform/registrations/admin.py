@@ -12,7 +12,23 @@ class RegistrationResource(resources.ModelResource):
     class Meta:
         model = Registration
         fields = (
-
+            'partner_organization__name',
+            'governorate__name',
+            'location',
+            'center__name',
+            'trainer',
+            'youth__first_name',
+            'youth__father_name',
+            'youth__last_name',
+            'youth__birthday_day',
+            'youth__birthday_month',
+            'youth__birthday_year',
+            'youth__sex',
+            'youth__marital_status',
+            'youth__nationality__name',
+            'youth__bayanati_ID',
+            'youth__id_number',
+            'youth__address',
         )
         export_order = fields
 
