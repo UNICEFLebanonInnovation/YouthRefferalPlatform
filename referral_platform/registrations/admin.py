@@ -1,40 +1,105 @@
+
+import tablib
+
 from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
+from import_export.formats import base_formats
 from import_export.widgets import *
 
 from referral_platform.users.utils import has_group
+from .exports import RegistrationFormat, RegistrationAssessmentFormat
 from .models import Registration, Assessment, AssessmentSubmission
 
 
-class RegistrationResource(resources.ModelResource):
+class BaseExportResource(resources.ModelResource):
+
+    headers = []
+
+    def insert_column(self, row, field_name, value):
+        """
+        Inserts a column into a row with a given value
+        or sets a default value of empty string if none
+        """
+        row[field_name] = value if self.headers else ''
+
+    # def insert_columns_inplace(self, row, fields, after_column):
+    #     """
+    #     Inserts fields with values into a row inplace
+    #     and after a specific named column
+    #     """
+    #     keys = row.keys()
+    #     before_column = None
+    #     if after_column in row:
+    #         index = keys.index(after_column)
+    #         offset = index + 1
+    #         if offset < len(row):
+    #             before_column = keys[offset]
+    #
+    #     for key, value in fields.items():
+    #         if before_column:
+    #             row.insert(offset, key, value)
+    #             offset += 1
+    #         else:
+    #             row[key] = value
+
+    def fill_row(self, resource, fields):
+        """
+        This performs the actual work of translating
+        a model into a fields dictionary for exporting.
+        Inheriting classes must implement this.
+        """
+        return NotImplementedError()
+
+    def export(self, queryset=None):
+        """
+        Exports a resource.
+        """
+        rows = []
+
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        fields = dict()
+
+        for model in queryset.iterator():
+            # first pass creates table shape
+            self.fill_row(model, fields)
+
+        self.headers = fields
+
+        # Iterate without the queryset cache, to avoid wasting memory when
+        # exporting large datasets.
+        #TODO: review this and check performance
+        for model in queryset.iterator():
+            # second pass creates rows from the known table shape
+            row = fields.copy()
+
+            self.fill_row(model, row)
+
+            rows.append(row)
+
+        data = tablib.Dataset(headers=fields.keys())
+        for row in rows:
+            data.append(row.values())
+        return data
+
+
+class RegistrationResource(BaseExportResource):
 
     class Meta:
         model = Registration
-        fields = (
-            'partner_organization__name',
-            'governorate__name',
-            'location',
-            'center__name',
-            'trainer',
-            'youth__first_name',
-            'youth__father_name',
-            'youth__last_name',
-            'youth__birthday_day',
-            'youth__birthday_month',
-            'youth__birthday_year',
-            'youth__sex',
-            'youth__marital_status',
-            'youth__nationality__name',
-            'youth__bayanati_ID',
-            'youth__id_number',
-            'youth__address',
-        )
-        export_order = fields
+
+    def fill_row(self, obj, row):
+        self.insert_column(row, 'ID', obj.id)
 
 
 class RegistrationAdmin(ImportExportModelAdmin):
     resource_class = RegistrationResource
+    formats = (
+        RegistrationFormat,
+        RegistrationAssessmentFormat,
+    )
     readonly_fields = (
         'youth',
         'youth_bayanati_ID',

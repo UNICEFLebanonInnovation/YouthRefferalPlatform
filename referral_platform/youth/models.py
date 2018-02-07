@@ -1,8 +1,6 @@
 from __future__ import unicode_literals, absolute_import, division
 
-from datetime import date
 from datetime import datetime
-# import datetime
 
 from django.contrib.gis.db import models
 from django.core.validators import RegexValidator
@@ -19,7 +17,8 @@ from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 from .utils import *
 
-current_year = datetime.today().year
+current_year = datetime.now().year
+
 
 class Nationality(models.Model):
     name = models.CharField(max_length=45, unique=True, verbose_name=_('Nationality'))
@@ -206,19 +205,19 @@ class Person(TimeStampedModel):
     def get_age(self):
         if self.age:
             return self.age
-        current_year = datetime.datetime.now().year
+        current_year = datetime.now().year
         return int(current_year) - int(self.birthday_year)
 
     @property
     def calc_age(self):
-        current_year = datetime.datetime.now().year
+        current_year = datetime.now().year
         if self.birthday_year:
             return int(current_year) - int(self.birthday_year)
         return 0
 
     @property
     def calculate_age(self):
-        today = date.today()
+        today = datetime.now()
         years_difference = today.year - int(self.birthday_year)
         is_before_birthday = (today.month, today.day) < (int(self.birthday_month), int(self.birthday_day))
         elapsed_years = years_difference - int(is_before_birthday)
