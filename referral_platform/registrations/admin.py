@@ -6,8 +6,11 @@ from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.formats import base_formats
 from import_export.widgets import *
+from django.utils.translation import ugettext as _
 
-from referral_platform.users.utils import has_group
+from referral_platform.users.utils import has_group, force_default_language
+from referral_platform.locations.models import Location
+from referral_platform.partners.models import PartnerOrganization
 from .exports import RegistrationFormat, RegistrationAssessmentFormat
 from .models import Registration, Assessment, AssessmentSubmission
 
@@ -94,6 +97,72 @@ class RegistrationResource(BaseExportResource):
         self.insert_column(row, 'ID', obj.id)
 
 
+class PartnerFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = _('Partner Organisation')
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'partner'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        queryset = PartnerOrganization.objects.all()
+        if request.user.country:
+            queryset = queryset.filter(locations=request.user.country_id)
+
+        return ((l.id, l.name) for l in queryset)
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        if self.value():
+            return queryset.filter(partner_organization_id=self.value())
+        return queryset
+
+
+class GovernorateFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = _('Governorate')
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'governorate'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        queryset = Location.objects.filter(parent__isnull=False)
+        if request.user.country:
+            queryset = queryset.filter(parent_id=request.user.country_id)
+
+        return ((l.id, l.name) for l in queryset)
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        if self.value():
+            return queryset.filter(governorate_id=self.value())
+        return queryset
+
+
 class RegistrationAdmin(ImportExportModelAdmin):
     resource_class = RegistrationResource
     formats = (
@@ -163,8 +232,8 @@ class RegistrationAdmin(ImportExportModelAdmin):
         'modified',
     )
     list_filter = (
-        'partner_organization',
-        'governorate',
+        PartnerFilter,
+        GovernorateFilter,
         'youth__sex',
         'youth__nationality',
         'youth__marital_status',
@@ -178,6 +247,7 @@ class RegistrationAdmin(ImportExportModelAdmin):
     )
 
     def get_queryset(self, request):
+        # force_default_language(request)
         qs = super(RegistrationAdmin, self).get_queryset(request)
         if has_group(request.user, 'UNICEF_CO'):
             return qs.filter(partner_organization__locations=request.user.country.id)
