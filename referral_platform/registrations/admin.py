@@ -247,7 +247,7 @@ class RegistrationAdmin(ImportExportModelAdmin):
     )
 
     def get_queryset(self, request):
-        # force_default_language(request)
+        force_default_language(request)
         qs = super(RegistrationAdmin, self).get_queryset(request)
         if has_group(request.user, 'UNICEF_CO'):
             return qs.filter(partner_organization__locations=request.user.country.id)
