@@ -165,6 +165,14 @@ def import_assessments_as_registrations(filename, base_url, token, protocol='HTT
                 continue
             data = {}
 
+            #  pre assessment
+            # if row[17].value == 'Yes':
+            #     continue
+
+            #  post assessment
+            if row[17].value == 'Yes' or row[18].value == 'Yes':
+                continue
+
             data['governorate'] = int(row[3].value) if row[3].value else None
             data['partner_organization'] = int(row[4].value) if row[4].value else None
 
@@ -173,14 +181,13 @@ def import_assessments_as_registrations(filename, base_url, token, protocol='HTT
             data['youth_father_name'] = row[8].value
             data['youth_sex'] = row[9].value
 
-            if row[10].value:
-                data['youth_nationality'] = int(row[10].value)
+            data['youth_nationality'] = 1
 
             data['youth_birthday_year'] = ''
             data['youth_birthday_month'] = ''
             data['youth_birthday_day'] = ''
-            if row[15].value:
-                birthday = row[15].value.split('-')
+            if row[14].value:
+                birthday = row[14].value.split('-')
                 data['youth_birthday_year'] = int(birthday[0])
                 data['youth_birthday_month'] = int(birthday[1])
                 data['youth_birthday_day'] = int(birthday[2])
@@ -188,7 +195,11 @@ def import_assessments_as_registrations(filename, base_url, token, protocol='HTT
             result = post_data(protocol=protocol, url=base_url, apifunc='/api/registration/', token=token, data=data)
             registry = json.loads(result)
 
-            submit_assessment(header, row, 2, registry, base_url, token, protocol)
+            #  pre
+            # submit_assessment(header, row, 2, registry, base_url, token, protocol)
+
+            #  post
+            submit_assessment(header, row, 3, registry, base_url, token, protocol)
 
         except Exception as ex:
             print("---------------")
@@ -241,7 +252,12 @@ def import_assessments(assessment, filename, base_url, token, protocol='HTTPS'):
             registry = {}
             data = {}
 
-            if not row[17].value == 'Yes':
+            #  matched with registration
+            # if not row[17].value == 'Yes':
+            #     continue
+
+            #  matched with pre
+            if not row[18].value == 'No':
                 continue
 
             birthday_day = ''
