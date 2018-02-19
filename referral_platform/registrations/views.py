@@ -124,7 +124,7 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
-        instance = Registration.objects.get(id=self.kwargs['pk'])
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
             return CommonForm(self.request.POST, instance=instance)
         else:
@@ -135,7 +135,7 @@ class EditView(LoginRequiredMixin, FormView):
             return CommonForm(data, instance=instance)
 
     def form_valid(self, form):
-        instance = Registration.objects.get(id=self.kwargs['pk'])
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
 
@@ -145,7 +145,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
-        registry = Registration.objects.get(id=self.request.GET.get('registry'))
+        registry = Registration.objects.get(id=self.request.GET.get('registry'), partner_organization=self.request.user.partner)
         youth = registry.youth
 
         url = '{form}?d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[' \
@@ -214,7 +214,7 @@ class RegistrationViewSet(mixins.RetrieveModelMixin,
         return self.queryset.filter(partner_organization=self.request.user.partner)
 
     def delete(self, request, *args, **kwargs):
-        instance = self.model.objects.get(id=kwargs['pk'])
+        instance = self.model.objects.get(id=kwargs['pk'], partner_organization=self.request.user.partner)
         instance.delete()
         return JsonResponse({'status': status.HTTP_200_OK})
 
@@ -237,18 +237,22 @@ class ExportView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
 
         queryset = self.queryset.filter(partner_organization=self.request.user.partner)
+        # queryset = self.queryset
         gov = self.request.GET.get('governorate', 0)
         if gov:
             queryset = queryset.filter(governorate_id=int(gov))
 
         common_headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -270,13 +274,16 @@ class ExportView(LoginRequiredMixin, ListView):
         for line in queryset:
             youth = line.youth
             content = [
+                line.governorate.parent.name if line.governorate else '',
+                line.governorate.name if line.governorate else '',
+                line.location,
+                line.partner_organization.name if line.partner_organization else '',
+
                 youth.number,
                 youth.first_name,
                 youth.father_name,
                 youth.last_name,
-                line.governorate.name,
                 line.trainer,
-                line.location,
                 youth.bayanati_ID,
                 youth.sex,
                 youth.birthday_day,
@@ -310,6 +317,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         book = tablib.Databook()
 
         submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        # submission_set = self.queryset
         gov = self.request.GET.get('governorate', 0)
         if gov:
             submission_set = submission_set.filter(registration__governorate_id=int(gov))
@@ -317,13 +325,16 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         data2 = tablib.Dataset()
         data2.title = "Registration Assessment"
         data2.headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -374,16 +385,20 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         for line2 in submission_set:
             content = []
             if ('slug' in line2.data and line2.data["slug"] == 'registration') or line2.data['__version__'] == 'vhi7pe6TonRqiDdWwAbnMS':
+            # if True:
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                    registry.governorate.parent.name if registry.governorate else '',
+                    registry.governorate.name if registry.governorate else '',
+                    registry.location,
+                    registry.partner_organization.name if registry.partner_organization else '',
+
                     youth.number,
                     youth.first_name,
                     youth.father_name,
                     youth.last_name,
-                    registry.governorate.name if registry.governorate else '',
                     registry.trainer,
-                    registry.location,
                     youth.bayanati_ID,
                     youth.sex,
                     youth.birthday_day,
@@ -452,6 +467,7 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
         book = tablib.Databook()
 
         submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        # submission_set = self.queryset
         gov = self.request.GET.get('governorate', 0)
         if gov:
             submission_set = submission_set.filter(registration__governorate_id=int(gov))
@@ -459,13 +475,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
         data3 = tablib.Dataset()
         data3.title = "Pre-Assessment"
         data3.headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -495,13 +514,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
         data4 = tablib.Dataset()
         data4.title = "Post-Assessment"
         data4.headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -531,13 +553,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
         data5.headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -572,13 +597,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
         data6.headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -624,13 +652,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            registry.governorate.parent.name if registry.governorate else '',
+                            registry.governorate.name if registry.governorate else '',
+                            registry.location,
+                            registry.partner_organization.name if registry.partner_organization else '',
+
                             youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
-                            registry.governorate.name if registry.governorate else '',
                             registry.trainer,
-                            registry.location,
                             youth.bayanati_ID,
                             youth.sex,
                             youth.birthday_day,
@@ -662,13 +693,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            registry.governorate.parent.name if registry.governorate else '',
+                            registry.governorate.name if registry.governorate else '',
+                            registry.location,
+                            registry.partner_organization.name if registry.partner_organization else '',
+
                             youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
-                            registry.governorate.name if registry.governorate else '',
                             registry.trainer,
-                            registry.location,
                             youth.bayanati_ID,
                             youth.sex,
                             youth.birthday_day,
@@ -700,13 +734,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            registry.governorate.parent.name if registry.governorate else '',
+                            registry.governorate.name if registry.governorate else '',
+                            registry.location,
+                            registry.partner_organization.name if registry.partner_organization else '',
+
                             youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
-                            registry.governorate.name if registry.governorate else '',
                             registry.trainer,
-                            registry.location,
                             youth.bayanati_ID,
                             youth.sex,
                             youth.birthday_day,
@@ -744,13 +781,16 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
                 youth = line2.youth
                 registry = line2.registration
                 content = [
+                            registry.governorate.parent.name if registry.governorate else '',
+                            registry.governorate.name if registry.governorate else '',
+                            registry.location,
+                            registry.partner_organization.name if registry.partner_organization else '',
+
                             youth.number,
                             youth.first_name,
                             youth.father_name,
                             youth.last_name,
-                            registry.governorate.name if registry.governorate else '',
                             registry.trainer,
-                            registry.location,
                             youth.bayanati_ID,
                             youth.sex,
                             youth.birthday_day,
