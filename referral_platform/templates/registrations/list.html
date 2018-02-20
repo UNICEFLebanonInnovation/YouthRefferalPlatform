@@ -20,7 +20,7 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item active">
-            <a href="{% url "registrations:add" %}" class="btn btn-success">
+            <a href="{% url 'registrations:add' %}" class="btn btn-success">
                 <i class="icon-plus-sign icon-white"></i>
                 {% trans "Add new beneficiary" %}
             </a>
@@ -32,12 +32,10 @@
             {% trans "Export data" %}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item btn btn-primary export-1" href="{% url 'registrations:export' %}">{% trans "Export Beneficiary data" %}</a>
-            <a class="dropdown-item btn btn-primary export-2" href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration assessments data" %}</a>
-            <a class="dropdown-item btn btn-primary export-3" href="{% url 'registrations:export_pre_assessments' %}">{% trans "Export Pre Assessments data" %}</a>
-            <a class="dropdown-item btn btn-primary export-4" href="{% url 'registrations:export_post_assessments' %}">{% trans "Export Post Assessments data" %}</a>
-            <a class="dropdown-item btn btn-primary export-5" href="{% url 'registrations:export_pre_entrepreneurship' %}">{% trans "Export Pre Entrepreneurship data" %}</a>
-            <a class="dropdown-item btn btn-primary export-6" href="{% url 'registrations:export_post_entrepreneurship' %}">{% trans "Export Post Entrepreneurship data" %}</a>
+            <a class="dropdown-item btn btn-primary export-2" href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export registration" %}</a>
+            <a class="dropdown-item btn btn-primary export-3" href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a>
+            <a class="dropdown-item btn btn-primary export-4" href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a>
+            <a class="dropdown-item btn btn-primary export-1" href="{% url 'registrations:export' %}">{% trans "Export beneficiary list" %}</a>
           </div>
         </li>
 
@@ -67,18 +65,14 @@
         var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
         var export_1 = '{% url "registrations:export" %}';
         var export_2 = '{% url "registrations:export_registry_assessments" %}';
-        var export_3 = '{% url "registrations:export_pre_assessments" %}';
-        var export_4 = '{% url "registrations:export_post_assessments" %}';
-        var export_5 = '{% url "registrations:export_pre_entrepreneurship" %}';
-        var export_6 = '{% url "registrations:export_post_entrepreneurship" %}';
+        var export_3 = '{% url "registrations:export_civic_assessments" %}';
+        var export_4 = '{% url "registrations:export_entrepreneurship_assessments" %}';
         $(document).ready(function(){
             var params = '?governorate='+$('select#id_governorate').val();
             $('a.export-1').attr('href', export_1+params);
             $('a.export-2').attr('href', export_2+params);
             $('a.export-3').attr('href', export_3+params);
             $('a.export-4').attr('href', export_4+params);
-            $('a.export-5').attr('href', export_5+params);
-            $('a.export-6').attr('href', export_6+params);
         });
     </script>
 {% endblock %}

@@ -44,27 +44,15 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^export-pre-assessments/$',
-        view=views.ExportPreAssessmentView.as_view(),
-        name='export_pre_assessments'
+        regex=r'^export-civic-assessments/$',
+        view=views.ExportCivicAssessmentsView.as_view(),
+        name='export_civic_assessments'
     ),
 
     url(
-        regex=r'^export-post-assessments/$',
-        view=views.ExportPostAssessmentView.as_view(),
-        name='export_post_assessments'
-    ),
-
-    url(
-        regex=r'^export-pre-entrepreneurship/$',
-        view=views.ExportPreEntrepreneurshipView.as_view(),
-        name='export_pre_entrepreneurship'
-    ),
-
-    url(
-        regex=r'^export-post-entrepreneurship/$',
-        view=views.ExportPostEntrepreneurshipView.as_view(),
-        name='export_post_entrepreneurship'
+        regex=r'^export-entrepreneurship-assessments/$',
+        view=views.ExportEntrepreneurshipAssessmentsView.as_view(),
+        name='export_entrepreneurship_assessments'
     ),
 ]
 
