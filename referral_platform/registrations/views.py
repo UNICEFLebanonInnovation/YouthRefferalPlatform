@@ -316,7 +316,8 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         book = tablib.Databook()
 
-        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner,
+                                              assessment__slug='registration')
         # submission_set = self.queryset
         gov = self.request.GET.get('governorate', 0)
         if gov:
@@ -380,12 +381,13 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             _('text_39911992'),
             _('text_d45750c6'),
             _('text_4c6fe6c9'),
+            _('submission_time'),
         ]
 
         for line2 in submission_set:
             content = []
-            if ('slug' in line2.data and line2.data["slug"] == 'registration') or line2.data['__version__'] == 'vhi7pe6TonRqiDdWwAbnMS':
-            # if True:
+            # if ('slug' in line2.data and line2.data["slug"] == 'registration') or line2.data['__version__'] == 'vhi7pe6TonRqiDdWwAbnMS':
+            if True:
                 youth = line2.youth
                 registry = line2.registration
                 content = [
@@ -444,6 +446,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                     line2.data.get('text_39911992', ''),
                     line2.data.get('text_d45750c6', ''),
                     line2.data.get('text_4c6fe6c9', ''),
+                    line2.data.get('_submission_time', ''),
                 ]
                 data2.append(content)
 
@@ -457,7 +460,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         return response
 
 
-class ExportAssessmentsView(LoginRequiredMixin, ListView):
+class ExportPreAssessmentView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.all()
@@ -466,7 +469,8 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
 
         book = tablib.Databook()
 
-        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner,
+                                              assessment__slug='pre_assessment')
         # submission_set = self.queryset
         gov = self.request.GET.get('governorate', 0)
         if gov:
@@ -508,8 +512,78 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
             _('_pal_contribute_to_development'),
             _('_51_communicate_community_conc'),
             _('_52_participate_community_medi'),
-
+            _('submission time'),
         ]
+
+        for line2 in submission_set:
+
+            # if 'slug' in line2.data and line2.data["slug"] == 'pre_assessment' or line2.data['_id'] == 'vdYpCGKVBtvQMnmoMfN6t9':
+            if True:
+                youth = line2.youth
+                registry = line2.registration
+                content = [
+                            registry.governorate.parent.name if registry.governorate else '',
+                            registry.governorate.name if registry.governorate else '',
+                            registry.location,
+                            registry.partner_organization.name if registry.partner_organization else '',
+
+                            youth.number,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.trainer,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
+
+                            line2.data.get('_4_articulate_thoughts', ''),
+                            line2.data.get('_1_express_opinion', ''),
+                            line2.data.get('discuss_before_decision', ''),
+                            line2.data.get('_28_discuss_opinions', ''),
+                            line2.data.get('_31_willing_to_compromise', ''),
+                            line2.data.get('_pal_I_belong', ''),
+                            line2.data.get('_41_where_to_volunteer', ''),
+                            line2.data.get('_42_regularly_volunteer', ''),
+                            line2.data.get('_pal_contrib_appreciated', ''),
+                            line2.data.get('_pal_contribute_to_development', ''),
+                            line2.data.get('_51_communicate_community_conc', ''),
+                            line2.data.get('_52_participate_community_medi', ''),
+                            line2.data.get('_submission_time', ''),
+                            ]
+                data3.append(content)
+
+        book.add_sheet(data3)
+
+        response = HttpResponse(
+            book.export("xls"),
+            content_type='application/vnd.ms-excel',
+        )
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Pre_Assessments.xls'
+        return response
+
+
+class ExportPostAssessmentView(LoginRequiredMixin, ListView):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        book = tablib.Databook()
+
+        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner,
+                                              assessment__slug='post_assessment')
+        # submission_set = self.queryset
+        gov = self.request.GET.get('governorate', 0)
+        if gov:
+            submission_set = submission_set.filter(registration__governorate_id=int(gov))
 
         data4 = tablib.Dataset()
         data4.title = "Post-Assessment"
@@ -547,8 +621,77 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
             _('_pal_contribute_to_development'),
             _('_51_communicate_community_conc'),
             _('_52_participate_community_medi'),
-
+            _('submission time')
         ]
+
+        for line2 in submission_set:
+            # if ('slug' in line2.data and line2.data["slug"] == 'post_assessment') or line2.data['_id'] == 'vW5gvr9EuV4siMxk37cRez':
+            if True:
+                youth = line2.youth
+                registry = line2.registration
+                content = [
+                            registry.governorate.parent.name if registry.governorate else '',
+                            registry.governorate.name if registry.governorate else '',
+                            registry.location,
+                            registry.partner_organization.name if registry.partner_organization else '',
+
+                            youth.number,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.trainer,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
+
+                            line2.data.get('_4_articulate_thoughts', ''),
+                            line2.data.get('_1_express_opinion', ''),
+                            line2.data.get('_20_discussions_with_peers_before_', ''),
+                            line2.data.get('_28_discuss_opinions', ''),
+                            line2.data.get('_31_willing_to_compromise', ''),
+                            line2.data.get('_pal_I_belong', ''),
+                            line2.data.get('_41_where_to_volunteer', ''),
+                            line2.data.get('_42_regularly_volunteer', ''),
+                            line2.data.get('_pal_contrib_appreciated', ''),
+                            line2.data.get('_pal_contribute_to_development', ''),
+                            line2.data.get('_51_communicate_community_conc', ''),
+                            line2.data.get('_52_participate_community_medi', ''),
+                            line2.data.get('_submission_time', ''),
+                            ]
+                data4.append(content)
+
+        book.add_sheet(data4)
+
+        response = HttpResponse(
+            book.export("xls"),
+            content_type='application/vnd.ms-excel',
+        )
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Post_Assessment.xls'
+        return response
+
+
+class ExportPreEntrepreneurshipView(LoginRequiredMixin, ListView):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        book = tablib.Databook()
+
+        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner,
+                                              assessment__slug='pre_entrepreneurship')
+        # submission_set = self.queryset
+        gov = self.request.GET.get('governorate', 0)
+        if gov:
+            submission_set = submission_set.filter(registration__governorate_id=int(gov))
 
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
@@ -592,7 +735,83 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
             _('bad_decision_cause'),
             _('easiest_solution'),
             _('problem_solving'),
+            _('submission time'),
         ]
+
+        for line2 in submission_set:
+            # if ('slug' in line2.data and line2.data["slug"] == 'pre_entrepreneurship') or line2.data['_id'] == 'vYoMCRsCcmN3d6vZiXUisF':
+            if True:
+                youth = line2.youth
+                registry = line2.registration
+                content = [
+                            registry.governorate.parent.name if registry.governorate else '',
+                            registry.governorate.name if registry.governorate else '',
+                            registry.location,
+                            registry.partner_organization.name if registry.partner_organization else '',
+
+                            youth.number,
+                            youth.first_name,
+                            youth.father_name,
+                            youth.last_name,
+                            registry.trainer,
+                            youth.bayanati_ID,
+                            youth.sex,
+                            youth.birthday_day,
+                            youth.birthday_month,
+                            youth.birthday_year,
+                            youth.calc_age,
+                            youth.birthday,
+                            youth.nationality.name if youth.nationality else '',
+                            youth.marital_status,
+                            youth.address,
+
+                            line2.data.get('can_plan_personal', ''),
+                            line2.data.get('can_plan_career', ''),
+                            line2.data.get('can_manage_financ', ''),
+                            line2.data.get('can_plan_time', ''),
+                            line2.data.get('can_suggest', ''),
+                            line2.data.get('can_take_decision', ''),
+                            line2.data.get('can_determin_probs', ''),
+                            line2.data.get('aware_resources', ''),
+                            line2.data.get('can_handle_pressure', ''),
+                            line2.data.get('motivated_advance_skills', ''),
+                            line2.data.get('communication_skills', ''),
+                            line2.data.get('presentation_skills', ''),
+                            line2.data.get('team_is', ''),
+                            line2.data.get('good_team_is', ''),
+                            line2.data.get('team_leader_is', ''),
+                            line2.data.get('bad_decision_cause', ''),
+                            line2.data.get('easiest_solution', ''),
+                            line2.data.get('problem_solving', ''),
+                            line2.data.get('_submission_time', ''),
+                            ]
+                data5.append(content)
+
+        book.add_sheet(data5)
+
+        response = HttpResponse(
+            book.export("xls"),
+            content_type='application/vnd.ms-excel',
+        )
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Pre_Entrepreneurship.xls'
+        return response
+
+
+class ExportPostEntrepreneurshipView(LoginRequiredMixin, ListView):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        book = tablib.Databook()
+
+        submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner,
+                                              assessment__slug='post_entrepreneurship')
+        # submission_set = self.queryset
+        gov = self.request.GET.get('governorate', 0)
+        if gov:
+            submission_set = submission_set.filter(registration__governorate_id=int(gov))
 
         data6 = tablib.Dataset()
         data6.title = "Post-Entrepreneurship"
@@ -643,141 +862,12 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
             _('bad_venue_others'),
             _('has_comments'),
             _('additional_comments'),
-
-
+            _('submission_time'),
         ]
+
         for line2 in submission_set:
-
-            if 'slug' in line2.data and line2.data["slug"] == 'pre_assessment' or line2.data['_id'] == 'vdYpCGKVBtvQMnmoMfN6t9':
-                youth = line2.youth
-                registry = line2.registration
-                content = [
-                            registry.governorate.parent.name if registry.governorate else '',
-                            registry.governorate.name if registry.governorate else '',
-                            registry.location,
-                            registry.partner_organization.name if registry.partner_organization else '',
-
-                            youth.number,
-                            youth.first_name,
-                            youth.father_name,
-                            youth.last_name,
-                            registry.trainer,
-                            youth.bayanati_ID,
-                            youth.sex,
-                            youth.birthday_day,
-                            youth.birthday_month,
-                            youth.birthday_year,
-                            youth.calc_age,
-                            youth.birthday,
-                            youth.nationality.name if youth.nationality else '',
-                            youth.marital_status,
-                            youth.address,
-
-                            line2.data.get('_4_articulate_thoughts', ''),
-                            line2.data.get('_1_express_opinion', ''),
-                            line2.data.get('discuss_before_decision', ''),
-                            line2.data.get('_28_discuss_opinions', ''),
-                            line2.data.get('_31_willing_to_compromise', ''),
-                            line2.data.get('_pal_I_belong', ''),
-                            line2.data.get('_41_where_to_volunteer', ''),
-                            line2.data.get('_42_regularly_volunteer', ''),
-                            line2.data.get('_pal_contrib_appreciated', ''),
-                            line2.data.get('_pal_contribute_to_development', ''),
-                            line2.data.get('_51_communicate_community_conc', ''),
-                            line2.data.get('_52_participate_community_medi', ''),
-
-                            ]
-                data3.append(content)
-
-            if ('slug' in line2.data and line2.data["slug"] == 'post_assessment') or line2.data['_id'] == 'vW5gvr9EuV4siMxk37cRez':
-                youth = line2.youth
-                registry = line2.registration
-                content = [
-                            registry.governorate.parent.name if registry.governorate else '',
-                            registry.governorate.name if registry.governorate else '',
-                            registry.location,
-                            registry.partner_organization.name if registry.partner_organization else '',
-
-                            youth.number,
-                            youth.first_name,
-                            youth.father_name,
-                            youth.last_name,
-                            registry.trainer,
-                            youth.bayanati_ID,
-                            youth.sex,
-                            youth.birthday_day,
-                            youth.birthday_month,
-                            youth.birthday_year,
-                            youth.calc_age,
-                            youth.birthday,
-                            youth.nationality.name if youth.nationality else '',
-                            youth.marital_status,
-                            youth.address,
-
-                            line2.data.get('_4_articulate_thoughts', ''),
-                            line2.data.get('_1_express_opinion', ''),
-                            line2.data.get('_20_discussions_with_peers_before_', ''),
-                            line2.data.get('_28_discuss_opinions', ''),
-                            line2.data.get('_31_willing_to_compromise', ''),
-                            line2.data.get('_pal_I_belong', ''),
-                            line2.data.get('_41_where_to_volunteer', ''),
-                            line2.data.get('_42_regularly_volunteer', ''),
-                            line2.data.get('_pal_contrib_appreciated', ''),
-                            line2.data.get('_pal_contribute_to_development', ''),
-                            line2.data.get('_51_communicate_community_conc', ''),
-                            line2.data.get('_52_participate_community_medi', ''),
-
-                            ]
-                data4.append(content)
-
-            if ('slug' in line2.data and line2.data["slug"] == 'pre_entrepreneurship') or line2.data['_id'] == 'vYoMCRsCcmN3d6vZiXUisF':
-                youth = line2.youth
-                registry = line2.registration
-                content = [
-                            registry.governorate.parent.name if registry.governorate else '',
-                            registry.governorate.name if registry.governorate else '',
-                            registry.location,
-                            registry.partner_organization.name if registry.partner_organization else '',
-
-                            youth.number,
-                            youth.first_name,
-                            youth.father_name,
-                            youth.last_name,
-                            registry.trainer,
-                            youth.bayanati_ID,
-                            youth.sex,
-                            youth.birthday_day,
-                            youth.birthday_month,
-                            youth.birthday_year,
-                            youth.calc_age,
-                            youth.birthday,
-                            youth.nationality.name if youth.nationality else '',
-                            youth.marital_status,
-                            youth.address,
-
-                            line2.data.get('can_plan_personal', ''),
-                            line2.data.get('can_plan_career', ''),
-                            line2.data.get('can_manage_financ', ''),
-                            line2.data.get('can_plan_time', ''),
-                            line2.data.get('can_suggest', ''),
-                            line2.data.get('can_take_decision', ''),
-                            line2.data.get('can_determin_probs', ''),
-                            line2.data.get('aware_resources', ''),
-                            line2.data.get('can_handle_pressure', ''),
-                            line2.data.get('motivated_advance_skills', ''),
-                            line2.data.get('communication_skills', ''),
-                            line2.data.get('presentation_skills', ''),
-                            line2.data.get('team_is', ''),
-                            line2.data.get('good_team_is', ''),
-                            line2.data.get('team_leader_is', ''),
-                            line2.data.get('bad_decision_cause', ''),
-                            line2.data.get('easiest_solution', ''),
-                            line2.data.get('problem_solving', ''),
-
-                            ]
-                data5.append(content)
-
-            if ('slug' in line2.data and line2.data["slug"] == 'post_entrepreneurship') or line2.data['_id'] == 'vfL4n2LJXAQ8HzPCVa3hwV':
+            # if ('slug' in line2.data and line2.data["slug"] == 'post_entrepreneurship') or line2.data['_id'] == 'vfL4n2LJXAQ8HzPCVa3hwV':
+            if True:
                 youth = line2.youth
                 registry = line2.registration
                 content = [
@@ -827,18 +917,17 @@ class ExportAssessmentsView(LoginRequiredMixin, ListView):
                             line2.data.get('bad_venue_others', ''),
                             line2.data.get('has_comments', ''),
                             line2.data.get('additional_comments', ''),
-
+                            line2.data.get('_submission_time', ''),
                             ]
                 data6.append(content)
 
-        book.add_sheet(data3)
-        book.add_sheet(data4)
-        book.add_sheet(data5)
         book.add_sheet(data6)
 
         response = HttpResponse(
             book.export("xls"),
             content_type='application/vnd.ms-excel',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Assessments.xls'
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Post_Entrepreneurship.xls'
         return response
+
+

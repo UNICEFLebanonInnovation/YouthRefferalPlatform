@@ -18,13 +18,15 @@ class RegistrationFormat(base_formats.XLS):
     def export_data(self, dataset):
 
         headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -50,13 +52,15 @@ class RegistrationFormat(base_formats.XLS):
                 content = []
                 youth = registry.youth
                 content = [
+                    registry.governorate.parent.name if registry.governorate else '',
+                    registry.governorate.name if registry.governorate else '',
+                    registry.location,
+                    registry.partner_organization,
                     youth.number,
                     youth.first_name,
                     youth.father_name,
                     youth.last_name,
-                    registry.governorate.name if registry.governorate else '',
                     registry.trainer,
-                    registry.location,
                     youth.bayanati_ID,
                     youth.sex,
                     youth.birthday_day,
@@ -87,13 +91,15 @@ class RegistrationAssessmentFormat(base_formats.XLS):
     def export_data(self, dataset):
 
         headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
             _('Unique number'),
             _('First name'),
             _('Father name'),
             _('Last name'),
-            _('Governorate'),
             _('Trainer'),
-            _('Location'),
             _('Bayanati ID'),
             _('Sex'),
             _('birthday day'),
@@ -156,13 +162,15 @@ class RegistrationAssessmentFormat(base_formats.XLS):
                     youth = line2.youth
                     registry = line2.registration
                     content = [
+                        registry.governorate.parent.name if registry.governorate else '',
+                        registry.governorate.name if registry.governorate else '',
+                        registry.location,
+                        registry.partner_organization,
                         youth.number,
                         youth.first_name,
                         youth.father_name,
                         youth.last_name,
-                        registry.governorate.name if registry.governorate else '',
                         registry.trainer,
-                        registry.location,
                         youth.bayanati_ID,
                         youth.sex,
                         youth.birthday_day,
