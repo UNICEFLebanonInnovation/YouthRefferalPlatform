@@ -323,7 +323,8 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'youth__first_name',
         'youth__last_name',
         'youth__father_name',
-        'youth__bayanati_ID'
+        'youth__bayanati_ID',
+        'data'
     )
 
 

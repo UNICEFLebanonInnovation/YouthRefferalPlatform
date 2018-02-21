@@ -396,6 +396,11 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             youth = line2.youth
             registry = line2.registration
             submission_date = line2.data.get('_submission_time', '')
+            try:
+                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+                    '%d/%m/%Y') if submission_date else ''
+            except Exception:
+                submission_date = ''
             content = [
                 registry.governorate.parent.name if registry.governorate else '',
                 registry.governorate.name if registry.governorate else '',
@@ -452,8 +457,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 line2.data.get('text_39911992', ''),
                 line2.data.get('text_d45750c6', ''),
                 line2.data.get('text_4c6fe6c9', ''),
-                datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else '',
+                submission_date,
             ]
             data2.append(content)
 
@@ -568,6 +572,11 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             youth = line2.youth
             registry = line2.registration
             submission_date = line2.data.get('_submission_time', '')
+            try:
+                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+                    '%d/%m/%Y') if submission_date else ''
+            except Exception:
+                submission_date = ''
             content = [
                 registry.governorate.parent.name if registry.governorate else '',
                 registry.governorate.name if registry.governorate else '',
@@ -602,8 +611,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
                 line2.data.get('_pal_contribute_to_development', ''),
                 line2.data.get('_51_communicate_community_conc', ''),
                 line2.data.get('_52_participate_community_medi', ''),
-                datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else '',
+                submission_date,
             ]
             data3.append(content)
 
@@ -612,6 +620,11 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             youth = line2.youth
             registry = line2.registration
             submission_date = line2.data.get('_submission_time', '')
+            try:
+                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+                    '%d/%m/%Y') if submission_date else ''
+            except Exception:
+                submission_date = ''
             content = [
                 registry.governorate.parent.name if registry.governorate else '',
                 registry.governorate.name if registry.governorate else '',
@@ -646,8 +659,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
                 line2.data.get('_pal_contribute_to_development', ''),
                 line2.data.get('_51_communicate_community_conc', ''),
                 line2.data.get('_52_participate_community_medi', ''),
-                datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else '',
+                submission_date,
             ]
             data4.append(content)
 
@@ -782,6 +794,12 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             youth = line2.youth
             registry = line2.registration
             submission_date = line2.data.get('_submission_time', '')
+            try:
+                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+                    '%d/%m/%Y') if submission_date else ''
+            except Exception:
+                submission_date = ''
+
             content = [
                 registry.governorate.parent.name if registry.governorate else '',
                 registry.governorate.name if registry.governorate else '',
@@ -822,8 +840,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
                 line2.data.get('bad_decision_cause', ''),
                 line2.data.get('easiest_solution', ''),
                 line2.data.get('problem_solving', ''),
-                datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else '',
+                submission_date,
             ]
             data5.append(content)
 
@@ -832,6 +849,11 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             youth = line2.youth
             registry = line2.registration
             submission_date = line2.data.get('_submission_time', '')
+            try:
+                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+                    '%d/%m/%Y') if submission_date else ''
+            except Exception:
+                submission_date = ''
             content = [
                 registry.governorate.parent.name if registry.governorate else '',
                 registry.governorate.name if registry.governorate else '',
@@ -879,8 +901,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
                 line2.data.get('bad_venue_others', ''),
                 line2.data.get('has_comments', ''),
                 line2.data.get('additional_comments', ''),
-                datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else '',
+                submission_date,
             ]
             data6.append(content)
 
