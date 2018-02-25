@@ -9,13 +9,13 @@ from django.utils.translation import ugettext as _
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.urlresolvers import reverse
 
-
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 from referral_platform.partners.models import PartnerOrganization, Center
-from referral_platform.youth.models import YoungPerson, Disability, EducationLevel
+from referral_platform.youth.models import YoungPerson
 from referral_platform.locations.models import Location
+from .utils import generate_hash
 
 
 class Assessment(models.Model):
@@ -180,3 +180,43 @@ class AssessmentSubmission(models.Model):
     assessment = models.ForeignKey(Assessment)
     status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
+
+
+class AssessmentHash(models.Model):
+
+    hashed = models.CharField(max_length=100)
+    registration = models.CharField(max_length=20)
+    assessment_slug = models.CharField(max_length=15)
+    partner = models.CharField(max_length=5)
+    user = models.CharField(max_length=20)
+    timestamp = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['id']
+
+    @property
+    def name(self):
+        return '{}-{}-{}-{}-{}'.format(
+            self.registration,
+            self.assessment_slug,
+            self.partner,
+            self.user,
+            self.timestamp,
+        )
+
+    def __unicode__(self):
+        return '{}-{}'.format(
+            self.hash,
+            self.name,
+        )
+
+    def save(self, **kwargs):
+        """
+        Generate unique Hash for every assessment
+        :param kwargs:
+        :return:
+        """
+        if self.pk is None:
+            self.hash = generate_hash(self.name)
+
+        super(AssessmentHash, self).save(**kwargs)

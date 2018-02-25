@@ -11,7 +11,6 @@ from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import RedirectView
 from django.utils.translation import ugettext as _
 
@@ -24,7 +23,7 @@ from django_tables2.export.views import ExportMixin
 
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
-from .models import Registration, Assessment, AssessmentSubmission
+from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
@@ -145,31 +144,20 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
-        registry = Registration.objects.get(id=self.request.GET.get('registry'), partner_organization=self.request.user.partner)
-        youth = registry.youth
+        registry = Registration.objects.get(id=self.request.GET.get('registry'),
+                                            partner_organization=self.request.user.partner)
+        hashing = AssessmentHash.objects.create(
+            registration=registry.id,
+            assessment_slug=assessment.slug,
+            partner=self.request.user.partner_id,
+            user=self.request.user.id,
+            timestamp=datetime.datetime.now().timestamp()
+        )
 
-        url = '{form}?d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[' \
-              'first]={first}&d[last]={last}&d[father]={father}&d[nationality]={nationality}&d[gender]={gender}&d[' \
-              'birthdate]={birthdate}&d[youth_id]={youth_id}&d[registry]={registry}&d[marital]={marital}&d[bayanati]={bayanati_id}&d[slug]={' \
-              'slug}&d[status]=enrolled&returnURL={callback}'.format(
+        url = '{form}?d[registry]={registry}' \
+              '&returnURL={callback}'.format(
             form=assessment.assessment_form,
-            slug=assessment.slug,
-            country=registry.governorate.parent.name,
-            governorate=registry.governorate.p_code,
-            partner=registry.partner_organization.name,
-            center=registry.center.name if registry.center else "",
-            first=youth.first_name,
-            father=youth.father_name,
-            last=youth.last_name,
-            nationality=youth.nationality.code,
-            gender=youth.sex,
-            marital=youth.marital_status,
-            birthdate=youth.birthday_year + "-" + '{0:0>2}'.format(len(youth.birthday_month)) + "-" + '{0:0>2}'.format(
-                len(youth.birthday_day)),
-            youth_id=youth.number,
-            registry=registry.id,
-            bayanati_id=youth.bayanati_ID if youth.bayanati_ID else "",
-            status=self.request.GET.get('status'),
+            registry=hashing.hashed,
             callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
         return url
