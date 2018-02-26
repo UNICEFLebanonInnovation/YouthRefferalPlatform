@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 import json
 import tablib
 import datetime
+import time
 
 from django.views.generic import ListView, FormView, TemplateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -146,19 +147,22 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         assessment = self.get_object()
         registry = Registration.objects.get(id=self.request.GET.get('registry'),
                                             partner_organization=self.request.user.partner)
+        youth = registry.youth
         hashing = AssessmentHash.objects.create(
             registration=registry.id,
             assessment_slug=assessment.slug,
             partner=self.request.user.partner_id,
             user=self.request.user.id,
-            timestamp=datetime.datetime.now().timestamp()
+            timestamp=time.time()
         )
 
-        url = '{form}?d[registry]={registry}' \
+        url = '{form}?d[registry]={registry}&d[country]={country}&d[nationality]={nationality}' \
               '&returnURL={callback}'.format(
-            form=assessment.assessment_form,
-            registry=hashing.hashed,
-            callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
+                form=assessment.assessment_form,
+                registry=hashing.hashed,
+                country=registry.governorate.parent.name,
+                nationality=youth.nationality.code,
+                callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
         return url
 
@@ -166,18 +170,20 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 @method_decorator(csrf_exempt, name='dispatch')
 class YouthAssessmentSubmission(SingleObjectMixin, View):
     def post(self, request, *args, **kwargs):
-        if 'youth_id' not in request.body or 'status' not in request.body:
+        if 'registry' not in request.body:
             return HttpResponseBadRequest()
 
         payload = json.loads(request.body.decode('utf-8'))
 
-        registration = Registration.objects.get(id=payload['registry'])
-        assessment = Assessment.objects.get(slug=payload['slug'])
+        hashing = AssessmentHash.objects.get(hashed=payload['registry'])
+
+        registration = Registration.objects.get(id=int(hashing.registration))
+        assessment = Assessment.objects.get(slug=hashing.assessment_slug)
         submission, new = AssessmentSubmission.objects.get_or_create(
             registration=registration,
             youth=registration.youth,
             assessment=assessment,
-            status=payload['status']
+            status='enrolled'
         )
         submission.data = payload
         submission.save()

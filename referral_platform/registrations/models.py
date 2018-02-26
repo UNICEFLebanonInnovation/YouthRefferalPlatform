@@ -184,9 +184,9 @@ class AssessmentSubmission(models.Model):
 
 class AssessmentHash(models.Model):
 
-    hashed = models.CharField(max_length=100)
+    hashed = models.CharField(max_length=100, unique=True)
     registration = models.CharField(max_length=20)
-    assessment_slug = models.CharField(max_length=15)
+    assessment_slug = models.CharField(max_length=50)
     partner = models.CharField(max_length=5)
     user = models.CharField(max_length=20)
     timestamp = models.CharField(max_length=100)
@@ -196,7 +196,7 @@ class AssessmentHash(models.Model):
 
     @property
     def name(self):
-        return '{}-{}-{}-{}-{}'.format(
+        return '{}{}{}{}{}'.format(
             self.registration,
             self.assessment_slug,
             self.partner,
@@ -205,9 +205,13 @@ class AssessmentHash(models.Model):
         )
 
     def __unicode__(self):
-        return '{}-{}'.format(
-            self.hash,
-            self.name,
+        return '{}-{}-{}-{}-{}-{}'.format(
+            self.hashed,
+            self.registration,
+            self.assessment_slug,
+            self.partner,
+            self.user,
+            self.timestamp,
         )
 
     def save(self, **kwargs):
@@ -217,6 +221,6 @@ class AssessmentHash(models.Model):
         :return:
         """
         if self.pk is None:
-            self.hash = generate_hash(self.name)
+            self.hashed = generate_hash(self.name)
 
         super(AssessmentHash, self).save(**kwargs)

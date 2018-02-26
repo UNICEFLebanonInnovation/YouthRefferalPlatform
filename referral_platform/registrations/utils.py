@@ -7,7 +7,9 @@ def generate_hash(string):
     # '{0:0>4}'.format(int(hashlib.sha1(full_name.encode('UTF-8')).hexdigest(), 16) % 10000)
     #https://gist.github.com/lkdocs/6519366
     #http://apprize.info/python/example/13.html
-    pass
+    import hashlib
+
+    return hashlib.sha224(string).hexdigest()
 
 
 def encode_string(string):

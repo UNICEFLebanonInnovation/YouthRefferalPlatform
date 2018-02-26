@@ -260,11 +260,9 @@ class CommonForm(forms.ModelForm):
             ).exists()
 
             for specific_form in all_forms:
-                formtxt = '{assessment}?registry={registry}&youth_id={youth_id}&status={status}'.format(
+                formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
-                    youth_id=instance.youth.number,
                     registry=instance.id,
-                    status='enrolled',
                 )
                 disabled = ""
 
