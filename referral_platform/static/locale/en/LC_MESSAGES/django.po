@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 10:13+0200\n"
+"POT-Creation-Date: 2018-03-23 14:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1245,7 +1245,7 @@ msgstr ""
 #: referral_platform/registrations/exports.py:36
 #: referral_platform/registrations/exports.py:109
 #: referral_platform/registrations/tables.py:25
-#: referral_platform/registrations/tables.py:57
+#: referral_platform/registrations/tables.py:58
 #: referral_platform/registrations/views.py:260
 #: referral_platform/registrations/views.py:347
 #: referral_platform/registrations/views.py:506
@@ -1683,21 +1683,21 @@ msgid "Registrations"
 msgstr ""
 
 #: referral_platform/registrations/tables.py:18
-#: referral_platform/registrations/tables.py:50
+#: referral_platform/registrations/tables.py:51
 #: referral_platform/templates/django_tables2/edit_column.html:4
 #: referral_platform/youth/tables.py:18
 msgid "Edit"
 msgstr ""
 
 #: referral_platform/registrations/tables.py:21
-#: referral_platform/registrations/tables.py:53
+#: referral_platform/registrations/tables.py:54
 #: referral_platform/templates/django_tables2/delete_column.html:5
 #: referral_platform/youth/tables.py:21
 msgid "Delete"
 msgstr ""
 
 #: referral_platform/registrations/tables.py:24
-#: referral_platform/registrations/tables.py:56
+#: referral_platform/registrations/tables.py:57
 msgid "Age"
 msgstr ""
 
