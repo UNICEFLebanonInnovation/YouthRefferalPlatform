@@ -13,7 +13,7 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 from referral_platform.partners.models import PartnerOrganization, Center
-from referral_platform.youth.models import YoungPerson
+from referral_platform.youth.models import YoungPerson, Disability
 from referral_platform.locations.models import Location
 from .utils import generate_hash
 
@@ -95,6 +95,16 @@ class Registration(TimeStampedModel):
         blank=True, null=True,
         related_name='+',
         verbose_name=_('Modified by'),
+    )
+    # disability = models.ForeignKey(
+    #     Disability,
+    #     blank=True, null=True,
+    #     related_name='+',
+    #     verbose_name=_('Disability')
+    # )
+    comments = models.TextField(
+        blank=True, null=True,
+        verbose_name=_('Comments')
     )
 
     class Meta:

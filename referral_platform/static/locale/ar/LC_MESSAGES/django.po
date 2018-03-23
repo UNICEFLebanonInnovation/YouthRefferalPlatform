@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 16:47+0200\n"
+"POT-Creation-Date: 2018-03-23 10:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: referral_platform/clm/forms.py:220 referral_platform/courses/forms.py:245
 #: referral_platform/courses/forms.py:490
 #: referral_platform/initiatives/forms.py:119
-#: referral_platform/registrations/forms.py:312
+#: referral_platform/registrations/forms.py:341
 #: referral_platform/youth/forms.py:243
 msgid "Save"
 msgstr "حفظ"
@@ -30,7 +30,7 @@ msgstr "حفظ"
 #: referral_platform/clm/forms.py:221 referral_platform/courses/forms.py:246
 #: referral_platform/courses/forms.py:491
 #: referral_platform/initiatives/forms.py:120
-#: referral_platform/registrations/forms.py:319
+#: referral_platform/registrations/forms.py:343
 #: referral_platform/youth/forms.py:250
 msgid "Cancel"
 msgstr "الغاء"
@@ -681,6 +681,7 @@ msgid "Website skills"
 msgstr "مهارات انشاء المواقع الالكترونية"
 
 #: referral_platform/initiatives/forms.py:41
+#: referral_platform/registrations/admin.py:103
 msgid "Partner Organisation"
 msgstr "الجمعية"
 
@@ -1045,227 +1046,655 @@ msgstr "لم يتم الوصول إلى العدد الإجمالي للمستف
 msgid "Somewhat"
 msgstr " إلى حد ما"
 
+#: referral_platform/registrations/admin.py:136
+#: referral_platform/registrations/exports.py:22
+#: referral_platform/registrations/exports.py:95
 #: referral_platform/registrations/filters.py:13
 #: referral_platform/registrations/filters.py:39
 #: referral_platform/registrations/filters.py:60
-#: referral_platform/registrations/forms.py:37
-#: referral_platform/registrations/models.py:63
-#: referral_platform/registrations/views.py:227
+#: referral_platform/registrations/forms.py:43
+#: referral_platform/registrations/models.py:68
+#: referral_platform/registrations/views.py:245
+#: referral_platform/registrations/views.py:332
+#: referral_platform/registrations/views.py:491
+#: referral_platform/registrations/views.py:530
+#: referral_platform/registrations/views.py:694
+#: referral_platform/registrations/views.py:739
 #: referral_platform/youth/filters.py:11 referral_platform/youth/filters.py:37
 #: referral_platform/youth/filters.py:58 referral_platform/youth/forms.py:41
-#: referral_platform/youth/forms.py:43 referral_platform/youth/models.py:265
-#: referral_platform/youth/views.py:230
+#: referral_platform/youth/forms.py:43 referral_platform/youth/models.py:264
+#: referral_platform/youth/views.py:242 referral_platform/youth/views.py:295
+#: referral_platform/youth/views.py:352 referral_platform/youth/views.py:387
+#: referral_platform/youth/views.py:423 referral_platform/youth/views.py:464
 msgid "Governorate"
 msgstr "المحافظة"
 
-#: referral_platform/registrations/forms.py:42
-#: referral_platform/registrations/forms.py:44
-#: referral_platform/registrations/models.py:69
+#: referral_platform/registrations/exports.py:21
+#: referral_platform/registrations/exports.py:94
+#: referral_platform/registrations/views.py:244
+#: referral_platform/registrations/views.py:331
+#: referral_platform/registrations/views.py:490
+#: referral_platform/registrations/views.py:529
+#: referral_platform/registrations/views.py:693
+#: referral_platform/registrations/views.py:738
+msgid "Country"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:23
+#: referral_platform/registrations/exports.py:96
+#: referral_platform/registrations/models.py:56
+#: referral_platform/registrations/views.py:246
+#: referral_platform/registrations/views.py:333
+#: referral_platform/registrations/views.py:492
+#: referral_platform/registrations/views.py:531
+#: referral_platform/registrations/views.py:695
+#: referral_platform/registrations/views.py:740
+#: referral_platform/youth/models.py:262 referral_platform/youth/views.py:244
+#: referral_platform/youth/views.py:297 referral_platform/youth/views.py:354
+#: referral_platform/youth/views.py:389 referral_platform/youth/views.py:425
+#: referral_platform/youth/views.py:466
+msgid "Location"
+msgstr "الموقع الجغرافي"
+
+#: referral_platform/registrations/exports.py:24
+#: referral_platform/registrations/exports.py:97
+#: referral_platform/registrations/views.py:247
+#: referral_platform/registrations/views.py:334
+#: referral_platform/registrations/views.py:493
+#: referral_platform/registrations/views.py:532
+#: referral_platform/registrations/views.py:696
+#: referral_platform/registrations/views.py:741
+msgid "Partner"
+msgstr "الجمعية"
+
+#: referral_platform/registrations/exports.py:25
+#: referral_platform/registrations/exports.py:98
+#: referral_platform/registrations/views.py:249
+#: referral_platform/registrations/views.py:336
+#: referral_platform/registrations/views.py:495
+#: referral_platform/registrations/views.py:534
+#: referral_platform/registrations/views.py:698
+#: referral_platform/registrations/views.py:743
+msgid "Unique number"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:26
+#: referral_platform/registrations/exports.py:99
+#: referral_platform/registrations/forms.py:66
+#: referral_platform/registrations/views.py:250
+#: referral_platform/registrations/views.py:337
+#: referral_platform/registrations/views.py:496
+#: referral_platform/registrations/views.py:535
+#: referral_platform/registrations/views.py:699
+#: referral_platform/registrations/views.py:744
+#: referral_platform/youth/views.py:239 referral_platform/youth/views.py:292
+#: referral_platform/youth/views.py:349 referral_platform/youth/views.py:384
+#: referral_platform/youth/views.py:420 referral_platform/youth/views.py:461
+msgid "First name"
+msgstr "الاسم الاول"
+
+#: referral_platform/registrations/exports.py:27
+#: referral_platform/registrations/exports.py:100
+#: referral_platform/registrations/forms.py:70
+#: referral_platform/registrations/views.py:251
+#: referral_platform/registrations/views.py:338
+#: referral_platform/registrations/views.py:497
+#: referral_platform/registrations/views.py:536
+#: referral_platform/registrations/views.py:700
+#: referral_platform/registrations/views.py:745
+#: referral_platform/youth/views.py:240 referral_platform/youth/views.py:293
+#: referral_platform/youth/views.py:350 referral_platform/youth/views.py:385
+#: referral_platform/youth/views.py:421 referral_platform/youth/views.py:462
+msgid "Father name"
+msgstr " اسم الأب"
+
+#: referral_platform/registrations/exports.py:28
+#: referral_platform/registrations/exports.py:101
+#: referral_platform/registrations/forms.py:74
+#: referral_platform/registrations/views.py:252
+#: referral_platform/registrations/views.py:339
+#: referral_platform/registrations/views.py:498
+#: referral_platform/registrations/views.py:537
+#: referral_platform/registrations/views.py:701
+#: referral_platform/registrations/views.py:746
+#: referral_platform/youth/views.py:241 referral_platform/youth/views.py:294
+#: referral_platform/youth/views.py:351 referral_platform/youth/views.py:386
+#: referral_platform/youth/views.py:422 referral_platform/youth/views.py:463
+msgid "Last name"
+msgstr "اسم العائلة"
+
+#: referral_platform/registrations/exports.py:29
+#: referral_platform/registrations/exports.py:102
+#: referral_platform/registrations/models.py:79
+#: referral_platform/registrations/views.py:253
+#: referral_platform/registrations/views.py:340
+#: referral_platform/registrations/views.py:499
+#: referral_platform/registrations/views.py:538
+#: referral_platform/registrations/views.py:702
+#: referral_platform/registrations/views.py:747
+#: referral_platform/youth/models.py:275 referral_platform/youth/views.py:243
+#: referral_platform/youth/views.py:296 referral_platform/youth/views.py:353
+#: referral_platform/youth/views.py:388 referral_platform/youth/views.py:424
+#: referral_platform/youth/views.py:465
+msgid "Trainer"
+msgstr "المدرب"
+
+#: referral_platform/registrations/exports.py:30
+#: referral_platform/registrations/exports.py:103
+#: referral_platform/registrations/forms.py:62
+#: referral_platform/registrations/views.py:254
+#: referral_platform/registrations/views.py:341
+#: referral_platform/registrations/views.py:500
+#: referral_platform/registrations/views.py:539
+#: referral_platform/registrations/views.py:703
+#: referral_platform/registrations/views.py:748
+#: referral_platform/youth/models.py:282 referral_platform/youth/views.py:245
+#: referral_platform/youth/views.py:298 referral_platform/youth/views.py:355
+#: referral_platform/youth/views.py:390 referral_platform/youth/views.py:426
+#: referral_platform/youth/views.py:467
+msgid "Bayanati ID"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:31
+#: referral_platform/registrations/exports.py:104
+#: referral_platform/registrations/forms.py:78
+#: referral_platform/registrations/views.py:255
+#: referral_platform/registrations/views.py:342
+#: referral_platform/registrations/views.py:501
+#: referral_platform/registrations/views.py:540
+#: referral_platform/registrations/views.py:704
+#: referral_platform/registrations/views.py:749
+#: referral_platform/youth/views.py:246 referral_platform/youth/views.py:299
+#: referral_platform/youth/views.py:356 referral_platform/youth/views.py:391
+#: referral_platform/youth/views.py:427 referral_platform/youth/views.py:468
+msgid "Sex"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:32
+#: referral_platform/registrations/exports.py:105
+#: referral_platform/registrations/views.py:256
+#: referral_platform/registrations/views.py:343
+#: referral_platform/registrations/views.py:502
+#: referral_platform/registrations/views.py:541
+#: referral_platform/registrations/views.py:705
+#: referral_platform/registrations/views.py:750
+#: referral_platform/youth/views.py:247 referral_platform/youth/views.py:300
+#: referral_platform/youth/views.py:357 referral_platform/youth/views.py:392
+#: referral_platform/youth/views.py:428 referral_platform/youth/views.py:469
+msgid "birthday day"
+msgstr "يوم الميلاد"
+
+#: referral_platform/registrations/exports.py:33
+#: referral_platform/registrations/exports.py:106
+#: referral_platform/registrations/views.py:257
+#: referral_platform/registrations/views.py:344
+#: referral_platform/registrations/views.py:503
+#: referral_platform/registrations/views.py:542
+#: referral_platform/registrations/views.py:706
+#: referral_platform/registrations/views.py:751
+#: referral_platform/youth/views.py:248 referral_platform/youth/views.py:301
+#: referral_platform/youth/views.py:358 referral_platform/youth/views.py:393
+#: referral_platform/youth/views.py:429 referral_platform/youth/views.py:470
+msgid "birthday month"
+msgstr "شهر الميلاد"
+
+#: referral_platform/registrations/exports.py:34
+#: referral_platform/registrations/exports.py:107
+#: referral_platform/registrations/views.py:258
+#: referral_platform/registrations/views.py:345
+#: referral_platform/registrations/views.py:504
+#: referral_platform/registrations/views.py:543
+#: referral_platform/registrations/views.py:707
+#: referral_platform/registrations/views.py:752
+#: referral_platform/youth/views.py:249 referral_platform/youth/views.py:302
+#: referral_platform/youth/views.py:359 referral_platform/youth/views.py:394
+#: referral_platform/youth/views.py:430 referral_platform/youth/views.py:471
+msgid "birthday year"
+msgstr "سنة الميلاد"
+
+#: referral_platform/registrations/exports.py:35
+#: referral_platform/registrations/exports.py:108
+#: referral_platform/registrations/views.py:259
+#: referral_platform/registrations/views.py:346
+#: referral_platform/registrations/views.py:505
+#: referral_platform/registrations/views.py:544
+#: referral_platform/registrations/views.py:708
+#: referral_platform/registrations/views.py:753
+#: referral_platform/youth/models.py:155 referral_platform/youth/tables.py:24
+#: referral_platform/youth/views.py:250 referral_platform/youth/views.py:303
+#: referral_platform/youth/views.py:360 referral_platform/youth/views.py:395
+#: referral_platform/youth/views.py:431 referral_platform/youth/views.py:472
+msgid "age"
+msgstr "العمر"
+
+#: referral_platform/registrations/exports.py:36
+#: referral_platform/registrations/exports.py:109
+#: referral_platform/registrations/tables.py:25
+#: referral_platform/registrations/tables.py:57
+#: referral_platform/registrations/views.py:260
+#: referral_platform/registrations/views.py:347
+#: referral_platform/registrations/views.py:506
+#: referral_platform/registrations/views.py:545
+#: referral_platform/registrations/views.py:709
+#: referral_platform/registrations/views.py:754
+#: referral_platform/youth/tables.py:25 referral_platform/youth/views.py:251
+#: referral_platform/youth/views.py:304 referral_platform/youth/views.py:361
+#: referral_platform/youth/views.py:396 referral_platform/youth/views.py:432
+#: referral_platform/youth/views.py:473
+msgid "Birthday"
+msgstr "تاريخ الميلاد"
+
+#: referral_platform/registrations/exports.py:37
+#: referral_platform/registrations/exports.py:110
+#: referral_platform/registrations/forms.py:116
+#: referral_platform/registrations/views.py:261
+#: referral_platform/registrations/views.py:348
+#: referral_platform/registrations/views.py:507
+#: referral_platform/registrations/views.py:546
+#: referral_platform/registrations/views.py:710
+#: referral_platform/registrations/views.py:755
+#: referral_platform/youth/filters.py:13 referral_platform/youth/filters.py:39
+#: referral_platform/youth/filters.py:60 referral_platform/youth/models.py:24
+#: referral_platform/youth/models.py:167 referral_platform/youth/views.py:252
+#: referral_platform/youth/views.py:305 referral_platform/youth/views.py:362
+#: referral_platform/youth/views.py:397 referral_platform/youth/views.py:433
+#: referral_platform/youth/views.py:474
+msgid "Nationality"
+msgstr "الجنسية"
+
+#: referral_platform/registrations/exports.py:38
+#: referral_platform/registrations/exports.py:111
+#: referral_platform/registrations/forms.py:125
+#: referral_platform/registrations/views.py:262
+#: referral_platform/registrations/views.py:349
+#: referral_platform/registrations/views.py:508
+#: referral_platform/registrations/views.py:547
+#: referral_platform/registrations/views.py:711
+#: referral_platform/registrations/views.py:756
+#: referral_platform/youth/models.py:252 referral_platform/youth/models.py:271
+#: referral_platform/youth/views.py:253 referral_platform/youth/views.py:306
+#: referral_platform/youth/views.py:363 referral_platform/youth/views.py:398
+#: referral_platform/youth/views.py:434 referral_platform/youth/views.py:475
+msgid "Marital status"
+msgstr "الحالة الاجتماعية"
+
+#: referral_platform/registrations/exports.py:39
+#: referral_platform/registrations/exports.py:112
+#: referral_platform/registrations/views.py:263
+#: referral_platform/registrations/views.py:350
+#: referral_platform/registrations/views.py:509
+#: referral_platform/registrations/views.py:548
+#: referral_platform/registrations/views.py:712
+#: referral_platform/registrations/views.py:757
+#: referral_platform/youth/views.py:254 referral_platform/youth/views.py:307
+#: referral_platform/youth/views.py:364 referral_platform/youth/views.py:399
+#: referral_platform/youth/views.py:435 referral_platform/youth/views.py:476
+msgid "address"
+msgstr "العنوان"
+
+#: referral_platform/registrations/exports.py:114
+#: referral_platform/registrations/views.py:352
+#: referral_platform/youth/views.py:309
+msgid "training_type"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:115
+#: referral_platform/registrations/views.py:353
+#: referral_platform/youth/views.py:310
+msgid "center_type"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:116
+#: referral_platform/registrations/views.py:354
+#: referral_platform/youth/views.py:311
+msgid "concent_paper"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:117
+#: referral_platform/registrations/views.py:355
+#: referral_platform/youth/views.py:312
+msgid "If_you_answered_Othe_the_name_of_the_NGO"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:118
+#: referral_platform/registrations/views.py:356
+#: referral_platform/youth/views.py:313
+msgid "UNHCR_ID"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:119
+#: referral_platform/registrations/views.py:357
+#: referral_platform/youth/views.py:314
+msgid "Jordanian_ID"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:120
+#: referral_platform/registrations/views.py:358
+#: referral_platform/youth/views.py:315
+msgid "training_date"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:121
+#: referral_platform/registrations/views.py:359
+#: referral_platform/youth/views.py:316
+msgid "training_end_date"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:122
+#: referral_platform/registrations/views.py:360
+#: referral_platform/youth/views.py:317
+msgid "educational_status"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:123
+#: referral_platform/registrations/views.py:361
+#: referral_platform/youth/views.py:318
+msgid "school_level"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:124
+#: referral_platform/registrations/views.py:362
+#: referral_platform/youth/views.py:319
+msgid "School_type"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:125
+#: referral_platform/registrations/views.py:363
+#: referral_platform/youth/views.py:320
+msgid "School_name"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:126
+#: referral_platform/registrations/views.py:364
+#: referral_platform/youth/views.py:321
+msgid "how_many_times_skipped_school"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:127
+#: referral_platform/registrations/views.py:365
+#: referral_platform/youth/views.py:322
+msgid "reason_for_skipping_class"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:128
+#: referral_platform/registrations/views.py:366
+#: referral_platform/youth/views.py:323
+msgid "educ_level_stopped"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:129
+#: referral_platform/registrations/views.py:367
+#: referral_platform/youth/views.py:324
+msgid "Reason_stop_study"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:130
+#: referral_platform/registrations/views.py:368
+#: referral_platform/youth/views.py:325
+msgid "other_five"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:131
+#: referral_platform/registrations/views.py:369
+#: referral_platform/youth/views.py:326
+msgid "Relation_with_labor_market"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:132
+#: referral_platform/registrations/views.py:370
+#: referral_platform/youth/views.py:327
+msgid "occupation_type"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:133
+#: referral_platform/registrations/views.py:371
+#: referral_platform/youth/views.py:328
+msgid "what_electronics_do_you_own"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:134
+#: referral_platform/registrations/views.py:372
+#: referral_platform/youth/views.py:329
+msgid "family_present"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:135
+#: referral_platform/registrations/views.py:373
+#: referral_platform/youth/views.py:330
+msgid "family_not_present"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:136
+#: referral_platform/registrations/views.py:374
+#: referral_platform/youth/views.py:331
+msgid "not_present_where"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:137
+#: referral_platform/registrations/views.py:375
+#: referral_platform/youth/views.py:332
+msgid "other_family_not_present"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:138
+#: referral_platform/registrations/views.py:376
+#: referral_platform/youth/views.py:333
+msgid "drugs_substance_use"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:139
+#: referral_platform/registrations/views.py:377
+#: referral_platform/youth/views.py:334
+msgid "feeling_of_safety_security"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:140
+#: referral_platform/registrations/views.py:378
+#: referral_platform/youth/views.py:335
+msgid "reasons_for_not_feeling_safe_a"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:141
+#: referral_platform/registrations/views.py:379
+#: referral_platform/youth/views.py:336
+msgid "Accommodation_type"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:142
+#: referral_platform/registrations/views.py:380
+#: referral_platform/youth/views.py:337
+msgid "how_many_times_displaced"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:143
+#: referral_platform/registrations/views.py:381
+#: referral_platform/youth/views.py:338
+msgid "family_steady_income"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:144
+#: referral_platform/registrations/views.py:382
+#: referral_platform/youth/views.py:339
+msgid "desired_method_for_follow_up"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:145
+#: referral_platform/registrations/views.py:383
+#: referral_platform/youth/views.py:340
+msgid "text_39911992"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:146
+#: referral_platform/registrations/views.py:384
+#: referral_platform/youth/views.py:341
+msgid "text_d45750c6"
+msgstr ""
+
+#: referral_platform/registrations/exports.py:147
+#: referral_platform/registrations/views.py:385
+#: referral_platform/youth/views.py:342
+msgid "text_4c6fe6c9"
+msgstr ""
+
+#: referral_platform/registrations/forms.py:38
+msgid "Search for youth by name or id"
+msgstr ""
+
+#: referral_platform/registrations/forms.py:48
+#: referral_platform/registrations/forms.py:50
+#: referral_platform/registrations/models.py:74
 #: referral_platform/youth/forms.py:47 referral_platform/youth/forms.py:49
 msgid "Center"
 msgstr ""
 
-#: referral_platform/registrations/forms.py:48
-#: referral_platform/registrations/views.py:230
-#: referral_platform/youth/models.py:283 referral_platform/youth/views.py:233
-msgid "Bayanati ID"
-msgstr ""
-
-#: referral_platform/registrations/forms.py:52
-#: referral_platform/registrations/views.py:231
-#: referral_platform/youth/views.py:234
-msgid "First name"
-msgstr "الاسم الاول"
-
-#: referral_platform/registrations/forms.py:56
-#: referral_platform/registrations/views.py:232
-#: referral_platform/youth/views.py:235
-msgid "Father name"
-msgstr " اسم الأب"
-
-#: referral_platform/registrations/forms.py:60
-#: referral_platform/registrations/views.py:233
-#: referral_platform/youth/views.py:236
-msgid "Last name"
-msgstr "اسم العائلة"
-
-#: referral_platform/registrations/forms.py:64
-#: referral_platform/registrations/views.py:234
-#: referral_platform/youth/views.py:237
-msgid "Sex"
-msgstr ""
-
 # "الجنس"
-#: referral_platform/registrations/forms.py:68
-#: referral_platform/youth/models.py:112
+#: referral_platform/registrations/forms.py:82
+#: referral_platform/youth/models.py:113
 msgid "Male"
 msgstr "ذكر"
 
-#: referral_platform/registrations/forms.py:69
-#: referral_platform/youth/models.py:113
+#: referral_platform/registrations/forms.py:83
+#: referral_platform/youth/models.py:114
 msgid "Female"
 msgstr "انثى"
 
-#: referral_platform/registrations/forms.py:73
-#: referral_platform/youth/models.py:137
+#: referral_platform/registrations/forms.py:87
+#: referral_platform/youth/models.py:136
 msgid "Birthday year"
 msgstr "سنة الميلاد"
 
-#: referral_platform/registrations/forms.py:78
-#: referral_platform/youth/models.py:146
+#: referral_platform/registrations/forms.py:92
+#: referral_platform/youth/models.py:145
 msgid "Birthday month"
 msgstr "شهر الميلاد"
 
-#: referral_platform/registrations/forms.py:82
-#: referral_platform/youth/models.py:96
+#: referral_platform/registrations/forms.py:96
+#: referral_platform/youth/models.py:97
 msgid "January"
 msgstr "كانون الثاني"
 
-#: referral_platform/registrations/forms.py:83
-#: referral_platform/youth/models.py:97
+#: referral_platform/registrations/forms.py:97
+#: referral_platform/youth/models.py:98
 msgid "February"
 msgstr "شباط"
 
-#: referral_platform/registrations/forms.py:84
-#: referral_platform/youth/models.py:98
+#: referral_platform/registrations/forms.py:98
+#: referral_platform/youth/models.py:99
 msgid "March"
 msgstr "آذار"
 
-#: referral_platform/registrations/forms.py:85
-#: referral_platform/youth/models.py:99
+#: referral_platform/registrations/forms.py:99
+#: referral_platform/youth/models.py:100
 msgid "April"
 msgstr "نيسان"
 
-#: referral_platform/registrations/forms.py:86
-#: referral_platform/youth/models.py:100
+#: referral_platform/registrations/forms.py:100
+#: referral_platform/youth/models.py:101
 msgid "May"
 msgstr "ايار"
 
-#: referral_platform/registrations/forms.py:87
-#: referral_platform/youth/models.py:101
+#: referral_platform/registrations/forms.py:101
+#: referral_platform/youth/models.py:102
 msgid "June"
 msgstr "حزيران"
 
-#: referral_platform/registrations/forms.py:88
-#: referral_platform/youth/models.py:102
+#: referral_platform/registrations/forms.py:102
+#: referral_platform/youth/models.py:103
 msgid "July"
 msgstr "تموز"
 
-#: referral_platform/registrations/forms.py:89
-#: referral_platform/youth/models.py:103
+#: referral_platform/registrations/forms.py:103
+#: referral_platform/youth/models.py:104
 msgid "August"
 msgstr "آب"
 
-#: referral_platform/registrations/forms.py:90
-#: referral_platform/youth/models.py:104
+#: referral_platform/registrations/forms.py:104
+#: referral_platform/youth/models.py:105
 msgid "September"
 msgstr "ايلول"
 
-#: referral_platform/registrations/forms.py:91
-#: referral_platform/youth/models.py:105
+#: referral_platform/registrations/forms.py:105
+#: referral_platform/youth/models.py:106
 msgid "October"
 msgstr "تشرين اول"
 
-#: referral_platform/registrations/forms.py:92
-#: referral_platform/youth/models.py:106
+#: referral_platform/registrations/forms.py:106
+#: referral_platform/youth/models.py:107
 msgid "November"
 msgstr "تشرين ثاني"
 
-#: referral_platform/registrations/forms.py:93
-#: referral_platform/youth/models.py:107
+#: referral_platform/registrations/forms.py:107
+#: referral_platform/youth/models.py:108
 msgid "December"
 msgstr "كانون اول"
 
-#: referral_platform/registrations/forms.py:97
-#: referral_platform/youth/models.py:154
+#: referral_platform/registrations/forms.py:111
+#: referral_platform/youth/models.py:153
 msgid "Birthday day"
 msgstr "يوم الميلاد"
 
-#: referral_platform/registrations/forms.py:102
-#: referral_platform/registrations/views.py:240
-#: referral_platform/youth/filters.py:13 referral_platform/youth/filters.py:39
-#: referral_platform/youth/filters.py:60 referral_platform/youth/models.py:23
-#: referral_platform/youth/models.py:168 referral_platform/youth/views.py:243
-msgid "Nationality"
-msgstr "الجنسية"
-
-#: referral_platform/registrations/forms.py:107
-#: referral_platform/youth/models.py:178
+#: referral_platform/registrations/forms.py:121
+#: referral_platform/youth/models.py:177
 msgid "Address"
 msgstr "العنوان"
 
-#: referral_platform/registrations/forms.py:111
-#: referral_platform/registrations/views.py:241
-#: referral_platform/youth/models.py:253 referral_platform/youth/models.py:272
-#: referral_platform/youth/views.py:244
-msgid "Marital status"
-msgstr "الحالة الاجتماعية"
-
-#: referral_platform/registrations/forms.py:114
-#: referral_platform/youth/models.py:254
+#: referral_platform/registrations/forms.py:128
+#: referral_platform/youth/models.py:253
 msgid "Married"
 msgstr "متزوج/متزوجة"
 
-#: referral_platform/registrations/forms.py:115
-#: referral_platform/youth/models.py:255
+#: referral_platform/registrations/forms.py:129
+#: referral_platform/youth/models.py:254
 msgid "Engaged"
 msgstr "مرتبط/مرتبطة"
 
-#: referral_platform/registrations/forms.py:116
-#: referral_platform/youth/models.py:256
+#: referral_platform/registrations/forms.py:130
+#: referral_platform/youth/models.py:255
 msgid "Divorced"
 msgstr "مطلق/مطلقة"
 
-#: referral_platform/registrations/forms.py:117
-#: referral_platform/youth/models.py:257
+#: referral_platform/registrations/forms.py:131
+#: referral_platform/youth/models.py:256
 msgid "Widower"
 msgstr "ارمل/ارملة"
 
-#: referral_platform/registrations/forms.py:118
-#: referral_platform/youth/models.py:258
+#: referral_platform/registrations/forms.py:132
+#: referral_platform/youth/models.py:257
 msgid "Single"
 msgstr "اعزب/عزباء"
 
-#: referral_platform/registrations/forms.py:313
+#: referral_platform/registrations/forms.py:342
 #: referral_platform/youth/forms.py:244
 msgid "Save and add another"
 msgstr ""
 
-#: referral_platform/registrations/forms.py:364
-#: referral_platform/registrations/forms.py:375
+#: referral_platform/registrations/forms.py:404
+#: referral_platform/registrations/forms.py:415
 msgid "Your data has been sent successfully to the server"
 msgstr ""
 
-#: referral_platform/registrations/models.py:51
-#: referral_platform/registrations/views.py:229
-#: referral_platform/youth/models.py:263 referral_platform/youth/views.py:232
-msgid "Location"
-msgstr "الموقع الجغرافي"
-
-#: referral_platform/registrations/models.py:57
+#: referral_platform/registrations/models.py:62
 msgid "Partner organization"
 msgstr "الجمعية"
 
-#: referral_platform/registrations/models.py:74
-#: referral_platform/registrations/views.py:228
-#: referral_platform/youth/models.py:276 referral_platform/youth/views.py:231
-msgid "Trainer"
-msgstr "المدرب"
-
-#: referral_platform/registrations/models.py:80
-#: referral_platform/youth/models.py:288 referral_platform/youth/models.py:289
+#: referral_platform/registrations/models.py:85
+#: referral_platform/youth/models.py:287 referral_platform/youth/models.py:288
 msgid "Youth"
 msgstr ""
 
-#: referral_platform/registrations/models.py:86
+#: referral_platform/registrations/models.py:91
 msgid "Created by"
 msgstr ""
 
-#: referral_platform/registrations/models.py:92
+#: referral_platform/registrations/models.py:97
 msgid "Modified by"
 msgstr ""
 
-#: referral_platform/registrations/models.py:97
+#: referral_platform/registrations/models.py:107
+msgid "Comments"
+msgstr "ملاحظات"
+
+#: referral_platform/registrations/models.py:112
 #: referral_platform/templates/clm/bln_add.html:21
 #: referral_platform/templates/clm/bln_edit.html:21
 #: referral_platform/templates/clm/common_form.html:21
@@ -1275,57 +1704,262 @@ msgstr ""
 msgid "Registration"
 msgstr "التسجيل"
 
-#: referral_platform/registrations/models.py:98
+#: referral_platform/registrations/models.py:113
 msgid "Registrations"
 msgstr "التسجيل"
 
 #: referral_platform/registrations/tables.py:18
+#: referral_platform/registrations/tables.py:50
 #: referral_platform/templates/django_tables2/edit_column.html:4
 #: referral_platform/youth/tables.py:18
 msgid "Edit"
 msgstr "تعديل"
 
 #: referral_platform/registrations/tables.py:21
+#: referral_platform/registrations/tables.py:53
 #: referral_platform/templates/django_tables2/delete_column.html:5
 #: referral_platform/youth/tables.py:21
 msgid "Delete"
 msgstr "حذف"
 
 #: referral_platform/registrations/tables.py:24
+#: referral_platform/registrations/tables.py:56
 msgid "Age"
 msgstr "العمر"
 
-#: referral_platform/registrations/tables.py:25
-#: referral_platform/registrations/views.py:239
-#: referral_platform/youth/tables.py:25 referral_platform/youth/views.py:242
-msgid "Birthday"
-msgstr "تاريخ الميلاد"
+#: referral_platform/registrations/views.py:264
+msgid "Submission date"
+msgstr ""
 
-#: referral_platform/registrations/views.py:235
-#: referral_platform/youth/views.py:238
-msgid "birthday day"
-msgstr "يوم الميلاد"
+#: referral_platform/registrations/views.py:386
+#: referral_platform/registrations/views.py:784
+msgid "submission_time"
+msgstr ""
 
-#: referral_platform/registrations/views.py:236
-#: referral_platform/youth/views.py:239
-msgid "birthday month"
-msgstr "شهر الميلاد"
+#: referral_platform/registrations/views.py:511
+#: referral_platform/registrations/views.py:550
+#: referral_platform/youth/views.py:366 referral_platform/youth/views.py:401
+msgid "_4_articulate_thoughts"
+msgstr ""
 
-#: referral_platform/registrations/views.py:237
-#: referral_platform/youth/views.py:240
-msgid "birthday year"
-msgstr "سنة الميلاد"
+#: referral_platform/registrations/views.py:512
+#: referral_platform/registrations/views.py:551
+#: referral_platform/youth/views.py:367 referral_platform/youth/views.py:402
+msgid "_1_express_opinion"
+msgstr ""
 
-#: referral_platform/registrations/views.py:238
-#: referral_platform/youth/models.py:156 referral_platform/youth/tables.py:24
-#: referral_platform/youth/views.py:241
-msgid "age"
-msgstr "العمر"
+#: referral_platform/registrations/views.py:513
+#: referral_platform/youth/views.py:368
+msgid "discuss_before_decision"
+msgstr ""
 
-#: referral_platform/registrations/views.py:242
-#: referral_platform/youth/views.py:245
-msgid "address"
-msgstr "العنوان"
+#: referral_platform/registrations/views.py:514
+#: referral_platform/registrations/views.py:553
+#: referral_platform/youth/views.py:369 referral_platform/youth/views.py:404
+msgid "_28_discuss_opinions"
+msgstr ""
+
+#: referral_platform/registrations/views.py:515
+#: referral_platform/registrations/views.py:554
+#: referral_platform/youth/views.py:370 referral_platform/youth/views.py:405
+msgid "_31_willing_to_compromise"
+msgstr ""
+
+#: referral_platform/registrations/views.py:516
+#: referral_platform/registrations/views.py:555
+#: referral_platform/youth/views.py:371 referral_platform/youth/views.py:406
+msgid "_pal_I_belong"
+msgstr ""
+
+#: referral_platform/registrations/views.py:517
+#: referral_platform/registrations/views.py:556
+#: referral_platform/youth/views.py:372 referral_platform/youth/views.py:407
+msgid "_41_where_to_volunteer"
+msgstr ""
+
+#: referral_platform/registrations/views.py:518
+#: referral_platform/registrations/views.py:557
+#: referral_platform/youth/views.py:373 referral_platform/youth/views.py:408
+msgid "_42_regularly_volunteer"
+msgstr ""
+
+#: referral_platform/registrations/views.py:519
+#: referral_platform/registrations/views.py:558
+#: referral_platform/youth/views.py:374 referral_platform/youth/views.py:409
+msgid "_pal_contrib_appreciated"
+msgstr ""
+
+#: referral_platform/registrations/views.py:520
+#: referral_platform/registrations/views.py:559
+#: referral_platform/youth/views.py:375 referral_platform/youth/views.py:410
+msgid "_pal_contribute_to_development"
+msgstr ""
+
+#: referral_platform/registrations/views.py:521
+#: referral_platform/registrations/views.py:560
+#: referral_platform/youth/views.py:376 referral_platform/youth/views.py:411
+msgid "_51_communicate_community_conc"
+msgstr ""
+
+#: referral_platform/registrations/views.py:522
+#: referral_platform/registrations/views.py:561
+#: referral_platform/youth/views.py:377 referral_platform/youth/views.py:412
+msgid "_52_participate_community_medi"
+msgstr ""
+
+#: referral_platform/registrations/views.py:523
+#: referral_platform/registrations/views.py:562
+#: referral_platform/registrations/views.py:732
+msgid "submission time"
+msgstr ""
+
+#: referral_platform/registrations/views.py:552
+#: referral_platform/youth/views.py:403
+msgid "_20_discussions_with_peers_before_"
+msgstr ""
+
+#: referral_platform/registrations/views.py:714
+#: referral_platform/registrations/views.py:759
+#: referral_platform/youth/views.py:437 referral_platform/youth/views.py:478
+msgid "can_plan_personal"
+msgstr ""
+
+#: referral_platform/registrations/views.py:715
+#: referral_platform/registrations/views.py:760
+#: referral_platform/youth/views.py:438 referral_platform/youth/views.py:479
+msgid "can_plan_career"
+msgstr ""
+
+#: referral_platform/registrations/views.py:716
+#: referral_platform/registrations/views.py:761
+#: referral_platform/youth/views.py:439 referral_platform/youth/views.py:480
+msgid "can_manage_financ"
+msgstr ""
+
+#: referral_platform/registrations/views.py:717
+#: referral_platform/registrations/views.py:762
+#: referral_platform/youth/views.py:440 referral_platform/youth/views.py:481
+msgid "can_plan_time"
+msgstr ""
+
+#: referral_platform/registrations/views.py:718
+#: referral_platform/registrations/views.py:763
+#: referral_platform/youth/views.py:441 referral_platform/youth/views.py:482
+msgid "can_suggest"
+msgstr ""
+
+#: referral_platform/registrations/views.py:719
+#: referral_platform/registrations/views.py:764
+#: referral_platform/youth/views.py:442 referral_platform/youth/views.py:483
+msgid "can_take_decision"
+msgstr ""
+
+#: referral_platform/registrations/views.py:720
+#: referral_platform/registrations/views.py:765
+#: referral_platform/youth/views.py:443 referral_platform/youth/views.py:484
+msgid "can_determin_probs"
+msgstr ""
+
+#: referral_platform/registrations/views.py:721
+#: referral_platform/registrations/views.py:766
+#: referral_platform/youth/views.py:444 referral_platform/youth/views.py:485
+msgid "aware_resources"
+msgstr ""
+
+#: referral_platform/registrations/views.py:722
+#: referral_platform/registrations/views.py:767
+#: referral_platform/youth/views.py:445 referral_platform/youth/views.py:486
+msgid "can_handle_pressure"
+msgstr ""
+
+#: referral_platform/registrations/views.py:723
+#: referral_platform/registrations/views.py:768
+#: referral_platform/youth/views.py:446 referral_platform/youth/views.py:487
+msgid "motivated_advance_skills"
+msgstr ""
+
+#: referral_platform/registrations/views.py:724
+#: referral_platform/registrations/views.py:769
+#: referral_platform/youth/views.py:447 referral_platform/youth/views.py:488
+msgid "communication_skills"
+msgstr ""
+
+#: referral_platform/registrations/views.py:725
+#: referral_platform/registrations/views.py:770
+#: referral_platform/youth/views.py:448 referral_platform/youth/views.py:489
+msgid "presentation_skills"
+msgstr ""
+
+#: referral_platform/registrations/views.py:726
+#: referral_platform/registrations/views.py:771
+#: referral_platform/youth/views.py:449 referral_platform/youth/views.py:490
+msgid "team_is"
+msgstr ""
+
+#: referral_platform/registrations/views.py:727
+#: referral_platform/registrations/views.py:772
+#: referral_platform/youth/views.py:450 referral_platform/youth/views.py:491
+msgid "good_team_is"
+msgstr ""
+
+#: referral_platform/registrations/views.py:728
+#: referral_platform/registrations/views.py:773
+#: referral_platform/youth/views.py:451 referral_platform/youth/views.py:492
+msgid "team_leader_is"
+msgstr ""
+
+#: referral_platform/registrations/views.py:729
+#: referral_platform/registrations/views.py:774
+#: referral_platform/youth/views.py:452 referral_platform/youth/views.py:493
+msgid "bad_decision_cause"
+msgstr ""
+
+#: referral_platform/registrations/views.py:730
+#: referral_platform/registrations/views.py:775
+#: referral_platform/youth/views.py:453 referral_platform/youth/views.py:494
+msgid "easiest_solution"
+msgstr ""
+
+#: referral_platform/registrations/views.py:731
+#: referral_platform/registrations/views.py:776
+#: referral_platform/youth/views.py:454 referral_platform/youth/views.py:495
+msgid "problem_solving"
+msgstr ""
+
+#: referral_platform/registrations/views.py:777
+#: referral_platform/youth/views.py:496
+msgid "personal_value"
+msgstr ""
+
+#: referral_platform/registrations/views.py:778
+#: referral_platform/youth/views.py:497
+msgid "faced_challenges"
+msgstr ""
+
+#: referral_platform/registrations/views.py:779
+#: referral_platform/youth/views.py:498
+msgid "challenges"
+msgstr ""
+
+#: referral_platform/registrations/views.py:780
+#: referral_platform/youth/views.py:499
+msgid "bad_venue"
+msgstr ""
+
+#: referral_platform/registrations/views.py:781
+#: referral_platform/youth/views.py:500
+msgid "bad_venue_others"
+msgstr ""
+
+#: referral_platform/registrations/views.py:782
+#: referral_platform/youth/views.py:501
+msgid "has_comments"
+msgstr ""
+
+#: referral_platform/registrations/views.py:783
+#: referral_platform/youth/views.py:502
+msgid "additional_comments"
+msgstr ""
 
 #: referral_platform/templates/account/account_inactive.html:5
 #: referral_platform/templates/account/account_inactive.html:8
@@ -1641,7 +2275,7 @@ msgstr ""
 "عنوانك الالكتوني </a>"
 
 #: referral_platform/templates/clm/bln_list.html:35
-#: referral_platform/templates/registrations/list.html:28
+#: referral_platform/templates/registrations/list.html:25
 #: referral_platform/templates/youth/list.html:28
 msgid "Add new beneficiary"
 msgstr "إضافة مستفيد جديد"
@@ -1715,17 +2349,32 @@ msgstr "العربية"
 msgid "Log In"
 msgstr ""
 
-#: referral_platform/templates/registrations/list.html:34
-#: referral_platform/templates/youth/list.html:34
-msgid "Export"
+#: referral_platform/templates/registrations/list.html:32
+msgid "Export data"
 msgstr "استخراج المعلومات"
 
-#: referral_platform/templates/registrations/list.html:42
+#: referral_platform/templates/registrations/list.html:35
+msgid "Export registration"
+msgstr ""
+
+#: referral_platform/templates/registrations/list.html:36
+msgid "Export Civic Engagement assessments"
+msgstr ""
+
+#: referral_platform/templates/registrations/list.html:37
+msgid "Export Entrepreneurship assessments"
+msgstr ""
+
+#: referral_platform/templates/registrations/list.html:38
+msgid "Export beneficiary list"
+msgstr " "
+
+#: referral_platform/templates/registrations/list.html:47
 #: referral_platform/templates/youth/list.html:42
 msgid "filter"
 msgstr "ابحث"
 
-#: referral_platform/templates/registrations/list.html:43
+#: referral_platform/templates/registrations/list.html:48
 #: referral_platform/templates/youth/list.html:43
 msgid "reset"
 msgstr "الغاء "
@@ -1786,6 +2435,10 @@ msgstr "موافق"
 msgid "Follow us"
 msgstr "تابعنا على القنوات التالية"
 
+#: referral_platform/templates/youth/list.html:34
+msgid "Export"
+msgstr "استخراج المعلومات"
+
 #: referral_platform/users/admin.py:52 referral_platform/users/admin.py:61
 msgid "Personal info"
 msgstr "تفاصيل شخصية"
@@ -1798,75 +2451,71 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: referral_platform/users/models.py:20
+#: referral_platform/users/models.py:21
 msgid "email address"
 msgstr "عنوان البريد الإلكتروني "
 
-#: referral_platform/users/models.py:21 referral_platform/youth/models.py:117
+#: referral_platform/users/models.py:22 referral_platform/youth/models.py:118
 msgid "first name"
 msgstr "الاسم الاول"
 
-#: referral_platform/users/models.py:22 referral_platform/youth/models.py:118
+#: referral_platform/users/models.py:23 referral_platform/youth/models.py:119
 msgid "last name"
 msgstr "اسم العائلة"
 
-#: referral_platform/users/models.py:24
+#: referral_platform/users/models.py:25
 msgid "staff status"
 msgstr "حالة المستخدم"
 
-#: referral_platform/users/models.py:28
+#: referral_platform/users/models.py:29
 msgid "active"
 msgstr "فعال"
 
-#: referral_platform/users/models.py:31
+#: referral_platform/users/models.py:32
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
 
-#: referral_platform/users/models.py:35
+#: referral_platform/users/models.py:36
 msgid "date joined"
 msgstr "تاريخ الانضمام"
 
-#: referral_platform/users/models.py:51
+#: referral_platform/users/models.py:56
 msgid "user"
 msgstr "المستخدم"
 
-#: referral_platform/users/models.py:52
+#: referral_platform/users/models.py:57
 msgid "users"
 msgstr "المستخدمين"
 
-#: referral_platform/youth/models.py:28
+#: referral_platform/youth/models.py:29
 msgid "Nationalities"
 msgstr "الجنسيات"
 
-#: referral_platform/youth/models.py:50 referral_platform/youth/models.py:51
+#: referral_platform/youth/models.py:51 referral_platform/youth/models.py:52
 msgid "ID Type"
 msgstr "نوع الهوية"
 
-#: referral_platform/youth/models.py:63 referral_platform/youth/models.py:64
+#: referral_platform/youth/models.py:64 referral_platform/youth/models.py:65
 msgid "ALP Level"
 msgstr "مستوى التعليم غير نظامي"
 
-#: referral_platform/youth/models.py:111 referral_platform/youth/models.py:127
+#: referral_platform/youth/models.py:112 referral_platform/youth/models.py:128
 msgid "Gender"
 msgstr "النوع الاجتماعي"
 
-#: referral_platform/youth/models.py:115
+#: referral_platform/youth/models.py:116
 msgid "Only Arabic characters are allowed."
 msgstr "يسمح فقط بالأحرف العربية."
 
-#: referral_platform/youth/models.py:119
+#: referral_platform/youth/models.py:120
 msgid "Father Name"
 msgstr " اسم الأب"
 
-#: referral_platform/youth/models.py:120
+#: referral_platform/youth/models.py:121
 msgid "full name"
 msgstr "الاسم الثلاثي"
-
-#: referral_platform/youth/models.py:278
-msgid "Bayanati ID should be composed of exactly 6 numbers ."
-msgstr ""
 
 #, fuzzy
 #~| msgid "Female"
@@ -1932,9 +2581,6 @@ msgstr ""
 #~ msgid "Financial barrier"
 #~ msgstr "عائق مالي"
 
-#~ msgid "Family pressure"
-#~ msgstr "ضغط الأسرة"
-
 #~ msgid "Discrimination"
 #~ msgstr "التمييز"
 
@@ -1973,6 +2619,3 @@ msgstr ""
 
 #~ msgid "I don't want follow up"
 #~ msgstr "أنا لا أريد المتابعة "
-
-#~ msgid "Partner"
-#~ msgstr "الجمعية"

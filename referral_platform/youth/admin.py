@@ -5,7 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import *
 import datetime
 
-from . models import EducationLevel, IDType, Nationality, YoungPerson
+from . models import Disability, IDType, Nationality, YoungPerson
 
 
 class YoungPersonResource(resources.ModelResource):
@@ -98,6 +98,6 @@ class NationalityAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(YoungPerson, YoungPersonAdmin)
-# admin.site.register(EducationLevel)
+admin.site.register(Disability)
 admin.site.register(Nationality, NationalityAdmin)
 # admin.site.register(IDType)

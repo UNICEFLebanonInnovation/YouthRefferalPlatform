@@ -154,6 +154,7 @@ class CommonForm(forms.ModelForm):
             'youth_address',
             'youth_marital_status',
             'override_submit',
+            'comments',
         )
         initial_fields = fields
         widgets = {}
@@ -212,7 +213,8 @@ class CommonForm(forms.ModelForm):
                                          'youth_sex',
                                          'youth_nationality',
                                          'youth_marital_status',
-                                         'youth_address', ]
+                                         'youth_address',
+                                         'comments', ]
 
         self.helper = FormHelper()
         self.helper.form_show_labels = True
