@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block main_content %}
+    <iframe id="powerbi"
+            style="width: inherit; height: 800px;"
+            src="{{ powerbi_url }}"
+            frameborder="0"
+            allowFullScreen="true">
+    </iframe>
+{% endblock %}
