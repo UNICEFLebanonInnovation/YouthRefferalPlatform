@@ -74,5 +74,13 @@ class PlatformUserAdmin(AuthUserAdmin):
         'is_superuser',
         'is_staff',
     )
+    list_filter = (
+        'email',
+        'is_staff',
+        'is_superuser',
+        'is_active',
+        'groups',
+        'partner',
+    )
     search_fields = ['first_name', 'last_name', 'email']
     filter_horizontal = ('groups', 'user_permissions', )

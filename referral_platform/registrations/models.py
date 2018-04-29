@@ -191,6 +191,12 @@ class AssessmentSubmission(models.Model):
     status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
 
+    def get_data_option(self, column, option):
+        column_value = self.data.get(column, '')
+        if column_value and option in column_value:
+            return 'yes'
+        return 'no'
+
 
 class AssessmentHash(models.Model):
 

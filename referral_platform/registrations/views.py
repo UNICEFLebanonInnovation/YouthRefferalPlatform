@@ -909,3 +909,312 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
         )
         response['Content-Disposition'] = 'attachment; filename=Beneficiary_Entrepreneurship_Assessments.xls'
         return response
+
+
+class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        book = tablib.Databook()
+
+        if self.request.user.is_superuser and not self.request.user.partner:
+            submission_set = self.queryset
+        else:
+            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+
+        gov = self.request.GET.get('governorate', 0)
+        if gov:
+            submission_set = submission_set.filter(registration__governorate_id=int(gov))
+
+        data5 = tablib.Dataset()
+        data5.title = "Initiative registration"
+        data5.headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
+            _('Unique number'),
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
+            _('Trainer'),
+            _('Bayanati ID'),
+            _('Sex'),
+            _('birthday day'),
+            _('birthday month'),
+            _('birthday year'),
+            _('age'),
+            _('Birthday'),
+            _('Nationality'),
+            _('Marital status'),
+            _('address'),
+
+            'status',
+
+            'type_of_initiative',
+            'basic_services',
+            'health_service',
+            'educational',
+            'protection',
+            'environmental',
+            'political',
+            'advocacy',
+            'economic_artis',
+            'religious_&_sp',
+            'sports',
+            'social_cohesio',
+            'other',
+
+            'assertiveness',
+            'initiative_as_expected',
+            'start_date_implementing_initia',
+            'leadership',
+            'team_involovement',
+            'communication',
+            'age_group_range',
+            'gender_implem_initiatives',
+            'gender_of_beneficiaries',
+            'No_of_team_members_executed',
+            'sense_of_belonging',
+            'type_of_support_required',
+            'problem_solving',
+            'planning_to_mobilize_resources',
+            'mentorship_helpful',
+            'initiative_loc',
+            'problem_addressed',
+            'planned_results',
+            'start',
+            'end',
+            'duration_of_initiative',
+            'respid_initiativeID_title',
+            'analytical_skills',
+            'mentor_assigned',
+            'number_of_direct_beneficiaries',
+            _('submission time'),
+        ]
+
+        data6 = tablib.Dataset()
+        data6.title = "Initiative implementation"
+        data6.headers = [
+            _('Country'),
+            _('Governorate'),
+            _('Location'),
+            _('Partner'),
+
+            _('Unique number'),
+            _('First name'),
+            _('Father name'),
+            _('Last name'),
+            _('Trainer'),
+            _('Bayanati ID'),
+            _('Sex'),
+            _('birthday day'),
+            _('birthday month'),
+            _('birthday year'),
+            _('age'),
+            _('Birthday'),
+            _('Nationality'),
+            _('Marital status'),
+            _('address'),
+
+            'leadership',
+            'assertiveness',
+            'initiative_as_expected',
+            'team_involovement',
+            'communication',
+            'did_you_mobilize_resources',
+            'challenges_faced',
+            'select_multiple_e160966a',
+
+            'type_of_initiative',
+            'basic_services',
+            'health_service',
+            'educational',
+            'protection',
+            'environmental',
+            'political',
+            'advocacy',
+            'economic_artis',
+            'religious_&_sp',
+            'sports',
+            'social_cohesio',
+            'other',
+
+            'select_one_a3c4ea99',
+            'integer_0259d46e',
+            'sense_of_belonging',
+            'problem_solving',
+            'support_received_helpful',
+            'mentorship_helpful',
+            'start',
+            'end',
+            'respid_initiativeID_title',
+            'analytical_skills',
+            'mentor_assigned',
+            _('submission_time'),
+        ]
+
+        submission_set1 = submission_set.filter(assessment__slug='init_registration')
+        for line2 in submission_set1:
+            youth = line2.youth
+            registry = line2.registration
+            submission_date = line2.data.get('_submission_time', '')
+            try:
+                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+                    '%d/%m/%Y') if submission_date else ''
+            except Exception:
+                submission_date = ''
+
+            content = [
+                registry.governorate.parent.name if registry.governorate else '',
+                registry.governorate.name if registry.governorate else '',
+                registry.location,
+                registry.partner_organization.name if registry.partner_organization else '',
+
+                youth.number,
+                youth.first_name,
+                youth.father_name,
+                youth.last_name,
+                registry.trainer,
+                youth.bayanati_ID,
+                youth.sex,
+                youth.birthday_day,
+                youth.birthday_month,
+                youth.birthday_year,
+                youth.calc_age,
+                youth.birthday,
+                youth.nationality.name if youth.nationality else '',
+                youth.marital_status,
+                youth.address,
+
+
+                line2.data.get('status', ''),
+
+                line2.data.get('type_of_initiative', ''),
+                line2.get_data_option('type_of_initiative', 'basic_services'),
+                line2.get_data_option('type_of_initiative', 'health_service'),
+                line2.get_data_option('type_of_initiative', 'educational'),
+                line2.get_data_option('type_of_initiative', 'protection'),
+                line2.get_data_option('type_of_initiative', 'environmental'),
+                line2.get_data_option('type_of_initiative', 'political'),
+                line2.get_data_option('type_of_initiative', 'advocacy'),
+                line2.get_data_option('type_of_initiative', 'economic_artis'),
+                line2.get_data_option('type_of_initiative', 'religious_&_sp'),
+                line2.get_data_option('type_of_initiative', 'sports'),
+                line2.get_data_option('type_of_initiative', 'social_cohesio'),
+                line2.get_data_option('type_of_initiative', 'other'),
+
+                line2.data.get('assertiveness', ''),
+                line2.data.get('initiative_as_expected', ''),
+                line2.data.get('start_date_implementing_initia', ''),
+                line2.data.get('leadership', ''),
+                line2.data.get('team_involovement', ''),
+                line2.data.get('communication', ''),
+                line2.data.get('age_group_range', ''),
+                line2.data.get('gender_implem_initiatives', ''),
+                line2.data.get('gender_of_beneficiaries', ''),
+                line2.data.get('No_of_team_members_executed', ''),
+                line2.data.get('sense_of_belonging', ''),
+                line2.data.get('type_of_support_required', ''),
+                line2.data.get('problem_solving', ''),
+                line2.data.get('planning_to_mobilize_resources', ''),
+                line2.data.get('mentorship_helpful', ''),
+                line2.data.get('initiative_loc', ''),
+                line2.data.get('problem_addressed', ''),
+                line2.data.get('planned_results', ''),
+                line2.data.get('start', ''),
+                line2.data.get('end', ''),
+                line2.data.get('duration_of_initiative', ''),
+                line2.data.get('respid_initiativeID_title', ''),
+                line2.data.get('analytical_skills', ''),
+                line2.data.get('mentor_assigned', ''),
+                line2.data.get('number_of_direct_beneficiaries', ''),
+
+                submission_date,
+            ]
+            data5.append(content)
+
+        submission_set2 = submission_set.filter(assessment__slug='init_exec')
+        for line2 in submission_set2:
+            youth = line2.youth
+            registry = line2.registration
+            submission_date = line2.data.get('_submission_time', '')
+            try:
+                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+                    '%d/%m/%Y') if submission_date else ''
+            except Exception:
+                submission_date = ''
+            content = [
+                registry.governorate.parent.name if registry.governorate else '',
+                registry.governorate.name if registry.governorate else '',
+                registry.location,
+                registry.partner_organization.name if registry.partner_organization else '',
+
+                youth.number,
+                youth.first_name,
+                youth.father_name,
+                youth.last_name,
+                registry.trainer,
+                youth.bayanati_ID,
+                youth.sex,
+                youth.birthday_day,
+                youth.birthday_month,
+                youth.birthday_year,
+                youth.calc_age,
+                youth.birthday,
+                youth.nationality.name if youth.nationality else '',
+                youth.marital_status,
+                youth.address,
+
+                line2.data.get('leadership', ''),
+                line2.data.get('assertiveness', ''),
+                line2.data.get('initiative_as_expected', ''),
+                line2.data.get('team_involovement', ''),
+                line2.data.get('communication', ''),
+                line2.data.get('did_you_mobilize_resources', ''),
+                line2.data.get('challenges_faced', ''),
+                line2.data.get('select_multiple_e160966a', ''),
+
+                line2.data.get('type_of_initiative', ''),
+                line2.get_data_option('type_of_initiative', 'basic_services'),
+                line2.get_data_option('type_of_initiative', 'health_service'),
+                line2.get_data_option('type_of_initiative', 'educational'),
+                line2.get_data_option('type_of_initiative', 'protection'),
+                line2.get_data_option('type_of_initiative', 'environmental'),
+                line2.get_data_option('type_of_initiative', 'political'),
+                line2.get_data_option('type_of_initiative', 'advocacy'),
+                line2.get_data_option('type_of_initiative', 'economic_artis'),
+                line2.get_data_option('type_of_initiative', 'religious_&_sp'),
+                line2.get_data_option('type_of_initiative', 'sports'),
+                line2.get_data_option('type_of_initiative', 'social_cohesio'),
+                line2.get_data_option('type_of_initiative', 'other'),
+
+                line2.data.get('select_one_a3c4ea99', ''),
+                line2.data.get('integer_0259d46e', ''),
+                line2.data.get('sense_of_belonging', ''),
+                line2.data.get('problem_solving', ''),
+                line2.data.get('support_received_helpful', ''),
+                line2.data.get('mentorship_helpful', ''),
+                line2.data.get('start', ''),
+                line2.data.get('end', ''),
+                line2.data.get('respid_initiativeID_title', ''),
+                line2.data.get('analytical_skills', ''),
+                line2.data.get('mentor_assigned', ''),
+
+                submission_date,
+            ]
+            data6.append(content)
+
+        book.add_sheet(data5)
+        book.add_sheet(data6)
+
+        response = HttpResponse(
+            book.export("xls"),
+            content_type='application/vnd.ms-excel',
+        )
+        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Initiative_Assessments.xls'
+        return response
