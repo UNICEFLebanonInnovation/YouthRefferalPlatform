@@ -28,6 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     youth_nationality = serializers.CharField(source='youth.nationality', required=False)
     youth_address = serializers.CharField(source='youth.address', required=False)
     youth_marital_status = serializers.CharField(source='youth.marital_status', required=False)
+    comments = serializers.CharField(required=False)
 
     youth_nationality_id = serializers.CharField(source='youth.nationality.id', read_only=True)
     youth_id = serializers.IntegerField(source='youth.id', required=False)
@@ -107,4 +108,5 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'governorate_id',
             'csrfmiddlewaretoken',
             'save',
+            'comments',
         )

@@ -66,6 +66,7 @@ LOCAL_APPS = (
     'referral_platform.initiatives',
     'referral_platform.registrations',
     'referral_platform.clm',
+    'referral_platform.dashboard',
 
 )
 
@@ -111,7 +112,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.c
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ("""James Cranwell-Ward""", 'jcranwellward@unicef.org'),
+    ("""Ali Chamseddine""", 'achamseddine@unicef.org'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -341,7 +342,7 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU_EXCLUDE': ('auth', 'sites'),
     'MENU': (
-        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/"},
+        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/dashboard/CO/"},
         {'app': 'registrations', 'label': 'Registration', 'icon': 'icon-list'},
         {'app': 'auth', 'label': 'Groups', 'icon': 'icon-user'},
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
@@ -367,4 +368,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+POWERBI_JCO = env('POWERBI_JCO', default='NO_URL')
+POWERBI_SCO = env('POWERBI_SCO', default='NO_URL')
+POWERBI_PCO = env('POWERBI_PCO', default='NO_URL')
 

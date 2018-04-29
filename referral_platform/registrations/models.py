@@ -9,13 +9,13 @@ from django.utils.translation import ugettext as _
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.urlresolvers import reverse
 
-
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 from referral_platform.partners.models import PartnerOrganization, Center
-from referral_platform.youth.models import YoungPerson, Disability, EducationLevel
+from referral_platform.youth.models import YoungPerson, Disability
 from referral_platform.locations.models import Location
+from .utils import generate_hash
 
 
 class Assessment(models.Model):
@@ -95,6 +95,16 @@ class Registration(TimeStampedModel):
         blank=True, null=True,
         related_name='+',
         verbose_name=_('Modified by'),
+    )
+    # disability = models.ForeignKey(
+    #     Disability,
+    #     blank=True, null=True,
+    #     related_name='+',
+    #     verbose_name=_('Disability')
+    # )
+    comments = models.TextField(
+        blank=True, null=True,
+        verbose_name=_('Comments')
     )
 
     class Meta:
@@ -180,3 +190,53 @@ class AssessmentSubmission(models.Model):
     assessment = models.ForeignKey(Assessment)
     status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
+
+    def get_data_option(self, column, option):
+        column_value = self.data.get(column, '')
+        if column_value and option in column_value:
+            return 'yes'
+        return 'no'
+
+
+class AssessmentHash(models.Model):
+
+    hashed = models.CharField(max_length=100, unique=True)
+    registration = models.CharField(max_length=20)
+    assessment_slug = models.CharField(max_length=50)
+    partner = models.CharField(max_length=5)
+    user = models.CharField(max_length=20)
+    timestamp = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['id']
+
+    @property
+    def name(self):
+        return '{}{}{}{}{}'.format(
+            self.registration,
+            self.assessment_slug,
+            self.partner,
+            self.user,
+            self.timestamp,
+        )
+
+    def __unicode__(self):
+        return '{}-{}-{}-{}-{}-{}'.format(
+            self.hashed,
+            self.registration,
+            self.assessment_slug,
+            self.partner,
+            self.user,
+            self.timestamp,
+        )
+
+    def save(self, **kwargs):
+        """
+        Generate unique Hash for every assessment
+        :param kwargs:
+        :return:
+        """
+        if self.pk is None:
+            self.hashed = generate_hash(self.name)
+
+        super(AssessmentHash, self).save(**kwargs)

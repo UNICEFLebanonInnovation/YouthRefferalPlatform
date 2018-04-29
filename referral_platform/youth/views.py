@@ -170,58 +170,62 @@ class EditView(LoginRequiredMixin, UpdateView):
         return super(EditView, self).form_valid(form)
 
 
-class YouthAssessment(SingleObjectMixin, RedirectView):
-    model = Assessment
+# class YouthAssessment(SingleObjectMixin, RedirectView):
+#     model = Assessment
+#
+#     def get_redirect_url(self, *args, **kwargs):
+#         assessment = self.get_object()
+#         youth = YoungPerson.objects.get(number=self.request.GET.get('youth_id'))
+#
+#         url = '{form}?d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[' \
+#               'first]={first}&d[last]={last}&d[father]={father}&d[nationality]={nationality}&d[gender]={gender}&d[' \
+#               'birthdate]={birthdate}&d[youth_id]={youth_id}&d[marital]={marital}&d[bayanati]={bayanati_id}&d[slug]={' \
+#               'slug}&d[status]=enrolled&returnURL={callback}'.format(
+#             form=assessment.assessment_form,
+#             slug=assessment.slug,
+#             country=youth.governorate.parent.name,
+#             governorate=youth.governorate.p_code,
+#             partner=youth.partner_organization.name,
+#             center=youth.center.name if youth.center else "",
+#             first=youth.first_name,
+#             father=youth.father_name,
+#             last=youth.last_name,
+#             nationality=youth.nationality.code,
+#             gender=youth.sex,
+#             marital=youth.marital_status,
+#             birthdate=youth.birthday_year + "-" + '{0:0>2}'.format(len(youth.birthday_month)) + "-" + '{0:0>2}'.format(
+#                 len(youth.birthday_day)),
+#             youth_id=youth.number,
+#             bayanati_id=youth.bayanati_ID if youth.bayanati_ID else "",
+#             status=self.request.GET.get('status'),
+#             callback=self.request.META.get('HTTP_REFERER', youth.get_absolute_url())
+#         )
+#         return url
 
-    def get_redirect_url(self, *args, **kwargs):
-        assessment = self.get_object()
-        youth = YoungPerson.objects.get(number=self.request.GET.get('youth_id'))
 
-        url = '{form}?d[country]={country}&d[governorate]={governorate}&d[partner]={partner}&d[center]={center}&d[' \
-              'first]={first}&d[last]={last}&d[father]={father}&d[nationality]={nationality}&d[gender]={gender}&d[' \
-              'birthdate]={birthdate}&d[youth_id]={youth_id}&d[marital]={marital}&d[bayanati]={bayanati_id}&d[slug]={' \
-              'slug}&d[status]=enrolled&returnURL={callback}'.format(
-            form=assessment.assessment_form,
-            slug=assessment.slug,
-            country=youth.governorate.parent.name,
-            governorate=youth.governorate.p_code,
-            partner=youth.partner_organization.name,
-            center=youth.center.name if youth.center else "",
-            first=youth.first_name,
-            father=youth.father_name,
-            last=youth.last_name,
-            nationality=youth.nationality.code,
-            gender=youth.sex,
-            marital=youth.marital_status,
-            birthdate=youth.birthday_year + "-" + '{0:0>2}'.format(len(youth.birthday_month)) + "-" + '{0:0>2}'.format(
-                len(youth.birthday_day)),
-            youth_id=youth.number,
-            bayanati_id=youth.bayanati_ID if youth.bayanati_ID else "",
-            status=self.request.GET.get('status'),
-            callback=self.request.META.get('HTTP_REFERER', youth.get_absolute_url())
-        )
-        return url
-
-
-@method_decorator(csrf_exempt, name='dispatch')
-class YouthAssessmentSubmission(SingleObjectMixin, View):
-    def post(self, request, *args, **kwargs):
-        if 'youth_id' not in request.body or 'status' not in request.body:
-            return HttpResponseBadRequest()
-
-        payload = json.loads(request.body.decode('utf-8'))
-        youth = YoungPerson.objects.get(number=payload['youth_id'])
-        assessment = Assessment.objects.get(slug=payload['slug'])
-        submission, new = AssessmentSubmission.objects.get_or_create(
-            youth=youth,
-            assessment=assessment,
-            status=payload['status']
-        )
-        submission.data = payload
-        submission.save()
-
-        return HttpResponse()
-
+# @method_decorator(csrf_exempt, name='dispatch')
+# class YouthAssessmentSubmission(SingleObjectMixin, View):
+#     def post(self, request, *args, **kwargs):
+#         from referral_platform.registrations.models import AssessmentHash, Registration
+#         if 'registry' not in request.body:
+#             return HttpResponseBadRequest()
+#
+#         payload = json.loads(request.body.decode('utf-8'))
+#
+#         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
+#
+#         registration = Registration.objects.get(id=int(hashing.registration))
+#         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+#         submission, new = AssessmentSubmission.objects.get_or_create(
+#             registration=registration,
+#             youth=registration.youth,
+#             assessment=assessment,
+#             status='enrolled'
+#         )
+#         submission.data = payload
+#         submission.save()
+#
+#         return HttpResponse()
 
 
 class ExportView(LoginRequiredMixin, ListView):

@@ -12,7 +12,7 @@ from referral_platform.users.utils import has_group, force_default_language
 from referral_platform.locations.models import Location
 from referral_platform.partners.models import PartnerOrganization
 from .exports import RegistrationFormat, RegistrationAssessmentFormat
-from .models import Registration, Assessment, AssessmentSubmission
+from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
 
 
 class BaseExportResource(resources.ModelResource):
@@ -331,3 +331,4 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
+admin.site.register(AssessmentHash)
