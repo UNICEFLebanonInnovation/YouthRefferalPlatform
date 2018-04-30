@@ -2367,7 +2367,7 @@ msgstr ""
 
 #: referral_platform/templates/registrations/list.html:38
 msgid "Export beneficiary list"
-msgstr " "
+msgstr ""
 
 #: referral_platform/templates/registrations/list.html:47
 #: referral_platform/templates/youth/list.html:42
