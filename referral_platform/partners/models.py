@@ -17,6 +17,7 @@ class PartnerOrganization(models.Model):
     )
     overview = models.TextField(null=True, blank=True)
     locations = models.ManyToManyField(Location, blank=True)
+    dashboard_url = models.CharField(max_length=1000, null=True, blank=True)
 
     @property
     def locations_list(self):

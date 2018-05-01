@@ -35,6 +35,7 @@
             <a class="dropdown-item btn btn-primary export-2" href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export registration" %}</a>
             <a class="dropdown-item btn btn-primary export-3" href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a>
             <a class="dropdown-item btn btn-primary export-4" href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a>
+            <a class="dropdown-item btn btn-primary export-5" href="{% url 'registrations:export_initiative_assessments' %}">{% trans "Export Initiative registration & implementation" %}</a>
             <a class="dropdown-item btn btn-primary export-1" href="{% url 'registrations:export' %}">{% trans "Export beneficiary list" %}</a>
           </div>
         </li>
@@ -67,12 +68,14 @@
         var export_2 = '{% url "registrations:export_registry_assessments" %}';
         var export_3 = '{% url "registrations:export_civic_assessments" %}';
         var export_4 = '{% url "registrations:export_entrepreneurship_assessments" %}';
+        var export_5 = '{% url "registrations:export_initiative_assessments" %}';
         $(document).ready(function(){
             var params = '?governorate='+$('select#id_governorate').val();
             $('a.export-1').attr('href', export_1+params);
             $('a.export-2').attr('href', export_2+params);
             $('a.export-3').attr('href', export_3+params);
             $('a.export-4').attr('href', export_4+params);
+            $('a.export-5').attr('href', export_5+params);
         });
     </script>
 {% endblock %}

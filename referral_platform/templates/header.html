@@ -30,6 +30,11 @@
                     <a class="nav-link" href="{% url "dashboard:co" %}">{% trans "Dashboard" %}</a>
                 </li>
               {% endif %}
+              {% if request.user|has_group:"YOUTH" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "dashboard:partner" %}">{% trans "Dashboard" %}</a>
+                </li>
+              {% endif %}
             </ul>
         {% endif %}
 
