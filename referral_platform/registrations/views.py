@@ -770,7 +770,6 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
                 youth.marital_status,
                 youth.address,
 
-
                 get_choice_value(line2.data, '_4_articulate_thoughts', 'rates'),
                 get_choice_value(line2.data, '_1_express_opinion', 'rates'),
                 get_choice_value(line2.data, 'discuss_before_decision', 'rates'),
@@ -908,14 +907,27 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'If I am the group leader, I will',
             'One of the main reasons to NOT make the best decision',
             'The easiest solution for the problem is always the best solution',
-            'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
-
+            'If you face a problem, what procedures would you take into consideration to solve the problem?',
             'Rate the benefits of the training to your personal life',
             'Have you faced any challenges with the program?',
-            'If yes, please specify',
+
+            'Challenges',
+            'The program materials/design were difficult to understand',
+            'The facilitators didn\'t provide us with required support',
+            'The training period is too short',
+            'The training period is too long',
+            'Meeting room/location not convenient',
+
             'If the room/ training area not convenient, please specify why',
+            'Location of CBO is too far',
+            'The rooms are not very well ventilated',
+            'The rooms are not clean',
+            'There are no tables / chairs',
+            'The classroom lacks safety equipment',
+            'Other',
+
             'If other, please specify',
-            'Do yo uhave anything else you want to tell us?',
+            'Do you have anything else you want to tell us?',
             'If yes, what is it?',
             'submission_time',
         ]
@@ -1035,8 +1047,24 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 
                 get_choice_value(line2.data, 'personal_value', 'rates'),
                 get_choice_value(line2.data, 'faced_challenges', 'yes_no'),
-                get_choice_value(line2.data, 'challenges', 'challenges'),
-                get_choice_value(line2.data, 'bad_venue', 'challenges'),
+
+                # get_choice_value(line2.data, 'challenges', 'challenges'),
+                line2.data.get('challenges', ''),
+                line2.get_data_option('challenges', 'difficult_material'),
+                line2.get_data_option('challenges', 'no_support'),
+                line2.get_data_option('challenges', 'too_short'),
+                line2.get_data_option('challenges', 'too_long'),
+                line2.get_data_option('challenges', 'inappropriate_venue'),
+
+                # get_choice_value(line2.data, 'bad_venue', 'challenges'),
+                line2.data.get('bad_venue', ''),
+                line2.get_data_option('bad_venue', 'far'),
+                line2.get_data_option('bad_venue', 'bad_ventilation'),
+                line2.get_data_option('bad_venue', 'dirty_room'),
+                line2.get_data_option('bad_venue', 'no_facility'),
+                line2.get_data_option('bad_venue', 'no_tools'),
+                line2.get_data_option('bad_venue', 'other'),
+
                 line2.data.get('bad_venue_others', ''),
                 get_choice_value(line2.data, 'has_comments', 'yes_no'),
                 line2.data.get('additional_comments', ''),
