@@ -12,12 +12,14 @@ from rest_framework_nested import routers
 from rest_framework_swagger.views import get_swagger_view
 
 from referral_platform.youth.views import YoungPersonViewSet
+from referral_platform.backends.views import ExporterViewSet
 from referral_platform.registrations.views import RegistrationViewSet, AssessmentSubmissionViewSet
 
 api = routers.SimpleRouter()
 api.register(r'young-person', YoungPersonViewSet, base_name='young-person')
 api.register(r'registration', RegistrationViewSet, base_name='registration')
 api.register(r'assessment-submission', AssessmentSubmissionViewSet, base_name='assessment-submission')
+api.register(r'backend-exporter', ExporterViewSet, base_name='backend-exporter')
 
 
 schema_view = get_swagger_view(title='EMS API')

@@ -32,11 +32,11 @@
             {% trans "Export data" %}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item btn btn-primary export-2" href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export registration" %}</a>
-            <a class="dropdown-item btn btn-primary export-3" href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a>
-            <a class="dropdown-item btn btn-primary export-4" href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a>
-            <a class="dropdown-item btn btn-primary export-5" href="{% url 'registrations:export_initiative_assessments' %}">{% trans "Export Initiative registration & implementation" %}</a>
-            <a class="dropdown-item btn btn-primary export-1" href="{% url 'registrations:export' %}">{% trans "Export beneficiary list" %}</a>
+              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_registry_assessments">{% trans "Export Registration" %}</a>
+              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_civic_assessments">{% trans "Export Civic Engagement assessments" %}</a>
+              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_entrepreneurship_assessments">{% trans "Export Entrepreneurship assessments" %}</a>
+              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_initiative_assessments">{% trans "Export Initiative registration & implementation" %}</a>
+              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_beneficiary">{% trans "Export Beneficiary list" %}</a>
           </div>
         </li>
 
@@ -60,22 +60,37 @@
     {% get_user_token request.user.id as user_token %}
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>
     <script>
+        var export_url = '/api/backend-exporter/';
         var user_token = '{{ user_token }}';
         var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
-        var export_1 = '{% url "registrations:export" %}';
-        var export_2 = '{% url "registrations:export_registry_assessments" %}';
-        var export_3 = '{% url "registrations:export_civic_assessments" %}';
-        var export_4 = '{% url "registrations:export_entrepreneurship_assessments" %}';
-        var export_5 = '{% url "registrations:export_initiative_assessments" %}';
-        $(document).ready(function(){
-            var params = '?governorate='+$('select#id_governorate').val();
-            $('a.export-1').attr('href', export_1+params);
-            $('a.export-2').attr('href', export_2+params);
-            $('a.export-3').attr('href', export_3+params);
-            $('a.export-4').attr('href', export_4+params);
-            $('a.export-5').attr('href', export_5+params);
+
+        $(document).ready(function() {
+            $('.export-link').click(function(){
+                export_file($(this).attr('itemref'));
+            });
         });
+
+        function export_file(params)
+        {
+
+            $.ajax({
+                type: "GET",
+                url: export_url,
+                data: params,
+                cache: false,
+                headers: getHeader(),
+                dataType: 'json',
+                success: function (response, result, jqXHR) {
+                    if(jqXHR.status == 200){
+                      alert("Your export request has been sent, you will find in exported file in the Exported file page");
+                    }
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
     </script>
 {% endblock %}
