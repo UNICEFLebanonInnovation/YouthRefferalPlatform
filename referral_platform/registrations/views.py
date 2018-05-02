@@ -22,6 +22,8 @@ from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 
+from referral_platform.backends.tasks import *
+from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
@@ -1083,7 +1085,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
         return response
 
 
-class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
+class ExportInitiativeAssessments1View(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.all()
@@ -1508,3 +1510,19 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         )
         response['Content-Disposition'] = 'attachment; filename=Beneficiary_Initiative_Assessments.xls'
         return response
+
+
+class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
+
+    model = AssessmentSubmission
+    queryset = AssessmentSubmission.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        params = {
+            'report': 'export_initiative_assessments',
+            'partner': self.request.user.partner_id,
+            'user': self.request.user.id,
+            'governorate': request.GET.get('governorate', 0)
+        }
+        export_full_data(params)

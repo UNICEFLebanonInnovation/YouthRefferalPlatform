@@ -52,6 +52,8 @@ THIRD_PARTY_APPS = (
     'import_export',
     'prettyjson',
     'django_tables2',
+    'django_celery_beat',
+    'django_celery_results',
 )
 
 # Apps specific for this project go here.
@@ -67,6 +69,7 @@ LOCAL_APPS = (
     'referral_platform.registrations',
     'referral_platform.clm',
     'referral_platform.dashboard',
+    'referral_platform.backends',
 
 )
 
@@ -288,14 +291,20 @@ LOGIN_URL = 'account_login'
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig',)
+# INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig',)
 # if you are not using the django database broker (e.g. rabbitmq, redis, memcached), you can remove the next line.
 # INSTALLED_APPS += ('kombu.transport.django',)
-BROKER_URL = env('CELERY_BROKER_URL', default='django://')
-if BROKER_URL == 'django://':
-    CELERY_RESULT_BACKEND = 'redis://'
-else:
-    CELERY_RESULT_BACKEND = BROKER_URL
+# BROKER_URL = env('CELERY_BROKER_URL', default='django://')
+# if BROKER_URL == 'django://':
+#     CELERY_RESULT_BACKEND = 'redis://'
+# else:
+#     CELERY_RESULT_BACKEND = BROKER_URL
+########## END CELERY
+
+########## CELERY
+INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig', )
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = 'django-db'
 ########## END CELERY
 
 # django-compressor
