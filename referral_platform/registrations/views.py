@@ -14,9 +14,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import RedirectView
 from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse, reverse_lazy
 
 from rest_framework import status
 from rest_framework import viewsets, mixins, permissions
+from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
@@ -1512,17 +1514,22 @@ class ExportInitiativeAssessments1View(LoginRequiredMixin, ListView):
         return response
 
 
-class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
+class ExportInitiativeAssessmentsView(LoginRequiredMixin,
+                                      GroupRequiredMixin,
+                                      TemplateView):
 
-    model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.all()
+    template_name = 'backends/files.html'
 
-    def get(self, request, *args, **kwargs):
+    group_required = [u"YOUTH"]
 
+    def get_context_data(self, **kwargs):
+        from django.shortcuts import redirect
         params = {
             'report': 'export_initiative_assessments',
             'partner': self.request.user.partner_id,
             'user': self.request.user.id,
-            'governorate': request.GET.get('governorate', 0)
+            'governorate': self.request.GET.get('governorate', 0)
         }
         export_full_data(params)
+        # return reverse('registrations:list', kwargs={})
+        return redirect('/registrations/list/')

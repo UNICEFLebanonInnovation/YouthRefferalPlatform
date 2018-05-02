@@ -13,14 +13,21 @@ from referral_platform.registrations.mappings import *
 @app.task
 def export_initiative_assessments(params=None, return_data=False):
     from referral_platform.registrations.models import AssessmentSubmission
+    from referral_platform.partners.models import PartnerOrganization
+    from referral_platform.locations.models import Location
 
     submission_set = AssessmentSubmission.objects.all()
 
     book = tablib.Databook()
-    if 'partner' in params:
-        submission_set = submission_set.filter(registration__partner_organization_id=int(params['partner']))
-    if 'governorate' in params:
-        submission_set - submission_set.filter(registration__governorate_id=int(params['governorate']))
+    title = 'initiative_assessments'
+    if 'partner' in params and params['partner']:
+        partner = PartnerOrganization.objects.get(id=int(params['partner']))
+        title = title + '-partner-'+partner.name
+        submission_set = submission_set.filter(registration__partner_organization_id=partner.id)
+    if 'governorate' in params and params['governorate']:
+        location = Location.objects.get(id=int(params['governorate']))
+        title = title + '-governorate-'+location.name
+        submission_set = submission_set.filter(registration__governorate_id=location.id)
 
     data5 = tablib.Dataset()
     data5.title = "Initiative registration"
@@ -423,10 +430,9 @@ def export_initiative_assessments(params=None, return_data=False):
     book.add_sheet(data5)
     book.add_sheet(data6)
 
-    timestamp = '{}-{}'.format('initiative_assessments', time.time())
-    file_format = base_formats.XLSX()
-    data = file_format.export_data(book.export("xlsx"))
+    timestamp = '{}-{}'.format(title, time.time())
+    data = book.export("xlsx")
     if return_data:
         return data
-    store_file(data, timestamp, params)
+    # store_file(data, timestamp, params)
     return True
