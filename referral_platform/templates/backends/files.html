@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load staticfiles i18n %}
 {% load static %}
 {% load render_table from django_tables2 %}
@@ -11,21 +11,21 @@
 {% endblock %}
 
 {% block content-full-page %}
+<section>
 
-    <div class="">
-        <fieldset class="bd-callout bd-callout-warning ">
-          <div> <h4 id="alternatives-to-hidden-labels">{% trans 'Exported files' %}</h4></div>
-          <hr>
+      <section id="page-title" class="inline-form inner-section ui-menu-color02">
+        <div class="container-fluid nopadding">
+            <h3 class="font-accident-two-light color01 uppercase"
+                data-animation-origin="right"
+                data-animation-duration="400"
+                data-animation-delay="100"
+                data-animation-distance="50px">{% trans "Exported files" %}</h3>
 
+        </div>
+    </section>
 
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><span class="badge badge-primary">{{ table.rows|length }}</span></li>
-      <li class="breadcrumb-item active">{{ request.user.partner }}</li>
-      <li class="breadcrumb-item active">{{ request.user }}</li>
-    </ol>
-
+    <section style="padding-top:10px;">
           {% render_table table 'django_tables2/bootstrap.html' %}
-        </fieldset>
-    </div>
-
+    </section>
+</section>
 {% endblock %}

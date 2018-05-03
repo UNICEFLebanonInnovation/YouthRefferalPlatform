@@ -35,7 +35,12 @@ class ExporterView(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         if self.request.GET.get('report', None):
             #  todo raise a exception if the partner do not belongs to the CO
-            export_full_data(self.request.GET)
+            data = {
+                'report': self.request.GET.get('report'),
+                'user': self.request.user.id,
+                'partner': self.request.GET.get('partner', 0),
+            }
+            export_full_data(data)
         partners = PartnerOrganization.objects.all()
 
         if has_group(self.request.user, 'UNICEF_CO'):

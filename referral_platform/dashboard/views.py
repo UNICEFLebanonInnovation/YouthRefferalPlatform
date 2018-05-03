@@ -20,7 +20,7 @@ class COView(LoginRequiredMixin,
 
     # group_required = [u"UNICEF_CO"]
 
-    def handle_no_permission(self, request):
+    def handle_no_permission(self):
         return HttpResponseForbidden()
 
     def get_context_data(self, **kwargs):
@@ -41,14 +41,14 @@ class COView(LoginRequiredMixin,
 
 
 class PartnerView(LoginRequiredMixin,
-                   GroupRequiredMixin,
-                   TemplateView):
+                  GroupRequiredMixin,
+                  TemplateView):
 
     template_name = 'dashboard/partner.html'
 
     group_required = [u"YOUTH"]
 
-    def handle_no_permission(self, request):
+    def handle_no_permission(self):
         return HttpResponseForbidden()
 
     def get_context_data(self, **kwargs):

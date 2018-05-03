@@ -83,6 +83,7 @@ class AddView(LoginRequiredMixin, FormView):
         return self.success_url
 
     def get_initial(self):
+        # force_default_language(self.request, 'ar-ar')
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()

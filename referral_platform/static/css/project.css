@@ -188,17 +188,19 @@
     margin-top: 3px;
     width: auto;
     height: 22px;
+    float: right;
+    margin-right: 10px;
 }
 .bd-callout {
     padding: 1.25rem;
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
     border: 1px solid #eee;
-    border-left-width: .25rem;
+    border-right-width: .25rem;
     border-radius: .25rem;
 }
 .bd-callout-warning {
-    border-left-color: #f0ad4e;
+    border-right  -color: #f0ad4e;
 }
 .bd-callout-warning h4 {
     color: #f0ad4e;
@@ -244,6 +246,7 @@ tr.odd {
 }
 .breadcrumb {
     position: relative;
+    background-color: #ECEEEE;
 }
 .row-class  {
     max-height:75px;
@@ -370,4 +373,23 @@ tr.odd {
 .nav-link.btn.btn-outline-secondary {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.inline-form .col-md-3 {
+  float: right;
+}
+section.inline-form.inner-section {
+  padding: 20px 20px;
+}
+section.inline-form .btn-actions .btn {
+  margin: 10px 10px;
+}
+#change-language {
+    top:40px;
+    height: 40px;
+    position: fixed;
+    right: 30px;
+    width: 40px;
+    z-index: 9999;
+    cursor: pointer;
 }

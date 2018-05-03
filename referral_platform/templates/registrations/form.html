@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load staticfiles i18n %}
 {% load crispy_forms_tags %}
 
@@ -10,28 +10,29 @@
 
 {% endblock %}
 
-{% block main_content %}
-
+{% block content-full-page %}
+<section>
     <div id="resume" class="inner-content">
 
-        <section id="page-title" class="inner-section ui-menu-color02">
+        <section id="page-title" class="inline-form inner-section ui-menu-color02">
             <div class="container-fluid nopadding">
-                <h2 class="font-accident-two-light color01 uppercase"
+                <h3 class="font-accident-two-light color01 uppercase"
                     data-animation-origin="right"
                     data-animation-duration="400"
                     data-animation-delay="100"
-                    data-animation-distance="50px">{% trans "Registration" %}</h2>
+                    data-animation-distance="50px">{% trans "Youth Registration" %}</h3>
 
             </div>
         </section>
 
-        <section class="inner-section light bg-color01">
+        <section class="inline-form inner-section light bg-color01">
             <div class="container-fluid nopadding">
                 {% crispy form 'bootstrap4' %}
             </div>
         </section>
 
     </div>
+</section>
 
 {% endblock %}
 

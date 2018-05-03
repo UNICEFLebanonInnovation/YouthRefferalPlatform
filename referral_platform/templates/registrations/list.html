@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load staticfiles i18n %}
 {% load static %}
 {% load render_table from django_tables2 %}
@@ -11,32 +11,44 @@
 {% endblock %}
 
 {% block content-full-page %}
+<section>
+
+    <section id="page-title" class="inline-form inner-section ui-menu-color02">
+        <div class="container-fluid nopadding">
+            <h3 class="font-accident-two-light color01 uppercase"
+                data-animation-origin="right"
+                data-animation-duration="400"
+                data-animation-delay="100"
+                data-animation-distance="50px">{% trans "Youth Registration" %}</h3>
+
+        </div>
+    </section>
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><span class="badge badge-primary">{{ table.rows|length }}</span></li>
       <li class="breadcrumb-item active">{{ request.user.partner }}</li>
       <li class="breadcrumb-item active">{{ request.user }}</li>
-    </ol>
 
-    <ol class="breadcrumb">
         <li class="breadcrumb-item active">
             <a href="{% url 'registrations:add' %}" class="btn btn-success">
                 <i class="icon-plus-sign icon-white"></i>
                 {% trans "Add new beneficiary" %}
             </a>
         </li>
-
-        <li class="breadcrumb-item dropdown">
-          <a class="btn btn-primary dropdown-toggle" id="navbarDropdownMenuLink" style="color: white"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {% trans "Export data" %}
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_registry_assessments">{% trans "Export Registration" %}</a>
-              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_civic_assessments">{% trans "Export Civic Engagement assessments" %}</a>
-              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_entrepreneurship_assessments">{% trans "Export Entrepreneurship assessments" %}</a>
-              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_initiative_assessments">{% trans "Export Initiative registration & implementation" %}</a>
-              <a class="dropdown-item btn btn-primary export-link" itemref="report=export_beneficiary">{% trans "Export Beneficiary list" %}</a>
+        <li>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary">{% trans "Export data" %}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="export-link" itemref="report=export_registry_assessments">{% trans "Export Registration" %}</a></li>
+              <li><a class="export-link" itemref="report=export_civic_assessments">{% trans "Export Civic Engagement assessments" %}</a></li>
+              <li><a class="export-link" itemref="report=export_entrepreneurship_assessments">{% trans "Export Entrepreneurship assessments" %}</a></li>
+              <li><a class="export-link" itemref="report=export_initiative_assessments">{% trans "Export Initiative registration & implementation" %}</a></li>
+              <li><a class="export-link" itemref="report=export_beneficiary">{% trans "Export Beneficiary list" %}</a></li>
+            </ul>
           </div>
         </li>
 
@@ -49,10 +61,11 @@
             {% bootstrap_button _('reset') button_type="link" button_class="btn-warning" href='/registrations/list/' %}
         </form>
     </div>
-    <div class="col-sm-10">
+    <div class="">
         {% csrf_token %}
         {% render_table table 'django_tables2/bootstrap.html' %}
     </div>
+</section>
 
 {% endblock %}
 

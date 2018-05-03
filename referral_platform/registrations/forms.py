@@ -4,7 +4,8 @@ from django import forms
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.contrib import messages
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _t
+from django.utils.translation import ugettext_lazy as _
 
 from datetime import datetime
 from collections import OrderedDict
@@ -44,6 +45,11 @@ class CommonForm(forms.ModelForm):
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         required=True, to_field_name='id',
     )
+    location = forms.CharField(
+        label=_("Location"),
+        widget=forms.TextInput,
+        required=False
+    )
     center = forms.ModelChoiceField(
         label=_('Center'),
         queryset=Center.objects.all(), widget=forms.Select,
@@ -75,7 +81,7 @@ class CommonForm(forms.ModelForm):
         widget=forms.TextInput, required=True
     )
     youth_sex = forms.ChoiceField(
-        label=_("Sex"),
+        label=_("Gender"),
         widget=forms.Select, required=True,
         choices=(
             ('', '----------'),
@@ -204,7 +210,7 @@ class CommonForm(forms.ModelForm):
             del self.fields['center']
             my_fields['Location Information'].remove('center')
 
-        my_fields['Personal Details'] = ['youth_first_name',
+        my_fields[_('Personal Details')] = ['youth_first_name',
                                          'youth_father_name',
                                          'youth_last_name',
                                          'youth_birthday_day',
@@ -228,7 +234,7 @@ class CommonForm(forms.ModelForm):
             # Title Div
             main_fieldset.fields.append(
                 Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">' + _(title) + '</h4>')
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
                 )
             )
             # remaining fields, every 3 on a row
@@ -338,9 +344,10 @@ class CommonForm(forms.ModelForm):
 
         self.helper.layout.append(
             FormActions(
-                Submit('save', _('Save')),
-                Submit('save_add_another', _('Save and add another')),
-                HTML('<a class="btn btn-info" href="/registrations/list/">' + _('Cancel') + '</a>'),
+                HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
+                Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
+                Submit('save', _('Save'), css_class='col-md-2'),
+                css_class='btn-actions'
             )
         )
 

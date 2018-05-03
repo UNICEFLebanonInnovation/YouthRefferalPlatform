@@ -1,19 +1,28 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load staticfiles i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">-->
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">-->
 {% endblock %}
 
 {% block content-full-page %}
+<section>
 
-{% load util_tags %}
-    <div class="">
-        <fieldset class="bd-callout bd-callout-warning ">
-          <div> <h4 id="alternatives-to-hidden-labels">{% trans "Full data export" %}</h4></div>
-          <hr>
+      {% load util_tags %}
+      <section id="page-title" class="inline-form inner-section ui-menu-color02">
+        <div class="container-fluid nopadding">
+            <h3 class="font-accident-two-light color01 uppercase"
+                data-animation-origin="right"
+                data-animation-duration="400"
+                data-animation-delay="100"
+                data-animation-distance="50px">{% trans "Full data export" %}</h3>
+
+        </div>
+    </section>
+
+    <section style="padding-top: 10px;">
 
         <div class="row">
 
@@ -134,6 +143,6 @@
 
         </div>
 
-        </fieldset>
-    </div>
+    </section>
+</section>
 {% endblock %}

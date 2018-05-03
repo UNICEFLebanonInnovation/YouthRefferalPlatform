@@ -4,7 +4,6 @@ import time
 import datetime
 import tablib
 from django.utils.translation import ugettext as _
-from import_export.formats import base_formats
 from referral_platform.taskapp.celery import app
 from .file import store_file
 from referral_platform.registrations.mappings import *
@@ -1233,6 +1232,8 @@ def export_beneficiary(params=None, return_data=False):
         title = title + '-governorate-'+location.name
         queryset = queryset.filter(governorate_id=location.id)
 
+    print(queryset.count())
+
     common_headers = [
         'Country',
         'Governorate',
@@ -1297,5 +1298,5 @@ def export_beneficiary(params=None, return_data=False):
     data = book.export("xlsx")
     if return_data:
         return data
-    store_file(data, timestamp, params)
+    # store_file(data, timestamp, params)
     return True
