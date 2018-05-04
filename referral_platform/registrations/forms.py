@@ -192,35 +192,35 @@ class CommonForm(forms.ModelForm):
         if not instance:
             my_fields['Search Youth'] = ['search_youth']
 
-        my_fields['Location Information'] = ['governorate', 'center', 'trainer', 'location']
+        my_fields[_('Location Information')] = ['governorate', 'center', 'trainer', 'location']
 
         # Add Trainer name to Jordan
         jordan_location = Location.objects.get(name="Jordan")
         if jordan_location not in partner_locations:
             del self.fields['trainer']
             del self.fields['youth_bayanati_ID']
-            my_fields['Location Information'].remove('trainer')
+            my_fields[_('Location Information')].remove('trainer')
         else:
             self.fields['youth_bayanati_ID'].required = True
             self.fields['trainer'].required = True
-            my_fields['Bayanati Information'] = ['youth_bayanati_ID', ]
+            my_fields['Bayanati'] = ['youth_bayanati_ID', ]
 
         # Add Centers for the partner having ones (For now only Jordan)
         if self.fields['center'].queryset.count() < 1:
             del self.fields['center']
-            my_fields['Location Information'].remove('center')
+            my_fields[_('Location Information')].remove('center')
 
         my_fields[_('Personal Details')] = ['youth_first_name',
-                                         'youth_father_name',
-                                         'youth_last_name',
-                                         'youth_birthday_day',
-                                         'youth_birthday_month',
-                                         'youth_birthday_year',
-                                         'youth_sex',
-                                         'youth_nationality',
-                                         'youth_marital_status',
-                                         'youth_address',
-                                         'comments', ]
+                                            'youth_father_name',
+                                            'youth_last_name',
+                                            'youth_birthday_day',
+                                            'youth_birthday_month',
+                                            'youth_birthday_year',
+                                            'youth_sex',
+                                            'youth_nationality',
+                                            'youth_marital_status',
+                                            'youth_address',
+                                            'comments', ]
 
         self.helper = FormHelper()
         self.helper.form_show_labels = True

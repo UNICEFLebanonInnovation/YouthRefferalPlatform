@@ -1,6 +1,7 @@
 # coding: utf-8
 import django_tables2 as tables
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _t
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Registration
 
