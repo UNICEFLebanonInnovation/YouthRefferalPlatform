@@ -382,19 +382,3 @@ REST_FRAMEWORK = {
 POWERBI_JCO = env('POWERBI_JCO', default='NO_URL')
 POWERBI_SCO = env('POWERBI_SCO', default='NO_URL')
 POWERBI_PCO = env('POWERBI_PCO', default='NO_URL')
-
-# STORAGE CONFIGURATION
-# ------------------------------------------------------------------------------
-# Uploaded Media Files
-# ------------------------
-# See: http://django-storages.readthedocs.io/en/latest/index.html
-INSTALLED_APPS += ('storages',)
-
-AZURE_ACCOUNT_NAME = env('AZURE_ACCOUNT_NAME', default='NO_AZURE_ACCOUNT_NAME')
-AZURE_ACCOUNT_KEY = env('AZURE_ACCOUNT_KEY', default='NO_AZURE_ACCOUNT_KEY')
-AZURE_CONTAINER = env('AZURE_CONTAINER', default='NO_AZURE_CONTAINER')
-
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-DEFAULT_FILE_FORMAT = 'xlsx'
-DEFAULT_FILE_CONTENT_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-DEFAULT_FILE_CONTENT_LANGUAGE = 'ar'
