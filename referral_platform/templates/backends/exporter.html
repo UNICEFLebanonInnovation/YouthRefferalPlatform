@@ -36,12 +36,12 @@
                       <i class="icon-export-sign icon-white"></i>&nbsp;
                       {% trans "Export" %}
                   </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_registry_assessments" target="_blank">{% trans "Export All" %}</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'backends:exporter' %}?report=export_registry_assessments" target="_blank">{% trans "Export All" %}</a></li>
                     {% for item in partners %}
-                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_registry_assessments&partner={{ item.id }}" target="_blank">{% trans "Export partner" %} <b>{{ item.name }}</b></a>
+                    <li><a href="{% url 'backends:exporter' %}?report=export_registry_assessments&partner={{ item.id }}" target="_blank">{% trans "Export partner" %} <b>{{ item.name }}</b></a></li>
                     {% endfor %}
-                  </div>
+                  </ul>
                 </div>
 
               </div>

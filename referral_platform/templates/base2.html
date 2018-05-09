@@ -87,6 +87,7 @@
                         data-animation-delay="100">
                         <a href="/" class="hvr-sweep-to-bottom"><i class="flaticon-insignia"></i><span>{% trans 'home' %}</span></a>
                     </li>
+                  {% if request.user.is_authenticated %}
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color02" data-animation-duration="1000"
                         data-animation-delay="300">
                         <a href="{% url 'registrations:list' %}" class="hvr-sweep-to-bottom"><i class="flaticon-graduation61"></i><span>{% trans 'Youth Registration' %}</span></a>
@@ -94,21 +95,37 @@
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color03" data-animation-duration="1000"
                         data-animation-delay="500">
                         <a href="{% url 'dashboard:co' %}" class="hvr-sweep-to-bottom"><i
-                                class="flaticon-book-bag2"></i><span>{% trans 'Global dashboard' %}</span></a>
+                                class="flaticon-stats47"></i><span>{% trans 'Global dashboard' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"
                         data-animation-delay="700">
-                        <a href="{% url 'dashboard:partner' %}" class="hvr-sweep-to-bottom"><i class="flaticon-placeholders4"></i><span>{% trans 'Partner dashboard' %}</span></a>
+                        <a href="{% url 'dashboard:partner' %}" class="hvr-sweep-to-bottom">
+                          <i class="flaticon-stats48"></i><span>{% trans 'Partner dashboard' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color05" data-animation-duration="1000"
                         data-animation-delay="900">
-                        <a href="{% url 'backends:files_list' %}" class="hvr-sweep-to-bottom"><i class="flaticon-earphones18"></i><span>{% trans 'Exported files' %}</span></a>
+                        <a href="{% url 'backends:files_list' %}" class="hvr-sweep-to-bottom"><i class="flaticon-download167"></i><span>{% trans 'Exported files' %}</span></a>
                     </li>
+                  {% if request.user.is_staff %}
+                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
+                        data-animation-delay="1100">
+                        <a href="/admin/" class="hvr-sweep-to-bottom"><i
+                                class="flaticon-tool-1"></i><span>{% trans 'Admin' %}</span></a>
+                    </li>
+                  {% else %}
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
                         data-animation-delay="1100">
                         <a href="" class="hvr-sweep-to-bottom"><i
-                                class="flaticon-pens15"></i><span>{% trans 'Profile' %}</span></a>
+                                class="flaticon-profile5"></i><span>{% trans 'Profile' %}</span></a>
                     </li>
+                  {% endif %}
+                  {% else %}
+                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
+                        data-animation-delay="1100">
+                        <a href="{% url 'account_login' %}" class="hvr-sweep-to-bottom"><i
+                                class="flaticon-identification28"></i><span>{% trans 'Login' %}</span></a>
+                    </li>
+                  {% endif %}
                 </ul>
 
                 <!-- /Main Navigation -->
@@ -168,6 +185,14 @@
                         <li><a target="_blank" href="#" class="rst-icon-youtube"><i class="fa fa-youtube"></i></a></li>
                     </ul>
                 </div>
+                <div class="divider-dynamic"></div>
+            </div>
+            <div class="col-sm-3">
+              {% if request.user.is_authenticated %}
+              <h5 class="font-accident-two-normal uppercase"><a href="{% url 'account_change_password' %}">{% trans 'Change password?' %}</a></h5>
+              <h5 class="font-accident-two-normal uppercase"><a href="{% url 'account_logout' %}">{% trans 'Logout' %}</a></h5>
+              {% endif %}
+                <div class="dividewhite1"></div>
                 <div class="divider-dynamic"></div>
             </div>
             <div class="col-sm-3">

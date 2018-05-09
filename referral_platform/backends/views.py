@@ -38,7 +38,7 @@ class ExporterView(LoginRequiredMixin,
             data = {
                 'report': self.request.GET.get('report'),
                 'user': self.request.user.id,
-                'partner': self.request.GET.get('partner', 0),
+                'partner': self.request.GET.get('partner', None),
             }
             export_full_data(data)
         partners = PartnerOrganization.objects.all()
