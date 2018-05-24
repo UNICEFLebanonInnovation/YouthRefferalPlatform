@@ -245,6 +245,9 @@ class ExportView(LoginRequiredMixin, ListView):
         gov = self.request.GET.get('governorate', 0)
         if gov:
             queryset = queryset.filter(governorate_id=int(gov))
+        country = self.request.GET.get('country', 0)
+        if country:
+            queryset = queryset.filter(partner_organization__locations=int(country))
 
         common_headers = [
             'Country',
@@ -332,6 +335,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         gov = self.request.GET.get('governorate', 0)
         if gov:
             submission_set = submission_set.filter(registration__governorate_id=int(gov))
+        country = self.request.GET.get('country', 0)
+        if country:
+            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
 
         data2 = tablib.Dataset()
         data2.title = "Registration Assessment"
@@ -379,18 +385,18 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'Education level completed before leaving school',
 
             'Reasons for leaving school',
-            'fam_request',
-            'underachieveme',
-            'illness',
-            'school_far',
-            'expenses',
-            'unsafe_travel',
-            'engaged_for_mo',
-            'educ_no_help',
-            'not_space',
-            'low_standard',
-            'school_bullyin',
-            'other',
+            # 'fam_request',
+            # 'underachieveme',
+            # 'illness',
+            # 'school_far',
+            # 'expenses',
+            # 'unsafe_travel',
+            # 'engaged_for_mo',
+            # 'educ_no_help',
+            # 'not_space',
+            # 'low_standard',
+            # 'school_bullyin',
+            # 'other',
 
             'If you answered (Others), what is the reason?',
 
@@ -421,12 +427,12 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'Feeling of safety',
 
             'Reasons for not feeling safe most or all of the time',
-            'conflict_relat',
-            'violence_home',
-            'comm_viol_harr',
-            'unplanned_futu',
-            'school_viol_ha',
-            'other',
+            # 'conflict_relat',
+            # 'violence_home',
+            # 'comm_viol_harr',
+            # 'unplanned_futu',
+            # 'school_viol_ha',
+            # 'other',
 
             'Accommodation type',
             'Displacement status',
@@ -487,7 +493,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
                 get_choice_value(line2.data, 'training_type'),
                 get_choice_value(line2.data, 'center_type'),
-                registry.center,
+                registry.center.name if registry.center else '',
                 get_choice_value(line2.data, 'concent_paper', 'status'),
                 line2.data.get('If_you_answered_Othe_the_name_of_the_NGO', ''),
 
@@ -505,20 +511,20 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 line2.data.get('reason_for_skipping_class', ''),
                 get_choice_value(line2.data, 'educ_level_stopped'),
 
-                # get_choice_value(line2.data, 'Reason_stop_study'),
-                line2.data.get('Reason_stop_study', ''),
-                line2.get_data_option('Reason_stop_study', 'fam_request'),
-                line2.get_data_option('Reason_stop_study', 'underachieveme'),
-                line2.get_data_option('Reason_stop_study', 'illness'),
-                line2.get_data_option('Reason_stop_study', 'school_far'),
-                line2.get_data_option('Reason_stop_study', 'expenses'),
-                line2.get_data_option('Reason_stop_study', 'unsafe_travel'),
-                line2.get_data_option('Reason_stop_study', 'engaged_for_mo'),
-                line2.get_data_option('Reason_stop_study', 'educ_no_help'),
-                line2.get_data_option('Reason_stop_study', 'not_space'),
-                line2.get_data_option('Reason_stop_study', 'low_standard'),
-                line2.get_data_option('Reason_stop_study', 'school_bullyin'),
-                line2.get_data_option('Reason_stop_study', 'other'),
+                get_choice_value(line2.data, 'Reason_stop_study'),
+                # line2.data.get('Reason_stop_study', ''),
+                # line2.get_data_option('Reason_stop_study', 'fam_request'),
+                # line2.get_data_option('Reason_stop_study', 'underachieveme'),
+                # line2.get_data_option('Reason_stop_study', 'illness'),
+                # line2.get_data_option('Reason_stop_study', 'school_far'),
+                # line2.get_data_option('Reason_stop_study', 'expenses'),
+                # line2.get_data_option('Reason_stop_study', 'unsafe_travel'),
+                # line2.get_data_option('Reason_stop_study', 'engaged_for_mo'),
+                # line2.get_data_option('Reason_stop_study', 'educ_no_help'),
+                # line2.get_data_option('Reason_stop_study', 'not_space'),
+                # line2.get_data_option('Reason_stop_study', 'low_standard'),
+                # line2.get_data_option('Reason_stop_study', 'school_bullyin'),
+                # line2.get_data_option('Reason_stop_study', 'other'),
 
                 line2.data.get('other_five', ''),
 
@@ -550,14 +556,14 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 get_choice_value(line2.data, 'drugs_substance_use', 'yes_no'),
                 get_choice_value(line2.data, 'feeling_of_safety_security', 'feeling_safety'),
 
-                # get_choice_value(line2.data, 'reasons_for_not_feeling_safe_a', 'not_feeling_safety'),
-                line2.data.get('reasons_for_not_feeling_safe_a', ''),
-                line2.get_data_option('reasons_for_not_feeling_safe_a', 'conflict_relat'),
-                line2.get_data_option('reasons_for_not_feeling_safe_a', 'violence_home'),
-                line2.get_data_option('reasons_for_not_feeling_safe_a', 'comm_viol_harr'),
-                line2.get_data_option('reasons_for_not_feeling_safe_a', 'unplanned_futu'),
-                line2.get_data_option('reasons_for_not_feeling_safe_a', 'school_viol_ha'),
-                line2.get_data_option('reasons_for_not_feeling_safe_a', 'other'),
+                get_choice_value(line2.data, 'reasons_for_not_feeling_safe_a', 'not_feeling_safety'),
+                # line2.data.get('reasons_for_not_feeling_safe_a', ''),
+                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'conflict_relat'),
+                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'violence_home'),
+                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'comm_viol_harr'),
+                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'unplanned_futu'),
+                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'school_viol_ha'),
+                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'other'),
 
                 get_choice_value(line2.data, 'Accommodation_type'),
                 get_choice_value(line2.data, 'how_many_times_displaced', 'how_many'),
@@ -612,6 +618,9 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
         gov = self.request.GET.get('governorate', 0)
         if gov:
             submission_set = submission_set.filter(registration__governorate_id=int(gov))
+        country = self.request.GET.get('country', 0)
+        if country:
+            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
 
         data3 = tablib.Dataset()
         data3.title = "Pre-Assessment"
@@ -819,6 +828,9 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
         gov = self.request.GET.get('governorate', 0)
         if gov:
             submission_set = submission_set.filter(registration__governorate_id=int(gov))
+        country = self.request.GET.get('country', 0)
+        if country:
+            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
 
         data5 = tablib.Dataset()
         data5.title = "Pre-Entrepreneurship"
@@ -1105,6 +1117,9 @@ class ExportInitiativeAssessments1View(LoginRequiredMixin, ListView):
         gov = self.request.GET.get('governorate', 0)
         if gov:
             submission_set = submission_set.filter(registration__governorate_id=int(gov))
+        country = self.request.GET.get('country', 0)
+        if country:
+            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
 
         data5 = tablib.Dataset()
         data5.title = "Initiative registration"
