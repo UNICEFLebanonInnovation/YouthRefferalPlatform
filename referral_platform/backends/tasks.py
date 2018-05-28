@@ -23,6 +23,9 @@ def export_registry_assessments(params=None, return_data=False):
         partner = PartnerOrganization.objects.get(id=params['partner'])
         title = title + '-partner-'+partner.name
         submission_set = submission_set.filter(registration__partner_organization_id=partner.id)
+    if 'country' in params and params['country']:
+        title = title + '-country-' + str(params['country'])
+        submission_set = submission_set.filter(registration__partner_organization__locations=int(params['country']))
     if 'governorate' in params and params['governorate']:
         location = Location.objects.get(id=int(params['governorate']))
         title = title + '-governorate-'+location.name
@@ -74,18 +77,18 @@ def export_registry_assessments(params=None, return_data=False):
         'Education level completed before leaving school',
 
         'Reasons for leaving school',
-        'fam_request',
-        'underachieveme',
-        'illness',
-        'school_far',
-        'expenses',
-        'unsafe_travel',
-        'engaged_for_mo',
-        'educ_no_help',
-        'not_space',
-        'low_standard',
-        'school_bullyin',
-        'other',
+        # 'fam_request',
+        # 'underachieveme',
+        # 'illness',
+        # 'school_far',
+        # 'expenses',
+        # 'unsafe_travel',
+        # 'engaged_for_mo',
+        # 'educ_no_help',
+        # 'not_space',
+        # 'low_standard',
+        # 'school_bullyin',
+        # 'other',
 
         'If you answered (Others), what is the reason?',
 
@@ -116,12 +119,12 @@ def export_registry_assessments(params=None, return_data=False):
         'Feeling of safety',
 
         'Reasons for not feeling safe most or all of the time',
-        'conflict_relat',
-        'violence_home',
-        'comm_viol_harr',
-        'unplanned_futu',
-        'school_viol_ha',
-        'other',
+        # 'conflict_relat',
+        # 'violence_home',
+        # 'comm_viol_harr',
+        # 'unplanned_futu',
+        # 'school_viol_ha',
+        # 'other',
 
         'Accommodation type',
         'Displacement status',
@@ -200,20 +203,20 @@ def export_registry_assessments(params=None, return_data=False):
             line2.data.get('reason_for_skipping_class', ''),
             get_choice_value(line2.data, 'educ_level_stopped'),
 
-            # get_choice_value(line2.data, 'Reason_stop_study'),
-            line2.data.get('Reason_stop_study', ''),
-            line2.get_data_option('Reason_stop_study', 'fam_request'),
-            line2.get_data_option('Reason_stop_study', 'underachieveme'),
-            line2.get_data_option('Reason_stop_study', 'illness'),
-            line2.get_data_option('Reason_stop_study', 'school_far'),
-            line2.get_data_option('Reason_stop_study', 'expenses'),
-            line2.get_data_option('Reason_stop_study', 'unsafe_travel'),
-            line2.get_data_option('Reason_stop_study', 'engaged_for_mo'),
-            line2.get_data_option('Reason_stop_study', 'educ_no_help'),
-            line2.get_data_option('Reason_stop_study', 'not_space'),
-            line2.get_data_option('Reason_stop_study', 'low_standard'),
-            line2.get_data_option('Reason_stop_study', 'school_bullyin'),
-            line2.get_data_option('Reason_stop_study', 'other'),
+            get_choice_value(line2.data, 'Reason_stop_study'),
+            # line2.data.get('Reason_stop_study', ''),
+            # line2.get_data_option('Reason_stop_study', 'fam_request'),
+            # line2.get_data_option('Reason_stop_study', 'underachieveme'),
+            # line2.get_data_option('Reason_stop_study', 'illness'),
+            # line2.get_data_option('Reason_stop_study', 'school_far'),
+            # line2.get_data_option('Reason_stop_study', 'expenses'),
+            # line2.get_data_option('Reason_stop_study', 'unsafe_travel'),
+            # line2.get_data_option('Reason_stop_study', 'engaged_for_mo'),
+            # line2.get_data_option('Reason_stop_study', 'educ_no_help'),
+            # line2.get_data_option('Reason_stop_study', 'not_space'),
+            # line2.get_data_option('Reason_stop_study', 'low_standard'),
+            # line2.get_data_option('Reason_stop_study', 'school_bullyin'),
+            # line2.get_data_option('Reason_stop_study', 'other'),
 
             line2.data.get('other_five', ''),
 
@@ -245,14 +248,14 @@ def export_registry_assessments(params=None, return_data=False):
             get_choice_value(line2.data, 'drugs_substance_use', 'yes_no'),
             get_choice_value(line2.data, 'feeling_of_safety_security', 'feeling_safety'),
 
-            # get_choice_value(line2.data, 'reasons_for_not_feeling_safe_a', 'not_feeling_safety'),
-            line2.data.get('reasons_for_not_feeling_safe_a', ''),
-            line2.get_data_option('reasons_for_not_feeling_safe_a', 'conflict_relat'),
-            line2.get_data_option('reasons_for_not_feeling_safe_a', 'violence_home'),
-            line2.get_data_option('reasons_for_not_feeling_safe_a', 'comm_viol_harr'),
-            line2.get_data_option('reasons_for_not_feeling_safe_a', 'unplanned_futu'),
-            line2.get_data_option('reasons_for_not_feeling_safe_a', 'school_viol_ha'),
-            line2.get_data_option('reasons_for_not_feeling_safe_a', 'other'),
+            get_choice_value(line2.data, 'reasons_for_not_feeling_safe_a', 'not_feeling_safety'),
+            # line2.data.get('reasons_for_not_feeling_safe_a', ''),
+            # line2.get_data_option('reasons_for_not_feeling_safe_a', 'conflict_relat'),
+            # line2.get_data_option('reasons_for_not_feeling_safe_a', 'violence_home'),
+            # line2.get_data_option('reasons_for_not_feeling_safe_a', 'comm_viol_harr'),
+            # line2.get_data_option('reasons_for_not_feeling_safe_a', 'unplanned_futu'),
+            # line2.get_data_option('reasons_for_not_feeling_safe_a', 'school_viol_ha'),
+            # line2.get_data_option('reasons_for_not_feeling_safe_a', 'other'),
 
             get_choice_value(line2.data, 'Accommodation_type'),
             get_choice_value(line2.data, 'how_many_times_displaced', 'how_many'),
@@ -304,6 +307,9 @@ def export_civic_assessments(params=None, return_data=False):
         partner = PartnerOrganization.objects.get(id=params['partner'])
         title = title + '-partner-'+partner.name
         submission_set = submission_set.filter(registration__partner_organization_id=partner.id)
+    if 'country' in params and params['country']:
+        title = title + '-country-' + str(params['country'])
+        submission_set = submission_set.filter(partner_organization__locations=int(params['country']))
     if 'governorate' in params and params['governorate']:
         location = Location.objects.get(id=int(params['governorate']))
         title = title + '-governorate-'+location.name
@@ -512,6 +518,9 @@ def export_entrepreneurship_assessments(params=None, return_data=False):
         partner = PartnerOrganization.objects.get(id=params['partner'])
         title = title + '-partner-'+partner.name
         submission_set = submission_set.filter(registration__partner_organization_id=partner.id)
+    if 'country' in params and params['country']:
+        title = title + '-country-' + str(params['country'])
+        submission_set = submission_set.filter(partner_organization__locations=int(params['country']))
     if 'governorate' in params and params['governorate']:
         location = Location.objects.get(id=int(params['governorate']))
         title = title + '-governorate-'+location.name
@@ -799,6 +808,9 @@ def export_initiative_assessments(params=None, return_data=False):
         partner = PartnerOrganization.objects.get(id=params['partner'])
         title = title + '-partner-'+partner.name
         submission_set = submission_set.filter(registration__partner_organization_id=partner.id)
+    if 'country' in params and params['country']:
+        title = title + '-country-' + str(params['country'])
+        submission_set = submission_set.filter(partner_organization__locations=int(params['country']))
     if 'governorate' in params and params['governorate']:
         location = Location.objects.get(id=int(params['governorate']))
         title = title + '-governorate-'+location.name
@@ -1227,6 +1239,9 @@ def export_beneficiary(params=None, return_data=False):
         partner = PartnerOrganization.objects.get(id=params['partner'])
         title = title + '-partner-'+partner.name
         queryset = queryset.filter(partner_organization_id=partner.id)
+    if 'country' in params and params['country']:
+        title = title + '-country-'+str(params['country'])
+        queryset = queryset.filter(partner_organization__locations=int(params['country']))
     if 'governorate' in params and params['governorate']:
         location = Location.objects.get(id=int(params['governorate']))
         title = title + '-governorate-'+location.name

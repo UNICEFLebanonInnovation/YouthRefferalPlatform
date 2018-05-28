@@ -68,7 +68,8 @@ class ExporterViewSet(LoginRequiredMixin,
             data = {
                 'report': self.request.GET.get('report'),
                 'user': self.request.user.id,
-                'partner': self.request.user.partner_id
+                'partner': self.request.user.partner_id,
+                'country': self.request.user.country_id
             }
             export_full_data(data)
         return JsonResponse({'status': status.HTTP_200_OK})
