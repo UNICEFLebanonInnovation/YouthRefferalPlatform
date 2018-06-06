@@ -328,7 +328,32 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
     )
 
 
+class AssessmentHashAdmin(admin.ModelAdmin):
+
+    readonly_fields = (
+
+    )
+
+    list_display = (
+        'hashed',
+        'registration',
+        'assessment_slug',
+        'partner',
+    )
+    list_filter = (
+        'assessment_slug',
+        'partner',
+    )
+
+    search_fields = (
+        'hashed',
+        'registration',
+        'assessment_slug',
+
+    )
+
+
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
-admin.site.register(AssessmentHash)
+admin.site.register(AssessmentHash, AssessmentHashAdmin)
