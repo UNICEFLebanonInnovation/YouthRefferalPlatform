@@ -2,7 +2,7 @@ from __future__ import unicode_literals, absolute_import, division
 
 from datetime import datetime
 
-from django.contrib.gis.db import models
+# from django.contrib.gis.db import models
 from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
@@ -296,6 +296,6 @@ class YoungPerson(Person):
             self.father_name,
             self.last_name,
         )
-
-    def get_absolute_url(self):
-        return reverse('youth:edit', kwargs={'pk': self.id})
+    # This is commented after throwing an error while accessing the individual youth profile.
+    # def get_absolute_url(self):
+    #     return reverse('youth:edit', kwargs={'pk': self.id})
