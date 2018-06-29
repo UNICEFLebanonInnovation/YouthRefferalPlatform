@@ -509,5 +509,11 @@ section.inline-form .btn-actions .btn {
 .text-faded {
     color: rgba(255, 255, 255, 0.7);
 }
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #ff150f;
+}
 
 
