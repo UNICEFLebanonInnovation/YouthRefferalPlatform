@@ -1100,7 +1100,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
         return response
 
 
-class ExportInitiativeAssessments1View(LoginRequiredMixin, ListView):
+class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.all()
@@ -1528,24 +1528,3 @@ class ExportInitiativeAssessments1View(LoginRequiredMixin, ListView):
         )
         response['Content-Disposition'] = 'attachment; filename=Beneficiary_Initiative_Assessments.xls'
         return response
-
-
-class ExportInitiativeAssessmentsView(LoginRequiredMixin,
-                                      GroupRequiredMixin,
-                                      TemplateView):
-
-    template_name = 'backends/files.html'
-
-    group_required = [u"YOUTH"]
-
-    def get_context_data(self, **kwargs):
-        from django.shortcuts import redirect
-        params = {
-            'report': 'export_initiative_assessments',
-            'partner': self.request.user.partner_id,
-            'user': self.request.user.id,
-            'governorate': self.request.GET.get('governorate', 0)
-        }
-        export_full_data(params)
-        # return reverse('registrations:list', kwargs={})
-        return redirect('/registrations/list/')
