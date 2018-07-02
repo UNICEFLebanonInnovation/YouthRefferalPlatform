@@ -152,8 +152,9 @@ def export_registry_assessments(params=None, return_data=False):
 
     for line2 in submission_set:
         content = []
-        youth = line2.youth
+        #youth = line2.youth
         registry = line2.registration
+        youth = registry.youth
         submission_date = line2.data.get('_submission_time', '')
         try:
             submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
@@ -161,7 +162,7 @@ def export_registry_assessments(params=None, return_data=False):
         except Exception:
             submission_date = ''
         content = [
-            registry.governorate.parent.name if registry.governorate else '',
+            registry.governorate.parent.name if registry.governorate and registry.governorate.parent else '',
             registry.governorate.name if registry.governorate else '',
             registry.location,
             registry.partner_organization.name if registry.partner_organization else '',
@@ -397,8 +398,9 @@ def export_civic_assessments(params=None, return_data=False):
 
     submission_set1 = submission_set.filter(assessment__slug='pre_assessment')
     for line2 in submission_set1:
-        youth = line2.youth
+        #youth = line2.youth
         registry = line2.registration
+        youth = registry.youth
         submission_date = line2.data.get('_submission_time', '')
         try:
             submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
@@ -406,7 +408,7 @@ def export_civic_assessments(params=None, return_data=False):
         except Exception:
             submission_date = ''
         content = [
-            registry.governorate.parent.name if registry.governorate else '',
+            registry.governorate.parent.name if registry.governorate and registry.governorate.parent else '',
             registry.governorate.name if registry.governorate else '',
             registry.location,
             registry.partner_organization.name if registry.partner_organization else '',
@@ -446,8 +448,9 @@ def export_civic_assessments(params=None, return_data=False):
 
     submission_set2 = submission_set.filter(assessment__slug='post_assessment')
     for line2 in submission_set2:
-        youth = line2.youth
+        #youth = line2.youth
         registry = line2.registration
+        youth = registry.youth
         submission_date = line2.data.get('_submission_time', '')
         try:
             submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
@@ -455,7 +458,7 @@ def export_civic_assessments(params=None, return_data=False):
         except Exception:
             submission_date = ''
         content = [
-            registry.governorate.parent.name if registry.governorate else '',
+            registry.governorate.parent.name if registry.governorate and registry.governorate.parent else '',
             registry.governorate.name if registry.governorate else '',
             registry.location,
             registry.partner_organization.name if registry.partner_organization else '',
@@ -645,8 +648,9 @@ def export_entrepreneurship_assessments(params=None, return_data=False):
 
     submission_set1 = submission_set.filter(assessment__slug='pre_entrepreneurship')
     for line2 in submission_set1:
-        youth = line2.youth
+        #youth = line2.youth
         registry = line2.registration
+        youth = registry.youth
         submission_date = line2.data.get('_submission_time', '')
         try:
             submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
@@ -655,7 +659,7 @@ def export_entrepreneurship_assessments(params=None, return_data=False):
             submission_date = ''
 
         content = [
-            registry.governorate.parent.name if registry.governorate else '',
+            registry.governorate.parent.name if registry.governorate and registry.governorate.parent else '',
             registry.governorate.name if registry.governorate else '',
             registry.location,
             registry.partner_organization.name if registry.partner_organization else '',
@@ -704,8 +708,9 @@ def export_entrepreneurship_assessments(params=None, return_data=False):
 
     submission_set2 = submission_set.filter(assessment__slug='post_entrepreneurship')
     for line2 in submission_set2:
-        youth = line2.youth
+        #youth = line2.youth
         registry = line2.registration
+        youth = registry.youth
         submission_date = line2.data.get('_submission_time', '')
         try:
             submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
@@ -713,7 +718,7 @@ def export_entrepreneurship_assessments(params=None, return_data=False):
         except Exception:
             submission_date = ''
         content = [
-            registry.governorate.parent.name if registry.governorate else '',
+            registry.governorate.parent.name if registry.governorate and registry.governorate.parent else '',
             registry.governorate.name if registry.governorate else '',
             registry.location,
             registry.partner_organization.name if registry.partner_organization else '',
@@ -1000,8 +1005,9 @@ def export_initiative_assessments(params=None, return_data=False):
 
     submission_set1 = submission_set.filter(assessment__slug='init_registration')
     for line2 in submission_set1:
-        youth = line2.youth
+        #youth = line2.youth
         registry = line2.registration
+        youth = registry.youth
         submission_date = line2.data.get('_submission_time', '')
         try:
             submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
@@ -1010,7 +1016,7 @@ def export_initiative_assessments(params=None, return_data=False):
             submission_date = ''
 
         content = [
-            registry.governorate.parent.name if registry.governorate else '',
+            registry.governorate.parent.name if registry.governorate and registry.governorate.parent else '',
             registry.governorate.name if registry.governorate else '',
             registry.location,
             registry.partner_organization.name if registry.partner_organization else '',
@@ -1105,8 +1111,9 @@ def export_initiative_assessments(params=None, return_data=False):
 
     submission_set2 = submission_set.filter(assessment__slug='init_exec')
     for line2 in submission_set2:
-        youth = line2.youth
+        #youth = line2.youth
         registry = line2.registration
+        youth = registry.youth
         submission_date = line2.data.get('_submission_time', '')
         try:
             submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
@@ -1114,7 +1121,7 @@ def export_initiative_assessments(params=None, return_data=False):
         except Exception:
             submission_date = ''
         content = [
-            registry.governorate.parent.name if registry.governorate else '',
+            registry.governorate.parent.name if registry.governorate and registry.governorate.parent else '',
             registry.governorate.name if registry.governorate else '',
             registry.location,
             registry.partner_organization.name if registry.partner_organization else '',
