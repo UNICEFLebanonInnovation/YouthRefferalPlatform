@@ -15,7 +15,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import RedirectView
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse, reverse_lazy
-
+from referral_platform.backends.djqscsv import render_to_csv_response
 from rest_framework import status
 from rest_framework import viewsets, mixins, permissions
 from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
@@ -235,8 +235,7 @@ class ExportView(LoginRequiredMixin, ListView):
     model = Registration
     queryset = Registration.objects.all()
 
-    def get(self, request, *args, **kwargs):
-
+    def get_queryset(self):
         if self.request.user.is_superuser and not self.request.user.partner:
             queryset = self.queryset
         else:
@@ -249,73 +248,114 @@ class ExportView(LoginRequiredMixin, ListView):
         if country:
             queryset = queryset.filter(partner_organization__locations=int(country))
 
-        common_headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
+    def get(self, request, *args, **kwargs):
 
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
-            'Submission date',
-        ]
+        # if self.request.user.is_superuser and not self.request.user.partner:
+        #     queryset = self.queryset
+        # else:
+        #     queryset = self.queryset.filter(partner_organization=self.request.user.partner)
+        #
+        # gov = self.request.GET.get('governorate', 0)
+        # if gov:
+        #     queryset = queryset.filter(governorate_id=int(gov))
+        # country = self.request.GET.get('country', 0)
+        # if country:
+        #     queryset = queryset.filter(partner_organization__locations=int(country))
 
-        book = tablib.Databook()
-        data = tablib.Dataset()
-        data.title = "Beneficiary List"
-        data.headers = common_headers
-
-        content = []
-        for line in queryset:
-            youth = line.youth
-            content = [
-                line.governorate.parent.name if line.governorate else '',
-                line.governorate.name if line.governorate else '',
-                line.location,
-                line.partner_organization.name if line.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                line.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name,
-                youth.marital_status,
-                youth.address,
-                line.created.strftime('%d/%m/%Y') if line.created else '',
-            ]
-            data.append(content)
-
-        book.add_sheet(data)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
+        headers = {
+            # 'self__country': 'Country',
+            'youth__governorate': 'Governorate',
+            'youth__Location': 'Location',
+            'youth__partner_organization': 'Partner',
+            # 'youth__number': 'Unique number',
+            'youth__first_name': 'First Name',
+            'youth__ father_name': "Father's Name",
+            'youth__ last_name': 'Last Name',
+            'youth__trainer': 'Trainer',
+            'youth__bayanati_ID': 'Bayanati ID',
+            # 'youth__number': 'Jordanian ID',
+            'youth__sex': 'Gender',
+            'youth__birthday_day': 'birthday day',
+            'youth__birthday_month': 'birthday month',
+            'youth__birthday_year': 'birthday year',
+            'youth__age': 'age',
+            'youth__elapsed_years': 'Date of birth',
+            'youth__nationality': 'Nationality',
+            'youth__marital_status': 'Marital status',
+            'youth__address': 'address',
+            # 'registration__number': 'Submission date',
+            'youth__center':  'Center',
+    }
+        qs = self.get_queryset().values(
+            # 'self__country',
+            'youth__governorate',
+            'youth__Location',
+            'youth__partner_organization',
+            # 'youth__number': 'Unique number',
+            'youth__first_name',
+            'youth__ father_name',
+            'youth__ last_name',
+            'youth__trainer',
+            'youth__bayanati_ID',
+            # 'youth__number': 'Jordanian ID',
+            'youth__sex',
+            'youth__birthday_day',
+            'youth__birthday_month',
+            'youth__birthday_year',
+            'youth__age',
+            'youth__elapsed_years',
+            'youth__nationality',
+            'youth__marital_status',
+            'youth__address',
+            # 'registration__number': 'Submission date',
+            'youth__center',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_list.xls'
-        return response
+
+        return render_to_csv_response(qs, field_header_map=headers)
+
+        #
+        # book = tablib.Databook()
+        # data = tablib.Dataset()
+        # data.title = "Beneficiary List"
+        # data.headers = common_headers
+        #
+        # content = []
+        # for line in queryset:
+        #     youth = line.youth
+        #     content = [
+        #         line.governorate.parent.name if line.governorate else '',
+        #         line.governorate.name if line.governorate else '',
+        #         line.location,
+        #         line.partner_organization.name if line.partner_organization else '',
+        #
+        #         youth.number,
+        #         youth.first_name,
+        #         youth.father_name,
+        #         youth.last_name,
+        #         line.trainer,
+        #         youth.bayanati_ID,
+        #         youth.id_number,
+        #         youth.sex,
+        #         youth.birthday_day,
+        #         youth.birthday_month,
+        #         youth.birthday_year,
+        #         youth.calc_age,
+        #         youth.birthday,
+        #         youth.nationality.name,
+        #         youth.marital_status,
+        #         youth.address,
+        #         line.created.strftime('%d/%m/%Y') if line.created else '',
+        #     ]
+        #     data.append(content)
+        #
+        # book.add_sheet(data)
+        #
+        # response = HttpResponse(
+        #     book.export("xls"),
+        #     content_type='application/vnd.ms-excel',
+        # )
+        # response['Content-Disposition'] = 'attachment; filename=Beneficiary_list.xls'
+        # return response
 
 
 class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
