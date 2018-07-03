@@ -241,12 +241,7 @@ class ExportView(LoginRequiredMixin, ListView):
         else:
             queryset = self.queryset.filter(partner_organization=self.request.user.partner)
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            queryset = queryset.filter(governorate_id=int(gov))
-        country = self.request.GET.get('country', 0)
-        if country:
-            queryset = queryset.filter(partner_organization__locations=int(country))
+        return queryset
 
     def get(self, request, *args, **kwargs):
 
@@ -264,51 +259,51 @@ class ExportView(LoginRequiredMixin, ListView):
 
         headers = {
             # 'self__country': 'Country',
-            'youth__governorate': 'Governorate',
-            'youth__Location': 'Location',
-            'youth__partner_organization': 'Partner',
+            # 'governorate__name': 'Governorate',
+            # 'youth__Location': 'Location',
+            # 'youth__partner_organization': 'Partner',
             # 'youth__number': 'Unique number',
             'youth__first_name': 'First Name',
-            'youth__ father_name': "Father's Name",
-            'youth__ last_name': 'Last Name',
-            'youth__trainer': 'Trainer',
+            'youth__father_name': "Father's Name",
+            'youth__last_name': 'Last Name',
+            # 'youth__trainer': 'Trainer',
             'youth__bayanati_ID': 'Bayanati ID',
             # 'youth__number': 'Jordanian ID',
             'youth__sex': 'Gender',
             'youth__birthday_day': 'birthday day',
             'youth__birthday_month': 'birthday month',
             'youth__birthday_year': 'birthday year',
-            'youth__age': 'age',
-            'youth__elapsed_years': 'Date of birth',
-            'youth__nationality': 'Nationality',
-            'youth__marital_status': 'Marital status',
-            'youth__address': 'address',
-            # 'registration__number': 'Submission date',
-            'youth__center':  'Center',
+            # 'youth__age': 'age',
+            # 'youth__elapsed_years': 'Date of birth',
+            # 'youth__nationality': 'Nationality',
+            # 'youth__marital_status': 'Marital status',
+            # 'youth__address': 'address',
+            # # 'registration__number': 'Submission date',
+            # 'youth__center':  'Center',
     }
         qs = self.get_queryset().values(
             # 'self__country',
-            'youth__governorate',
-            'youth__Location',
-            'youth__partner_organization',
+            # 'governorate__name',
+            # 'youth__location',
+            # 'youth__partner_organization',
             # 'youth__number': 'Unique number',
             'youth__first_name',
-            'youth__ father_name',
-            'youth__ last_name',
-            'youth__trainer',
+            'youth__father_name',
+            'youth__last_name',
+            # 'youth__trainer',
             'youth__bayanati_ID',
             # 'youth__number': 'Jordanian ID',
             'youth__sex',
             'youth__birthday_day',
             'youth__birthday_month',
             'youth__birthday_year',
-            'youth__age',
-            'youth__elapsed_years',
-            'youth__nationality',
-            'youth__marital_status',
-            'youth__address',
+            # 'youth__age',
+            # 'youth__elapsed_years',
+            # 'youth__nationality',
+            # 'youth__marital_status',
+            # 'youth__address',
             # 'registration__number': 'Submission date',
-            'youth__center',
+            # 'youth__center',
         )
 
         return render_to_csv_response(qs, field_header_map=headers)
