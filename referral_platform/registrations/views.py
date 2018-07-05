@@ -333,6 +333,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__marital_status': 'Marital status',
             # 'youth__address': 'address',
             'training_type': 'Training Type',
+            'training_date': 'Training date',
             # 'registration__name': 'Type of training',
             # 'assessment__type': 'Type of center',
             # 'assessment__name': 'Assessment Name',
@@ -455,6 +456,8 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         #         registry.partner_organization.name if registry.partner_organization else '',
         qs = self.get_queryset().extra(select={
             'training_type': "registration->>'registration/training_type'",
+            'training_date': "registration->>'registration/training_date'",
+
 
 
 
@@ -607,6 +610,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'created',
             # 'modified',
             'training_type',
+            'training_date',
         )
 
         return render_to_csv_response(qs, field_header_map=headers)
