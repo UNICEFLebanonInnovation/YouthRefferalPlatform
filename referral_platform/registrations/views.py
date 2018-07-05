@@ -245,112 +245,55 @@ class ExportView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
-        # if self.request.user.is_superuser and not self.request.user.partner:
-        #     queryset = self.queryset
-        # else:
-        #     queryset = self.queryset.filter(partner_organization=self.request.user.partner)
-        #
-        # gov = self.request.GET.get('governorate', 0)
-        # if gov:
-        #     queryset = queryset.filter(governorate_id=int(gov))
-        # country = self.request.GET.get('country', 0)
-        # if country:
-        #     queryset = queryset.filter(partner_organization__locations=int(country))
-
         headers = {
-            # 'self__country': 'Country',
-            # 'governorate__name': 'Governorate',
-            # 'youth__Location': 'Location',
-            # 'youth__partner_organization': 'Partner',
-            # 'youth__number': 'Unique number',
+            # 'country': 'Country',
+            'governorate__parent__name': 'Country',
+            'governorate__name': 'Governorate',
+            'partner_organization__name': 'Partner',
+            'center__name': 'Center',
+            'location': 'Location',
             'youth__first_name': 'First Name',
             'youth__father_name': "Father's Name",
             'youth__last_name': 'Last Name',
-            # 'youth__trainer': 'Trainer',
+            'trainer': 'Trainer',
             'youth__bayanati_ID': 'Bayanati ID',
-            # 'youth__number': 'Jordanian ID',
             'youth__sex': 'Gender',
             'youth__birthday_day': 'birthday day',
             'youth__birthday_month': 'birthday month',
             'youth__birthday_year': 'birthday year',
-            # 'youth__age': 'age',
-            # 'youth__elapsed_years': 'Date of birth',
-            # 'youth__nationality': 'Nationality',
-            # 'youth__marital_status': 'Marital status',
-            # 'youth__address': 'address',
-            # # 'registration__number': 'Submission date',
-            # 'youth__center':  'Center',
+            'youth__nationality__name': 'Nationality',
+            'youth__marital_status': 'Marital status',
+            'youth__address': 'address',
+            'owner__email': 'Created By',
+            'modified_by__email': 'modified_by',
+            'created': 'created',
+            'modified': 'modified',
     }
         qs = self.get_queryset().values(
-            # 'self__country',
-            # 'governorate__name',
-            # 'youth__location',
-            # 'youth__partner_organization',
-            # 'youth__number': 'Unique number',
             'youth__first_name',
             'youth__father_name',
             'youth__last_name',
-            # 'youth__trainer',
+            'trainer',
             'youth__bayanati_ID',
-            # 'youth__number': 'Jordanian ID',
             'youth__sex',
             'youth__birthday_day',
             'youth__birthday_month',
             'youth__birthday_year',
-            # 'youth__age',
-            # 'youth__elapsed_years',
-            # 'youth__nationality',
-            # 'youth__marital_status',
-            # 'youth__address',
-            # 'registration__number': 'Submission date',
-            # 'youth__center',
+            'location',
+            'governorate__name',
+            'governorate__parent__name',
+            'partner_organization__name',
+            'center__name',
+            'youth__nationality__name',
+            'youth__marital_status',
+            'youth__address',
+            'owner__email',
+            'modified_by__email',
+            'created',
+            'modified',
         )
 
         return render_to_csv_response(qs, field_header_map=headers)
-
-        #
-        # book = tablib.Databook()
-        # data = tablib.Dataset()
-        # data.title = "Beneficiary List"
-        # data.headers = common_headers
-        #
-        # content = []
-        # for line in queryset:
-        #     youth = line.youth
-        #     content = [
-        #         line.governorate.parent.name if line.governorate else '',
-        #         line.governorate.name if line.governorate else '',
-        #         line.location,
-        #         line.partner_organization.name if line.partner_organization else '',
-        #
-        #         youth.number,
-        #         youth.first_name,
-        #         youth.father_name,
-        #         youth.last_name,
-        #         line.trainer,
-        #         youth.bayanati_ID,
-        #         youth.id_number,
-        #         youth.sex,
-        #         youth.birthday_day,
-        #         youth.birthday_month,
-        #         youth.birthday_year,
-        #         youth.calc_age,
-        #         youth.birthday,
-        #         youth.nationality.name,
-        #         youth.marital_status,
-        #         youth.address,
-        #         line.created.strftime('%d/%m/%Y') if line.created else '',
-        #     ]
-        #     data.append(content)
-        #
-        # book.add_sheet(data)
-        #
-        # response = HttpResponse(
-        #     book.export("xls"),
-        #     content_type='application/vnd.ms-excel',
-        # )
-        # response['Content-Disposition'] = 'attachment; filename=Beneficiary_list.xls'
-        # return response
 
 
 class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
@@ -358,282 +301,325 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.filter(assessment__slug='registration')
 
-    def get(self, request, *args, **kwargs):
-
-        book = tablib.Databook()
-
+    def get_queryset(self):
         if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
+            queryset = self.queryset
         else:
             submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
-        country = self.request.GET.get('country', 0)
-        if country:
-            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
+        return self.queryset
 
-        data2 = tablib.Dataset()
-        data2.title = "Registration Assessment"
-        data2.headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
+    def get(self, request, *args, **kwargs):
 
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
+        headers = {
+            # 'governorate__name': 'Governorate',
+            # 'governorate__parent__name': 'Country',
+            # 'partner_organization__name': 'Partner',
+            # 'center__name': 'Center',
+            # 'location': 'Location',
+            'youth__first_name': 'First Name',
+            'youth__father_name': "Father's Name",
+            'youth__last_name': 'Last Name',
+            # 'trainer': 'Trainer',
+            'youth__bayanati_ID': 'Bayanati ID',
+            # 'youth__number': 'Jordanian ID',
+            'youth__sex': 'Gender',
+            'youth__birthday_day': 'birthday day',
+            'youth__birthday_month': 'birthday month',
+            'youth__birthday_year': 'birthday year',
+            # 'youth__assessmentsubmission': 'Assessement submission',
+            # 'youth__elapsed_years': 'Date of birth',
+            # 'youth__nationality__name': 'Nationality',
+            # 'youth__marital_status': 'Marital status',
+            # 'youth__address': 'address',
+            'training_type': 'Training Type',
+            # 'registration__name': 'Type of training',
+            # 'assessment__type': 'Type of center',
+            # 'assessment__name': 'Assessment Name',
+            # 'assessment__slug': 'Assessment Type',
+            # 'assessment__start_date': 'Assessment Start Date',
+            # 'assessment__end_date': 'Assessment End Date',
+            # 'assessment__capacity': 'Assessment Capacity',
+            # 'assessment__partner__name': 'Partner Name',
+            # 'owner__email': 'Created By',
+            # 'modified_by__email': 'modified_by',
+            # 'created': 'created',
+            # 'modified': 'modified',
+            # 'assessment__partner': 'Assessment Status'
+            # 'center ID',
+            # 'Conscent form filled',
+            # 'If you answered Others, provide the name of the NGO',
+            #
+            # 'UNHCR ID',
+            # 'Jordanian ID',
+            # 'Starting date of training',
+            # 'Ending date of Training',
+            # 'Education status',
+            #
+            # 'Current education level',
+            # 'Type of school',
+            # 'School name',
+            #
+            # 'If you are attending school, how many times have you missed your classes in the past 3 months',
+            # 'Reasons for skipping school more than once',
+            # 'Education level completed before leaving school',
+            #
+            # 'Reasons for leaving school',
+            # # 'fam_request',
+            # # 'underachieveme',
+            # # 'illness',
+            # # 'school_far',
+            # # 'expenses',
+            # # 'unsafe_travel',
+            # # 'engaged_for_mo',
+            # # 'educ_no_help',
+            # # 'not_space',
+            # # 'low_standard',
+            # # 'school_bullyin',
+            # # 'other',
+            #
+            # 'If you answered (Others), what is the reason?',
+            #
+            # 'Relationship with Labour Market',
+            # 'Type of occupation',
+            #
+            # 'Owned electronic devices',
+            # 'laptop',
+            # 'computer',
+            # 'smart_phone',
+            # 'tablet',
+            # 'NA',
+            #
+            # 'Family composition',
+            # 'mother',
+            # 'father',
+            # 'brothers',
+            # 'sisters',
+            # 'other_relative',
+            # 'na',
+            # 'orphan',
+            #
+            # 'the above household members are not living with you at the moment',
+            #
+            # 'If your answer is yes please specify why',
+            # 'If other, please specify',
+            # 'Any family member use drug/alcohol?',
+            # 'Feeling of safety',
+            #
+            # 'Reasons for not feeling safe most or all of the time',
+            # # 'conflict_relat',
+            # # 'violence_home',
+            # # 'comm_viol_harr',
+            # # 'unplanned_futu',
+            # # 'school_viol_ha',
+            # # 'other',
+            #
+            # 'Accommodation type',
+            # 'Displacement status',
+            #
+            # 'Family members who have a fixed income source',
+            # 'mother',
+            # 'father',
+            # 'brothers',
+            # 'sisters',
+            # 'none_of_them',
+            # 'NA',
+            #
+            # 'Preferred method of communication for follow up',
+            # 'facebook',
+            # 'email',
+            # 'mobile_phone',
+            # 'through_NGO',
+            # 'no_follow_up',
+            #
+            # 'Facebook account',
+            # 'Email address',
+            # 'Mobile phone number',
+            # 'submission_time': 'end of statement',
+         }
 
-            'Type of training',
-            'Type of center',
-            'center ID',
-            'Conscent form filled',
-            'If you answered Others, provide the name of the NGO',
+        # for line2 in submission_set:
+        #     content = []
+        #     youth = line2.youth
+        #     registry = line2.registration
+        #     submission_date = line2.data.get('_submission_time', '')
+        #     try:
+        #         submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
+        #             '%d/%m/%Y') if submission_date else ''
+        #     except Exception:
+        #         submission_date = ''
+        #     content = [
+        #         registry.governorate.parent.name if registry.governorate else '',
+        #         registry.governorate.name if registry.governorate else '',
+        #         registry.location,
+        #         registry.partner_organization.name if registry.partner_organization else '',
+        qs = self.get_queryset().extra(select={
+            'training_type': "registration->>'registration/training_type'",
 
-            'UNHCR ID',
-            'Jordanian ID',
-            'Starting date of training',
-            'Ending date of Training',
-            'Education status',
 
-            'Current education level',
-            'Type of school',
-            'School name',
 
-            'If you are attending school, how many times have you missed your classes in the past 3 months',
-            'Reasons for skipping school more than once',
-            'Education level completed before leaving school',
 
-            'Reasons for leaving school',
-            # 'fam_request',
-            # 'underachieveme',
-            # 'illness',
-            # 'school_far',
-            # 'expenses',
-            # 'unsafe_travel',
-            # 'engaged_for_mo',
-            # 'educ_no_help',
-            # 'not_space',
-            # 'low_standard',
-            # 'school_bullyin',
-            # 'other',
-
-            'If you answered (Others), what is the reason?',
-
-            'Relationship with Labour Market',
-            'Type of occupation',
-
-            'Owned electronic devices',
-            'laptop',
-            'computer',
-            'smart_phone',
-            'tablet',
-            'NA',
-
-            'Family composition',
-            'mother',
-            'father',
-            'brothers',
-            'sisters',
-            'other_relative',
-            'na',
-            'orphan',
-
-            'the above household members are not living with you at the moment',
-
-            'If your answer is yes please specify why',
-            'If other, please specify',
-            'Any family member use drug/alcohol?',
-            'Feeling of safety',
-
-            'Reasons for not feeling safe most or all of the time',
-            # 'conflict_relat',
-            # 'violence_home',
-            # 'comm_viol_harr',
-            # 'unplanned_futu',
-            # 'school_viol_ha',
-            # 'other',
-
-            'Accommodation type',
-            'Displacement status',
-
-            'Family members who have a fixed income source',
-            'mother',
-            'father',
-            'brothers',
-            'sisters',
-            'none_of_them',
-            'NA',
-
-            'Preferred method of communication for follow up',
-            'facebook',
-            'email',
-            'mobile_phone',
-            'through_NGO',
-            'no_follow_up',
-
-            'Facebook account',
-            'Email address',
-            'Mobile phone number',
-            'submission_time',
-        ]
-
-        for line2 in submission_set:
-            content = []
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                get_choice_value(line2.data, 'training_type'),
-                get_choice_value(line2.data, 'center_type'),
-                registry.center.name if registry.center else '',
-                get_choice_value(line2.data, 'concent_paper', 'status'),
-                line2.data.get('If_you_answered_Othe_the_name_of_the_NGO', ''),
-
-                line2.data.get('UNHCR_ID', ''),
-                line2.data.get('Jordanian_ID', ''),
-                line2.data.get('training_date', ''),
-                line2.data.get('training_end_date', ''),
-                get_choice_value(line2.data, 'educational_status'),
-
-                get_choice_value(line2.data, 'school_level'),
-                get_choice_value(line2.data, 'School_type'),
-                line2.data.get('School_name', ''),
-
-                get_choice_value(line2.data, 'how_many_times_skipped_school', 'how_many'),
-                line2.data.get('reason_for_skipping_class', ''),
-                get_choice_value(line2.data, 'educ_level_stopped'),
-
-                get_choice_value(line2.data, 'Reason_stop_study'),
-                # line2.data.get('Reason_stop_study', ''),
-                # line2.get_data_option('Reason_stop_study', 'fam_request'),
-                # line2.get_data_option('Reason_stop_study', 'underachieveme'),
-                # line2.get_data_option('Reason_stop_study', 'illness'),
-                # line2.get_data_option('Reason_stop_study', 'school_far'),
-                # line2.get_data_option('Reason_stop_study', 'expenses'),
-                # line2.get_data_option('Reason_stop_study', 'unsafe_travel'),
-                # line2.get_data_option('Reason_stop_study', 'engaged_for_mo'),
-                # line2.get_data_option('Reason_stop_study', 'educ_no_help'),
-                # line2.get_data_option('Reason_stop_study', 'not_space'),
-                # line2.get_data_option('Reason_stop_study', 'low_standard'),
-                # line2.get_data_option('Reason_stop_study', 'school_bullyin'),
-                # line2.get_data_option('Reason_stop_study', 'other'),
-
-                line2.data.get('other_five', ''),
-
-                get_choice_value(line2.data, 'Relation_with_labor_market'),
-                get_choice_value(line2.data, 'occupation_type'),
-
-                # get_choice_value(line2.data, 'what_electronics_do_you_own'),
-                line2.data.get('what_electronics_do_you_own', ''),
-                line2.get_data_option('what_electronics_do_you_own', 'laptop'),
-                line2.get_data_option('what_electronics_do_you_own', 'computer'),
-                line2.get_data_option('what_electronics_do_you_own', 'smart_phone'),
-                line2.get_data_option('what_electronics_do_you_own', 'tablet'),
-                line2.get_data_option('what_electronics_do_you_own', 'NA'),
-
-                # get_choice_value(line2.data, 'family_present', 'family'),
-                line2.data.get('family_present', ''),
-                line2.get_data_option('family_present', 'mother'),
-                line2.get_data_option('family_present', 'father'),
-                line2.get_data_option('family_present', 'brothers'),
-                line2.get_data_option('family_present', 'sisters'),
-                line2.get_data_option('family_present', 'other_relative'),
-                line2.get_data_option('family_present', 'na'),
-                line2.get_data_option('family_present', 'orphan'),
-
-                get_choice_value(line2.data, 'family_not_present', 'yes_no'),
-
-                get_choice_value(line2.data, 'not_present_where'),
-                line2.data.get('other_family_not_present', ''),
-                get_choice_value(line2.data, 'drugs_substance_use', 'yes_no'),
-                get_choice_value(line2.data, 'feeling_of_safety_security', 'feeling_safety'),
-
-                get_choice_value(line2.data, 'reasons_for_not_feeling_safe_a', 'not_feeling_safety'),
-                # line2.data.get('reasons_for_not_feeling_safe_a', ''),
-                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'conflict_relat'),
-                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'violence_home'),
-                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'comm_viol_harr'),
-                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'unplanned_futu'),
-                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'school_viol_ha'),
-                # line2.get_data_option('reasons_for_not_feeling_safe_a', 'other'),
-
-                get_choice_value(line2.data, 'Accommodation_type'),
-                get_choice_value(line2.data, 'how_many_times_displaced', 'how_many'),
-                # get_choice_value(line2.data, 'family_steady_income', 'family'),
-                line2.data.get('family_steady_income', ''),
-                line2.get_data_option('family_steady_income', 'mother'),
-                line2.get_data_option('family_steady_income', 'father'),
-                line2.get_data_option('family_steady_income', 'brothers'),
-                line2.get_data_option('family_steady_income', 'sisters'),
-                line2.get_data_option('family_steady_income', 'none_of_them'),
-                line2.get_data_option('family_steady_income', 'NA'),
-
-                # get_choice_value(line2.data, 'desired_method_for_follow_up', 'method_follow_up'),
-                line2.data.get('desired_method_for_follow_up', ''),
-                line2.get_data_option('desired_method_for_follow_up', 'facebook'),
-                line2.get_data_option('desired_method_for_follow_up', 'email'),
-                line2.get_data_option('desired_method_for_follow_up', 'mobile_phone'),
-                line2.get_data_option('desired_method_for_follow_up', 'through_NGO'),
-                line2.get_data_option('desired_method_for_follow_up', 'no_follow_up'),
-
-                line2.data.get('text_39911992', ''),
-                line2.data.get('text_d45750c6', ''),
-                line2.data.get('text_4c6fe6c9', ''),
-                submission_date,
-            ]
-            data2.append(content)
-
-        book.add_sheet(data2)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
+                # youth.number,
+                # youth.first_name,
+                # youth.father_name,
+                # youth.last_name,
+                # registry.trainer,
+                # youth.bayanati_ID,
+                # youth.id_number,
+                # youth.sex,
+                # youth.birthday_day,
+                # youth.birthday_month,
+                # youth.birthday_year,
+                # youth.calc_age,
+                # youth.birthday,
+                # youth.nationality.name if youth.nationality else '',
+                # youth.marital_status,
+                # youth.address,
+                #
+                # get_choice_value(line2.data, 'training_type'),
+                # get_choice_value(line2.data, 'center_type'),
+                # registry.center.name if registry.center else '',
+                # get_choice_value(line2.data, 'concent_paper', 'status'),
+                # line2.data.get('If_you_answered_Othe_the_name_of_the_NGO', ''),
+                #
+                # line2.data.get('UNHCR_ID', ''),
+                # line2.data.get('Jordanian_ID', ''),
+                # line2.data.get('training_date', ''),
+                # line2.data.get('training_end_date', ''),
+                # get_choice_value(line2.data, 'educational_status'),
+                #
+                # get_choice_value(line2.data, 'school_level'),
+                # get_choice_value(line2.data, 'School_type'),
+                # line2.data.get('School_name', ''),
+                #
+                # get_choice_value(line2.data, 'how_many_times_skipped_school', 'how_many'),
+                # line2.data.get('reason_for_skipping_class', ''),
+                # get_choice_value(line2.data, 'educ_level_stopped'),
+                #
+                # get_choice_value(line2.data, 'Reason_stop_study'),
+                # # line2.data.get('Reason_stop_study', ''),
+                # # line2.get_data_option('Reason_stop_study', 'fam_request'),
+                # # line2.get_data_option('Reason_stop_study', 'underachieveme'),
+                # # line2.get_data_option('Reason_stop_study', 'illness'),
+                # # line2.get_data_option('Reason_stop_study', 'school_far'),
+                # # line2.get_data_option('Reason_stop_study', 'expenses'),
+                # # line2.get_data_option('Reason_stop_study', 'unsafe_travel'),
+                # # line2.get_data_option('Reason_stop_study', 'engaged_for_mo'),
+                # # line2.get_data_option('Reason_stop_study', 'educ_no_help'),
+                # # line2.get_data_option('Reason_stop_study', 'not_space'),
+                # # line2.get_data_option('Reason_stop_study', 'low_standard'),
+                # # line2.get_data_option('Reason_stop_study', 'school_bullyin'),
+                # # line2.get_data_option('Reason_stop_study', 'other'),
+                #
+                # line2.data.get('other_five', ''),
+                #
+                # get_choice_value(line2.data, 'Relation_with_labor_market'),
+                # get_choice_value(line2.data, 'occupation_type'),
+                #
+                # # get_choice_value(line2.data, 'what_electronics_do_you_own'),
+                # line2.data.get('what_electronics_do_you_own', ''),
+                # line2.get_data_option('what_electronics_do_you_own', 'laptop'),
+                # line2.get_data_option('what_electronics_do_you_own', 'computer'),
+                # line2.get_data_option('what_electronics_do_you_own', 'smart_phone'),
+                # line2.get_data_option('what_electronics_do_you_own', 'tablet'),
+                # line2.get_data_option('what_electronics_do_you_own', 'NA'),
+                #
+                # # get_choice_value(line2.data, 'family_present', 'family'),
+                # line2.data.get('family_present', ''),
+                # line2.get_data_option('family_present', 'mother'),
+                # line2.get_data_option('family_present', 'father'),
+                # line2.get_data_option('family_present', 'brothers'),
+                # line2.get_data_option('family_present', 'sisters'),
+                # line2.get_data_option('family_present', 'other_relative'),
+                # line2.get_data_option('family_present', 'na'),
+                # line2.get_data_option('family_present', 'orphan'),
+                #
+                # get_choice_value(line2.data, 'family_not_present', 'yes_no'),
+                #
+                # get_choice_value(line2.data, 'not_present_where'),
+                # line2.data.get('other_family_not_present', ''),
+                # get_choice_value(line2.data, 'drugs_substance_use', 'yes_no'),
+                # get_choice_value(line2.data, 'feeling_of_safety_security', 'feeling_safety'),
+                #
+                # get_choice_value(line2.data, 'reasons_for_not_feeling_safe_a', 'not_feeling_safety'),
+                # # line2.data.get('reasons_for_not_feeling_safe_a', ''),
+                # # line2.get_data_option('reasons_for_not_feeling_safe_a', 'conflict_relat'),
+                # # line2.get_data_option('reasons_for_not_feeling_safe_a', 'violence_home'),
+                # # line2.get_data_option('reasons_for_not_feeling_safe_a', 'comm_viol_harr'),
+                # # line2.get_data_option('reasons_for_not_feeling_safe_a', 'unplanned_futu'),
+                # # line2.get_data_option('reasons_for_not_feeling_safe_a', 'school_viol_ha'),
+                # # line2.get_data_option('reasons_for_not_feeling_safe_a', 'other'),
+                #
+                # get_choice_value(line2.data, 'Accommodation_type'),
+                # get_choice_value(line2.data, 'how_many_times_displaced', 'how_many'),
+                # # get_choice_value(line2.data, 'family_steady_income', 'family'),
+                # line2.data.get('family_steady_income', ''),
+                # line2.get_data_option('family_steady_income', 'mother'),
+                # line2.get_data_option('family_steady_income', 'father'),
+                # line2.get_data_option('family_steady_income', 'brothers'),
+                # line2.get_data_option('family_steady_income', 'sisters'),
+                # line2.get_data_option('family_steady_income', 'none_of_them'),
+                # line2.get_data_option('family_steady_income', 'NA'),
+                #
+                # # get_choice_value(line2.data, 'desired_method_for_follow_up', 'method_follow_up'),
+                # line2.data.get('desired_method_for_follow_up', ''),
+                # line2.get_data_option('desired_method_for_follow_up', 'facebook'),
+                # line2.get_data_option('desired_method_for_follow_up', 'email'),
+                # line2.get_data_option('desired_method_for_follow_up', 'mobile_phone'),
+                # line2.get_data_option('desired_method_for_follow_up', 'through_NGO'),
+                # line2.get_data_option('desired_method_for_follow_up', 'no_follow_up'),
+                #
+                # line2.data.get('text_39911992', ''),
+                # line2.data.get('text_d45750c6', ''),
+                # line2.data.get('text_4c6fe6c9', ''),
+                # submission_date,
+        }).values(
+            # 'governorate__name',
+            # 'governorate__parent__name',
+            # 'partner_organization__name',
+            # 'center__name',
+            # 'location',
+            # 'youth__first_name',
+            # 'youth__father_name',
+            # 'youth__last_name',
+            # 'trainer',
+            'youth__bayanati_ID',
+            # 'youth__number': 'Jordanian ID',
+            'youth__sex',
+            'youth__birthday_day',
+            'youth__birthday_month',
+            'youth__birthday_year',
+            # 'youth__assessmentsubmission': 'Assessement submission',
+            # 'youth__elapsed_years': 'Date of birth',
+            'youth__nationality__name',
+            'youth__marital_status',
+            'youth__address',
+            # 'registration__name',
+            # 'assessment__type',
+            # 'assessment__name',
+            # 'assessment__slug',
+            # 'assessment__start_date',
+            # 'assessment__end_date',
+            # 'assessment__capacity',
+            # 'assessment__partner__name',
+            # 'owner__email',
+            # 'modified_by__email',
+            # 'created',
+            # 'modified',
+            'training_type',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Registration_Assessments.xls'
-        return response
+
+        return render_to_csv_response(qs, field_header_map=headers)
+        #     data2.append(content)
+        #
+        # book.add_sheet(data2)
+        #
+        # response = HttpResponse(
+        #     book.export("xls"),
+        #     content_type='application/vnd.ms-excel',
+        # )
+        # response['Content-Disposition'] = 'attachment; filename=Beneficiary_Registration_Assessments.xls'
+        # return response
 
 
 class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
@@ -1028,10 +1014,8 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
                 get_choice_value(line2.data, 'aware_resources', 'rates'),
                 get_choice_value(line2.data, 'can_handle_pressure', 'rates'),
                 get_choice_value(line2.data, 'motivated_advance_skills', 'rates'),
-
                 get_choice_value(line2.data, 'communication_skills', 'skills'),
                 get_choice_value(line2.data, 'presentation_skills', 'skills'),
-
                 get_choice_value(line2.data, 'team_is', 'capacities'),
                 get_choice_value(line2.data, 'good_team_is', 'capacities'),
                 get_choice_value(line2.data, 'team_leader_is', 'capacities'),
