@@ -261,6 +261,7 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__birthday_day': 'birthday day',
             'youth__birthday_month': 'birthday month',
             'youth__birthday_year': 'birthday year',
+            'registration__youth_age': 'Age',
             'youth__nationality__name': 'Nationality',
             'youth__marital_status': 'Marital status',
             'youth__address': 'address',
@@ -291,6 +292,7 @@ class ExportView(LoginRequiredMixin, ListView):
             'modified_by__email',
             'created',
             'modified',
+            'registration__youth_age',
         )
 
         return render_to_csv_response(qs, field_header_map=headers)
@@ -332,9 +334,14 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__nationality__name': 'Nationality',
             # 'youth__marital_status': 'Marital status',
             # 'youth__address': 'address',
-            'Assessment_name':'Assessment Name',
+
             'training_type': 'Training Type',
-            'training_date': 'Training date',
+            'partner': 'Partner Organization',
+            'training_governerate': 'Governorate',
+            'training_location': 'rLocation',
+            'trainer': 'Trainer',
+            'location': 'Location',
+            'training_date': 'Registration date',
             # 'registration__name': 'Type of training',
             # 'assessment__type': 'Type of center',
             # 'assessment__name': 'Assessment Name',
@@ -457,8 +464,12 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         #         registry.partner_organization.name if registry.partner_organization else '',
         qs = self.get_queryset().extra(select={
             'training_type': "registration->>'registration/training_type'",
+            'partner': "registration->>'registration/partner_organization'",
+            'training_governerate': "registration->>'registration/governorate'",
+            'training_location': "registration->>'registration/location'",
+            'trainer': "registration->>'registration/trainer'",
+            'location': "registration->>'registration/location'",
             'training_date': "registration->>'registration/training_date'",
-            'Assessment_name': "->>'registration/assessment_name'",
 
 
 
@@ -613,6 +624,11 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'created',
             # 'modified',
             'training_type',
+            'partner',
+            'training_governerate',
+            'Location',
+            'Trainer',
+            'location',
             'training_date',
         )
 
