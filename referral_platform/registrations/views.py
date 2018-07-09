@@ -447,21 +447,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'submission_time': 'end of statement',
          }
 
-        # for line2 in submission_set:
-        #     content = []
-        #     youth = line2.youth
-        #     registry = line2.registration
-        #     submission_date = line2.data.get('_submission_time', '')
-        #     try:
-        #         submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-        #             '%d/%m/%Y') if submission_date else ''
-        #     except Exception:
-        #         submission_date = ''
-        #     content = [
-        #         registry.governorate.parent.name if registry.governorate else '',
-        #         registry.governorate.name if registry.governorate else '',
-        #         registry.location,
-        #         registry.partner_organization.name if registry.partner_organization else '',
         qs = self.get_queryset().extra(select={
             # 'training_type': "registration->>'registration/training_type'",
             # 'partner': "registration->>'registration/partner_organization'",
@@ -590,17 +575,17 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 # line2.data.get('text_4c6fe6c9', ''),
                 # submission_date,
         }).values(
-            # 'governorate__name',
-            # 'governorate__parent__name',
-            # 'partner_organization__name',
-            # 'center__name',
-            # 'location',
-            # 'youth__first_name',
-            # 'youth__father_name',
-            # 'youth__last_name',
+            'governorate__name',
+            'governorate__parent__name',
+            'partner_organization__name',
+            'center__name',
+            'location',
+            'youth__first_name',
+            'youth__father_name',
+            'youth__last_name',
             # 'trainer',
             'youth__bayanati_ID',
-            'Assessment_name',
+            # 'Assessment_name',
             # 'youth__number': 'Jordanian ID',
             'youth__sex',
             'youth__birthday_day',
@@ -633,16 +618,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         )
 
         return render_to_csv_response(qs, field_header_map=headers)
-        #     data2.append(content)
-        #
-        # book.add_sheet(data2)
-        #
-        # response = HttpResponse(
-        #     book.export("xls"),
-        #     content_type='application/vnd.ms-excel',
-        # )
-        # response['Content-Disposition'] = 'attachment; filename=Beneficiary_Registration_Assessments.xls'
-        # return response
 
 
 class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
