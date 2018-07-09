@@ -24,10 +24,6 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         (None, {
             'classes': ('suit-tab', 'suit-tab-general',),
             'fields': [
-                'partner_organization',
-                'governorate',
-                'trainer',
-                'location',
                 'first_name',
                 'father_name',
                 'last_name',
@@ -60,14 +56,8 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         'address',
         'created',
         'modified',
-        'partner_organization',
-        'governorate',
-        'trainer',
-        'location',
     )
     list_filter = (
-        'partner_organization',
-        'governorate',
         'sex',
         'nationality',
         'marital_status',
