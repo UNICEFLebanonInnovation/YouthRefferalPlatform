@@ -332,6 +332,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__nationality__name': 'Nationality',
             # 'youth__marital_status': 'Marital status',
             # 'youth__address': 'address',
+            'Assessment_name':'Assessment Name',
             'training_type': 'Training Type',
             'training_date': 'Training date',
             # 'registration__name': 'Type of training',
@@ -455,8 +456,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         #         registry.location,
         #         registry.partner_organization.name if registry.partner_organization else '',
         qs = self.get_queryset().extra(select={
-            'training_type': "registration->>'registration/training_type'",
-            'training_date': "registration->>'registration/training_date'",
+            # 'training_type': "registration->>'registration/training_type'",
+            # 'training_date': "registration->>'registration/training_date'",
+            'Assessment_name': "->>'registration/assessment_name'",
 
 
 
@@ -587,6 +589,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__last_name',
             # 'trainer',
             'youth__bayanati_ID',
+            'Assessment_name',
             # 'youth__number': 'Jordanian ID',
             'youth__sex',
             'youth__birthday_day',
