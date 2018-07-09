@@ -456,8 +456,8 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         #         registry.location,
         #         registry.partner_organization.name if registry.partner_organization else '',
         qs = self.get_queryset().extra(select={
-            # 'training_type': "registration->>'registration/training_type'",
-            # 'training_date': "registration->>'registration/training_date'",
+            'training_type': "registration->>'registration/training_type'",
+            'training_date': "registration->>'registration/training_date'",
             'Assessment_name': "->>'registration/assessment_name'",
 
 
