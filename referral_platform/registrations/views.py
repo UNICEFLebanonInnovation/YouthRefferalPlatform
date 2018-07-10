@@ -314,11 +314,11 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
 
         headers = {
-            'governorate__name': 'Governorate',
-            'governorate__parent__name': 'Country',
-            'partner_organization__name': 'Partner',
-            'center__name': 'Center',
-            'location': 'Location',
+            # 'governorate__name': 'Governorate',
+            # 'governorate__parent__name': 'Country',
+            'partner': 'Partner Organization',
+            # 'center__name': 'Center',
+            # 'location': 'Location',
             'youth__first_name': 'First Name',
             'youth__father_name': "Father's Name",
             'youth__last_name': 'Last Name',
@@ -335,7 +335,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__marital_status': 'Marital status',
             # 'youth__address': 'address',
 
-            # 'training_type': 'Training Type',
+            'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
             # 'training_governerate': 'Governorate',
             # 'training_location': 'rLocation',
@@ -448,35 +448,13 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
          }
 
         qs = self.get_queryset().extra(select={
-            # 'training_type': "registration->>'registration/training_type'",
-            # 'partner': "registration->>'registration/partner_organization'",
-            # 'training_governerate': "registration->>'registration/governorate'",
-            # 'training_location': "registration->>'registration/location'",
-            # 'trainer': "registration->>'registration/trainer'",
-            # 'location': "registration->>'registration/location'",
-            # 'training_date': "registration->>'registration/training_date'",
-
-
-
-
-
-                # youth.number,
-                # youth.first_name,
-                # youth.father_name,
-                # youth.last_name,
-                # registry.trainer,
-                # youth.bayanati_ID,
-                # youth.id_number,
-                # youth.sex,
-                # youth.birthday_day,
-                # youth.birthday_month,
-                # youth.birthday_year,
-                # youth.calc_age,
-                # youth.birthday,
-                # youth.nationality.name if youth.nationality else '',
-                # youth.marital_status,
-                # youth.address,
-                #
+            'training_type': "Assessment->>'name/training_type'",
+            'partner': "Data>>'partner/partner_organization'",
+            # 'training_governerate': "registrations->>'registration/governorate'",
+            # 'training_location': "registrations->>'registration/location'",
+            # 'trainer': "registrations->>'registration/trainer'",
+            # 'location': "registrations->>'registration/location'",
+            # 'training_date': "registrations->>'registration/training_date'",
                 # get_choice_value(line2.data, 'training_type'),
                 # get_choice_value(line2.data, 'center_type'),
                 # registry.center.name if registry.center else '',
@@ -575,15 +553,15 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 # line2.data.get('text_4c6fe6c9', ''),
                 # submission_date,
         }).values(
-            'governorate__name',
-            'governorate__parent__name',
-            'partner_organization__name',
-            'center__name',
-            'location',
+            # 'governorate__name',
+            # 'governorate__parent__name',
+            'partner_organization',
+            # 'center__name',
+            # 'location',
             'youth__first_name',
             'youth__father_name',
             'youth__last_name',
-            # 'trainer',
+            'training_type',
             'youth__bayanati_ID',
             # 'Assessment_name',
             # 'youth__number': 'Jordanian ID',
