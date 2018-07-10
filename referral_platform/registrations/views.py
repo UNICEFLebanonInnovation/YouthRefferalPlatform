@@ -335,7 +335,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__marital_status': 'Marital status',
             # 'youth__address': 'address',
 
-            'training_type': 'Training Type',
+            # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
             # 'training_governerate': 'Governorate',
             # 'training_location': 'rLocation',
@@ -448,7 +448,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
          }
 
         qs = self.get_queryset().extra(select={
-            'training_type': "Assessment->>'name/training_type'",
+            # 'training_type': "Assessment->>'name/training_type'",
             'partner': "Data>>'partner/partner_organization'",
             # 'training_governerate': "registrations->>'registration/governorate'",
             # 'training_location': "registrations->>'registration/location'",
@@ -561,7 +561,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__first_name',
             # 'youth__father_name',
             # 'youth__last_name',
-            'training_type',
+            # 'training_type',
             # 'youth__bayanati_ID',
             # 'Assessment_name',
             # 'youth__number': 'Jordanian ID',
