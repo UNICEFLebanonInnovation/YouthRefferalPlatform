@@ -314,6 +314,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
 
         headers = {
+            'assessment__name': 'Assessment Name',
             'phonenumber':'Phone Number',
             'country': 'Country',
             'nationality': 'Nationality',
@@ -392,6 +393,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'country',
             'nationality',
             'training_type',
+            'assessment_name',
 
             'phonenumber',
 
