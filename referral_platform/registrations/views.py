@@ -314,7 +314,8 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
 
         headers = {
-            'assessment__name': 'Assessment Name',
+            'youth': 'Name',
+            'youth_id': 'youth ID',
             'phonenumber':'Phone Number',
             'country': 'Country',
             'nationality': 'Nationality',
@@ -348,6 +349,8 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
          }
 
         qs = self.get_queryset().extra(select={
+            'youth': "data->>'youth'",
+            'youth-id': "data->>'youth_id'",
             'partner': "data->>'partner'",
             'educational_status': "data->>'educational_status'",
             'country': "data->>'country'",
