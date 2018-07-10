@@ -316,7 +316,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         headers = {
             # 'governorate__name': 'Governorate',
             # 'governorate__parent__name': 'Country',
-            'partner',
+            'partner': 'Partner Organization',
             # 'center__name': 'Center',
             # 'location': 'Location',
             # 'youth__first_name': 'First Name',
@@ -326,9 +326,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'youth__bayanati_ID': 'Bayanati ID',
             # 'youth__number': 'Jordanian ID',
             # 'youth__sex': 'Gender',
-            # 'youth__birthday_day': 'birthday day',
-            # 'youth__birthday_month': 'birthday month',
-            # 'youth__birthday_year': 'birthday year',
+            'youth__birthday_day': 'birthday day',
+            'youth__birthday_month': 'birthday month',
+            'youth__birthday_year': 'birthday year',
             # 'youth__assessmentsubmission': 'Assessement submission',
             # 'youth__elapsed_years': 'Date of birth',
             # 'youth__nationality__name': 'Nationality',
@@ -449,7 +449,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset().extra(select={
             # 'training_type': "Assessment->>'name/training_type'",
-            'partner': "Data>>'partner/partner_organization'",
+            'partner': "data>>'partner/partner_organization'",
             # 'training_governerate': "registrations->>'registration/governorate'",
             # 'training_location': "registrations->>'registration/location'",
             # 'trainer': "registrations->>'registration/trainer'",
@@ -555,7 +555,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         }).values(
             # 'governorate__name',
             # 'governorate__parent__name',
-            'partner_organization',
+            'partner',
             # 'center__name',
             # 'location',
             # 'youth__first_name',
