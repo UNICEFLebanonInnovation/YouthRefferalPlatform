@@ -359,17 +359,16 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
          }
 
         qs = self.get_queryset().extra(select={
-            'partner': "data->>'partner'",
+            # 'partner': "data->>'partner'",
             'educational_status': "data->>'educational_status'",
-            'country': "data->>'country'",
-            'nationality': "data->>'nationality'",
-            'training_type': "data->>'training_type'",
+            # 'country': "data->>'country'",
+            # 'nationality': "data->>'nationality'",
+            # 'training_type': "data->>'training_type'",
 
-            'phonenumber': "data->>'phonenumber'",
+            # 'phonenumber': "data->>'phonenumber'",
 
             'center_type': "data->>'center_type'",
             'occupation_type': "data->>'occupation_type'",
-
             'School_name': "data->>'School_name'",
             'School_type': "data->>'School_type'",
             'school_level': "data->>'School_level'",
@@ -397,17 +396,17 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         }).values(
             'registration__youth__first_name',
+            'registration__youth__father_name',
             'registration__youth__last_name',
-            'partner',
+            # 'partner',
             'educational_status',
-            'country',
-            'nationality',
-            'training_type',
+            # 'country',
+            # 'nationality',
+            # 'training_type',
             'registration__governorate__parent__name',
             'registration__governorate__name',
             'registration__center__name',
             'registration__location',
-            'registration__youth__father_name',
             'registration__youth__bayanati_ID',
             'registration__youth__birthday_day',
             'registration__youth__birthday_month',
