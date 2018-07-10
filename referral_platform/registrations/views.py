@@ -396,7 +396,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'country',
             'nationality',
             'training_type',
-            'assessment_name',
+            'youth',
+            'youth_id',
+
 
             'phonenumber',
 
