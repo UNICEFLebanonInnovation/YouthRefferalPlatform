@@ -315,7 +315,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         headers = {
             # 'registration__youth__first_name': 'First Name',
-            # 'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__father_name': "Fathers's Name",
             # 'registration__youth__bayanati_ID': 'Bayanati ID',
             # 'registration__youth__birthday_day': 'Birth Day',
             # 'registration__youth__birthday_month': 'Birth Month',
@@ -324,6 +324,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'registration__youth__marital_status': 'Marital status',
             # 'registration__youth__sex': 'Gender',
             'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
             'registration__youth__last_name': 'Last Name',
             'phonenumber':'Phone Number',
             'country': 'Country',
@@ -403,7 +404,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'nationality',
             'training_type',
             # 'registration__youth__first_name',
-            # 'registration__youth__youth__father_name',
+            'registration__youth__youth__father_name',
             # 'registration__youth__bayanati_ID',
             # 'registration__youth__birthday_day',
             # 'registration__youth__birthday_month',
