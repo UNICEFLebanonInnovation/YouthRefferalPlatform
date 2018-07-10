@@ -324,6 +324,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'registration__youth__marital_status': 'Marital status',
             # 'registration__youth__sex': 'Gender',
             'registration__youth__first_name': 'First Name',
+            'registration__youth__last_name': 'Last Name',
             'phonenumber':'Phone Number',
             'country': 'Country',
             'nationality': 'Nationality',
@@ -395,6 +396,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         }).values(
             'registration__youth__first_name',
+            'registration__youth__last_name',
             'partner',
             'educational_status',
             'country',
@@ -412,7 +414,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'phonenumber',
             'center_type',
             'occupation_type',
-            'registration__youth__first_name',
             'School_name',
             'School_type',
             'school_level',
