@@ -314,8 +314,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
 
         headers = {
-            # 'registration__youth__first_name': 'First Name',
+            'registration__youth__first_name': 'First Name',
             'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
             'registration__youth__bayanati_ID': 'Bayanati ID',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
@@ -323,9 +324,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__nationality__name': 'Nationality',
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
-            'registration__youth__first_name': 'First Name',
-            'registration__youth__father_name': "Fathers's Name",
-            'registration__youth__last_name': 'Last Name',
+            'registration__youth__age': "Age",
+            'registration__youth__assessmentsubmission': 'Assessment Submission',
+            'registration__youth__youthledinitiative': 'Youth Led Initiative',
             'phonenumber':'Phone Number',
             'country': 'Country',
             'nationality': 'Nationality',
@@ -412,6 +413,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__nationality__name',
             'registration__youth__marital_status',
             'registration__youth__sex',
+            'registration__youth__age',
+            'registration__youth__assessmentsubmission',
+            'registration__youth__youthledinitiative',
             'phonenumber',
             'center_type',
             'occupation_type',
