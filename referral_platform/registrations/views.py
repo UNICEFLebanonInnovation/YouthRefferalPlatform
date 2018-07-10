@@ -449,7 +449,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset().extra(select={
             # 'training_type': "Assessment->>'name/training_type'",
-            'partner': "data>>'partner'",
+            'partner': "data->>'partner'",
             # 'training_governerate': "registrations->>'registration/governorate'",
             # 'training_location': "registrations->>'registration/location'",
             # 'trainer': "registrations->>'registration/trainer'",
