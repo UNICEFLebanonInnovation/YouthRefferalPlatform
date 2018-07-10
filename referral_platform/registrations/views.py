@@ -316,7 +316,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         headers = {
             # 'governorate__name': 'Governorate',
             # 'governorate__parent__name': 'Country',
-            'partner__organization': 'Partner Organization',
+            'partner': 'Partner Organization',
             # 'center__name': 'Center',
             # 'location': 'Location',
             # 'youth__first_name': 'First Name',
@@ -449,7 +449,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset().extra(select={
             # 'training_type': "Assessment->>'name/training_type'",
-            'partner__organization': "data>>'partner/partner_organization'",
+            'partner': "data>>'partner'",
             # 'training_governerate': "registrations->>'registration/governorate'",
             # 'training_location': "registrations->>'registration/location'",
             # 'trainer': "registrations->>'registration/trainer'",
@@ -555,7 +555,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         }).values(
             # 'governorate__name',
             # 'governorate__parent__name',
-            'partner__organization',
+            'partner',
             # 'center__name',
             # 'location',
             # 'youth__first_name',
