@@ -316,7 +316,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         headers = {
             # 'governorate__name': 'Governorate',
             # 'governorate__parent__name': 'Country',
-            'partner': 'Partner Organization',
+            'partner',
             # 'center__name': 'Center',
             # 'location': 'Location',
             # 'youth__first_name': 'First Name',
