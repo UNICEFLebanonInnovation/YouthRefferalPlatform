@@ -307,7 +307,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         if self.request.user.is_superuser and not self.request.user.partner:
             queryset = self.queryset
         else:
-            submission_set = self.queryset.filter(registration_partner_organization=self.request.user.partner)
+            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
         return self.queryset
 
@@ -345,6 +345,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time': 'Submission Time and Date',
             'what_electronics_do_you_own': 'What electronics do you own?',
             'desired_method_for_follow_up': 'Desired Method for follow-up',
+            'registration__youth__first_name': 'First Name',
 
          }
 
@@ -404,7 +405,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
             'center_type',
             'occupation_type',
-
+            'registration__youth__first_name',
             'School_name',
             'School_type',
             'school_level',
