@@ -314,8 +314,15 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
 
         headers = {
-            'youth': 'Name',
-            'youth_id': 'youth ID',
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__youth__father_name': "Fathers's Name",
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__name': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registrations__youth__sex': 'Gender',
             'phonenumber':'Phone Number',
             'country': 'Country',
             'nationality': 'Nationality',
@@ -345,13 +352,11 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time': 'Submission Time and Date',
             'what_electronics_do_you_own': 'What electronics do you own?',
             'desired_method_for_follow_up': 'Desired Method for follow-up',
-            'registration__youth__first_name': 'First Name',
+
 
          }
 
         qs = self.get_queryset().extra(select={
-            'youth': "data->>'youth'",
-            'youth-id': "data->>'youth_id'",
             'partner': "data->>'partner'",
             'educational_status': "data->>'educational_status'",
             'country': "data->>'country'",
@@ -399,10 +404,16 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'training_type',
             'youth',
             'youth_id',
-
-
+            'registration__youth__first_name',
+            'registration__youth__youth__father_name',
+            'registration__youth__bayanati_ID',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__name',
+            'registration__youth__marital_status',
+            'registrations__youth__sex',
             'phonenumber',
-
             'center_type',
             'occupation_type',
             'registration__youth__first_name',
