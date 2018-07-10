@@ -322,7 +322,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__birthday_year': 'Birth Year',
             'registration__youth__nationality__name': 'Nationality',
             'registration__youth__marital_status': 'Marital status',
-            'registrations__youth__sex': 'Gender',
+            'registration__youth__sex': 'Gender',
             'phonenumber':'Phone Number',
             'country': 'Country',
             'nationality': 'Nationality',
@@ -352,7 +352,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time': 'Submission Time and Date',
             'what_electronics_do_you_own': 'What electronics do you own?',
             'desired_method_for_follow_up': 'Desired Method for follow-up',
-
 
          }
 
@@ -410,7 +409,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__birthday_year',
             'registration__youth__nationality__name',
             'registration__youth__marital_status',
-            'registrations__youth__sex',
+            'registration__youth__sex',
             'phonenumber',
             'center_type',
             'occupation_type',
