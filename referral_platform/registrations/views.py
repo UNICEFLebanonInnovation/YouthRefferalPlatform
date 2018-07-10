@@ -316,7 +316,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         headers = {
             'registration__youth__first_name': 'First Name',
             'registration__youth__father_name': "Fathers's Name",
-            'registration__bayanati_ID': 'Bayanati ID',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
