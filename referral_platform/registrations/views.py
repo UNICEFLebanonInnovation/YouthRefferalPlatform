@@ -447,209 +447,116 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.all()
 
-    def get(self, request, *args, **kwargs):
-
-        book = tablib.Databook()
-
+    def get_queryset(self):
         if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
+            queryset = self.queryset
         else:
             submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
-        country = self.request.GET.get('country', 0)
-        if country:
-            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
+        return self.queryset
 
-        data3 = tablib.Dataset()
-        data3.title = "Pre-Assessment"
-        data3.headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
+    def get(self, request, *args, **kwargs):
 
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
+        headers = {
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__name': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registration__youth__sex': 'Gender',
+            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__name': 'Governorate',
+            'registration__center__name': 'Center',
+            'registration__location': 'Location',
+            # 'nationality': 'Nationality',
+            # 'training_type': 'Training Type',
+            # 'partner': 'Partner Organization',
+            'center_type': 'Center Type',
+            '_4_articulate_thoughts': 'PRE - I can articulate/state my thoughts, feelings and ideas to others well',
+            '_1_express_opinion': 'PRE - I can express my opinions when my classmates/friends/peers disagree with me',
+            '_20_discussions_with_peers_before_': 'PRE - Usually I discuss with others before making decisions',
+            '_28_discuss_opinions': 'PRE - I build on the ideas of others.',
+            '_31_willing_to_compromise': 'PRE - I am willing to compromise my own view to obtain a group consensus.',
+            '_pal_I_belong': 'PRE - I feel I belong to my community',
+            '_41_where_to_volunteer': 'PRE - I know where to volunteer in my community',
+            '_42_regularly_volunteer': 'PRE - I volunteer on a regular basis in my community',
+            '_pal_contrib_appreciated': 'PRE - I feel I am appreciated for my contributions to my community.',
+            '_pal_contribute_to_development': 'PRE - I believe I can contribute towards community development',
+            '_51_communicate_community_conc': 'PRE - I am able to address community concerns with community leaders',
+            '_52_participate_community_medi': 'PRE - I participate in addressing my community concerns through SMedia',
+            '_submission_time': 'PRE assessment submission time',
+            # '_4_articulate_thoughts': 'POST - I can articulate/state my thoughts, feelings and ideas to others well',
+            # '_1_express_opinion': 'POST - I can express my opinions when my classmates/friends/peers disagree with me',
+            # '_20_discussions_with_peers_before_': 'POST - Usually I discuss with others before making decisions',
+            # '_28_discuss_opinions': 'POST - I build on the ideas of others.',
+            # '_31_willing_to_compromise': 'POST - I am willing to compromise my own view to obtain a group consensus.',
+            # '_pal_I_belong': 'POST - I feel I belong to my community',
+            # '_41_where_to_volunteer': 'POST - I know where to volunteer in my community',
+            # '_42_regularly_volunteer': 'POST - I volunteer on a regular basis in my community',
+            # '_pal_contrib_appreciated': 'POST - I feel I am appreciated for my contributions to my community.',
+            # '_pal_contribute_to_development': 'POST - I believe I can contribute towards community development',
+            # '_51_communicate_community_conc': 'POST - I am able to address community concerns with community leaders',
+            # '_52_participate_community_medi': 'POST - I participate in addressing my community concerns through SMedia',
+            # '_submission_time': 'POST assessment submission time',
+        }
 
-            'I can articulate/state my thoughts, feelings and ideas to others well',
-            'I can express my opinions when my classmates/friends/peers disagree with me',
-            'Usually I discuss with friends/parents/colleagues to clarify some issues before taking a decision in that regard',
-            'I build on the ideas of others.',
-            'I am willing to compromise my own view to obtain a group consensus.',
-            'I feel I belong to my community',
-            'I know where to volunteer in my community',
-            'I volunteer on a regular basis in my community',
-            'I feel I am appreciated for my contributions to my community.',
-            'I believe I can contribute towards the development (betterment) of my community',
-            'I am able to address/discuss community concerns in interactions with community leaders/people of authority at the local level',
-            'I participate actively in addressing my community concerns through media/social media',
-            'submission time',
-        ]
-
-        data4 = tablib.Dataset()
-        data4.title = "Post-Assessment"
-        data4.headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
-
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
-
-            'I can articulate/state my thoughts, feelings and ideas to others well',
-            'I can express my opinions when my classmates/friends/peers disagree with me',
-            'Usually I discuss with friends/parents/colleagues to clarify some issues before taking a decision in that regard',
-            'I build on the ideas of others.',
-            'I am willing to compromise my own view to obtain a group consensus.',
-            'I feel I belong to my community',
-            'I know where to volunteer in my community',
-            'I volunteer on a regular basis in my community',
-            'I feel I am appreciated for my contributions to my community.',
-            'I believe I can contribute towards the development (betterment) of my community',
-            'I am able to address/discuss community concerns in interactions with community leaders/people of authority at the local level',
-            'I participate actively in addressing my community concerns through media/social media',
-            'submission time'
-        ]
-
-        submission_set1 = submission_set.filter(assessment__slug='pre_assessment')
-        for line2 in submission_set1:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                get_choice_value(line2.data, '_4_articulate_thoughts', 'rates'),
-                get_choice_value(line2.data, '_1_express_opinion', 'rates'),
-                get_choice_value(line2.data, 'discuss_before_decision', 'rates'),
-                get_choice_value(line2.data, '_28_discuss_opinions', 'rates'),
-                get_choice_value(line2.data, '_31_willing_to_compromise', 'rates'),
-                get_choice_value(line2.data, '_pal_I_belong', 'rates'),
-                get_choice_value(line2.data, '_41_where_to_volunteer', 'rates'),
-                get_choice_value(line2.data, '_42_regularly_volunteer', 'rates'),
-                get_choice_value(line2.data, '_pal_contrib_appreciated', 'rates'),
-                get_choice_value(line2.data, '_pal_contribute_to_development', 'rates'),
-                get_choice_value(line2.data, '_51_communicate_community_conc', 'rates'),
-                get_choice_value(line2.data, '_52_participate_community_medi', 'rates'),
-                submission_date,
-            ]
-            data3.append(content)
-
-        submission_set2 = submission_set.filter(assessment__slug='post_assessment')
-        for line2 in submission_set2:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                get_choice_value(line2.data, '_4_articulate_thoughts', 'rates'),
-                get_choice_value(line2.data, '_1_express_opinion', 'rates'),
-                get_choice_value(line2.data, 'discuss_before_decision', 'rates'),
-                get_choice_value(line2.data, '_28_discuss_opinions', 'rates'),
-                get_choice_value(line2.data, '_31_willing_to_compromise', 'rates'),
-                get_choice_value(line2.data, '_pal_I_belong', 'rates'),
-                get_choice_value(line2.data, '_41_where_to_volunteer', 'rates'),
-                get_choice_value(line2.data, '_42_regularly_volunteer', 'rates'),
-                get_choice_value(line2.data, '_pal_contrib_appreciated', 'rates'),
-                get_choice_value(line2.data, '_pal_contribute_to_development', 'rates'),
-                get_choice_value(line2.data, '_51_communicate_community_conc', 'rates'),
-                get_choice_value(line2.data, '_52_participate_community_medi', 'rates'),
-                submission_date,
-            ]
-            data4.append(content)
-
-        book.add_sheet(data3)
-        book.add_sheet(data4)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
+        qs = self.get_queryset().extra(select={
+            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
+            '_1_express_opinion': "data->>'_1_express_opinion'",
+            '_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
+            '_28_discuss_opinions': "data->>'_28_discuss_opinions'",
+            '_31_willing_to_compromise': "data->>'_31_willing_to_compromise'",
+            '_pal_I_belong': "data->>'_pal_I_belong'",
+            '_41_where_to_volunteer': "data->>'_41_where_to_volunteer'",
+            '_42_regularly_volunteer': "data->>'_42_regularly_volunteer'",
+            '_pal_contrib_appreciated': "data->>'_pal_contrib_appreciated'",
+            '_pal_contribute_to_development': "data->>'_pal_contribute_to_development'",
+            '_51_communicate_community_conc': "data->>'_51_communicate_community_conc'",
+            '_52_participate_community_medi': "data->>'_52_participate_community_medi'",
+            '_submission_time': "data->>'_submission_time'",
+            'center_type': "data->>'center_type'",
+            'occupation_type': "data->>'occupation_type'",
+        }).values(
+            'registration__youth__first_name',
+            'registration__youth__father_name',
+            'registration__youth__last_name',
+            # 'partner',
+            'educational_status',
+            # 'country',
+            # 'nationality',
+            # 'training_type',
+            'registration__governorate__parent__name',
+            'registration__governorate__name',
+            'registration__center__name',
+            'registration__location',
+            'registration__youth__bayanati_ID',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__name',
+            'registration__youth__marital_status',
+            'registration__youth__sex',
+            'center_type',
+            '_4_articulate_thoughts',
+            '_1_express_opinion',
+            '_20_discussions_with_peers_before_',
+            '_28_discuss_opinions',
+            '_31_willing_to_compromise',
+            '_pal_I_belong',
+            '_41_where_to_volunteer',
+            '_42_regularly_volunteer',
+            '_pal_contrib_appreciated',
+            '_pal_contribute_to_development',
+            '_51_communicate_community_conc',
+            '_52_participate_community_medi',
+            '_submission_time',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Civic_Engagement_Assessments.xls'
-        return response
+
+        return render_to_csv_response(qs, field_header_map=headers)
 
 
 class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
