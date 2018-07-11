@@ -451,7 +451,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
         if self.request.user.is_superuser and not self.request.user.partner:
             queryset = self.queryset
         else:
-            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner).filter(registration__assessment__name=="pre-assessment")
 
         return self.queryset
 
