@@ -544,290 +544,160 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
 
 
 class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
-
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.all()
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_entrepreneurship', 'post_entrepreneurship'])
 
-    def get(self, request, *args, **kwargs):
-
-        book = tablib.Databook()
-
+    def get_queryset(self):
         if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
+            queryset = self.queryset
         else:
             submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
-        country = self.request.GET.get('country', 0)
-        if country:
-            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
+        return self.queryset
 
-        data5 = tablib.Dataset()
-        data5.title = "Pre-Entrepreneurship"
-        data5.headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
+    def get(self, request, *args, **kwargs):
 
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
+        headers = {
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__name': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registration__youth__sex': 'Gender',
+            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__name': 'Governorate',
+            'registration__center__name': 'Center',
+            'registration__location': 'Location',
+            'assessment__slug': 'Assessment Type',
+            # 'nationality': 'Nationality',
+            # 'training_type': 'Training Type',
+            # 'partner': 'Partner Organization',
 
-            'I am prepared to plan my personal objectives',
-            'I am prepared to plan my professional objectives',
-            'I know how to manage my monetary affairs responsibly',
-            'I know ways to plan my time',
-            'I can give suggestions without being bossy',
-            'I make a decision by thinking about all the information I have about available options decision making',
-            'I know how to identify causes for my problems and find solutions for them  problem solving',
-            'I know where and when to get support when I face a problem',
-            'When I am stressed, I manage my stress in a positive way',
-            'There are opportunities in the labour market that encourage me to develop my skills',
+            'can_plan_personal': 'I am prepared to plan my personal objectives',
+            'can_plan_career': 'I am prepared to plan my professional objectives',
+            'can_manage_financ': 'I know how to manage my monetary affairs responsibly',
+            'can_plan_time': 'I know ways to plan my time',
+            'can_suggest': 'I can give suggestions without being bossy',
+            'can_take_decision': 'I make a decision by thinking about all the information I have about available options decision making',
+            'problem_solving': 'I know how to identify causes for my problems and find solutions for them  problem solving',
+            'aware_resources': 'I know where and when to get support when I face a problem',
+            'can_handle_pressure': 'When I am stressed, I manage my stress in a positive way',
+            'motivated_advance_skills': 'There are opportunities in the labour market that encourage me to develop my skills',
 
-            'A good communicator',
-            'The most important part of delivering a successful presentation is',
+            'communication_skills': 'A good communicator',
+            'presentation_skills': 'The most important part of delivering a successful presentation is',
 
-            'A team is a group of people who',
-            'To work efficiently as a team',
-            'If I am the group leader, I will',
-            'One of the main reasons to NOT make the best decision',
-            'The easiest solution for the problem is always the best solution',
-            'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
-            'submission time',
-        ]
+            'team_is': 'A team is a group of people who',
+            'good_team_is': 'To work efficiently as a team',
+            'team_leader_is': 'If I am the group leader, I will',
+            'bad_decision_cause': 'One of the main reasons to NOT make the best decision',
+            'easiest_solution': 'The easiest solution for the problem is always the best solution',
+            'can_determin_probs': 'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
+            '_submission_time': 'submission time',
 
-        data6 = tablib.Dataset()
-        data6.title = "Post-Entrepreneurship"
-        data6.headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
+            'personal_value': 'Rate the benefits of the training to your personal life',
+            'faced_challenges': 'Have you faced any challenges with the program?',
+            'challenges': 'Challenges',
+            'has_comments': 'Comments',
+            '_userform_id': 'User',
 
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
+        }
 
-            'I am prepared to plan my personal objectives',
-            'I am prepared to plan my professional objectives',
-            'I know how to manage my monetary affairs responsibly',
-            'I know ways to plan my time',
-            'I can give suggestions without being bossy',
-            'I make a decision by thinking about all the information I have about available options decision making',
-            'I know how to identify causes for my problems and find solutions for them  problem solving',
-            'I know where and when to get support when I face a problem',
-            'When I am stressed, I manage my stress in a positive way',
-            'There are opportunities in the labour market that encourage me to develop my skills',
+        qs = self.get_queryset().extra(select={
 
-            'A good communicator',
-            'The most important part of delivering a successful presentation is',
+            'can_plan_personal': "data->>'can_plan_personal'",
+            'can_plan_career': "data->>'can_plan_career'",
+            'can_manage_financ': "data->>'can_manage_financ'",
+            'can_plan_time': "data->>'can_plan_time'",
+            'can_suggest': "data->>'can_suggest'",
+            'can_take_decision': "data->>'can_take_decision'",
+            'problem_solving': "data->>'problem_solving'",
+            'aware_resources': "data->>'aware_resources'",
+            'can_handle_pressure': "data->>'can_handle_pressure'",
+            'motivated_advance_skills': "data->>'motivated_advance_skills'",
 
-            'A team is a group of people who',
-            'To work efficiently as a team',
-            'If I am the group leader, I will',
-            'One of the main reasons to NOT make the best decision',
-            'The easiest solution for the problem is always the best solution',
-            'If you face a problem, what procedures would you take into consideration to solve the problem?',
-            'Rate the benefits of the training to your personal life',
-            'Have you faced any challenges with the program?',
+            'communication_skills': "data->>'communication_skills'",
+            'presentation_skills': "data->>'presentation_skills'",
 
-            'Challenges',
-            'The program materials/design were difficult to understand',
-            'The facilitators didn\'t provide us with required support',
-            'The training period is too short',
-            'The training period is too long',
-            'Meeting room/location not convenient',
+            'team_is': "data->>'team_is'",
+            'good_team_is': "data->>'good_team_is'",
+            'team_leader_is': "data->>'team_leader_is'",
+            'bad_decision_cause': "data->>'bad_decision_cause'",
+            'easiest_solution': "data->>'easiest_solution'",
+            'can_determin_probs': "data->>'can_determin_probs'",
+            '_submission_time': "data->>'_submission_time'",
 
-            'If the room/ training area not convenient, please specify why',
-            'Location of CBO is too far',
-            'The rooms are not very well ventilated',
-            'The rooms are not clean',
-            'There are no tables / chairs',
-            'The classroom lacks safety equipment',
-            'Other',
+            'personal_value': "data->>'personal_value'",
+            'faced_challenges': "data->>'faced_challenges'",
+            'challenges': "data->>'challenges'",
+            'has_comments': "data->>'has_comments'",
+            '_userform_id': "data->>'_userform_id'",
 
-            'If other, please specify',
-            'Do you have anything else you want to tell us?',
-            'If yes, what is it?',
-            'submission_time',
-        ]
+        }).values(
+            'registration__youth__first_name',
+            'registration__youth__father_name',
+            'registration__youth__last_name',
+            'registration__governorate__parent__name',
+            'registration__governorate__name',
+            'registration__center__name',
+            'registration__location',
+            'registration__youth__bayanati_ID',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__name',
+            'registration__youth__marital_status',
+            'registration__youth__sex',
+            'assessment__slug',
+             'can_plan_personal',
+            'can_plan_career',
+            'can_manage_financ',
+            'can_plan_time',
+            'can_suggest',
+            'can_take_decision',
+            'problem_solving',
+            'aware_resources',
+            'can_handle_pressure',
+            'motivated_advance_skills',
 
-        submission_set1 = submission_set.filter(assessment__slug='pre_entrepreneurship')
-        for line2 in submission_set1:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
+            'communication_skills',
+            'presentation_skills',
 
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
+            'team_is',
+            'good_team_is',
+            'team_leader_is',
+            'bad_decision_cause',
+            'easiest_solution',
+            'can_determin_probs',
+            '_submission_time',
 
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
+            'personal_value',
+            'faced_challenges',
+            'challenges',
+            'has_comments',
+            '_userform_id',
 
-                get_choice_value(line2.data, 'can_plan_personal', 'rates'),
-                get_choice_value(line2.data, 'can_plan_career', 'rates'),
-                get_choice_value(line2.data, 'can_manage_financ', 'rates'),
-                get_choice_value(line2.data, 'can_plan_time', 'rates'),
-                get_choice_value(line2.data, 'can_suggest', 'rates'),
-                get_choice_value(line2.data, 'can_take_decision', 'rates'),
-                get_choice_value(line2.data, 'can_determin_probs', 'rates'),
-                get_choice_value(line2.data, 'aware_resources', 'rates'),
-                get_choice_value(line2.data, 'can_handle_pressure', 'rates'),
-                get_choice_value(line2.data, 'motivated_advance_skills', 'rates'),
-                get_choice_value(line2.data, 'communication_skills', 'skills'),
-                get_choice_value(line2.data, 'presentation_skills', 'skills'),
-                get_choice_value(line2.data, 'team_is', 'capacities'),
-                get_choice_value(line2.data, 'good_team_is', 'capacities'),
-                get_choice_value(line2.data, 'team_leader_is', 'capacities'),
-                get_choice_value(line2.data, 'bad_decision_cause', 'capacities'),
-                get_choice_value(line2.data, 'easiest_solution', 'capacities'),
-                get_choice_value(line2.data, 'problem_solving', 'capacities'),
-
-                submission_date,
-            ]
-            data5.append(content)
-
-        submission_set2 = submission_set.filter(assessment__slug='post_entrepreneurship')
-        for line2 in submission_set2:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                get_choice_value(line2.data, 'can_plan_personal', 'rates'),
-                get_choice_value(line2.data, 'can_plan_career', 'rates'),
-                get_choice_value(line2.data, 'can_manage_financ', 'rates'),
-                get_choice_value(line2.data, 'can_plan_time', 'rates'),
-                get_choice_value(line2.data, 'can_suggest', 'rates'),
-                get_choice_value(line2.data, 'can_take_decision', 'rates'),
-                get_choice_value(line2.data, 'can_determin_probs', 'rates'),
-                get_choice_value(line2.data, 'aware_resources', 'rates'),
-                get_choice_value(line2.data, 'can_handle_pressure', 'rates'),
-                get_choice_value(line2.data, 'motivated_advance_skills', 'rates'),
-
-                get_choice_value(line2.data, 'communication_skills', 'skills'),
-                get_choice_value(line2.data, 'presentation_skills', 'skills'),
-
-                get_choice_value(line2.data, 'team_is', 'capacities'),
-                get_choice_value(line2.data, 'good_team_is', 'capacities'),
-                get_choice_value(line2.data, 'team_leader_is', 'capacities'),
-                get_choice_value(line2.data, 'bad_decision_cause', 'capacities'),
-                get_choice_value(line2.data, 'easiest_solution', 'capacities'),
-                get_choice_value(line2.data, 'problem_solving', 'capacities'),
-
-                get_choice_value(line2.data, 'personal_value', 'rates'),
-                get_choice_value(line2.data, 'faced_challenges', 'yes_no'),
-
-                # get_choice_value(line2.data, 'challenges', 'challenges'),
-                line2.data.get('challenges', ''),
-                line2.get_data_option('challenges', 'difficult_material'),
-                line2.get_data_option('challenges', 'no_support'),
-                line2.get_data_option('challenges', 'too_short'),
-                line2.get_data_option('challenges', 'too_long'),
-                line2.get_data_option('challenges', 'inappropriate_venue'),
-
-                # get_choice_value(line2.data, 'bad_venue', 'challenges'),
-                line2.data.get('bad_venue', ''),
-                line2.get_data_option('bad_venue', 'far'),
-                line2.get_data_option('bad_venue', 'bad_ventilation'),
-                line2.get_data_option('bad_venue', 'dirty_room'),
-                line2.get_data_option('bad_venue', 'no_facility'),
-                line2.get_data_option('bad_venue', 'no_tools'),
-                line2.get_data_option('bad_venue', 'other'),
-
-                line2.data.get('bad_venue_others', ''),
-                get_choice_value(line2.data, 'has_comments', 'yes_no'),
-                line2.data.get('additional_comments', ''),
-                submission_date,
-            ]
-            data6.append(content)
-
-        book.add_sheet(data5)
-        book.add_sheet(data6)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Entrepreneurship_Assessments.xls'
-        return response
+
+        return render_to_csv_response(qs, field_header_map=headers)
+
+
+            # 'If the room/ training area not convenient, please specify why',
+            # 'Location of CBO is too far',
+            # 'The rooms are not very well ventilated',
+            # 'The rooms are not clean',
+            # 'There are no tables / chairs',
+            # 'The classroom lacks safety equipment',
+            # 'Other',
+            #
+            # 'If other, please specify',
+            # 'Do you have anything else you want to tell us?',
+            # 'If yes, what is it?',
+            # 'submission_time',
 
 
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
