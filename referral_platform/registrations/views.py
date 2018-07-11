@@ -491,25 +491,24 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time': 'PRE assessment submission time',
 
 
-
-            # '_4_articulate_thoughts': 'POST - I can articulate/state my thoughts, feelings and ideas to others well',
-            # '_1_express_opinion': 'POST - I can express my opinions when my classmates/friends/peers disagree with me',
-            # '_20_discussions_with_peers_before_': 'POST - Usually I discuss with others before making decisions',
-            # '_28_discuss_opinions': 'POST - I build on the ideas of others.',
-            # '_31_willing_to_compromise': 'POST - I am willing to compromise my own view to obtain a group consensus.',
-            # '_pal_I_belong': 'POST - I feel I belong to my community',
-            # '_41_where_to_volunteer': 'POST - I know where to volunteer in my community',
-            # '_42_regularly_volunteer': 'POST - I volunteer on a regular basis in my community',
-            # '_pal_contrib_appreciated': 'POST - I feel I am appreciated for my contributions to my community.',
-            # '_pal_contribute_to_development': 'POST - I believe I can contribute towards community development',
-            # '_51_communicate_community_conc': 'POST - I am able to address community concerns with community leaders',
-            # '_52_participate_community_medi': 'POST - I participate in addressing my community concerns through SMedia',
-            # '_submission_time': 'POST assessment submission time',
+            'post_4_articulate_thoughts': 'POST - I can articulate/state my thoughts, feelings and ideas to others well',
+            'post_1_express_opinion': 'POST - I can express my opinions when others disagree with me',
+            'post_20_discussions_with_peers_before_': 'POST - Usually I discuss with others before making decisions',
+            'post_28_discuss_opinions': 'POST - I build on the ideas of others.',
+            'post_31_willing_to_compromise': 'POST -I am willing to compromise my own view to obtain a group consensus.',
+            'post_pal_I_belong': 'POST - I feel I belong to my community',
+            'post_41_where_to_volunteer': 'POST - I know where to volunteer in my community',
+            'post_42_regularly_volunteer': 'POST - I volunteer on a regular basis in my community',
+            'post_pal_contrib_appreciated': 'POST - I feel I am appreciated for my contributions to my community.',
+            'post_pal_contribute_to_development': 'POST - I believe I can contribute towards community development',
+            'post_51_communicate_community_conc': 'POST -I am able to address community concerns with community leaders',
+            'post_52_participate_community_medi': 'POST-I participate in addressing my community issues through SMedia',
+            'post_submission_time': 'POST assessment submission time',
         }
 
         qs = self.get_queryset().extra(select={
-            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts' WHERE 'registration__slug'=='pre-assessment'",
-            '_1_express_opinion': "data->>'_1_express_opinion' registration__slug'=='post-assessment'",
+            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
+            '_1_express_opinion': "data->>'_1_express_opinion'",
             '_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
             '_28_discuss_opinions': "data->>'_28_discuss_opinions'",
             '_31_willing_to_compromise': "data->>'_31_willing_to_compromise'",
@@ -521,6 +520,20 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_51_communicate_community_conc': "data->>'_51_communicate_community_conc'",
             '_52_participate_community_medi': "data->>'_52_participate_community_medi'",
             '_submission_time': "data->>'_submission_time'",
+
+            'post_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
+            'post_1_express_opinion': "data->>'_1_express_opinion'",
+            'post_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
+            'post_28_discuss_opinions': "data->>'_28_discuss_opinions'",
+            'post_31_willing_to_compromise': "data->>'_31_willing_to_compromise'",
+            'post_pal_I_belong': "data->>'_pal_I_belong'",
+            'post_41_where_to_volunteer': "data->>'_41_where_to_volunteer'",
+            'post_42_regularly_volunteer': "data->>'_42_regularly_volunteer'",
+            'post_pal_contrib_appreciated': "data->>'_pal_contrib_appreciated'",
+            'post_pal_contribute_to_development': "data->>'_pal_contribute_to_development'",
+            'post_51_communicate_community_conc': "data->>'_51_communicate_community_conc'",
+            'post_52_participate_community_medi': "data->>'_52_participate_community_medi'",
+            'post_submission_time': "data->>'_submission_time'",
 
         }).values(
             'registration__youth__first_name',
@@ -537,6 +550,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__nationality__name',
             'registration__youth__marital_status',
             'registration__youth__sex',
+
             '_4_articulate_thoughts',
             '_1_express_opinion',
             '_20_discussions_with_peers_before_',
@@ -550,6 +564,20 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_51_communicate_community_conc',
             '_52_participate_community_medi',
             '_submission_time',
+
+            'post_4_articulate_thoughts',
+            'post_1_express_opinion',
+            'post_20_discussions_with_peers_before_',
+            'post_28_discuss_opinions',
+            'post_31_willing_to_compromise',
+            'post_pal_I_belong',
+            'post_41_where_to_volunteer',
+            'post_42_regularly_volunteer',
+            'post_pal_contrib_appreciated',
+            'post_pal_contribute_to_development',
+            'post_51_communicate_community_conc',
+            'post_52_participate_community_medi',
+            'post_submission_time',
         )
 
         return render_to_csv_response(qs, field_header_map=headers)
