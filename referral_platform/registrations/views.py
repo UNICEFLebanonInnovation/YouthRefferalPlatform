@@ -445,7 +445,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.filter(assessment__slug='pre_assessment')
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_assessment', 'post_assessment'])
 
     def get_queryset(self):
         if self.request.user.is_superuser and not self.request.user.partner:
@@ -472,6 +472,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__governorate__name': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
+            # 'registration__assessment__type'
             # 'nationality': 'Nationality',
             # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
