@@ -491,7 +491,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time': 'PRE assessment submission time',
 
 
-            'post_4_articulate_thoughts': 'POST - I can articulate/state my thoughts, feelings and ideas to others well',
+            'post_assessment__4_articulate_thoughts': 'POST -I can articulate my thoughts/feelings/ideas to others well',
             'post_1_express_opinion': 'POST - I can express my opinions when others disagree with me',
             'post_20_discussions_with_peers_before_': 'POST - Usually I discuss with others before making decisions',
             'post_28_discuss_opinions': 'POST - I build on the ideas of others.',
@@ -507,7 +507,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
         }
 
         qs = self.get_queryset().extra(select={
-            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
+            '_4_articulate_thoughts': "pre_assessment__data->>'_4_articulate_thoughts'",
             '_1_express_opinion': "data->>'_1_express_opinion'",
             '_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
             '_28_discuss_opinions': "data->>'_28_discuss_opinions'",
@@ -521,7 +521,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_52_participate_community_medi': "data->>'_52_participate_community_medi'",
             '_submission_time': "data->>'_submission_time'",
 
-            'post_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
+            'post_assessment__4_articulate_thoughts': "post_assessment__data->>'_4_articulate_thoughts'",
             'post_1_express_opinion': "data->>'_1_express_opinion'",
             'post_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
             'post_28_discuss_opinions': "data->>'_28_discuss_opinions'",
@@ -565,7 +565,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_52_participate_community_medi',
             '_submission_time',
 
-            'post_4_articulate_thoughts',
+            'post_assessment__4_articulate_thoughts',
             'post_1_express_opinion',
             'post_20_discussions_with_peers_before_',
             'post_28_discuss_opinions',
