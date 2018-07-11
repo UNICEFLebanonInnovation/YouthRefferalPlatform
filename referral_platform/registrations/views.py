@@ -475,6 +475,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             # 'nationality': 'Nationality',
             # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
+
             '_4_articulate_thoughts': 'PRE - I can articulate/state my thoughts, feelings and ideas to others well',
             '_1_express_opinion': 'PRE - I can express my opinions when my classmates/friends/peers disagree with me',
             '_20_discussions_with_peers_before_': 'PRE - Usually I discuss with others before making decisions',
@@ -488,6 +489,9 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_51_communicate_community_conc': 'PRE - I am able to address community concerns with community leaders',
             '_52_participate_community_medi': 'PRE - I participate in addressing my community concerns through SMedia',
             '_submission_time': 'PRE assessment submission time',
+
+
+
             # '_4_articulate_thoughts': 'POST - I can articulate/state my thoughts, feelings and ideas to others well',
             # '_1_express_opinion': 'POST - I can express my opinions when my classmates/friends/peers disagree with me',
             # '_20_discussions_with_peers_before_': 'POST - Usually I discuss with others before making decisions',
@@ -504,8 +508,8 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
         }
 
         qs = self.get_queryset().extra(select={
-            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
-            '_1_express_opinion': "data->>'_1_express_opinion'",
+            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts' WHERE 'slug'=='pre-assessment'",
+            '_1_express_opinion': "data->>'_1_express_opinion' WHERE 'slug'=='post-assessment'",
             '_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
             '_28_discuss_opinions': "data->>'_28_discuss_opinions'",
             '_31_willing_to_compromise': "data->>'_31_willing_to_compromise'",
@@ -517,7 +521,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_51_communicate_community_conc': "data->>'_51_communicate_community_conc'",
             '_52_participate_community_medi': "data->>'_52_participate_community_medi'",
             '_submission_time': "data->>'_submission_time'",
-        
+
         }).values(
             'registration__youth__first_name',
             'registration__youth__father_name',
