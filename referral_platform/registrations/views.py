@@ -508,8 +508,8 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
         }
 
         qs = self.get_queryset().extra(select={
-            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts' WHERE 'slug'=='pre-assessment'",
-            '_1_express_opinion': "data->>'_1_express_opinion' WHERE 'slug'=='post-assessment'",
+            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts' WHERE 'registration__slug'=='pre-assessment'",
+            '_1_express_opinion': "data->>'_1_express_opinion' registration__slug'=='post-assessment'",
             '_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
             '_28_discuss_opinions': "data->>'_28_discuss_opinions'",
             '_31_willing_to_compromise': "data->>'_31_willing_to_compromise'",
