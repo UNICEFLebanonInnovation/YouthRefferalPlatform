@@ -261,7 +261,6 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__birthday_day': 'birthday day',
             'youth__birthday_month': 'birthday month',
             'youth__birthday_year': 'birthday year',
-            'registration__youth_age': 'Age',
             'youth__nationality__name': 'Nationality',
             'youth__marital_status': 'Marital status',
             'youth__address': 'address',
