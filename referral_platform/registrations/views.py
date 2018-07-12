@@ -862,5 +862,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             '_userform_id',
 
         )
+        filename = 'Initiative-Export'
 
-        return render_to_csv_response(qs, field_header_map=headers)
+        return render_to_csv_response(qs, filename,  field_header_map=headers)
