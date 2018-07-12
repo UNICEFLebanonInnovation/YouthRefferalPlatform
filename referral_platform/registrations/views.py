@@ -294,8 +294,9 @@ class ExportView(LoginRequiredMixin, ListView):
             'modified',
             'registration__youth_age',
         )
+        filename = 'beneficiaries'
 
-        return render_to_csv_response(qs, field_header_map=headers)
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
 class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
@@ -438,8 +439,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'what_electronics_do_you_own',
             'desired_method_for_follow_up',
         )
+        filename = 'registrations'
 
-        return render_to_csv_response(qs, field_header_map=headers)
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
 class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
@@ -539,8 +541,9 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time',
 
         )
+        filename = 'Civic-assessment'
 
-        return render_to_csv_response(qs, field_header_map=headers)
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
 class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
@@ -682,8 +685,9 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             '_userform_id',
 
         )
+        filename = 'Entrepreneurship-assessment'
 
-        return render_to_csv_response(qs, field_header_map=headers)
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
             # 'If the room/ training area not convenient, please specify why',
