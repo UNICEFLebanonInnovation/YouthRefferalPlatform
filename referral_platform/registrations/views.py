@@ -265,7 +265,7 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__marital_status': 'Marital status',
             'youth__address': 'address',
             'owner__email': 'Created By',
-            'youth__calculate_age': 'Age',
+            # 'youth__calculate_age': 'Age',
             'modified_by__email': 'modified_by',
             'created': 'created',
             'modified': 'modified',
@@ -292,7 +292,7 @@ class ExportView(LoginRequiredMixin, ListView):
             'modified_by__email',
             'created',
             'modified',
-            'youth__calculate_age',
+            # 'youth__calculate_age',
         )
         filename = 'beneficiaries'
 
