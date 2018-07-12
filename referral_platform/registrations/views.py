@@ -703,7 +703,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_entrepreneurship', 'post_entrepreneurship'])
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
 
     def get_queryset(self):
         if self.request.user.is_superuser and not self.request.user.partner:
