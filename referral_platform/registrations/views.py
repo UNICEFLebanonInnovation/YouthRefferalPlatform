@@ -734,7 +734,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
             'respid_initiativeID_title': 'Initiative Title',
             'initiative_loc': 'Initiative Location',
-            'No_of_team_members_executed': 'Gender of members who were engaged in the initiative implementation',
+            'gender_implem_initiatives': 'Gender of members who were engaged in the initiative implementation',
+            'No_of_team_members_executed': 'Number of people engaged in the initiative implementation',
             'start_date_implementing_initia': 'Planned start date of the initiative',
             'duration_of_initiative': 'Duration of the initiative',
             '_tags': 'Initiative Tags',
@@ -755,7 +756,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'problem_solving': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
             'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
             'planning_to_mobilize_resources': 'Are you planning to mobilize resources for this project?',
-            'gender_implem_initiatives': 'Gender of people implementing Initiative',
             '_geolocation': 'Location',
             'if_so_who': 'If yes, from whom?',
 
@@ -785,7 +785,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'gender_of_beneficiaries': "data->>'gender_of_beneficiaries'",
             'mentor_assigned': "data->>'mentor_assigned'",
             'planned_results': "data->>'planned_results'",
-            'team_involovement': "data->>'eam_involovement'",
+            'team_involovement': "data->>'team_involovement'",
             'communication': "data->>'communication'",
             #'sense_of_belonging': 'The group members expects to play leading roles for the implementation of the initiative',
             'analytical_skills': "data->>'analytical_skills'",
