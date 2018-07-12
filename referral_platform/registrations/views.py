@@ -773,7 +773,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
             'respid_initiativeID_title': "data->>'respid_initiativeID_title''",
             'initiative_loc': "data->>'initiative_loc'",
-            'No_of_team_members_executed': "No_of_team_members_executed'",
+            'No_of_team_members_executed': "data->>'No_of_team_members_executed'",
             'start_date_implementing_initia': "data->>'start_date_implementing_initia'",
             'duration_of_initiative': "data->>'duration_of_initiative'",
             '_tags': "data->>'_tags'",
