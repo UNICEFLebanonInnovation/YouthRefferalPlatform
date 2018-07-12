@@ -703,428 +703,164 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.all()
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_entrepreneurship', 'post_entrepreneurship'])
 
-    def get(self, request, *args, **kwargs):
-
-        book = tablib.Databook()
-
+    def get_queryset(self):
         if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
+            queryset = self.queryset
         else:
             submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
-        country = self.request.GET.get('country', 0)
-        if country:
-            submission_set = submission_set.filter(registration__partner_organization__locations=int(country))
+        return self.queryset
 
-        data5 = tablib.Dataset()
-        data5.title = "Initiative registration"
-        data5.headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
+    def get(self, request, *args, **kwargs):
 
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
+        headers = {
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__name': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registration__youth__sex': 'Gender',
+            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__name': 'Governorate',
+            'registration__center__name': 'Center',
+            'registration__location': 'Location',
+            'assessment__slug': 'Assessment Type',
 
-            'Initiative Title',
-            'Initiative Location',
-            'Gender of members who were engaged in the initiative implementation',
-            'Number of members who were engaged in the initiative implementation',
-            'Planned start date of the initiative',
-            'Duration of the initiative',
+            'respid_initiativeID_title': 'Initiative Title',
+            'initiative_loc': 'Initiative Location',
+            'No_of_team_members_executed': 'Gender of members who were engaged in the initiative implementation',
+            'start_date_implementing_initia': 'Planned start date of the initiative',
+            'duration_of_initiative': 'Duration of the initiative',
+            '_tags': 'Initiative Tags',
+            'type_of_initiative': 'Type of Initiative',
+            'basic_services': 'basic services',
 
-            'Type of Initiative',
-            'basic services',
-            'health service',
-            'educational',
-            'protection',
-            'environmental',
-            'political',
-            'advocacy',
-            'economic, artistic',
-            'religious or spiritual',
-            'sports',
-            'social cohesion',
-            'other',
+            'number_of_direct_beneficiaries': 'How many people are estimated to benefit/will be reached by implementing the initiative?',
+            'age_group_range': 'The estimated Age groups of the beneficiaries?',
+            'gender_of_beneficiaries': 'Gender of beneficiaries',
+            'mentor_assigned': 'Did your group have a mentor/facilitator/teacher to support you with planning of the initiative?',
+            'planned_results': 'The team expects to implement the initiative as expected',
+            'team_involovement': 'Team members expect to participate effectively in the implementation of the initiative',
+            'communication': 'The group aims to communicate with each other for the implementation of the initiative',
+            #'sense_of_belonging': 'The group members expects to play leading roles for the implementation of the initiative',
+            'analytical_skills': 'The group expects to collect and analyse data for the implementation of the initiative',
+            'sense_of_belonging': 'The group expects to have a sense of belonging while implementing of the initiatives',
+            'assertiveness': 'The group is confident in coming up with solutions if challenges are faced',
+            'problem_solving': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
+            'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
+            'planning_to_mobilize_resources': 'Are you planning to mobilize resources for this project?',
+            'gender_implem_initiatives': 'Gender of people implementing Initiative',
+            '_geolocation': 'Location',
+            'if_so_who': 'If yes, from whom?',
 
-            'Other initiatives',
+            'type_of_support_required': 'What kind of support are you planning to receive?',
 
-            'How many people are estimated to benefit/will be reached by implementing the initiative?',
-            '1-10 year old',
-            '11-24 year old',
-            '25-50 year old',
-            '50 years and above',
+            'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
+            'initiative_as_expected': 'Can you please tell us your planned results/what will the initiative achieve?',
+            'start': 'Start Date',
+            'end': 'End ',
+            '_submission_time': 'submission time',
+            '_userform_id': 'Registered by',
+        }
 
-            'The estimated Age groups of the beneficiaries?',
-            'Gender of beneficiaries',
-            'Did your group have a mentor/facilitator/teacher to support you with planning of the initiative?',
-            'The team expects to implement the initiative as expected',
-            'Team members expect to participate effectively in the implementation of the initiative',
-            'The group aims to communicate with each other for the implementation of the initiative',
-            'The group members expects to play leading roles for the implementation of the initiative',
-            'The group expects to collect and analyse data for the implementation of the initiative',
-            'The group expects to have a sense of belonging while implementing of the initiatives',
-            'The group is confident in coming up with solutions if challenges are faced',
-            'The group feels certain that the initiative will address the problem(s) faced by our communities',
-            'The group expects to find the mentorship in the planning phase very helpful',
-            'Are you planning to mobilize resources for this project?',
+        qs = self.get_queryset().extra(select={
 
-            'If yes, from whom?',
-            'unicef',
-            'Local business',
-            'NGO',
-            'Governmental body',
-            'other',
+            'respid_initiativeID_title': "data->>'respid_initiativeID_title''",
+            'initiative_loc': "data->>'initiative_loc'",
+            'No_of_team_members_executed': "No_of_team_members_executed'",
+            'start_date_implementing_initia': "data->>'start_date_implementing_initia'",
+            'duration_of_initiative': "data->>'duration_of_initiative'",
+            '_tags': "data->>'_tags'",
+            'type_of_initiative': "data->>'type_of_initiative'",
+            'basic_services': "data->>'basic_services'",
 
-            'What kind of support are you planning to receive?',
-            'technical',
-            'inkind',
-            'financial',
-            'other',
+            'number_of_direct_beneficiaries': "data->>'number_of_direct_beneficiaries'",
+            'age_group_range': "data->>'age_group_range'",
+            'gender_of_beneficiaries': "data->>'gender_of_beneficiaries'",
+            'mentor_assigned': "data->>'mentor_assigned'",
+            'planned_results': "data->>'planned_results'",
+            'team_involovement': "data->>'eam_involovement'",
+            'communication': "data->>'communication'",
+            #'sense_of_belonging': 'The group members expects to play leading roles for the implementation of the initiative',
+            'analytical_skills': "data->>'analytical_skills'",
+            'sense_of_belonging': "data->>'sense_of_belonging'",
+            'assertiveness': "data->>'assertiveness'",
+            'problem_solving': "data->>'problem_solving'",
+            'mentorship_helpful': "data->>'mentorship_helpful'",
+            'planning_to_mobilize_resources': "data->>'planning_to_mobilize_resources'",
+            'gender_implem_initiatives': "data->>'gender_implem_initiatives'",
+            '_geolocation': "data->>'_geolocation'",
+            'if_so_who': "data->>'if_so_who'",
 
-            'Can you tell us more about the problem you/your community is facing?',
-            'Can you please tell us your planned results/what will the initiative achieve?',
+            'type_of_support_required': "data->>'type_of_support_required'",
+
+            'problem_addressed': "data->>'problem_addressed'",
+            'initiative_as_expected': "data->>'initiative_as_expected'",
+            'start': "data->>'start'",
+            'end': "data->>'end'",
+            '_submission_time': "data->>'_submission_time'",
+            '_userform_id': "data->>'_userform_id'",
+
+        }).values(
+            'registration__youth__first_name',
+            'registration__youth__father_name',
+            'registration__youth__last_name',
+            'registration__governorate__parent__name',
+            'registration__governorate__name',
+            'registration__center__name',
+            'registration__location',
+            'registration__youth__bayanati_ID',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__name',
+            'registration__youth__marital_status',
+            'registration__youth__sex',
+            'assessment__slug',
+
+
+            'respid_initiativeID_title',
+            'initiative_loc',
+            'No_of_team_members_executed',
+            'start_date_implementing_initia',
+            'duration_of_initiative',
+            '_tags',
+            'type_of_initiative',
+            'basic_services',
+
+            'number_of_direct_beneficiaries',
+            'age_group_range',
+            'gender_of_beneficiaries',
+            'mentor_assigned',
+            'planned_results',
+            'team_involovement',
+            'communication',
+            #'sense_of_belonging': 'The group members expects to play leading roles for the implementation of the initiative',
+            'analytical_skills',
+            'sense_of_belonging',
+            'assertiveness',
+            'problem_solving',
+            'mentorship_helpful',
+            'planning_to_mobilize_resources',
+            'gender_implem_initiatives',
+            '_geolocation',
+            'if_so_who',
+
+            'type_of_support_required',
+
+            'problem_addressed',
+            'initiative_as_expected',
             'start',
             'end',
-            'submission time',
-        ]
+            '_submission_time',
+            '_userform_id',
 
-        data6 = tablib.Dataset()
-        data6.title = "Initiative implementation"
-        data6.headers = [
-            'Country',
-            'Governorate',
-            'Location',
-            'Partner',
-
-            'Unique number',
-            'First Name',
-            "Father's Name",
-            'Last Name',
-            'Trainer',
-            'Bayanati ID',
-            'Jordanian ID',
-            'Gender',
-            'birthday day',
-            'birthday month',
-            'birthday year',
-            'age',
-            'Date of birth',
-            'Nationality',
-            'Marital status',
-            'address',
-
-            'Initiative Title',
-            'Type of Initiative',
-            'basic services',
-            'health service',
-            'educational',
-            'protection',
-            'environmental',
-            'political',
-            'advocacy',
-            'economic, artistic',
-            'religious or spiritual',
-            'sports',
-            'social cohesion',
-            'other',
-
-            'Other initiatives',
-            'How many people benefited/ reached by implementing the initiative?',
-
-            'The Age groups of the beneficiaries reached?',
-            '1-10 year old',
-            '11-24 year old',
-            '25-49 year old',
-            '50 years and above',
-            'We don''t know',
-
-            'Gender of beneficiaries',
-            'The initiative was implemented as expected',
-
-            'Types of challenges while implementing the initiative',
-            'financial',
-            'inkind',
-            'physical',
-            'technical',
-            'other',
-            'no_challenges',
-
-            'Other challenges',
-
-            'Team members participated effectively in the implementation of the initiative',
-            'The group communicated with each other for the implementation of the initiative',
-            'The group members played leading roles for the implementation of the initiative',
-            'The group collected and analysed data for the implementation of the initiative',
-            'The group had a sense of belonging while planning for the initiatives',
-            'The group confidently came up with solutions when challenges were faced',
-            'The group effectively addressed  the problem(s) faced by the community',
-            'Did your group have a mentor/facilitator/teacher to support the implementation of the initiative',
-            'The group found the mentorship in the planning phase very helpful',
-            'Were resources mobilized for this project?',
-
-            'If so, from whom?',
-            'unicef',
-            'Local business',
-            'NGO',
-            'Governmental body',
-            'other',
-
-            'What kind of support did you receive?',
-            'technical',
-            'inkind',
-            'financial',
-            'other',
-
-            'The support we received was helpful and consistent with what the group was expecting',
-            'If you answer is disagree or strongly disagree, can you tell us why?',
-            'start',
-            'end',
-            'submission_time',
-        ]
-
-        submission_set1 = submission_set.filter(assessment__slug='init_registration')
-        for line2 in submission_set1:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                line2.data.get('respid_initiativeID_title', ''),
-                line2.data.get('initiative_loc', ''),
-                get_choice_value(line2.data, 'gender_implem_initiatives', 'gender'),
-                line2.data.get('No_of_team_members_executed', ''),
-                line2.data.get('start_date_implementing_initia', ''),
-                get_choice_value(line2.data, 'duration_of_initiative', 'how_many'),
-
-                # get_choice_value(line2.data, 'type_of_initiative', 'initiative_types'),
-                line2.data.get('type_of_initiative', ''),
-                line2.get_data_option('type_of_initiative', 'basic_services'),
-                line2.get_data_option('type_of_initiative', 'health_service'),
-                line2.get_data_option('type_of_initiative', 'educational'),
-                line2.get_data_option('type_of_initiative', 'protection'),
-                line2.get_data_option('type_of_initiative', 'environmental'),
-                line2.get_data_option('type_of_initiative', 'political'),
-                line2.get_data_option('type_of_initiative', 'advocacy'),
-                line2.get_data_option('type_of_initiative', 'economic_artis'),
-                line2.get_data_option('type_of_initiative', 'religious_&_sp'),
-                line2.get_data_option('type_of_initiative', 'sports'),
-                line2.get_data_option('type_of_initiative', 'social_cohesio'),
-                line2.get_data_option('type_of_initiative', 'other'),
-
-                line2.get_data_option('other_type_of_initiative', ''),
-
-                # get_choice_value(line2.data, 'number_of_direct_beneficiaries', 'how_many'),
-                line2.data.get('number_of_direct_beneficiaries', ''),
-                line2.get_data_option('number_of_direct_beneficiaries', '1-10'),
-                line2.get_data_option('number_of_direct_beneficiaries', '11-24'),
-                line2.get_data_option('number_of_direct_beneficiaries', '25-50'),
-                line2.get_data_option('number_of_direct_beneficiaries', 'above_50'),
-
-                get_choice_value(line2.data, 'age_group_range', 'how_many'),
-                get_choice_value(line2.data, 'gender_of_beneficiaries', 'gender'),
-                get_choice_value(line2.data, 'mentor_assigned', 'yes_no'),
-
-                get_choice_value(line2.data, 'initiative_as_expected', 'rates'),
-                get_choice_value(line2.data, 'team_involovement', 'rates'),
-                get_choice_value(line2.data, 'communication', 'rates'),
-                get_choice_value(line2.data, 'leadership', 'rates'),
-                get_choice_value(line2.data, 'analytical_skills', 'rates'),
-                get_choice_value(line2.data, 'sense_of_belonging', 'rates'),
-                get_choice_value(line2.data, 'problem_solving', 'rates'),
-                get_choice_value(line2.data, 'assertiveness', 'rates'),
-                get_choice_value(line2.data, 'mentorship_helpful', 'rates'),
-
-                get_choice_value(line2.data, 'planning_to_mobilize_resources', 'yes_no'),
-
-                # get_choice_value(line2.data, 'if_so_who', 'third_parties'),
-                line2.data.get('if_so_who', ''),
-                line2.get_data_option('if_so_who', 'unicef'),
-                line2.get_data_option('if_so_who', 'private,_local'),
-                line2.get_data_option('if_so_who', 'NGO'),
-                line2.get_data_option('if_so_who', 'Governmental_i'),
-                line2.get_data_option('if_so_who', 'other'),
-
-                # get_choice_value(line2.data, 'type_of_support_required', 'challenges'),
-                line2.data.get('type_of_support_required', ''),
-                line2.get_data_option('type_of_support_required', 'technical'),
-                line2.get_data_option('type_of_support_required', 'inkind'),
-                line2.get_data_option('type_of_support_required', 'financial'),
-                line2.get_data_option('type_of_support_required', 'other'),
-
-                line2.data.get('problem_addressed', ''),
-                line2.data.get('planned_results', ''),
-                line2.data.get('start', ''),
-                line2.data.get('end', ''),
-
-                submission_date,
-            ]
-            data5.append(content)
-
-        submission_set2 = submission_set.filter(assessment__slug='init_exec')
-        for line2 in submission_set2:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.id_number,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                line2.data.get('respid_initiativeID_title', ''),
-
-                # get_choice_value(line2.data, 'type_of_initiative', 'initiative_types'),
-                line2.data.get('type_of_initiative', ''),
-                line2.get_data_option('type_of_initiative', 'basic_services'),
-                line2.get_data_option('type_of_initiative', 'health_service'),
-                line2.get_data_option('type_of_initiative', 'educational'),
-                line2.get_data_option('type_of_initiative', 'protection'),
-                line2.get_data_option('type_of_initiative', 'environmental'),
-                line2.get_data_option('type_of_initiative', 'political'),
-                line2.get_data_option('type_of_initiative', 'advocacy'),
-                line2.get_data_option('type_of_initiative', 'economic_artis'),
-                line2.get_data_option('type_of_initiative', 'religious_&_sp'),
-                line2.get_data_option('type_of_initiative', 'sports'),
-                line2.get_data_option('type_of_initiative', 'social_cohesio'),
-                line2.get_data_option('type_of_initiative', 'other'),
-
-                line2.data.get('other_type_of_initiative', ''),
-                line2.data.get('integer_0259d46e', ''),
-
-                # get_choice_value(line2.data, 'select_multiple_e160966a', 'how_many'), split the options
-                line2.data.get('select_multiple_e160966a', ''),
-                line2.get_data_option('select_multiple_e160966a', '1-10'),
-                line2.get_data_option('select_multiple_e160966a', '11-24'),
-                line2.get_data_option('select_multiple_e160966a', '25-49'),
-                line2.get_data_option('select_multiple_e160966a', '50'),
-                line2.get_data_option('select_multiple_e160966a', 'unknown'),
-
-                get_choice_value(line2.data, 'select_one_a3c4ea99', 'gender'),
-                get_choice_value(line2.data, 'initiative_as_expected', 'rates'),
-
-                # get_choice_value(line2.data, 'challenges_faced', 'challenges'), split the options
-                line2.data.get('challenges_faced', ''),
-                line2.get_data_option('challenges_faced', 'financial'),
-                line2.get_data_option('challenges_faced', 'inkind'),
-                line2.get_data_option('challenges_faced', 'physical'),
-                line2.get_data_option('challenges_faced', 'technical'),
-                line2.get_data_option('challenges_faced', 'other'),
-                line2.get_data_option('challenges_faced', 'no_challenges'),
-
-                line2.data.get('other_challenges', ''),
-
-                get_choice_value(line2.data, 'team_involovement', 'rates'),
-                get_choice_value(line2.data, 'communication', 'rates'),
-                get_choice_value(line2.data, 'leadership', 'rates'),
-                get_choice_value(line2.data, 'analytical_skills', 'rates'),
-                get_choice_value(line2.data, 'sense_of_belonging', 'rates'),
-                get_choice_value(line2.data, 'problem_solving', 'rates'),
-                get_choice_value(line2.data, 'assertiveness', 'rates'),
-
-                get_choice_value(line2.data, 'mentor_assigned', 'yes_no'),
-                get_choice_value(line2.data, 'mentorship_helpful', 'rates'),
-                get_choice_value(line2.data, 'did_you_mobilize_resources', 'yes_no'),
-
-                # get_choice_value(line2.data, 'mobilized_resources_through', 'third_parties'), split the options
-                line2.data.get('mobilized_resources_through', ''),
-                line2.get_data_option('mobilized_resources_through', 'unicef'),
-                line2.get_data_option('mobilized_resources_through', 'private,_local'),
-                line2.get_data_option('mobilized_resources_through', 'NGO'),
-                line2.get_data_option('mobilized_resources_through', 'Governmental_i'),
-                line2.get_data_option('mobilized_resources_through', 'other'),
-
-                # get_choice_value(line2.data, 'type_of_support_required', 'challenges'), split the options
-                line2.data.get('type_of_support_received', ''),
-                line2.get_data_option('type_of_support_received', 'technical'),
-                line2.get_data_option('type_of_support_received', 'inkind'),
-                line2.get_data_option('type_of_support_received', 'financial'),
-                line2.get_data_option('type_of_support_received', 'other'),
-
-                get_choice_value(line2.data, 'support_received_helpful', 'rates'),
-                line2.data.get('support_not_helpful_why', ''),
-                line2.data.get('start', ''),
-                line2.data.get('end', ''),
-
-                submission_date,
-            ]
-            data6.append(content)
-
-        book.add_sheet(data5)
-        book.add_sheet(data6)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Initiative_Assessments.xls'
-        return response
+
+        return render_to_csv_response(qs, field_header_map=headers)
