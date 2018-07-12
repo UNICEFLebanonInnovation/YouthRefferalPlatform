@@ -771,7 +771,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset().extra(select={
 
-            'respid_initiativeID_title': "data->>'respid_initiativeID_title''",
+            'respid_initiativeID_title': "data->>'respid_initiativeID_title'",
             'initiative_loc': "data->>'initiative_loc'",
             'No_of_team_members_executed': "data->>'No_of_team_members_executed'",
             'start_date_implementing_initia': "data->>'start_date_implementing_initia'",
