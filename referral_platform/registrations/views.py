@@ -884,7 +884,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             #'analytical_skills',
             'analytical_skills',
             'sense_of_belonging',
-            # 'problem_solving',
+            'problem_solving',
             'assertiveness',
             'mentorship_helpful',
             'problem_addressed',
