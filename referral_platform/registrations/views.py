@@ -2,7 +2,6 @@
 from __future__ import absolute_import, unicode_literals
 
 import json
-import tablib
 import datetime
 import time
 
@@ -761,7 +760,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'type_of_initiative': 'Type of Initiative',
             'other_type_of_initiative': 'If other, please specify',
             'duration_of_initiative': 'Duration of the initiative',
-            'select_multiple_e160966a': 'The Age groups of the beneficiaries reached? ',
+            #'select_multiple_e160966a': 'The Age groups of the beneficiaries reached?',
             #'select_one_a3c4ea99': 'Sex of beneficiaries',
             'leadership': 'The group members expects to play leading roles for the implementation of the initiative ',
             'challenges_faced': 'Types of challenges while implementing the initiative',
@@ -839,7 +838,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'did_you_mobilize_resources': "data->>'did_you_mobilize_resources'",
             'support_received_helpful': "data->>'support_received_helpful'",
             'support_not_helpful_why': "data->>'support_not_helpful_why'",
-            'select_multiple_e160966a': "data->>'select_multiple_e160966a'",
+            #'select_multiple_e160966a': "data->>'select_multiple_e160966a'",
             # 'select_one_a3c4ea99': "data->>'select_one_a3c4ea99'",
 
         }).values(
@@ -899,7 +898,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             '_userform_id',
             'did_you_mobilize_resources',
             #'select_one_a3c4ea99',
-            'select_multiple_e160966a',
+            #'select_multiple_e160966a',
 
         )
         filename = 'Initiative-Export'
