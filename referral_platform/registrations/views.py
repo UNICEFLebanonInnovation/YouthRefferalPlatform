@@ -333,42 +333,54 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
             'center_type': 'Center Type',
-            'occupation_type': 'Occupation Type',
+
             'educational_status': 'Educational Status',
             'School_name': 'School name',
             'School_type': 'Type of school',
             'school_level': 'School Level',
-            'reason_for_skipping_class': 'Reason fro skipping Classes',
-            'family_present': 'Family composition',
-            'not_present_where': 'Reason of family absence',
-            'family_not_present': 'TBD',
-            'Accommodation_type': 'Accommodation Type',
             'how_many_times_skipped_school': 'How many times have you missed your classes in the past 3 months ',
+            'reason_for_skipping_class': 'Reason fro skipping Classes',
+            'educ_level_stopped': 'Education level completed before leaving school',
+            'Reason_stop_study': 'Reasons for leaving school',
+            'other_five': 'Other reasons',
+
+
+            'Accommodation_type': 'Accommodation Type',
+            'what_electronics_do_you_own': 'What electronics do you own?',
+            'family_present': 'Family composition',
+            'family_not_present': 'Please state if any of the above household members are not living with you at the moment:',
+            'not_present_where': 'Reason of family absence',
+            'other_family_not_present': 'Other reasons',
             'drugs_substance_use': 'Any family member use drug/alcohol?',
             'how_many_times_displaced': 'Displacement status',
             'Relation_with_labor_market': 'Relationship with Labour Market',
-            'reasons_for_not_feeling_safe_a': 'Reasons for not feeling safe most or all of the time',
-            'feeling_of_safety_security': 'Feeling of safety',
+            'occupation_type': 'Occupation Type',
+
             'concent_paper': 'Conscent form filled',
             'family_steady_income': 'Family Income',
             'training_date': 'Training Date',
             'training_end_date': 'Training End Date',
             '_submission_time': 'Submission Time and Date',
-            'what_electronics_do_you_own': 'What electronics do you own?',
             'desired_method_for_follow_up': 'Desired Method for follow-up',
+            'text_39911992': 'Facebook Account',
+            'text_d45750c6': 'Email Address',
+            'text_4c6fe6c9': 'Mobile phone number',
 
          }
 
         qs = self.get_queryset().extra(select={
             # 'partner': "data->>'partner'",
             'educational_status': "data->>'educational_status'",
-            # 'country': "data->>'country'",
+            'other_family_not_present': "data->>'other_family_not_present'",
             # 'nationality': "data->>'nationality'",
             # 'training_type': "data->>'training_type'",
 
             # 'phonenumber': "data->>'phonenumber'",
 
             'center_type': "data->>'center_type'",
+            'other_five': "data->>'other_five'",
+            'Reason_stop_study': "data->>'Reason_stop_study'",
+            'educ_level_stopped': "data->>'educ_level_stopped'",
             'occupation_type': "data->>'occupation_type'",
             'School_name': "data->>'School_name'",
             'School_type': "data->>'School_type'",
@@ -391,6 +403,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time': "data->>'_submission_time'",
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own'",
             'desired_method_for_follow_up': "data->>'desired_method_for_follow_up'",
+            'text_39911992': "data->>'text_39911992'",
+            'text_d45750c6': "data->>'text_d45750c6'",
+            'text_4c6fe6c9': "data->>'text_4c6fe6c9'",
 
             # 'youth_fname':"registration->>youth__last_name",
             # 'youth_lname':"registration->>youth__first_name",
@@ -399,7 +414,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__first_name',
             'registration__youth__father_name',
             'registration__youth__last_name',
-            # 'partner',
+            'other_family_not_present',
             'educational_status',
             # 'country',
             # 'nationality',
@@ -438,6 +453,12 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time',
             'what_electronics_do_you_own',
             'desired_method_for_follow_up',
+            'educ_level_stopped',
+            'Reason_stop_study',
+            'other_five',
+            'text_39911992',
+            'text_d45750c6',
+            'text_4c6fe6c9',
         )
         filename = 'registrations'
 
@@ -492,6 +513,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_51_communicate_community_conc': 'I am able to address community concerns with community leaders',
             '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
             '_submission_time': 'Submission time',
+            '_userform_id': 'User',
         }
 
         qs = self.get_queryset().extra(select={
@@ -508,6 +530,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_51_communicate_community_conc': "data->>'_51_communicate_community_conc'",
             '_52_participate_community_medi': "data->>'_52_participate_community_medi'",
             '_submission_time': "data->>'_submission_time'",
+            '_userform_id': "data->>'_userform_id'",
 
 
         }).values(
@@ -539,6 +562,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_51_communicate_community_conc',
             '_52_participate_community_medi',
             '_submission_time',
+            '_userform_id',
 
         )
         filename = 'Civic-assessment'
@@ -586,28 +610,29 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'can_plan_time': 'I know ways to plan my time',
             'can_suggest': 'I can give suggestions without being bossy',
             'can_take_decision': 'I make a decision by thinking about all the information I have about available options decision making',
-            'problem_solving': 'I know how to identify causes for my problems and find solutions for them  problem solving',
+            'can_determin_probs': 'I know how to identify causes for my problems and find solutions for them  problem solving',
             'aware_resources': 'I know where and when to get support when I face a problem',
             'can_handle_pressure': 'When I am stressed, I manage my stress in a positive way',
             'motivated_advance_skills': 'There are opportunities in the labour market that encourage me to develop my skills',
-
             'communication_skills': 'A good communicator',
             'presentation_skills': 'The most important part of delivering a successful presentation is',
-
             'team_is': 'A team is a group of people who',
             'good_team_is': 'To work efficiently as a team',
             'team_leader_is': 'If I am the group leader, I will',
             'bad_decision_cause': 'One of the main reasons to NOT make the best decision',
             'easiest_solution': 'The easiest solution for the problem is always the best solution',
-            'can_determin_probs': 'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
-            '_submission_time': 'submission time',
+            'problem_solving': 'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
+
+            'bad_venue': 'If the room/ training area not convenient, please specify why',
+            'bad_venue_others': 'If other, please specify',
+            'additional_comments': 'If yes, what is it?',
 
             'personal_value': 'Rate the benefits of the training to your personal life',
             'faced_challenges': 'Have you faced any challenges with the program?',
             'challenges': 'Challenges',
-            'has_comments': 'Comments',
+            'has_comments': 'Do yo uhave anything else you want to tell us?',
             '_userform_id': 'User',
-
+            '_submission_time': 'submission time',
         }
 
         qs = self.get_queryset().extra(select={
@@ -622,10 +647,8 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'aware_resources': "data->>'aware_resources'",
             'can_handle_pressure': "data->>'can_handle_pressure'",
             'motivated_advance_skills': "data->>'motivated_advance_skills'",
-
             'communication_skills': "data->>'communication_skills'",
             'presentation_skills': "data->>'presentation_skills'",
-
             'team_is': "data->>'team_is'",
             'good_team_is': "data->>'good_team_is'",
             'team_leader_is': "data->>'team_leader_is'",
@@ -633,6 +656,10 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'easiest_solution': "data->>'easiest_solution'",
             'can_determin_probs': "data->>'can_determin_probs'",
             '_submission_time': "data->>'_submission_time'",
+
+            'bad_venue': "data->>'bad_venue'",
+            'bad_venue_others': "data->>'bad_venue_others'",
+            'additional_comments': "data->>'additional_comments'",
 
             'personal_value': "data->>'personal_value'",
             'faced_challenges': "data->>'faced_challenges'",
@@ -656,7 +683,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status',
             'registration__youth__sex',
             'assessment__slug',
-             'can_plan_personal',
+            'can_plan_personal',
             'can_plan_career',
             'can_manage_financ',
             'can_plan_time',
@@ -669,6 +696,9 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 
             'communication_skills',
             'presentation_skills',
+            'bad_venue',
+            'bad_venue_others',
+            'additional_comments',
 
             'team_is',
             'good_team_is',
@@ -688,20 +718,6 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
         filename = 'Entrepreneurship-assessment'
 
         return render_to_csv_response(qs, filename, field_header_map=headers)
-
-
-            # 'If the room/ training area not convenient, please specify why',
-            # 'Location of CBO is too far',
-            # 'The rooms are not very well ventilated',
-            # 'The rooms are not clean',
-            # 'There are no tables / chairs',
-            # 'The classroom lacks safety equipment',
-            # 'Other',
-            #
-            # 'If other, please specify',
-            # 'Do you have anything else you want to tell us?',
-            # 'If yes, what is it?',
-            # 'submission_time',
 
 
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
@@ -740,33 +756,42 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'initiative_loc': 'Initiative Location',
             'gender_implem_initiatives': 'Gender of members who were engaged in the initiative implementation',
             'No_of_team_members_executed': 'Number of people engaged in the initiative implementation',
+            'integer_0259d46e': 'How many people benefited/ reached by implementing the initiative?',
             'start_date_implementing_initia': 'Planned start date of the initiative',
-            'duration_of_initiative': 'Duration of the initiative',
-            '_tags': 'Initiative Tags',
             'type_of_initiative': 'Type of Initiative',
-            'basic_services': 'basic services',
-
+            'other_type_of_initiative': 'If other, please specify',
+            'duration_of_initiative': 'Duration of the initiative',
+            'select_multiple_e160966a': 'The Age groups of the beneficiaries reached? ',
+            'select_one_a3c4ea99': 'Sex of beneficiaries',
+            'leadership': 'The group members expects to play leading roles for the implementation of the initiative ',
+            'challenges_faced': 'Types of challenges while implementing the initiative',
+            'other_challenges': 'Others, please specify',
             'number_of_direct_beneficiaries': 'How many people are estimated to benefit/will be reached by implementing the initiative?',
             'age_group_range': 'The estimated Age groups of the beneficiaries?',
             'gender_of_beneficiaries': 'Gender of beneficiaries',
             'mentor_assigned': 'Did your group have a mentor/facilitator/teacher to support you with planning of the initiative?',
-            'planned_results': 'The team expects to implement the initiative as expected',
+            'initiative_as_expected': 'The team expects to implement the initiative as expected',
             'team_involovement': 'Team members expect to participate effectively in the implementation of the initiative',
             'communication': 'The group aims to communicate with each other for the implementation of the initiative',
-            #'sense_of_belonging': 'The group members expects to play leading roles for the implementation of the initiative',
+            #'analytical_skills': 'The group expects to collect and analyse data for the implementation of the initiative ',
             'analytical_skills': 'The group expects to collect and analyse data for the implementation of the initiative',
             'sense_of_belonging': 'The group expects to have a sense of belonging while implementing of the initiatives',
-            'assertiveness': 'The group is confident in coming up with solutions if challenges are faced',
-            'problem_solving': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
+            'problem_solving': 'The group is confident in coming up with solutions if challenges are faced',
+            'assertiveness': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
             'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
+            'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
+            'planned_results': 'Can you please tell us your planned results/what will the initiative achieve? ',
             'planning_to_mobilize_resources': 'Are you planning to mobilize resources for this project?',
+            'mobilized_resources_through': 'If so, from whom?',
+            'did_you_mobilize_resources': 'Were resources mobilized for this project?',
             '_geolocation': 'Location',
             'if_so_who': 'If yes, from whom?',
 
             'type_of_support_required': 'What kind of support are you planning to receive?',
+            'type_of_support_received': 'What kind of support did you receive?',
+            'support_received_helpful': 'The support we received was helpful and consistent with what the group was expecting',
+            'support_not_helpful_why': 'If you answer is disagree or strongly disagree, can you tell us why?',
 
-            'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
-            'initiative_as_expected': 'Can you please tell us your planned results/what will the initiative achieve?',
             'start': 'Start Date',
             'end': 'End ',
             '_submission_time': 'submission time',
@@ -780,18 +805,17 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'No_of_team_members_executed': "data->>'No_of_team_members_executed'",
             'start_date_implementing_initia': "data->>'start_date_implementing_initia'",
             'duration_of_initiative': "data->>'duration_of_initiative'",
-            '_tags': "data->>'_tags'",
+            'planned_results': "data->>'planned_results'",
             'type_of_initiative': "data->>'type_of_initiative'",
-            'basic_services': "data->>'basic_services'",
-
+            'leadership': "data->>'leadership'",
+            'other_type_of_initiative': "data->>'other_type_of_initiative'",
             'number_of_direct_beneficiaries': "data->>'number_of_direct_beneficiaries'",
             'age_group_range': "data->>'age_group_range'",
             'gender_of_beneficiaries': "data->>'gender_of_beneficiaries'",
             'mentor_assigned': "data->>'mentor_assigned'",
-            'planned_results': "data->>'planned_results'",
             'team_involovement': "data->>'team_involovement'",
             'communication': "data->>'communication'",
-            #'sense_of_belonging': 'The group members expects to play leading roles for the implementation of the initiative',
+            'other_challenges': "data->>'other_challenges'",
             'analytical_skills': "data->>'analytical_skills'",
             'sense_of_belonging': "data->>'sense_of_belonging'",
             'assertiveness': "data->>'assertiveness'",
@@ -801,15 +825,22 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'gender_implem_initiatives': "data->>'gender_implem_initiatives'",
             '_geolocation': "data->>'_geolocation'",
             'if_so_who': "data->>'if_so_who'",
-
+            'challenges_faced': "data->>'challenges_faced'",
             'type_of_support_required': "data->>'type_of_support_required'",
-
+            'type_of_support_received': "data->>'type_of_support_received'",
+            'integer_0259d46e': "data->>'integer_0259d46e'",
+            'mobilized_resources_through': "data->>'mobilized_resources_through'",
             'problem_addressed': "data->>'problem_addressed'",
             'initiative_as_expected': "data->>'initiative_as_expected'",
             'start': "data->>'start'",
             'end': "data->>'end'",
             '_submission_time': "data->>'_submission_time'",
             '_userform_id': "data->>'_userform_id'",
+            'did_you_mobilize_resources': "data->>'did_you_mobilize_resources'",
+            'support_received_helpful': "data->>'support_received_helpful'",
+            'support_not_helpful_why': "data->>'support_not_helpful_why'",
+            'select_multiple_e160966a': "data->>'select_multiple_e160966a'",
+            'select_one_a3c4ea99': "data->>'select_one_a3c4ea99'",
 
         }).values(
             'registration__youth__first_name',
@@ -827,8 +858,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status',
             'registration__youth__sex',
             'assessment__slug',
-
-
+            'challenges_faced',
+            'mobilized_resources_through',
             'respid_initiativeID_title',
             'initiative_loc',
             'No_of_team_members_executed',
@@ -836,8 +867,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'duration_of_initiative',
             '_tags',
             'type_of_initiative',
-            'basic_services',
-
+            'leadership',
+            'integer_0259d46e',
             'number_of_direct_beneficiaries',
             'age_group_range',
             'gender_of_beneficiaries',
@@ -845,7 +876,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'planned_results',
             'team_involovement',
             'communication',
-            #'sense_of_belonging': 'The group members expects to play leading roles for the implementation of the initiative',
+            'other_challenges',
             'analytical_skills',
             'sense_of_belonging',
             'assertiveness',
@@ -855,15 +886,22 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'gender_implem_initiatives',
             '_geolocation',
             'if_so_who',
-
+            'other_type_of_initiative',
             'type_of_support_required',
-
+            'type_of_support_received',
+            'support_received_helpful',
+            'support_not_helpful_why',
             'problem_addressed',
             'initiative_as_expected',
             'start',
             'end',
             '_submission_time',
             '_userform_id',
+            'did_you_mobilize_resources',
+            'select_one_a3c4ea99',
+            'select_multiple_e160966a',
+
+
 
         )
         filename = 'Initiative-Export'
