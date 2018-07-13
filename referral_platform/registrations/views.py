@@ -820,9 +820,9 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'initiative_as_expected': "data->>'initiative_as_expected'",
             'team_involovement': "data->>'team_involovement'",
             'communication': "data->>'communication'",
-            #'analytical_skills': 'The group expects to collect and analyse data for the implementation of the initiative ',
+            'problem_solving': "data->>'problem_solving'",
             'analytical_skills': "data->>'analytical_skills'",
-            'sense_of_belonging': "data-problem_solving'",
+            'sense_of_belonging': "data->>'sense_of_belonging'",
             'assertiveness': "data->>'assertiveness'",
             'mentorship_helpful': "data->>'mentorship_helpful'",
             'problem_addressed': "data->>'problem_addressed'",
@@ -884,7 +884,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             #'analytical_skills',
             'analytical_skills',
             'sense_of_belonging',
-            'problem_solving',
+            # 'problem_solving',
             'assertiveness',
             'mentorship_helpful',
             'problem_addressed',
@@ -904,8 +904,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'end',
             '_submission_time',
             '_userform_id',
-
         )
+
         filename = 'Initiative-Export'
 
         return render_to_csv_response(qs, filename,  field_header_map=headers)
