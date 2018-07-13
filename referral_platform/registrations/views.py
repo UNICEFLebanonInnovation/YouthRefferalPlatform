@@ -761,8 +761,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'type_of_initiative': 'Type of Initiative',
             'other_type_of_initiative': 'If other, please specify',
             'duration_of_initiative': 'Duration of the initiative',
-            #'select_multiple_e160966a': 'The Age groups of the beneficiaries reached? ',
-            'select_one_a3c4ea99': 'Sex of beneficiaries',
+            'select_multiple_e160966a': 'The Age groups of the beneficiaries reached? ',
+            #'select_one_a3c4ea99': 'Sex of beneficiaries',
             'leadership': 'The group members expects to play leading roles for the implementation of the initiative ',
             'challenges_faced': 'Types of challenges while implementing the initiative',
             'other_challenges': 'Others, please specify',
@@ -898,8 +898,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             '_submission_time',
             '_userform_id',
             'did_you_mobilize_resources',
-            'select_one_a3c4ea99',
-            # 'select_multiple_e160966a',
+            #'select_one_a3c4ea99',
+            'select_multiple_e160966a',
 
         )
         filename = 'Initiative-Export'
