@@ -901,8 +901,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'select_one_a3c4ea99',
             'select_multiple_e160966a',
 
-
-
         )
         filename = 'Initiative-Export'
 
