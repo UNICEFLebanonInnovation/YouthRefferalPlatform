@@ -39,13 +39,13 @@
                 <!--</li>-->
               <!--{% endif %}-->
 
-              {% if request.user|has_group:"EXPORT_FULL" %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "backends:exporter" %}">{% trans "Export Full data" %}</a>
-                </li>
-              {% endif %}
+              <!--{% if request.user|has_group:"EXPORT_FULL" %}-->
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="{% url "backends:exporter" %}">{% trans "Export Full data" %}</a>-->
+                <!--</li>-->
+              <!--{% endif %}-->
 
-            </ul>
+            <!--</ul>-->
         {% endif %}
 
         <ul class="navbar-nav pull-xs-right">
