@@ -43,11 +43,11 @@
               <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="export-link" itemref="report=export_registry_assessments">{% trans "Export Registration" %}</a></li>
-              <li><a class="export-link" itemref="report=export_civic_assessments">{% trans "Export Civic Engagement assessments" %}</a></li>
-              <li><a class="export-link" itemref="report=export_entrepreneurship_assessments">{% trans "Export Entrepreneurship assessments" %}</a></li>
-              <li><a class="export-link" itemref="report=export_initiative_assessments">{% trans "Export Initiative registration & implementation" %}</a></li>
-              <li><a class="export-link" itemref="report=export_beneficiary">{% trans "Export Beneficiary list" %}</a></li>
+              <li><a href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration" %}</a></li>
+              <li><a href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a></li>
+              <li><a href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a></li>
+              <li><a href="{% url 'registrations:export_initiative_assessments' %}">{% trans "Export Initiative registration & implementation" %}</a></li>
+              <li><a href="{% url 'registrations:export' %}">{% trans "Export Beneficiary list" %}</a></li>
             </ul>
           </div>
         </li>
