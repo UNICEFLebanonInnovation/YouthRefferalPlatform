@@ -235,7 +235,7 @@ class ExportView(LoginRequiredMixin, ListView):
     queryset = Registration.objects.all()
 
     def get_queryset(self):
-        if self.request.user.is_superuser and not self.request.user.partner:
+        if self.request.user.is_superuser:
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(partner_organization=self.request.user.partner)
@@ -304,7 +304,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     queryset = AssessmentSubmission.objects.filter(assessment__slug='registration')
 
     def get_queryset(self):
-        if self.request.user.is_superuser and not self.request.user.partner:
+        if self.request.user.is_superuser:
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
@@ -472,7 +472,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_assessment', 'post_assessment'])
 
     def get_queryset(self):
-        if self.request.user.is_superuser and not self.request.user.partner:
+        if self.request.user.is_superuser:
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
@@ -578,7 +578,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_entrepreneurship', 'post_entrepreneurship'])
 
     def get_queryset(self):
-        if self.request.user.is_superuser and not self.request.user.partner:
+        if self.request.user.is_superuser:
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
@@ -731,7 +731,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
 
     def get_queryset(self):
-        if self.request.user.is_superuser and not self.request.user.partner:
+        if self.request.user.is_superuser:
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
