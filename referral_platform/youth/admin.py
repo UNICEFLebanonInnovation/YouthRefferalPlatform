@@ -58,6 +58,8 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         'modified',
     )
     list_filter = (
+        'partner_organization',
+        'governorate',
         'sex',
         'nationality',
         'marital_status',
