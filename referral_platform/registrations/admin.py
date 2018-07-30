@@ -237,6 +237,7 @@ class RegistrationAdmin(ImportExportModelAdmin):
         'youth__sex',
         'youth__nationality',
         'youth__marital_status',
+        'partner_organization',
         'created',
         'modified',
     )
