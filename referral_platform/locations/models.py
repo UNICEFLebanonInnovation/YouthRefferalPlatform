@@ -21,6 +21,7 @@ class LocationType(models.Model):
 class Location(MPTTModel):
 
     name = models.CharField(max_length=254)
+    name_en = models.CharField(max_length=254, default='', null=True, blank=True)
     type = models.ForeignKey(LocationType, verbose_name='Location Type')
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
@@ -40,6 +41,7 @@ class Location(MPTTModel):
 
     def __iter__(self):
         return iter([self.name,
+                self.name_en,
                 self.type,
                 self.latitude,
                 self.longitude,
