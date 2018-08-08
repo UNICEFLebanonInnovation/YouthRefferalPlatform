@@ -19,6 +19,7 @@ class LocationResource(resources.ModelResource):
         fields = (
             'id',
             'name',
+            'name_en',
             'type',
             'latitude',
             'longitude',
@@ -32,6 +33,7 @@ class LocationAdmin(ImportExportMixin, MPTTModelAdmin):
     resource_class = LocationResource
     list_display = (
         'name',
+        'name_en',
         'type',
         'parent',
     )
