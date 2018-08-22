@@ -945,4 +945,4 @@ class ExportPBI(LoginRequiredMixin, ListView):
             zip.write(file)
     #     zf.write(current_file)
     #     os.unlink(current_file)
-    # zf.close()
+    zip.close(),
