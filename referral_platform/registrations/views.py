@@ -932,6 +932,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
 class ExportPBI(LoginRequiredMixin, ListView):
+
     def download(request, company_id):
         in_memory = StringIO()
         zip = ZipFile(in_memory, "a")
@@ -941,7 +942,6 @@ class ExportPBI(LoginRequiredMixin, ListView):
 
         zip.writestr(initiative)
         zip.writestr(registration)
-        zip.writestr("file2.csv", "csv,data,here")
 
         # fix for Linux zip files read in Windows
         for file in zip.filelist:
