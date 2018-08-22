@@ -940,12 +940,9 @@ class ExportPBI(LoginRequiredMixin, ListView):
 
     current_files = [ExportInitiativeAssessmentsView.as_view(), ExportRegistryAssessmentsView.as_view(),]
 
-    for current_file in current_files:
-        zipped_files.append(current_file)
-
-        with ZipFile('my_python_files.zip', 'w') as zip:
-            for file in current_files:
-                zip.write(file)
+    with ZipFile('my_python_files.zip', 'w') as zip:
+        for file in current_files:
+            zip.write(file)
     #     zf.write(current_file)
     #     os.unlink(current_file)
     # zf.close()
