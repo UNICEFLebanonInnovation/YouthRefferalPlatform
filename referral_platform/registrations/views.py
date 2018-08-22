@@ -32,7 +32,8 @@ from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
 from .mappings import *
-from StringIO import StringIO
+from io import BytesIO
+import os
 from zipfile import ZipFile
 
 
@@ -933,26 +934,20 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 class ExportPBI(LoginRequiredMixin, ListView):
 
-    def download(request, company_id):
-        in_memory = StringIO()
-        zip = ZipFile(in_memory, "a")
+    byte = BytesIO()
+    zf = zipfile.ZipFile(byte, "w")
+    zipped_files = []
 
-        initiative = ExportInitiativeAssessmentsView.as_view(),
-        registration= ExportRegistryAssessmentsView.as_view(),
+    current_files = [ExportInitiativeAssessmentsView.as_view(), ExportRegistryAssessmentsView.as_view(),]
 
-        zip.writestr(initiative)
-        zip.writestr(registration)
+    for current_file in current_files:
+        zipped_files.append(current_file)
 
-        # fix for Linux zip files read in Windows
-        for file in zip.filelist:
-            file.create_system = 0
+        data = current_file.read()
 
-        zip.close()
-
-        response = HttpResponse(mimetype="application/zip")
-        response["Content-Disposition"] = "attachment; filename=PBI.zip"
-
-        in_memory.seek(0)
-        response.write(in_memory.read())
-
-        return response
+        with ZipFile('my_python_files.zip', 'w') as zip:
+            for file in current_files:
+                zip.write(file)
+        zf.write(current_file)
+        os.unlink(current_file)
+    zf.close()
