@@ -32,10 +32,8 @@ from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
 from .mappings import *
-from io import BytesIO
-import os
-from zipfile import ZipFile
-
+import zipfile
+import StringIO
 
 class ListingView(LoginRequiredMixin,
                   FilterView,
@@ -934,15 +932,23 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 class ExportPBI(LoginRequiredMixin, ListView):
 
-    byte = BytesIO()
-    # zf = zipfile.ZipFile(byte, "w")
-    zipped_files = []
-
+    # byte = BytesIO()
+    # # zf = zipfile.ZipFile(byte, "w")
+    # zipped_files = []
+    #
     current_files = [ExportInitiativeAssessmentsView.as_view(), ExportRegistryAssessmentsView.as_view(),]
+    #
+    # with ZipFile('my_python_files.zip', 'w') as zip:
+    #     for file in current_files:
+    #         zip.write(file)
+    # #     zf.write(current_file)
+    # #     os.unlink(current_file)
+    # zip.close(),
+    zipped_file = StringIO.StringIO()
+    with zipfile.ZipFile(zipped_file, 'w') as zip:
+        for i, file in enumerate(current_files):
+            file.seek(0)
+            zip.writestr("{}.csv".format(i), file.read())
 
-    with ZipFile('my_python_files.zip', 'w') as zip:
-        for file in current_files:
-            zip.write(file)
-    #     zf.write(current_file)
-    #     os.unlink(current_file)
-    zip.close(),
+    zipped_file.seek(0)
+
