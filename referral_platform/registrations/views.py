@@ -943,8 +943,6 @@ class ExportPBI(LoginRequiredMixin, ListView):
     for current_file in current_files:
         zipped_files.append(current_file)
 
-        data = current_file.read()
-
         with ZipFile('my_python_files.zip', 'w') as zip:
             for file in current_files:
                 zip.write(file)
