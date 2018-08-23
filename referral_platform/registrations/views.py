@@ -936,8 +936,13 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # # zf = zipfile.ZipFile(byte, "w")
     # zipped_files = []
     #
-    file1 = ExportInitiativeAssessmentsView()
-    file2 = ExportRegistryAssessmentsView()
+
+
+    file1 = ExportInitiativeAssessmentsView.as_view()
+    file2 = ExportRegistryAssessmentsView.as_view()
+    return file1(request)
+    return file2(request)
+
     current_files = [file1, file2,]
 
     #
