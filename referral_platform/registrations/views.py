@@ -937,6 +937,7 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # zipped_files = []
     #
     current_files = [ExportInitiativeAssessmentsView(), ExportRegistryAssessmentsView(),]
+    print(ExportInitiativeAssessmentsView())
     #
     # with ZipFile('my_python_files.zip', 'w') as zip:
     #     for file in current_files:
@@ -946,7 +947,7 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # zip.close(),
     zipped_file = StringIO.StringIO()
     with zipfile.ZipFile(zipped_file, 'w') as zip:
-        for i, file in enumerate(current_files):
+        for file in current_files:
             # file.seek()
             # zip.write("{}.csv".format(i))
             zip.write(file)
