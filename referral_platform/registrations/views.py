@@ -938,7 +938,7 @@ class ExportPBI(LoginRequiredMixin, ListView):
     #
     # current_files = [ExportInitiativeAssessmentsView.as_view(), ExportRegistryAssessmentsView.as_view(),]
 
-    ExportInitiativeAssessmentsView.as_view().get_queryset()
+    
     ExportInitiativeAssessmentsView.as_view().get_queryset
     ExportInitiativeAssessmentsView.as_view()
 
