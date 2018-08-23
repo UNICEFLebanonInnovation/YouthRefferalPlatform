@@ -940,9 +940,8 @@ class ExportPBI(LoginRequiredMixin, ListView):
 
     file1 = ExportInitiativeAssessmentsView.as_view()
     file2 = ExportRegistryAssessmentsView.as_view()
-    return file1(request)
-    return file2(request)
-
+    # return file1(request)
+    # return file2(request)
     current_files = [file1, file2,]
 
     #
