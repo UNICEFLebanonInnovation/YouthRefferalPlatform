@@ -938,7 +938,7 @@ class ExportPBI(LoginRequiredMixin, ListView):
     #
     # current_files = [ExportInitiativeAssessmentsView.as_view(), ExportRegistryAssessmentsView.as_view(),]
 
-    print(ExportInitiativeAssessmentsView.as_view().self())
+    ExportInitiativeAssessmentsView.as_view() 
 
     #
     # with ZipFile('my_python_files.zip', 'w') as zip:
