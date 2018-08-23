@@ -956,7 +956,7 @@ class ExportPBI(LoginRequiredMixin, ListView):
         for file in current_files:
             # file.seek()
             # zip.write("{}.csv".format(i))
-            zip.write('Initiative-Export.csv')
+            zip.write('file')
 
 
     zipped_file.close()
