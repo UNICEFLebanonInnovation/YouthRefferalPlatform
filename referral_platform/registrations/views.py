@@ -943,14 +943,14 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # return file2(request)
     current_files = [file1, file2,]
 
-
-    zipped_file = io.BytesIO()
-    with zipfile.ZipFile(zipped_file, 'w') as f:
-    # for i, file in current_files:
-        f.writestr("{}.csv".format(0), file1)
-        f.writestr("{}.csv".format(0), file2)
-
-    zipped_file.seek(0)
+    print(file1, file2)
+    # zipped_file = io.BytesIO()
+    # with zipfile.ZipFile(zipped_file, 'w') as f:
+    # # for i, file in current_files:
+    #     f.writestr("{}.csv".format(0), file1)
+    #     f.writestr("{}.csv".format(0), file2)
+    #
+    # zipped_file.seek(0)
 
     #
     # with ZipFile('my_python_files.zip', 'w') as zip:
@@ -979,5 +979,5 @@ class ExportPBI(LoginRequiredMixin, ListView):
     #         zip_file.writestr(file + '.csv', string_buffer.getvalue())
 
 
-    zipped_file.close()
+    # zipped_file.close()
 
