@@ -62,7 +62,7 @@ urlpatterns = [
     ),
     url(
         regex=r'^exportPBI/$',
-        view=views.exportPBI(),
+        view=views.exportPBI,
         name='ZIP'
     ),
 ]
