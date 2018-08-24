@@ -931,9 +931,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
 
-class ExportPBI(LoginRequiredMixin, ListView):
-
-    def get(self, request, *args, **kwargs):
+# class ExportPBI(LoginRequiredMixin, ListView):
+def ExportPBI(request, *args, **kwargs):
         # byte = BytesIO()
         # # zf = zipfile.ZipFile(byte, "w")
         # zipped_files = []
@@ -978,7 +977,7 @@ class ExportPBI(LoginRequiredMixin, ListView):
         #     # Write data using the writer object.
         #
         #         zip_file.writestr(file + '.csv', string_buffer.getvalue())
-    
+
 
         # zipped_file.close()
         return file1

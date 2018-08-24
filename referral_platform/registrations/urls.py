@@ -62,7 +62,7 @@ urlpatterns = [
     ),
     url(
         regex=r'^exportPBI/$',
-        view=views.ExportPBI.as_view(),
+        view=views.ExportPBI(),
         name='ZIP'
     ),
 ]
