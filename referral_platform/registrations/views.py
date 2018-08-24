@@ -490,7 +490,6 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__father_name': "Fathers's Name",
             'registration__youth__last_name': 'Last Name',
             'registration__youth__bayanati_ID': 'Bayanati ID',
-            'registration__partner_organization__name': 'Partner',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
@@ -521,6 +520,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
             '_submission_time': 'Submission time',
             '_userform_id': 'User',
+            'registration__partner_organization__name': 'Partner',
         }
 
         qs = self.get_queryset().extra(select={
@@ -946,9 +946,9 @@ class ExportPBI(LoginRequiredMixin, ListView):
 
     zipped_file = io.BytesIO()
     with zipfile.ZipFile(zipped_file, 'w') as f:
-        # for i, file in current_files:
-            f.writestr("{}.csv".format(0), file1.getvalue())
-            f.writestr("{}.csv".format(0), file2.getvalue())
+    # for i, file in current_files:
+        f.writestr("{}.csv".format(0), file1)
+        f.writestr("{}.csv".format(0), file2)
 
     zipped_file.seek(0)
 
