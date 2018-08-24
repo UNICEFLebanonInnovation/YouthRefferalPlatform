@@ -940,7 +940,7 @@ def exportPBI(request):
     file1 = ExportInitiativeAssessmentsView.as_view()
     file2 = ExportRegistryAssessmentsView.as_view()
 
-    return file1, file2
-    
+    return file1
+
 
 
