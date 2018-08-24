@@ -930,56 +930,17 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
 
-
 # class ExportPBI(LoginRequiredMixin, ListView):
 def exportPBI(request):
+
         # byte = BytesIO()
         # # zf = zipfile.ZipFile(byte, "w")
         # zipped_files = []
 
-        file1 = ExportInitiativeAssessmentsView.as_view()
-        file2 = ExportRegistryAssessmentsView.as_view()
-        # return file1(request)
-        # return file2(request)
-        # current_files = [file1, file2,]
-        #
-        # print(file1, file2)
-        # zipped_file = io.BytesIO()
-        # with zipfile.ZipFile(zipped_file, 'w') as f:
-        # # for i, file in current_files:
-        #     f.writestr("{}.csv".format(0), file1)
-        #     f.writestr("{}.csv".format(0), file2)
-        #
-        # zipped_file.seek(0)
+    file1 = ExportInitiativeAssessmentsView.as_view()
+    file2 = ExportRegistryAssessmentsView.as_view()
 
-        #
-        # with ZipFile('my_python_files.zip', 'w') as zip:
-        #     for file in current_files:
-        #         zip.write(file)
-        # #     zf.write(current_file)
-        # #     os.unlink(current_file)
-        # zip.close(),
-        # string_buffer = StringIO().StringIO()
-        # zipped_file = io.BytesIO()
-        # with zipfile.ZipFile(zipped_file, 'w') as zip:
-        #      for file in current_files:
-        #          # file.seek()
-        #          # zip.write("{}.csv".file)
-        #          # zip.write(file)
-        #          writer = csv.writer(string_buffer)
-        #          zip.writestr(file + '.csv', string_buffer.getvalue())
+    return file1, file2
+    
 
-        # with ZipFile (zipped_file, 'w', ZIP_DEFLATED) as zip_file:
-        #     string_buffer = StringIO()
-        #     for file in current_files:
-        #         writer = csv.writer(string_buffer)
-        #
-        #     # Write data using the writer object.
-        #
-        #         zip_file.writestr(file + '.csv', string_buffer.getvalue())
-
-
-        # zipped_file.close()
-        return file1
-        return file2
 
