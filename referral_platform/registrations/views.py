@@ -34,6 +34,7 @@ from .forms import CommonForm
 from .mappings import *
 import zipfile
 import StringIO
+import io
 
 class ListingView(LoginRequiredMixin,
                   FilterView,
@@ -949,8 +950,8 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # #     zf.write(current_file)
     # #     os.unlink(current_file)
     # zip.close(),
-    string_buffer = StringIO()
-    zipped_file = StringIO.StringIO()
+    string_buffer = StringIO().StringIO()
+    zipped_file = io.BytesIO()
     with zipfile.ZipFile(zipped_file, 'w') as zip:
          for file in current_files:
              # file.seek()
