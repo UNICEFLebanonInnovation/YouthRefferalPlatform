@@ -932,7 +932,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
 # class ExportPBI(LoginRequiredMixin, ListView):
-def ExportPBI(LoginRequiredMixin, ListView):
+def exportPBI(request):
         # byte = BytesIO()
         # # zf = zipfile.ZipFile(byte, "w")
         # zipped_files = []
