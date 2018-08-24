@@ -936,8 +936,6 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # # zf = zipfile.ZipFile(byte, "w")
     # zipped_files = []
     #
-
-
     file1 = ExportInitiativeAssessmentsView.as_view()
     file2 = ExportRegistryAssessmentsView.as_view()
     # return file1(request)
@@ -951,22 +949,24 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # #     zf.write(current_file)
     # #     os.unlink(current_file)
     # zip.close(),
+    string_buffer = StringIO()
     zipped_file = StringIO.StringIO()
-    # with zipfile.ZipFile(zipped_file, 'w') as zip:
+    with zipfile.ZipFile(zipped_file, 'w') as zip:
+         for file in current_files:
+             # file.seek()
+             # zip.write("{}.csv".file)
+             # zip.write(file)
+             writer = csv.writer(string_buffer)
+             zip.writestr(file + '.csv', string_buffer.getvalue())
+
+    # with ZipFile (zipped_file, 'w', ZIP_DEFLATED) as zip_file:
+    #     string_buffer = StringIO()
     #     for file in current_files:
-    #         # file.seek()
-    #         # zip.write("{}.csv".file)
-    #         # zip.write(file)
-    #         zip.write('file.csv')
-
-    with ZipFile (zipped_file, 'w', ZIP_DEFLATED) as zip_file:
-        string_buffer = StringIO()
-        for file in current_files:
-            writer = csv.writer(string_buffer)
-
-        # Write data using the writer object.
-
-            zip_file.writestr(file + '.csv', string_buffer.getvalue())
+    #         writer = csv.writer(string_buffer)
+    #
+    #     # Write data using the writer object.
+    #
+    #         zip_file.writestr(file + '.csv', string_buffer.getvalue())
 
 
     zipped_file.close()
