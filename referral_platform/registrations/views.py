@@ -943,6 +943,14 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # return file2(request)
     current_files = [file1, file2,]
 
+
+    zipped_file = io.BytesIO()
+    with zipfile.ZipFile(zipped_file, 'w') as f:
+        for i, file in enumerate(current_files):
+            f.writestr("{}.csv".format(i), file.getvalue())
+
+    zipped_file.seek(0)
+
     #
     # with ZipFile('my_python_files.zip', 'w') as zip:
     #     for file in current_files:
@@ -950,15 +958,15 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # #     zf.write(current_file)
     # #     os.unlink(current_file)
     # zip.close(),
-    string_buffer = StringIO().StringIO()
-    zipped_file = io.BytesIO()
-    with zipfile.ZipFile(zipped_file, 'w') as zip:
-         for file in current_files:
-             # file.seek()
-             # zip.write("{}.csv".file)
-             # zip.write(file)
-             writer = csv.writer(string_buffer)
-             zip.writestr(file + '.csv', string_buffer.getvalue())
+    # string_buffer = StringIO().StringIO()
+    # zipped_file = io.BytesIO()
+    # with zipfile.ZipFile(zipped_file, 'w') as zip:
+    #      for file in current_files:
+    #          # file.seek()
+    #          # zip.write("{}.csv".file)
+    #          # zip.write(file)
+    #          writer = csv.writer(string_buffer)
+    #          zip.writestr(file + '.csv', string_buffer.getvalue())
 
     # with ZipFile (zipped_file, 'w', ZIP_DEFLATED) as zip_file:
     #     string_buffer = StringIO()
