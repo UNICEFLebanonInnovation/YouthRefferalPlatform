@@ -952,12 +952,21 @@ class ExportPBI(LoginRequiredMixin, ListView):
     # #     os.unlink(current_file)
     # zip.close(),
     zipped_file = StringIO.StringIO()
-    with zipfile.ZipFile(zipped_file, 'w') as zip:
+    # with zipfile.ZipFile(zipped_file, 'w') as zip:
+    #     for file in current_files:
+    #         # file.seek()
+    #         # zip.write("{}.csv".file)
+    #         # zip.write(file)
+    #         zip.write('file.csv')
+
+    with ZipFile (zipped_file, 'w', ZIP_DEFLATED) as zip_file:
+        string_buffer = StringIO()
         for file in current_files:
-            # file.seek()
-            # zip.write("{}.csv".file)
-            # zip.write(file)
-            zip.write('file.csv')
+            writer = csv.writer(string_buffer)
+
+        # Write data using the writer object.
+
+            zip_file.writestr(file + '.csv', string_buffer.getvalue())
 
 
     zipped_file.close()
