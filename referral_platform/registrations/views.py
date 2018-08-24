@@ -946,8 +946,9 @@ class ExportPBI(LoginRequiredMixin, ListView):
 
     zipped_file = io.BytesIO()
     with zipfile.ZipFile(zipped_file, 'w') as f:
-        for i, file in enumerate(current_files):
-            f.writestr("{}.csv".format(i), file.getvalue())
+        # for i, file in current_files:
+            f.writestr("{}.csv".format(), file1.getvalue())
+            f.writestr("{}.csv".format(), file2.getvalue())
 
     zipped_file.seek(0)
 
