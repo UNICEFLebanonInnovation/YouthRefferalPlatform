@@ -937,10 +937,10 @@ def exportPBI(request):
         # # zf = zipfile.ZipFile(byte, "w")
         # zipped_files = []
 
-    file1 = ExportInitiativeAssessmentsView.as_view()
-    file2 = ExportRegistryAssessmentsView.as_view()
+    file1 = ExportInitiativeAssessmentsView()
+    file2 = ExportRegistryAssessmentsView()
 
-    return file1
+    return file1, file2
 
 
 
