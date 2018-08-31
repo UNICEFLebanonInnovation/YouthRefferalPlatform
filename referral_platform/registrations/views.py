@@ -404,7 +404,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'training_date': "data->>'training_date'",
             'training_end_date': "data->>'training_end_date'",
             '_submission_time': "data->>'_submission_time'",
-            'what_electronics_do_you_own': "data->>'what_electronics_do_you_own'",
+            'what_electronics_do_you_own': "data->>'what_electronics_do_you_own' IN ('laptop')",
             'desired_method_for_follow_up': "data->>'desired_method_for_follow_up'",
             'text_39911992': "data->>'text_39911992'",
             'text_d45750c6': "data->>'text_d45750c6'",
