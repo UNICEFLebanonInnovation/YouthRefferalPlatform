@@ -481,7 +481,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_4c6fe6c9',
         )
         filename = 'registrations'
-        equi = qs[what_electronics_do_you_own],
+        equi = qs['what_electronics_do_you_own'],
 
         return render_to_csv_response(qs, equi, filename, field_header_map=headers)
 
