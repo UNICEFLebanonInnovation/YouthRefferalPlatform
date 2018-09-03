@@ -376,7 +376,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
         #
         #  }
 
-        qs = self.get_queryset().json()
+        qs = request.get_queryset().json()
 
         partner = qs['partner'],
 
