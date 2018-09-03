@@ -354,7 +354,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'what_electronics_do_you_own': 'What electronics do you own? - Computer',
             'what_electronics_do_you_own': 'What electronics do you own? - Smart Phone',
             'what_electronics_do_you_own': 'What electronics do you own? - Tablet',
-            'what_electronics_do_you_own': 'What electronics do you own? - NA',
             'family_present': 'Family composition',
             'family_not_present': 'Please state if any of the above household members are not living with you at the moment:',
             'not_present_where': 'Reason of family absence',
@@ -414,7 +413,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Computer' IN ('computer')",
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Smart Phone' IN ('smart_phone')",
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Tablet' IN ('tablet')",
-            'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - NA' IN ('NA')",
             'desired_method_for_follow_up': "data->>'desired_method_for_follow_up'",
             'text_39911992': "data->>'text_39911992'",
             'text_d45750c6': "data->>'text_d45750c6'",
@@ -942,8 +940,3 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         filename = 'Initiative-Export'
 
         return render_to_csv_response(qs, filename,  field_header_map=headers)
-
-
-
-
-
