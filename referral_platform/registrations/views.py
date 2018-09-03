@@ -945,17 +945,5 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
 
-# class ExportPBI(LoginRequiredMixin, ListView):
-def exportPBI(request):
-
-        # byte = BytesIO()
-        # # zf = zipfile.ZipFile(byte, "w")
-        # zipped_files = []
-
-    file1 = ExportInitiativeAssessmentsView()
-    file2 = ExportRegistryAssessmentsView()
-
-    return file1, file2
-
 
 
