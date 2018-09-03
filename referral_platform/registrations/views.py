@@ -408,11 +408,9 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'family_steady_income': "data->>'family_steady_income'",
             'training_date': "data->>'training_date'",
             'training_end_date': "data->>'training_end_date'",
-
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own",
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own' IF ('what_electronics_do_you_own' = 'laptop')",
             # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own",
-
             # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Computer' IN ('computer')",
             # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Smart Phone' IN ('smart_phone')",
             # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Tablet' IN ('tablet')",
@@ -469,11 +467,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'training_end_date',
             '_submission_time',
             'what_electronics_do_you_own',
-            # 'what_electronics_do_you_own',
-            # 'what_electronics_do_you_own',
-            # 'what_electronics_do_you_own',
-            # 'what_electronics_do_you_own',
-            # 'what_electronics_do_you_own',
             'desired_method_for_follow_up',
             'educ_level_stopped',
             'Reason_stop_study',
@@ -483,7 +476,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_4c6fe6c9',
         )
         filename = 'registrations'
-
 
         return render_to_csv_response(qs, filename, field_header_map=headers)
 
