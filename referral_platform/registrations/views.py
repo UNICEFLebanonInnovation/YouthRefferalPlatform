@@ -409,7 +409,12 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'training_date': "data->>'training_date'",
             'training_end_date': "data->>'training_end_date'",
             '_submission_time': "data->>'_submission_time'",
+<<<<<<< HEAD
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own",
+=======
+            'what_electronics_do_you_own': "data->> SELECT 'what_electronics_do_you_own' IF ('what_electronics_do_you_own' = 'laptop')",
+            # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own",
+>>>>>>> parent of dfdf80e... tst
             # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Computer' IN ('computer')",
             # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Smart Phone' IN ('smart_phone')",
             # 'what_electronics_do_you_own': "data->>'what_electronics_do_you_own - Tablet' IN ('tablet')",
