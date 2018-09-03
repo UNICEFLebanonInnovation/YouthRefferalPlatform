@@ -60,11 +60,11 @@ urlpatterns = [
         view=views.ExportInitiativeAssessmentsView.as_view(),
         name='export_initiative_assessments'
     ),
-    url(
-        regex=r'^exportPBI/$',
-        view=views.exportPBI,
-        name='ZIP'
-    ),
+    # url(
+    #     regex=r'^exportPBI/$',
+    #     view=views.exportPBI,
+    #     name='ZIP'
+    # ),
 ]
 
 
