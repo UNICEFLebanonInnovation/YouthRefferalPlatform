@@ -468,7 +468,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             #     ('tr_type_3', 'Civic engagement'),
             #     ('tr_type_4', 'Sports for development')),
             'training_end_date',
-            '_submission_time',
+            '_submission_time',     
             'what_electronics_do_you_own',
             'desired_method_for_follow_up',
             'educ_level_stopped',
