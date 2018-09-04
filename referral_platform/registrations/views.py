@@ -350,10 +350,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
             'Accommodation_type': 'Accommodation Type',
             'what_electronics_do_you_own': 'What electronics do you own?',
-            'what_electronics_do_you_own': 'What electronics do you own? - Laptop',
-            'what_electronics_do_you_own': 'What electronics do you own? - Computer',
-            'what_electronics_do_you_own': 'What electronics do you own? - Smart Phone',
-            'what_electronics_do_you_own': 'What electronics do you own? - Tablet',
             'family_present': 'Family composition',
             'family_not_present': 'Please state if any of the above household members are not living with you at the moment:',
             'not_present_where': 'Reason of family absence',
