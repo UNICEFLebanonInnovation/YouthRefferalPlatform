@@ -463,13 +463,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'concent_paper',
             'family_steady_income',
             'training_date',
-            training_type_choice['training_type'],
-
-            #in (
-            #     ('tr_type_1', 'Life skills'),
-            #     ('tr_type_2', 'Entrepreneurship'),
-            #     ('tr_type_3', 'Civic engagement'),
-            #     ('tr_type_4', 'Sports for development')),
             'training_end_date',
             '_submission_time',     
             'what_electronics_do_you_own',
@@ -480,6 +473,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_39911992',
             'text_d45750c6',
             'text_4c6fe6c9',
+            training_type=training_type_choice.get('training_type', ''),
         )
         filename = 'registrations'
 
