@@ -365,7 +365,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'family_steady_income': 'Family Income',
             'training_date': 'Training Date',
             'training_type': 'Training Type',
-            'registration__training_type': 'Training Type',
+            'assessment__training_type': 'Training Type',
             'training_end_date': 'Training End Date',
             '_submission_time': 'Submission Time and Date',
             'desired_method_for_follow_up': 'Desired Method for follow-up',
@@ -460,7 +460,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'family_steady_income',
             'training_date',
             'training_type',
-            'registration__training_type',
+            'assessment__training_type',
 
             #in (
             #     ('tr_type_1', 'Life skills'),
