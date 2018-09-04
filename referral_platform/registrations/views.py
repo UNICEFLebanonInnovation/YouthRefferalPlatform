@@ -319,7 +319,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 'tr_type_1': 'Life skills',
                 'tr_type_2': 'Entrepreneurship',
                 'tr_type_3': 'Civic engagement',
-                'tr_type_4': 'Sports for development'},
+                'tr_type_4': 'Sports for development'}
 
         headers = {
             'registration__youth__first_name': 'First Name',
