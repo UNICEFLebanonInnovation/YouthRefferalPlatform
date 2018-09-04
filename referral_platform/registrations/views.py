@@ -315,12 +315,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
-        training_type_CHOICES = (
-            ('tr_type_1', 'Life skills'),
-            ('tr_type_2', 'Entrepreneurship'),
-            ('tr_type_3', 'Civic engagement'),
-            ('tr_type_4', 'Sports for development'),
-        )
 
         headers = {
             'registration__youth__first_name': 'First Name',
@@ -371,6 +365,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'family_steady_income': 'Family Income',
             'training_date': 'Training Date',
             'training_type': 'Training Type',
+            'registration__training_type': 'Training Type',
             'training_end_date': 'Training End Date',
             '_submission_time': 'Submission Time and Date',
             'desired_method_for_follow_up': 'Desired Method for follow-up',
@@ -465,6 +460,8 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'family_steady_income',
             'training_date',
             'training_type',
+            'registration__training_type',
+
             #in (
             #     ('tr_type_1', 'Life skills'),
             #     ('tr_type_2', 'Entrepreneurship'),
