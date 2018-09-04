@@ -463,7 +463,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'concent_paper',
             'family_steady_income',
             'training_date',
-            'training_type' in training_type_choice,
+            'training_type'.training_type_choice.value,
 
             #in (
             #     ('tr_type_1', 'Life skills'),
