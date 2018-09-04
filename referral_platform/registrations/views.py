@@ -473,8 +473,8 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_39911992',
             'text_d45750c6',
             'text_4c6fe6c9',
-            training_type=training_type_choice.get('training_type', ''),
-        )
+            training_type=training_type_choice['training_type'],
+        ) 
         filename = 'registrations'
 
         return render_to_csv_response(qs, filename, field_header_map=headers)
