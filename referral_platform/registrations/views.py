@@ -267,9 +267,9 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__address': 'address',
             'owner__email': 'Created By',
             # 'youth__calculate_age': 'Age',
-            'modified_by__email': 'modified_by',
+            'modified_by__email': 'Modified By',
             'created': 'created',
-            'modified': 'modified',
+            'modified': 'Modified',
     }
         qs = self.get_queryset().values(
             'youth__first_name',

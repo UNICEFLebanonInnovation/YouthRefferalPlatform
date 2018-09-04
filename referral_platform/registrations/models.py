@@ -31,7 +31,16 @@ class Assessment(models.Model):
     order = models.TextField(blank=False, null=False, default=1)
     partner = models.ForeignKey(PartnerOrganization, null=True, blank=True,)
 
-
+    assessment_form.training_type = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        choices=Choices(
+            ('tr_type_1', _('Life skills')),
+            ('tr_type_2', _('Entrepreneurship')),
+            ('tr_type_3', _('Civic engagement')),
+            ('tr_type_4', _('Sports for development')),
+        )
+    )
 
     class Meta:
         ordering = ['order']
@@ -98,17 +107,7 @@ class Registration(TimeStampedModel):
         blank=True, null=True,
         related_name='+',
         verbose_name=_('Modified by'),
-    )
 
-    training_type = models.CharField(
-        max_length=50,
-        blank=True, null=True,
-        choices=Choices(
-            ('tr_type_1', _('Life skills')),
-            ('tr_type_2', _('Entrepreneurship')),
-            ('tr_type_3', _('Civic engagement')),
-            ('tr_type_4', _('Sports for development')),
-        )
     )
     # disability = models.ForeignKey(
     #     Disability,
