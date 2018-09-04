@@ -412,7 +412,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'family_steady_income': "data->>'family_steady_income'",
             'training_date': "data->>'training_date'",
             'training_end_date': "data->>'training_end_date'",
-            'training_type': "data->>'training_type', translations=training_type_CHOICES",
+            'training_type': "data->>'training_type'",
             '_submission_time': "data->>'_submission_time'",
             'what_electronics_do_you_own': "data->>'what_electronics_do_you_own'",
             'desired_method_for_follow_up': "data->>'desired_method_for_follow_up'",
