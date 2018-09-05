@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from datetime import date
 import datetime
+import json
 
 from django.db import models
 from django.conf import settings
@@ -201,17 +202,21 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    data.training_type = models.CharField(
-        max_length=50,
-        blank=True, null=True,
-        choices=Choices(
-            ('tr_type_1', _('Life skills')),
-            ('tr_type_2', _('Entrepreneurship')),
-            ('tr_type_3', _('Civic engagement')),
-            ('tr_type_4', _('Sports for development')),
-        )
-    )
 
+# class DataCleansing(models.Model):
+#
+#     assessment = models.ForeignKey(Assessment)
+#     data = JSONField(blank=True, null=True, default=dict)
+#
+#     def update_field(self, key, value):
+#         getattr(self, key)
+#         setattr(self, key, value)
+#
+#         # with open('data.json', 'r+') as f:
+#         #     data = json.load(f)
+#         #     data['key'] = value
+#         #     f.seek(0)
+#         #     json.dump(data, f, indent=4)
 
 
 class AssessmentHash(models.Model):

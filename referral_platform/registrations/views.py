@@ -313,6 +313,11 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         return queryset
 
+    def update_field(self, key, value):
+
+        getattr(self, key)
+        setattr(self, key, value)
+
     def get(self, request, *args, **kwargs):
 
         training_type_choice = {
@@ -473,7 +478,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_39911992',
             'text_d45750c6',
             'text_4c6fe6c9',
-            training_type = training_type_choice['training_type'],
+            training_type.update_field('training_type', 'training_type_choice'),
         )
         filename = 'registrations'
 
