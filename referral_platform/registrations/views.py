@@ -313,18 +313,18 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         return queryset
 
-    def update_field(self, key, value):
-
-        getattr(self, key)
-        setattr(self, key, value)
+    # def update_field(self, key, value):
+    #
+    #     getattr(self, key)
+    #     setattr(self, key, value)
 
     def get(self, request, *args, **kwargs):
 
-        training_type_choice = {
-                'tr_type_1': 'Life skills',
-                'tr_type_2': 'Entrepreneurship',
-                'tr_type_3': 'Civic engagement',
-                'tr_type_4': 'Sports for development'}
+        # training_type_choice = {
+        #         'tr_type_1': 'Life skills',
+        #         'tr_type_2': 'Entrepreneurship',
+        #         'tr_type_3': 'Civic engagement',
+        #         'tr_type_4': 'Sports for development'}
 
         headers = {
             'registration__youth__first_name': 'First Name',
@@ -478,7 +478,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_39911992',
             'text_d45750c6',
             'text_4c6fe6c9',
-            training_type.update_field(training_type, training_type_choice),
+            'training_type',
         )
         filename = 'registrations'
 
