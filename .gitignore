@@ -77,3 +77,4 @@ referral_platform/static/referral_platform/dist/
 webpack-stats.json
 webpack-stats-production.json
 /staticfiles/
+referral_platform/registrations/models.py
