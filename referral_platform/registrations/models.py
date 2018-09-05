@@ -201,7 +201,7 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    data.training_type = models.CharField(
+    data['training_type'] = models.CharField(
         max_length=50,
         blank=True, null=True,
         choices=Choices(
