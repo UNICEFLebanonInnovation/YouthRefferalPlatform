@@ -201,16 +201,16 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    data['training_type'] = models.CharField(
-        max_length=50,
-        blank=True, null=True,
-        choices=Choices(
-            ('tr_type_1', _('Life skills')),
-            ('tr_type_2', _('Entrepreneurship')),
-            ('tr_type_3', _('Civic engagement')),
-            ('tr_type_4', _('Sports for development')),
-        )
-    )
+    # data['training_type'] = models.CharField(
+    #     max_length=50,
+    #     blank=True, null=True,
+    #     choices=Choices(
+    #         ('tr_type_1', _('Life skills')),
+    #         ('tr_type_2', _('Entrepreneurship')),
+    #         ('tr_type_3', _('Civic engagement')),
+    #         ('tr_type_4', _('Sports for development')),
+    #     )
+    # )
 
 
 
