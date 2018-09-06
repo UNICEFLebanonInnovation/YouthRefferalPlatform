@@ -303,7 +303,7 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
-class NewMappingResource(resources.ModelResource):
+class NewMapping(resources.ModelResource):
 
     class Meta:
         model = NewMapping
@@ -318,7 +318,7 @@ class NewMappingResource(resources.ModelResource):
 
 
 class NewMappingAdmin(ImportExportModelAdmin):
-    resource_class = NewMappingResource
+    resource_class = NewMapping
     list_display = (
         'type',
         'key',
@@ -388,6 +388,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
-admin.site.register(NewMappingResource, NewMappingAdmin)
+admin.site.register(NewMapping, NewMappingAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)
