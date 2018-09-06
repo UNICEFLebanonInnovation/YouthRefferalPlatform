@@ -52,6 +52,30 @@ class Assessment(models.Model):
                      self.partner])
 
 
+class NewMapping(models.Model):
+
+    type = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('Assessment Type')
+    )
+    key = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('Key')
+    )
+    old_value = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('Old Value')
+    )
+    new_value = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('New Value')
+    )
+
+
 class Registration(TimeStampedModel):
 
     location = models.CharField(
@@ -182,30 +206,6 @@ class Registration(TimeStampedModel):
         return reverse('registrations:edit', kwargs={'pk': self.id})
 
 
-class NewMapping(models.Model):
-
-    type = models.CharField(
-        max_length=50,
-        blank=True, null=True,
-        verbose_name=_('Assessment Type')
-    )
-    key = models.CharField(
-        max_length=50,
-        blank=True, null=True,
-        verbose_name=_('Key')
-    )
-    old_value = models.CharField(
-        max_length=50,
-        blank=True, null=True,
-        verbose_name=_('Old Value')
-    )
-    new_value = models.CharField(
-        max_length=50,
-        blank=True, null=True,
-        verbose_name=_('New Value')
-    )
-
-
 class AssessmentSubmission(models.Model):
 
     STATUS = Choices(
@@ -227,23 +227,23 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    # def update_field(self):
-    #
-    #     print(type(self.data))
-    #     data = json.loads(self.data)
-    #     new_data = {}
-    #
-    #     for key in data:
-    #         assessment_type = self.assessment.slug
-    #         old_value = data[key]
-    #
-    #         try:
-    #             obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
-    #             new_data[key] = obj.new_value
-    #         except Exception as ex:
-    #             new_data[key] = old_value
-    #             continue
-    #     self.save()
+    def update_field(self):
+
+        print(type(self.data))
+        data = json.loads(self.data)
+        new_data = {}
+
+        for key in data:
+            assessment_type = self.assessment.slug
+            old_value = data[key]
+
+            try:
+                obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+                new_data[key] = obj.new_value
+            except Exception as ex:
+                new_data[key] = old_value
+                continue
+        self.save()
 
 
 class AssessmentHash(models.Model):
