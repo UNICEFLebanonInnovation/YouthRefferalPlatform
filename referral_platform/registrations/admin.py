@@ -302,6 +302,38 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
+class NewMappingResource(resources.ModelResource):
+    class Meta:
+        model = NewMapping
+        fields = (
+            'type',
+            'key',
+            'old_value',
+            'new_value',
+        )
+        export_order = fields
+
+
+class NewMappingAdmin(ImportExportModelAdmin):
+    resource_class = NewMappingResource
+    list_display = (
+        'type',
+        'key',
+        'old_value',
+        'new_value',
+    )
+    list_filter = (
+        'type',
+        'key',
+        'old_value',
+        'new_value',
+    )
+    search_fields = (
+        'type',
+        'key',
+    )
+
+
 class AssessmentSubmissionAdmin(admin.ModelAdmin):
 
     readonly_fields = (
@@ -356,5 +388,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
+admin.site.register(PartnerOrganization, PartnerOrganizationAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)

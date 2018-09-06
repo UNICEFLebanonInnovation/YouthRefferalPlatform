@@ -182,6 +182,30 @@ class Registration(TimeStampedModel):
         return reverse('registrations:edit', kwargs={'pk': self.id})
 
 
+class NewMapping(models.Model):
+
+    type = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('Assessment Type')
+    )
+    key = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('Key')
+    )
+    old_value = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('Old Value')
+    )
+    new_value = models.CharField(
+        max_length=50,
+        blank=True, null=True,
+        verbose_name=_('New Value')
+    )
+
+
 class AssessmentSubmission(models.Model):
 
     STATUS = Choices(
@@ -195,6 +219,7 @@ class AssessmentSubmission(models.Model):
     assessment = models.ForeignKey(Assessment)
     status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
+    new_data = JSONField(blank=True, null=True, default=dict)
 
     def get_data_option(self, column, option):
         column_value = self.data.get(column, '')
@@ -202,29 +227,23 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    def update_field(self, key, value):
+    def update_field(self):
 
-        with open('data.json', 'r+') as f:
-            data = json.load(f)
-            data[key] = value
-            f.seek(0)
-            new_data = json.dump(data, f)
-        return new_data
+        print(type(self.data))
+        data = json.loads(self.data)
+        new_data = {}
 
+        for key in data:
+            assessment_type = self.assessment.slug
+            old_value = data[key]
 
-# class DataCleansing(models.Model):
-#
-#     assessment = models.ForeignKey(Assessment)
-#     data = JSONField(blank=True, null=True, default=dict)
-#
-#     def update_field(self, key, value):
-#
-#         with open('data.json', 'r+') as f:
-#             data = json.load(f)
-#             data[key] = value
-#             f.seek(0)
-#             new_data = json.dump(data, f)
-#         return new_data
+            try:
+                obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+                new_data[key] = obj.new_value
+            except Exception as ex:
+                new_data[key] = old_value
+                continue
+        self.save()
 
 
 class AssessmentHash(models.Model):
