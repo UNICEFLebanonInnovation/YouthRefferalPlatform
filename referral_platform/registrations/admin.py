@@ -12,7 +12,7 @@ from referral_platform.users.utils import has_group, force_default_language
 from referral_platform.locations.models import Location
 from referral_platform.partners.models import PartnerOrganization
 from .exports import RegistrationFormat, RegistrationAssessmentFormat
-from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
+from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 
 
 class BaseExportResource(resources.ModelResource):
@@ -302,7 +302,7 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
-class NewMappingResource(admin.ModelAdmin):
+class NewMapping(admin.ModelAdmin):
     class Meta:
         fields = (
             'type',
@@ -314,7 +314,7 @@ class NewMappingResource(admin.ModelAdmin):
 
 
 class NewMappingAdmin(ImportExportModelAdmin):
-    resource_class = NewMappingResource
+
     list_display = (
         'type',
         'key',
@@ -387,6 +387,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
-admin.site.register(NewMappingResource, NewMappingAdmin)
+admin.site.register(NewMapping, NewMappingAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)
