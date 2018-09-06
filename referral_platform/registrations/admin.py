@@ -304,7 +304,6 @@ class AssessmentAdmin(admin.ModelAdmin):
 
 class NewMappingResource(resources.ModelResource):
     class Meta:
-        model = NewMapping
         fields = (
             'type',
             'key',
