@@ -227,23 +227,23 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    def update_field(self):
-
-        print(type(self.data))
-        data = json.loads(self.data)
-        new_data = {}
-
-        for key in data:
-            assessment_type = self.assessment.slug
-            old_value = data[key]
-
-            try:
-                obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
-                new_data[key] = obj.new_value
-            except Exception as ex:
-                new_data[key] = old_value
-                continue
-        self.save()
+    # def update_field(self):
+    #
+    #     print(type(self.data))
+    #     data = json.loads(self.data)
+    #     new_data = {}
+    #
+    #     for key in data:
+    #         assessment_type = self.assessment.slug
+    #         old_value = data[key]
+    #
+    #         try:
+    #             obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+    #             new_data[key] = obj.new_value
+    #         except Exception as ex:
+    #             new_data[key] = old_value
+    #             continue
+    #     self.save()
 
 
 class AssessmentHash(models.Model):

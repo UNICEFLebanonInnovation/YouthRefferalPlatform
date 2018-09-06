@@ -304,6 +304,7 @@ class AssessmentAdmin(admin.ModelAdmin):
 
 
 class NewMappingResource(resources.ModelResource):
+
     class Meta:
         model = NewMapping
 
@@ -317,7 +318,7 @@ class NewMappingResource(resources.ModelResource):
 
 
 class NewMappingAdmin(ImportExportModelAdmin):
-    
+    resource_class = NewMappingResource
     list_display = (
         'type',
         'key',
