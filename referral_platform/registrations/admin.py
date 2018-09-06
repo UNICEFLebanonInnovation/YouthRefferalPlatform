@@ -302,15 +302,15 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
-class NewMapping(admin.ModelAdmin):
-    class Meta:
-        fields = (
-            'type',
-            'key',
-            'old_value',
-            'new_value',
-        )
-        export_order = fields
+# class NewMapping(admin.ModelAdmin):
+#     class Meta:
+#         fields = (
+#             'type',
+#             'key',
+#             'old_value',
+#             'new_value',
+#         )
+#         export_order = fields
 
 
 class NewMappingAdmin(ImportExportModelAdmin):
@@ -387,6 +387,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
-admin.site.register(NewMapping, NewMappingAdmin)
+admin.site.register(NewMappingAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)
