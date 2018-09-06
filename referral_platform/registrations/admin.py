@@ -1,6 +1,7 @@
 
 import tablib
 
+
 from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
@@ -302,9 +303,10 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
-class NewMappingResource(ImportExportModelAdmin):
+class NewMappingResource(resources.ModelResource):
     class Meta:
         model = NewMapping
+
         fields = (
             'type',
             'key',
@@ -314,24 +316,21 @@ class NewMappingResource(ImportExportModelAdmin):
         export_order = fields
 
 
-# class NewMappingAdmin(ImportExportModelAdmin):
-#     resource_class = NewMappingResource
-#     list_display = (
-#         'type',
-#         'key',
-#         'old_value',
-#         'new_value',
-#     )
-#     list_filter = (
-#         'type',
-#         'key',
-#         'old_value',
-#         'new_value',
-#     )
-#     search_fields = (
-#         'type',
-#         'key',
-#     )
+class NewMappingAdmin(ImportExportModelAdmin):
+    resource_class = NewMappingResource
+    list_display = (
+        'type',
+        'key',
+        'old_value',
+        'new_value',
+    )
+    list_filter = (
+        'type',
+    )
+    search_fields = (
+        'type',
+        'key',
+    )
 
 
 class AssessmentSubmissionAdmin(admin.ModelAdmin):
@@ -388,6 +387,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
-admin.site.register(NewMappingResource)
+admin.site.register(NewMappingResource, NewMappingAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)
