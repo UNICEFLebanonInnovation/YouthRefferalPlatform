@@ -387,6 +387,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
-admin.site.register(PartnerOrganization, PartnerOrganizationAdmin)
+admin.site.register(NewMappingResource, NewMappingAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)
