@@ -302,7 +302,7 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
-class NewMappingResource(resources.ModelAdmin):
+class NewMappingResource(admin.ModelAdmin):
     class Meta:
         fields = (
             'type',
