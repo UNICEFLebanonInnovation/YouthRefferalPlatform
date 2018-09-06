@@ -303,22 +303,22 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
-class NewMapping(resources.ModelResource):
-
-    class Meta:
-        model = NewMapping
-
-        fields = (
-            'type',
-            'key',
-            'old_value',
-            'new_value',
-        )
-        export_order = fields
+# class NewMapping(resources.ModelResource):
+#
+#     class Meta:
+#         model = NewMapping
+#
+#         fields = (
+#             'type',
+#             'key',
+#             'old_value',
+#             'new_value',
+#         )
+#         export_order = fields
 
 
 class NewMappingAdmin(ImportExportModelAdmin):
-    resource_class = NewMapping
+
     list_display = (
         'type',
         'key',
