@@ -301,21 +301,21 @@ class AssessmentAdmin(admin.ModelAdmin):
     search_fields = (
     )
 
-
-class NewMappingResource(resources.ModelResource):
-    class Meta:
-        model = NewMapping
-        fields = (
-            'type',
-            'key',
-            'old_value',
-            'new_value',
-        )
-        export_order = fields
+#
+# class NewMappingResource(resources.ModelResource):
+#     class Meta:
+#         model = NewMapping
+#         fields = (
+#             'type',
+#             'key',
+#             'old_value',
+#             'new_value',
+#         )
+#         export_order = fields
 
 
 class NewMappingAdmin(ImportExportModelAdmin):
-    resource_class = NewMappingResource
+    # resource_class = NewMappingResource
     list_display = (
         'type',
         'key',
@@ -388,6 +388,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
-admin.site.register(NewMappingResource, NewMappingAdmin)
+admin.site.register(NewMappingAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)
