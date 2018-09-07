@@ -749,7 +749,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
     model = AssessmentSubmission
     newmaping = NewMapping.objects.filter(type__in=['init_exec', 'init_registration'])
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
-    model.update_field()
 
     def get_queryset(self):
         if self.request.user.is_superuser:
