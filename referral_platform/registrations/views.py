@@ -27,7 +27,7 @@ from referral_platform.backends.tasks import *
 from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
-from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
+from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
@@ -303,7 +303,8 @@ class ExportView(LoginRequiredMixin, ListView):
 class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.filter(assessment__slug='registration')
+    newmapping = NewMapping.objects.filter(assessment__slug='registration')
+    queryset = AssessmentSubmission.objects.filter(assessment__slug='registration').update_field(newmapping)
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -388,36 +389,36 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
             # 'phonenumber': "data->>'phonenumber'",
 
-            'center_type': "data->>'center_type'",
-            'other_five': "data->>'other_five'",
-            'Reason_stop_study': "data->>'Reason_stop_study'",
-            'educ_level_stopped': "data->>'educ_level_stopped'",
-            'occupation_type': "data->>'occupation_type'",
-            'School_name': "data->>'School_name'",
-            'School_type': "data->>'School_type'",
-            'school_level': "data->>'School_level'",
-            'reason_for_skipping_class': "data->>'reason_for_skipping_class'",
-            'family_present': "data->>'family_present'",
-            'family_not_present': "data->>'family_not_present'",
-            'not_present_where': "data->>'not_present_where'",
-            'Accommodation_type': "data->>'Accommodation_type'",
-            'how_many_times_skipped_school': "data->>'how_many_times_skipped_school'",
-            'drugs_substance_use': "data->>'drugs_substance_use'",
-            'how_many_times_displaced': "data->>'how_many_times_displaced'",
-            'Relation_with_labor_market': "data->>'Relation_with_labor_market'",
-            'reasons_for_not_feeling_safe_a': "data->>'reasons_for_not_feeling_safe_a'",
-            'feeling_of_safety_security': "data->>'feeling_of_safety_security'",
-            'concent_paper': "data->>'concent_paper'",
-            'family_steady_income': "data->>'family_steady_income'",
-            'training_date': "data->>'training_date'",
-            'training_end_date': "data->>'training_end_date'",
-            'training_type': "data->>'training_type'",
-            '_submission_time': "data->>'_submission_time'",
-            'what_electronics_do_you_own': "data->>'what_electronics_do_you_own'",
-            'desired_method_for_follow_up': "data->>'desired_method_for_follow_up'",
-            'text_39911992': "data->>'text_39911992'",
-            'text_d45750c6': "data->>'text_d45750c6'",
-            'text_4c6fe6c9': "data->>'text_4c6fe6c9'",
+            'center_type': "new_data->>'center_type'",
+            'other_five': "new_data->>'other_five'",
+            'Reason_stop_study': "new_data->>'Reason_stop_study'",
+            'educ_level_stopped': "new_data->>'educ_level_stopped'",
+            'occupation_type': "new_data->>'occupation_type'",
+            'School_name': "new_data->>'School_name'",
+            'School_type': "new_data->>'School_type'",
+            'school_level': "new_data->>'School_level'",
+            'reason_for_skipping_class': "new_data->>'reason_for_skipping_class'",
+            'family_present': "new_data->>'family_present'",
+            'family_not_present': "new_data->>'family_not_present'",
+            'not_present_where': "new_data->>'not_present_where'",
+            'Accommodation_type': "new_data->>'Accommodation_type'",
+            'how_many_times_skipped_school': "new_data->>'how_many_times_skipped_school'",
+            'drugs_substance_use': "new_data->>'drugs_substance_use'",
+            'how_many_times_displaced': "new_data->>'how_many_times_displaced'",
+            'Relation_with_labor_market': "new_data->>'Relation_with_labor_market'",
+            'reasons_for_not_feeling_safe_a': "new_data->>'reasons_for_not_feeling_safe_a'",
+            'feeling_of_safety_security': "new_data->>'feeling_of_safety_security'",
+            'concent_paper': "new_data->>'concent_paper'",
+            'family_steady_income': "new_data->>'family_steady_income'",
+            'training_date': "new_data->>'training_date'",
+            'training_end_date': "new_data->>'training_end_date'",
+            'training_type': "new_data->>'training_type'",
+            '_submission_time': "new_data>>'_submission_time'",
+            'what_electronics_do_you_own': "new_data->>'what_electronics_do_you_own'",
+            'desired_method_for_follow_up': "new_data->>'desired_method_for_follow_up'",
+            'text_39911992': "new_data->>'text_39911992'",
+            'text_d45750c6': "new_data->>'text_d45750c6'",
+            'text_4c6fe6c9': "new_data->>'text_4c6fe6c9'",
 
             # 'youth_fname':"registration->>youth__last_name",
             # 'youth_lname':"registration->>youth__first_name",
