@@ -747,8 +747,9 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    newmaping = NewMapping.objects.filter(type='registration')
-    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration']).update_field(newmaping)
+    newmaping = NewMapping.objects.filter(type__in=['init_exec', 'init_registration'])
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
+    AssessmentSubmission.update_field(newmaping)
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -861,15 +862,15 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             '_geolocation': "new_data->>'_geolocation'",
             'if_so_who': "new_data->>'if_so_who'",
 
-            'type_of_support_required': "data->>'type_of_support_required'",
-            'type_of_support_received': "data->>'type_of_support_received'",
-            'support_received_helpful': "data->>'support_received_helpful'",
-            'support_not_helpful_why': "data->>'support_not_helpful_why'",
+            'type_of_support_required': "new_data>>'type_of_support_required'",
+            'type_of_support_received': "new_data->>'type_of_support_received'",
+            'support_received_helpful': "new_data->>'support_received_helpful'",
+            'support_not_helpful_why': "new_data->>'support_not_helpful_why'",
 
-            'start': "data->>'start'",
-            'end': "data->>'end'",
-            '_submission_time': "data->>'_submission_time'",
-            '_userform_id': "data->>'_userform_id'",
+            'start': "new_data->>'start'",
+            'end': "new_data->>'end'",
+            '_submission_time': "new_data->>'_submission_time'",
+            '_userform_id': "new_data->>'_userform_id'",
 
         }).values(
             'registration__youth__first_name',
