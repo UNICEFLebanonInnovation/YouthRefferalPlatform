@@ -28,11 +28,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "dashboard:co" %}">{% trans "Global Dashboard" %}</a>
                 </li>
-              {% if request.user|has_group:"YOUTH" %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "dashboard:partner" %}">{% trans "Partner Dashboard" %}</a>
-                </li>
-              {% endif %}
+              <!--{% if request.user|has_group:"YOUTH" %}-->
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="{% url "dashboard:partner" %}">{% trans "Partner Dashboard" %}</a>-->
+                <!--</li>-->
+              <!--{% endif %}-->
               {% if request.user|has_group:"YOUTH" %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "backends:files_list" %}">{% trans "Exported files" %}</a>
