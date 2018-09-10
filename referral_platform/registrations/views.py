@@ -900,7 +900,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'type_of_initiative',
             'other_type_of_initiative',
             'duration_of_initiative',
-            'select_multiple_e160966a',
+            #  
             # 'select_one_a3c4ea99',
             # 'leadership',
             # 'challenges_faced',
