@@ -313,7 +313,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
         return queryset
-    
+
 
     # def update_field(self, key, value):
     #
@@ -749,7 +749,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
     newmaping = NewMapping
-    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
+    queryset = AssessmentSubmission.objects.all()
 
     def get_queryset(self):
         if self.request.user.is_superuser:
