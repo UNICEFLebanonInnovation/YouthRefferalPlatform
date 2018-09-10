@@ -313,7 +313,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
         return queryset
-    model.update_field()
+    
 
     # def update_field(self, key, value):
     #
@@ -748,7 +748,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    newmaping = NewMapping.objects.filter(type__in=['init_exec', 'init_registration'])
+    newmaping = NewMapping
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
 
     def get_queryset(self):
