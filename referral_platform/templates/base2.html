@@ -1,6 +1,7 @@
 {% load staticfiles i18n %}
 {% load static %}
 {% get_current_language as LANGUAGE_CODE %}
+
 <!DOCTYPE html>
 <!--<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar"{% else %}lang="en"{% endif %}>-->
 <html ng-app>
@@ -94,7 +95,7 @@
                     </li>
                     <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color03" data-animation-duration="1000"
                         data-animation-delay="500">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiZDIyMTNhNTktZDBmZS00NTExLWI0YmQtNDliOGZjYmY5NmNjIiwidCI6Ijc3NDEwMTk1LTE0ZTEtNGZiOC05MDRiLWFiMTg5MjAyMzY2NyIsImMiOjh9" class="hvr-sweep-to-bottom"><i
+                        <a href="{% url 'dashboard:co' %}" class="hvr-sweep-to-bottom"><i
                                 class="flaticon-stats47"></i><span>{% trans 'Dashboard' %}</span></a>
                     </li>
                     <!--<li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"-->
