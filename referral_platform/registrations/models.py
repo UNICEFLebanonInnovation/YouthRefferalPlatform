@@ -236,14 +236,20 @@ class AssessmentSubmission(models.Model):
         for key in data:
             assessment_type = self.assessment.slug
             old_value = data[key]
-
-            try:
+            if data.get(key) != None:
                 obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
                 new_data[key] = obj.new_value
-            except Exception as ex:
+            else:
                 new_data[key] = old_value
-                continue
+        #     try:
+        #         obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+        #         new_data[key] = obj.new_value
+        #     except Exception as ex:
+        #         new_data[key] = old_value
+        #         continue
         self.save()
+
+
 
 
 class AssessmentHash(models.Model):
