@@ -345,6 +345,7 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'assessment',
         'registration',
         'data',
+        'new_data',
     )
     list_filter = (
         'assessment__name',
@@ -357,7 +358,8 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'youth__last_name',
         'youth__father_name',
         'youth__bayanati_ID',
-        'data'
+        'data',
+        'new_data',
     )
 
 
