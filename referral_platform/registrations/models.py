@@ -232,6 +232,8 @@ class AssessmentSubmission(models.Model):
         print(type(self.data))
         data = json.loads(self.data)
         new_data = {}
+        print(data)
+        print(new_data)
 
         for key in data:
             assessment_type = self.assessment.slug
