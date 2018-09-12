@@ -229,7 +229,7 @@ class AssessmentSubmission(models.Model):
 
     def update_field(self):
 
-        data = json.loads(self.data)
+        data = self.data
 
         for key in data:
             assessment_type = self.assessment.slug
