@@ -229,19 +229,16 @@ class AssessmentSubmission(models.Model):
 
     def update_field(self):
 
-        print(type(self.data))
         data = json.loads(self.data)
         new_data = {}
-        new_data = data
 
         for key in data:
             assessment_type = self.assessment.slug
             old_value = data[key]
-            if data.get(key) != None:
-                obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
-                new_data[key] = obj.new_value
-            else:
-                new_data[key] = old_value
+            obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+            new_data[key] = obj.new_value
+            # else:
+            #     new_data[key] = old_value
         #     try:
         #         obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
         #         new_data[key] = obj.new_value
@@ -249,7 +246,6 @@ class AssessmentSubmission(models.Model):
         #         new_data[key] = old_value
         #         continue
         self.save()
-
 
 
 
