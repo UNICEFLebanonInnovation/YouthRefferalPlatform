@@ -230,11 +230,10 @@ class AssessmentSubmission(models.Model):
     def update_field(self):
 
         data = json.loads(self.data)
-        new_data = {}
 
         for key in data:
             assessment_type = self.assessment.slug
-            old_value = self.objects.filter(data__key=key)
+            old_value = self.objects.get(data__key=key)
             obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
             self.objects.create(new_data__key=obj.new_value)
             # else:
