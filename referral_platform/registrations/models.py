@@ -230,7 +230,7 @@ class AssessmentSubmission(models.Model):
     def update_field(self):
 
         # data = json.loads(self.data)
-        data = self.objects.get(self.data)
+        data = self.data
 
         for key in data:
             assessment_type = self.assessment.slug
@@ -245,7 +245,7 @@ class AssessmentSubmission(models.Model):
         #     except Exception as ex:
         #         new_data[key] = old_value
         #         continue
-            new_data = json.dumps(self.data)
+        #     new_data = json.dumps(self.data)
         self.save()
 
 
