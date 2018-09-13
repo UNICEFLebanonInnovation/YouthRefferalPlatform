@@ -233,9 +233,10 @@ class AssessmentSubmission(models.Model):
         data = self.data
         assessment_type = self.assessment.slug
         new_data = {}
-        for key, old_value in data:
+        for key in data:
             print(key)
-            print(old_value)
+            print(data[key])
+            old_value = data[key]
             # old_value = self.objects.get(data__key=key)
             # old_value = data[key]
             # obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
