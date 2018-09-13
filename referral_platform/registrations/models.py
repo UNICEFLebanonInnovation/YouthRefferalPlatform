@@ -245,8 +245,8 @@ class AssessmentSubmission(models.Model):
         #     except Exception as ex:
         #         new_data[key] = old_value
         #         continue
+            new_data = json.dumps(self.data)
         self.save()
-
 
 
 class AssessmentHash(models.Model):
