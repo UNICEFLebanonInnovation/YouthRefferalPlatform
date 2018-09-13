@@ -250,6 +250,8 @@ class AssessmentSubmission(models.Model):
                 new_data[key] = old_value
                 continue
             # new_data = json.dumps(self.data)
+
+        self.new_data = new_data
         self.save()
 
 
