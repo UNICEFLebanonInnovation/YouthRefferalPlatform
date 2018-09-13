@@ -748,7 +748,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    newmaping = NewMapping.objects.all()
+
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
 
     def get_queryset(self):
@@ -760,6 +760,10 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         return queryset
 
     def get(self, request, *args, **kwargs):
+
+        newmaping = AssessmentSubmission.objects.all()[0:5]
+        for obj in newmaping:
+            obj.update_field()
 
         headers = {
             'registration__youth__first_name': 'First Name',

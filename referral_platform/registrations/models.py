@@ -231,10 +231,13 @@ class AssessmentSubmission(models.Model):
 
         # data = json.loads(self.data)
         data = self.data
-
-        for key in data:
-            assessment_type = self.assessment.slug
-            old_value = self.objects.get(data__key=key)
+        assessment_type = self.assessment.slug
+        new_data = {}
+        for key, old_value in data:
+            print(key)
+            print(old_value)
+            # old_value = self.objects.get(data__key=key)
+            # old_value = data[key]
             # obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
             # self.objects.create(new_data__key=obj.new_value)
             # # else:
@@ -245,7 +248,7 @@ class AssessmentSubmission(models.Model):
             except Exception as ex:
                 new_data[key] = old_value
                 continue
-            new_data = json.dumps(self.data)
+            # new_data = json.dumps(self.data)
         self.save()
 
 
