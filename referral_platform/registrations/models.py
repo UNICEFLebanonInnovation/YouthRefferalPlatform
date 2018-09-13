@@ -235,7 +235,7 @@ class AssessmentSubmission(models.Model):
         new_data = {}
         for key in data:
             print(key)
-            print(data[key])
+            # print(data[key])
             old_value = data[key]
             # old_value = self.objects.get(data__key=key)
             # old_value = data[key]
