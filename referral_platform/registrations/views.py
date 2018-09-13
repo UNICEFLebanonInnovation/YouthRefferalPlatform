@@ -761,10 +761,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
-        newmaping = AssessmentSubmission.objects.all()
-        for obj in newmaping:
-            obj.update_field()
-
         headers = {
             'registration__youth__first_name': 'First Name',
             'registration__youth__father_name': "Fathers's Name",
