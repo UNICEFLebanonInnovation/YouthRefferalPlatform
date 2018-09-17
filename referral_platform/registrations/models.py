@@ -55,22 +55,18 @@ class Assessment(models.Model):
 class NewMapping(models.Model):
 
     type = models.CharField(
-        max_length=50,
         blank=True, null=True,
         verbose_name=_('Assessment Type')
     )
     key = models.CharField(
-        max_length=100,
         blank=True, null=True,
         verbose_name=_('Key')
     )
     old_value = models.CharField(
-        max_length=100,
         blank=True, null=True,
         verbose_name=_('Old Value')
     )
     new_value = models.CharField(
-        max_length=100,
         blank=True, null=True,
         verbose_name=_('New Value')
     )
