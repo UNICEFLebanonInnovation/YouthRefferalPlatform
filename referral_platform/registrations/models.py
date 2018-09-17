@@ -60,17 +60,17 @@ class NewMapping(models.Model):
         verbose_name=_('Assessment Type')
     )
     key = models.CharField(
-        max_length=50,
+        max_length=100,
         blank=True, null=True,
         verbose_name=_('Key')
     )
     old_value = models.CharField(
-        max_length=50,
+        max_length=100,
         blank=True, null=True,
         verbose_name=_('Old Value')
     )
     new_value = models.CharField(
-        max_length=50,
+        max_length=100,
         blank=True, null=True,
         verbose_name=_('New Value')
     )
@@ -229,27 +229,17 @@ class AssessmentSubmission(models.Model):
 
     def update_field(self):
 
-        # data = json.loads(self.data)
         data = self.data
         assessment_type = self.assessment.slug
         new_data = {}
         for key in data:
-            print(key)
-            # print(data[key])
             old_value = data[key]
-            # old_value = self.objects.get(data__key=key)
-            # old_value = data[key]
-            # obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
-            # self.objects.create(new_data__key=obj.new_value)
-            # # else:
-            # #     new_data[key] = old_value
             try:
                 obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
                 new_data[key] = obj.new_value
             except Exception as ex:
                 new_data[key] = old_value
                 continue
-            # new_data = json.dumps(self.data)
 
         self.new_data = new_data
         self.save()
