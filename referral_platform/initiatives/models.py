@@ -62,7 +62,7 @@ class YouthLedInitiative(models.Model):
 
     start_date = models.DateField(blank=True, null=True)
     duration = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('1_2', _('1-2 weeks')),
@@ -76,7 +76,7 @@ class YouthLedInitiative(models.Model):
     initiative_types = ArrayField(
         models.CharField(
             choices=INITIATIVE_TYPES,
-            max_length=50,
+            
             blank=True,
             null=True,
         ),
@@ -87,7 +87,7 @@ class YouthLedInitiative(models.Model):
     knowledge_areas = ArrayField(
         models.CharField(
             choices=SKILL_AREAS,
-            max_length=50,
+            
             blank=True,
             null=True,
         ),
@@ -97,7 +97,7 @@ class YouthLedInitiative(models.Model):
     why_this_initiative = models.TextField(blank=True, null=True)
 
     other_groups = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('ngos', _('Other NGOs')),
@@ -108,7 +108,7 @@ class YouthLedInitiative(models.Model):
     )
 
     number_of_beneficiaries = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('1-50', _('1-50')),
@@ -118,7 +118,7 @@ class YouthLedInitiative(models.Model):
         )
     )
     age_of_beneficiaries = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('1-6', _('1-6 years')),
@@ -129,7 +129,7 @@ class YouthLedInitiative(models.Model):
         )
     )
     sex_of_beneficiaries = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('both', _('Both male and females')),
@@ -138,7 +138,7 @@ class YouthLedInitiative(models.Model):
         )
     )
     indirect_beneficiaries = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('1-50', _('1-50')),
@@ -149,7 +149,7 @@ class YouthLedInitiative(models.Model):
     )
     needs_resources = models.BooleanField(default=False)
     resources_from = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('unicef', _('UNICEF')),
@@ -158,7 +158,7 @@ class YouthLedInitiative(models.Model):
         )
     )
     resources_type = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=RESOURCE_TYPES
     )
@@ -183,7 +183,7 @@ class YouthLedInitiative(models.Model):
     initiative_activities = ArrayField(
         models.CharField(
             choices=INITIATIVE_TYPES,
-            max_length=50,
+            
             blank=True,
             null=True,
         ),
@@ -203,7 +203,7 @@ class YouthLedInitiative(models.Model):
     )
     mentor = models.NullBooleanField()
     mentor_was_helpful = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('yes', _('Yes')),
@@ -212,7 +212,7 @@ class YouthLedInitiative(models.Model):
         )
     )
     support_helpful = models.CharField(
-        max_length=50,
+        
         blank=True, null=True,
         choices=Choices(
             ('yes', _('Yes')),
