@@ -750,7 +750,6 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
 
     def get_queryset(self):
@@ -767,12 +766,12 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__first_name': 'First Name',
             'registration__youth__father_name': "Fathers's Name",
             'registration__youth__last_name': 'Last Name',
-            'registration__youth__bayanati_ID': 'Bayanati ID',
             'registration__partner_organization__name': 'Partner',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
-            'registration__youth__nationality__name_en': 'Nationality',
+            'registration__youth__nationality__code': 'Nationality',
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
@@ -780,7 +779,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
-            'assessment__overview': 'Assessment Type',
+            'assessment__slug': 'Assessment Type',
 
             'respid_initiativeID_title': 'Initiative Title',
             'initiative_loc': 'Initiative Location',
@@ -816,10 +815,12 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'did_you_mobilize_resources': 'Were resources mobilized for this project?',
             '_geolocation': 'Location',
             'if_so_who': 'If yes, from whom?',
+
             'type_of_support_required': 'What kind of support are you planning to receive?',
             'type_of_support_received': 'What kind of support did you receive?',
             'support_received_helpful': 'The support we received was helpful and consistent with what the group was expecting',
             'support_not_helpful_why': 'If you answer is disagree or strongly disagree, can you tell us why?',
+
             'start': 'Start Date',
             'end': 'End ',
             '_submission_time': 'submission time',
@@ -861,10 +862,12 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'did_you_mobilize_resources': "new_data->>'did_you_mobilize_resources'",
             '_geolocation': "new_data->>'_geolocation'",
             'if_so_who': "new_data->>'if_so_who'",
-            'type_of_support_required': "new_data>>'type_of_support_required'",
+
+            'type_of_support_required': "new_data->>'type_of_support_required'",
             'type_of_support_received': "new_data->>'type_of_support_received'",
             'support_received_helpful': "new_data->>'support_received_helpful'",
             'support_not_helpful_why': "new_data->>'support_not_helpful_why'",
+
             'start': "new_data->>'start'",
             'end': "new_data->>'end'",
             '_submission_time': "new_data->>'_submission_time'",
@@ -874,12 +877,12 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__first_name',
             'registration__youth__father_name',
             'registration__youth__last_name',
-            'registration__youth__bayanati_ID',
             'registration__partner_organization__name',
+            'registration__youth__bayanati_ID',
             'registration__youth__birthday_day',
             'registration__youth__birthday_month',
             'registration__youth__birthday_year',
-            'registration__youth__nationality__name_en',
+            'registration__youth__nationality__code',
             'registration__youth__marital_status',
             'registration__youth__sex',
             'registration__youth__number',
@@ -887,7 +890,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
-            'assessment__overview',
+            'assessment__slug',
 
             'respid_initiativeID_title',
             'initiative_loc',
@@ -898,6 +901,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'type_of_initiative',
             'other_type_of_initiative',
             'duration_of_initiative',
+            # 'select_multiple_e160966a',
             # 'select_one_a3c4ea99',
             'leadership',
             'challenges_faced',
@@ -922,10 +926,12 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'did_you_mobilize_resources',
             '_geolocation',
             'if_so_who',
+
             'type_of_support_required',
             'type_of_support_received',
             'support_received_helpful',
             'support_not_helpful_why',
+
             'start',
             'end',
             '_submission_time',
