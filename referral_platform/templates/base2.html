@@ -1,6 +1,7 @@
 {% load staticfiles i18n %}
 {% load static %}
 {% get_current_language as LANGUAGE_CODE %}
+
 <!DOCTYPE html>
 <!--<html {% if LANGUAGE_CODE == 'ar-ar' %}lang="ar"{% else %}lang="en"{% endif %}>-->
 <html ng-app>
@@ -88,20 +89,20 @@
                         <a href="/" class="hvr-sweep-to-bottom"><i class="flaticon-insignia"></i><span>{% trans 'home' %}</span></a>
                     </li>
                   {% if request.user.is_authenticated %}
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color02" data-animation-duration="1000"
+                    <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color02" data-animation-duration="1000"
                         data-animation-delay="300">
                         <a href="{% url 'registrations:list' %}" class="hvr-sweep-to-bottom"><i class="flaticon-graduation61"></i><span>{% trans 'Youth Registration' %}</span></a>
                     </li>
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color03" data-animation-duration="1000"
+                    <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color03" data-animation-duration="1000"
                         data-animation-delay="500">
                         <a href="{% url 'dashboard:co' %}" class="hvr-sweep-to-bottom"><i
-                                class="flaticon-stats47"></i><span>{% trans 'Global dashboard' %}</span></a>
+                                class="flaticon-stats47"></i><span>{% trans 'Dashboard' %}</span></a>
                     </li>
-                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"
-                        data-animation-delay="700">
-                        <a href="{% url 'dashboard:partner' %}" class="hvr-sweep-to-bottom">
-                          <i class="flaticon-stats48"></i><span>{% trans 'Partner dashboard' %}</span></a>
-                    </li>
+                    <!--<li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"-->
+                        <!--data-animation-delay="700">-->
+                        <!--<a href="{% url 'dashboard:partner' %}" class="hvr-sweep-to-bottom">-->
+                          <!--<i class="flaticon-stats48"></i><span>{% trans 'Partner dashboard' %}</span></a>-->
+                    <!--</li>-->
                     <!--<li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color05" data-animation-duration="1000"-->
                         <!--data-animation-delay="900">-->
                         <!--<a href="{% url 'backends:files_list' %}" class="hvr-sweep-to-bottom"><i class="flaticon-download167"></i><span>{% trans 'Exported files' %}</span></a>-->
@@ -115,7 +116,7 @@
                   {% else %}
                     <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
                         data-animation-delay="1100">
-                        <a href="" class="hvr-sweep-to-bottom"><i
+                        <a href="" class="hvr-sweep-to-bottom"><i>
                                 class="flaticon-profile5"></i><span>{% trans 'Profile' %}</span></a>
                     </li>
                   {% endif %}
