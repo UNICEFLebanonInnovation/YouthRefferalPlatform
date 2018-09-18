@@ -792,7 +792,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'other_type_of_initiative': 'If other, please specify',
             'duration_of_initiative': 'Duration of the initiative',
             # 'select_multiple_e160966a': 'The Age groups of the beneficiaries reached?',
-            'select_one_a3c4ea99': 'Sex of beneficiaries',
+            # 'select_one_a3c4ea99': 'Sex of beneficiaries',
             'leadership': 'The group members expects to play leading roles for the implementation of the initiative ',
             'challenges_faced': 'Types of challenges while implementing the initiative',
             'other_challenges': 'Others, please specify',
