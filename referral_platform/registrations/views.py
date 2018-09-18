@@ -779,7 +779,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
-            'assessment__slug': 'Assessment Type',
+            'assessment__overview': 'Assessment Type',
 
             'respid_initiativeID_title': 'Initiative Title',
             'initiative_loc': 'Initiative Location',
@@ -890,7 +890,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
-            'assessment__slug',
+            'assessment__overview',
 
             'respid_initiativeID_title',
             'initiative_loc',
