@@ -35,6 +35,9 @@ from .mappings import *
 import zipfile
 import StringIO
 import io
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
 
 class ListingView(LoginRequiredMixin,
                   FilterView,
@@ -196,8 +199,7 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         submission.data = payload
         # submission.update_field()
         submission.save()
-
-
+        post_save.connect(submission.update_field(), sender=User)
         return HttpResponse()
 
 
