@@ -199,7 +199,7 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         submission.data = payload
         # submission.update_field()
         submission.save()
-        # post_save.connect(submission.update_field(), sender=User)
+        post_save.connect(submission.update_field(), sender=User)
         return HttpResponse()
 
 
