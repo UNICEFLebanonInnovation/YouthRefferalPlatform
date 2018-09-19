@@ -18,6 +18,8 @@ from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.youth.models import YoungPerson, Disability
 from referral_platform.locations.models import Location
 from .utils import generate_hash
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Assessment(models.Model):
@@ -227,6 +229,7 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
+    @receiver(post_save, sender=AssessmentSubmission, dispatch_uid="update new_data")
     def update_field(self):
 
         data = self.data
