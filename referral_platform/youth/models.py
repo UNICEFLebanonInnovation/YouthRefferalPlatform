@@ -22,6 +22,7 @@ current_year = datetime.now().year
 
 class Nationality(models.Model):
     name = models.CharField(max_length=45, unique=True, verbose_name=_('Nationality'))
+    name_en = models.CharField(max_length=45, default='', null=True, blank=True, verbose_name=_('Nationality En'))
     code = models.CharField(max_length=45, null=True)
 
     class Meta:

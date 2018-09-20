@@ -2,7 +2,8 @@ from __future__ import unicode_literals
 
 from datetime import date
 import datetime
-
+import json
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _t
@@ -31,6 +32,8 @@ class Assessment(models.Model):
     order = models.TextField(blank=False, null=False, default=1)
     partner = models.ForeignKey(PartnerOrganization, null=True, blank=True,)
 
+
+
     class Meta:
         ordering = ['order']
 
@@ -49,10 +52,34 @@ class Assessment(models.Model):
                      self.partner])
 
 
+class NewMapping(models.Model):
+
+    type = models.CharField(
+        max_length=254,
+        blank=True, null=True,
+        verbose_name=_('Assessment Type')
+    )
+    key = models.CharField(
+        max_length=254,
+        blank=True, null=True,
+        verbose_name=_('Key')
+    )
+    old_value = models.CharField(
+        max_length=254,
+        blank=True, null=True,
+        verbose_name=_('Old Value')
+    )
+    new_value = models.CharField(
+        max_length=254,
+        blank=True, null=True,
+        verbose_name=_('New Value')
+    )
+
+
 class Registration(TimeStampedModel):
 
     location = models.CharField(
-        max_length=50,
+        max_length=254,
         blank=True, null=True,
         verbose_name=_('Location')
     )
@@ -75,7 +102,7 @@ class Registration(TimeStampedModel):
         verbose_name=_('Center')
     )
     trainer = models.CharField(
-        max_length=50,
+        max_length=254,
         blank=True, null=True,
         verbose_name=_('Trainer')
     )
@@ -96,6 +123,7 @@ class Registration(TimeStampedModel):
         blank=True, null=True,
         related_name='+',
         verbose_name=_('Modified by'),
+
     )
     # disability = models.ForeignKey(
     #     Disability,
@@ -189,8 +217,9 @@ class AssessmentSubmission(models.Model):
     registration = models.ForeignKey(Registration)
     youth = models.ForeignKey(YoungPerson)
     assessment = models.ForeignKey(Assessment)
-    status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
+    status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
+    new_data = JSONField(blank=True, null=True, default=dict)
 
     def get_data_option(self, column, option):
         column_value = self.data.get(column, '')
@@ -198,10 +227,27 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
+    def update_field(self):
+
+        data = self.data
+        assessment_type = self.assessment.slug
+        new_data = {}
+        for key in data:
+            old_value = data[key]
+            try:
+                obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+                new_data[key] = obj.new_value
+            except Exception as ex:
+                new_data[key] = old_value
+                continue
+
+        self.new_data = new_data
+        self.save()
+
 
 class AssessmentHash(models.Model):
 
-    hashed = models.CharField(max_length=100, unique=True)
+    hashed = models.CharField(max_length=254, unique=True)
     registration = models.CharField(max_length=20)
     assessment_slug = models.CharField(max_length=50)
     partner = models.CharField(max_length=5)
