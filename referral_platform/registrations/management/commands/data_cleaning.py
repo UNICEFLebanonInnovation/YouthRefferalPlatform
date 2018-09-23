@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         from referral_platform.registrations.models import AssessmentSubmission
-        newmaping = AssessmentSubmission.objects.all()
+        newmaping = AssessmentSubmission.objects.all()[1:10000]
         for obj in newmaping:
             obj.update_field()
 
