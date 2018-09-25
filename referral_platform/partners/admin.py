@@ -42,6 +42,7 @@ class CenterResource(resources.ModelResource):
             'id',
             'name',
             'partner_organization',
+
         )
         export_order = fields
 
@@ -52,6 +53,7 @@ class CenterAdmin(ImportExportModelAdmin):
         'id',
         'name',
         'partner_organization',
+        'id',
     )
     list_filter = (
         'partner_organization',
