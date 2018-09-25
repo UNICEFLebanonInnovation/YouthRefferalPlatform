@@ -54,6 +54,7 @@ class CenterAdmin(ImportExportModelAdmin):
         'name',
         'partner_organization',
         'id',
+        'partner_organization_id',
     )
     list_filter = (
         'partner_organization',
