@@ -24,6 +24,7 @@ class PartnerOrganizationAdmin(ImportExportModelAdmin):
         'locations_list',
         'phone_number',
         'email',
+        'id',
     )
     list_filter = (
         'locations',
