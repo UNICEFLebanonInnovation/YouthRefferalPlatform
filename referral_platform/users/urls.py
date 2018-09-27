@@ -40,5 +40,5 @@ urlpatterns = [
         view=views.UserChangeLanguageRedirectView.as_view(),
         name='set_language'
     ),
-    url(r'^profile/$', views.view_profile, name='view_profile'),
+    # url(r'^profile/$', views.view_profile, name='view_profile'),
 ]
