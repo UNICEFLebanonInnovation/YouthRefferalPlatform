@@ -63,6 +63,24 @@ class ListingView(LoginRequiredMixin,
             return YouthSYFilter
         elif "JORDAN" in locations:
             return YouthFilter
+        elif "IRAK" in locations:
+            return YouthPLFilter
+        elif "IRAN" in locations:
+            return YouthSYFilter
+        elif "MOROCCO" in locations:
+            return YouthFilter
+        elif "DJIBOUTI" in locations:
+            return YouthPLFilter
+        elif "EGYPT" in locations:
+            return YouthSYFilter
+        elif "ALGERIA" in locations:
+            return YouthFilter
+        elif "TUNIS" in locations:
+            return YouthPLFilter
+        elif "LEBANON" in locations:
+            return YouthSYFilter
+        elif "SUDAN" in locations:
+            return YouthFilter
 
     def get_table_class(self):
             locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -71,6 +89,24 @@ class ListingView(LoginRequiredMixin,
             elif "SYRIA" in locations:
                 return CommonTableAlt
             elif "JORDAN" in locations:
+                return CommonTable
+            elif "IRAK" in locations:
+                return CommonTable
+            elif "IRAN" in locations:
+                return CommonTable
+            elif "MOROCCO" in locations:
+                return CommonTable
+            elif "DJIBOUTI" in locations:
+                return CommonTable
+            elif "EGYPT" in locations:
+                return CommonTable
+            elif "ALGERIA" in locations:
+                return CommonTable
+            elif "TUNIS" in locations:
+                return CommonTable
+            elif "LEBANON" in locations:
+                return CommonTable
+            elif "SUDAN" in locations:
                 return CommonTable
 
 
