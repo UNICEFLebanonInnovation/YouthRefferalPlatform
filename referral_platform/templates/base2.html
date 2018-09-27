@@ -116,7 +116,7 @@
                   {% else %}
                     <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
                         data-animation-delay="1100">
-                        <a href="/users/profile" class="hvr-sweep-to-bottom"><i
+                        <a href="{% url 'users:view_profile' %}" class="hvr-sweep-to-bottom"><i
                                 class="flaticon-profile5"></i><span>{% trans 'Profile' %}</span></a>
                     </li>
                   {% endif %}
