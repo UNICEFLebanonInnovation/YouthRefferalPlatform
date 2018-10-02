@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     country = models.ForeignKey(
         Location,
-        null=True, blank=True
+        null=True, blank=True, location__type=1,
     )
 
     objects = UserManager()
