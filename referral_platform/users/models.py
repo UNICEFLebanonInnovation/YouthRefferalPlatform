@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     country = models.ForeignKey(
         Location,
-        null=True, blank=True, limit_choices_to={'type_id=1'}
+        null=True, blank=True, limit_choices_to={'type_id': '1'}
     )
 
     objects = UserManager()
