@@ -39,11 +39,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         PartnerOrganization,
         null=True, blank=True
     )
-    countries = models.ForeignKey(
+    country = models.ForeignKey(
         Location,
-        null=True, blank=True, limit_choices_to={"country"}
+        null=True, blank=True, limit_choices_to={'country': True}
     )
-    country = countries.object.filter(location__type='country')
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
