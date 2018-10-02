@@ -47,6 +47,7 @@ class PlatformUserAdmin(AuthUserAdmin):
     #     (_('Partner'), {'fields': ('partner',)}),
     # )
 
+
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
