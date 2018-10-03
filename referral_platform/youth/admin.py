@@ -83,6 +83,12 @@ class NationalityResource(resources.ModelResource):
             'name_en',
             'code',
         )
+        list_display = (
+            'id',
+            'name',
+            'name_en',
+            'code',
+        )
         export_order = fields
 
 
