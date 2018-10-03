@@ -83,17 +83,18 @@ class NationalityResource(resources.ModelResource):
             'name_en',
             'code',
         )
-        list_display = (
-            'id',
-            'name',
-            'name_en',
-            'code',
-        )
+
         export_order = fields
 
 
 class NationalityAdmin(ImportExportModelAdmin):
     resource_class = NationalityResource
+    list_display = (
+        'id',
+        'name',
+        'name_en',
+        'code',
+    )
 
 
 admin.site.register(YoungPerson, YoungPersonAdmin)
