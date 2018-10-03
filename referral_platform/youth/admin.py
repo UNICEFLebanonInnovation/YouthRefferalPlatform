@@ -80,7 +80,7 @@ class NationalityResource(resources.ModelResource):
         fields = (
             'id',
             'name',
-            'name_en'
+            'name_en',
             'code',
         )
         export_order = fields
