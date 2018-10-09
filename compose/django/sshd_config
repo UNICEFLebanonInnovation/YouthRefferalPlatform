@@ -16,7 +16,7 @@ IgnoreRhosts 		no
 #deprecated option
 #RhostsAuthentication 	no
 RhostsRSAAuthentication yes
-RSAAuthentication 	no
+#RSAAuthentication 	no
 PasswordAuthentication 	yes
 PermitEmptyPasswords 	no
 PermitRootLogin 	yes
