@@ -9,7 +9,7 @@ services:
 language: python
 # python versions
 python:
-  - "3.4"
+  - "2.7"
 # install requirements
 install:
   - pip install coveralls
