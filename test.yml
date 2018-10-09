@@ -1,0 +1,27 @@
+version: '2'
+
+volumes:
+  postgres_data_dev: {}
+  postgres_backup_dev: {}
+
+services:
+  postgres:
+    extends:
+      file: local.yml
+      service: postgres
+
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    command: ./runtests.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - postgres
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.test
+      - POSTGRES_USER=referral_platform
+      - DATABASE_URL=postgres://student_registration:postgres@postgres:5432/referral_platform
+      - USE_DOCKER=yes
+
