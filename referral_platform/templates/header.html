@@ -25,16 +25,26 @@
                     <a class="nav-link" href="{% url "registrations:list" %}">{% trans "Youth Registration" %}</a>
                 </li>
               {% endif %}
-              {% if request.user|has_group:"UNICEF_CO" %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url "dashboard:co" %}">{% trans "Dashboard" %}</a>
+                    <a class="nav-link" href="{% url "dashboard:co" %}">{% trans "Global Dashboard" %}</a>
+                </li>
+              {% if request.user|has_group:"YOUTH" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "dashboard:partner" %}">{% trans "Partner Dashboard" %}</a>
                 </li>
               {% endif %}
               {% if request.user|has_group:"YOUTH" %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url "dashboard:partner" %}">{% trans "Dashboard" %}</a>
+                    <a class="nav-link" href="{% url "backends:files_list" %}">{% trans "Exported files" %}</a>
                 </li>
               {% endif %}
+
+              {% if request.user|has_group:"EXPORT_FULL" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "backends:exporter" %}">{% trans "Export Full data" %}</a>
+                </li>
+              {% endif %}
+
             </ul>
         {% endif %}
 

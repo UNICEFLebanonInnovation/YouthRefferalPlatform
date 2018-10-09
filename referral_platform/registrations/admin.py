@@ -1,6 +1,7 @@
 
 import tablib
 
+
 from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
@@ -12,7 +13,7 @@ from referral_platform.users.utils import has_group, force_default_language
 from referral_platform.locations.models import Location
 from referral_platform.partners.models import PartnerOrganization
 from .exports import RegistrationFormat, RegistrationAssessmentFormat
-from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
+from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 
 
 class BaseExportResource(resources.ModelResource):
@@ -237,6 +238,7 @@ class RegistrationAdmin(ImportExportModelAdmin):
         'youth__sex',
         'youth__nationality',
         'youth__marital_status',
+        'partner_organization',
         'created',
         'modified',
     )
@@ -301,6 +303,37 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
 
 
+# class NewMapping(resources.ModelResource):
+#
+#     class Meta:
+#         model = NewMapping
+#
+#         fields = (
+#             'type',
+#             'key',
+#             'old_value',
+#             'new_value',
+#         )
+#         export_order = fields
+
+
+class NewMappingAdmin(ImportExportModelAdmin):
+
+    list_display = (
+        'type',
+        'key',
+        'old_value',
+        'new_value',
+    )
+    list_filter = (
+        'type',
+    )
+    search_fields = (
+        'type',
+        'key',
+    )
+
+
 class AssessmentSubmissionAdmin(admin.ModelAdmin):
 
     readonly_fields = (
@@ -312,6 +345,7 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'assessment',
         'registration',
         'data',
+        'new_data',
     )
     list_filter = (
         'assessment__name',
@@ -324,7 +358,8 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'youth__last_name',
         'youth__father_name',
         'youth__bayanati_ID',
-        'data'
+        'data',
+        'new_data',
     )
 
 
@@ -355,5 +390,6 @@ class AssessmentHashAdmin(admin.ModelAdmin):
 
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
+admin.site.register(NewMapping, NewMappingAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 admin.site.register(AssessmentHash, AssessmentHashAdmin)
