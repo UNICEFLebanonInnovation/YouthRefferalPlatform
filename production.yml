@@ -16,7 +16,6 @@ services:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    user: django
     depends_on:
       - postgres
       - redis
@@ -28,18 +27,39 @@ services:
     depends_on:
       - django
 
+      - certbot
+    environment:
+      - MY_DOMAIN_NAME=ems.uniceflebanon.org
+
     ports:
       - "0.0.0.0:80:80"
 
+      - "0.0.0.0:443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/lib/letsencrypt:/var/lib/letsencrypt
+
+  certbot:
+    image: quay.io/letsencrypt/letsencrypt
+    command: bash -c "sleep 6 && certbot certonly -n --standalone -d ems.uniceflebanon.org --test --agree-tos --email jcranwellward@unicef.org --server https://acme-v01.api.letsencrypt.org/directory --rsa-key-size 4096 --verbose --keep-until-expiring --preferred-challenges http-01"
+    entrypoint: ""
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/lib/letsencrypt:/var/lib/letsencrypt
+    ports:
+      - "80"
+      - "443"
+    environment:
+      - TERM=xterm
+
 
   redis:
-    image: redis:latest
+    image: redis:3.0
 
   celeryworker:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    user: django
     env_file: .env
     depends_on:
      - postgres
@@ -50,10 +70,8 @@ services:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    user: django
     env_file: .env
     depends_on:
       - postgres
       - redis
     command: celery -A referral_platform.taskapp beat -l INFO
-

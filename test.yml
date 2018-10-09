@@ -22,6 +22,6 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings.test
       - POSTGRES_USER=referral_platform
-      - DATABASE_URL=postgres://student_registration:postgres@postgres:5432/referral_platform
+      - DATABASE_URL=postgres://referral_platform:postgres@postgres:5432/referral_platform
       - USE_DOCKER=yes
 
