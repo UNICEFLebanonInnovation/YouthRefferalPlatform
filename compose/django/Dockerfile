@@ -28,7 +28,9 @@ RUN service ssh start
 #COPY ./compose/django/entrypoint.sh /entrypoint.sh
 #RUN sed -i 's/\r//' /entrypoint.sh
 #RUN chmod +x /entrypoint.sh
-chmod +x /code/compose/django/entrypoint.sh
-ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
+#chmod +x /code/compose/django/entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+#ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
 
 CMD ["/code/compose/django/gunicorn.sh"]
