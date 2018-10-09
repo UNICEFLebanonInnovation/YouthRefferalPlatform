@@ -25,6 +25,9 @@ EXPOSE 2222 80
 RUN service ssh start
 
 # Start
+COPY ./compose/django/entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r//' /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
 
 CMD ["/code/compose/django/gunicorn.sh"]
