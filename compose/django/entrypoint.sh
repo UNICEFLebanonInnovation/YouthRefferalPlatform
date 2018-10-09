@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 #touch /home/LogFiles/node_${WEBSITE_ROLE_INSTANCE_ID}_out.log
