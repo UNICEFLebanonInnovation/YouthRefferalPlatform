@@ -17,6 +17,7 @@ class PartnerOrganization(models.Model):
     )
     overview = models.TextField(null=True, blank=True)
     locations = models.ManyToManyField(Location, blank=True)
+    dashboard_url = models.CharField(max_length=1000, null=True, blank=True)
 
     @property
     def locations_list(self):
@@ -29,10 +30,17 @@ class PartnerOrganization(models.Model):
 
     def __iter__(self):
         return iter([self.name,
-                self.phone_number,
-                self.email,
-                self.overview,
-                self.locations])
+                    self.phone_number,
+                    self.email,
+                    self.overview,
+                    self.locations]
+                    )
+
+    def has_country(self, country):
+        locations = [f.id for f in self.locations.all()]
+        if country in locations:
+            return True
+        return False
 
 
 class Center(models.Model):

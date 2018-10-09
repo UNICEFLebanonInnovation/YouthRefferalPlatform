@@ -2,7 +2,7 @@ from __future__ import unicode_literals, absolute_import, division
 
 from datetime import datetime
 
-from django.contrib.gis.db import models
+# from django.contrib.gis.db import models
 from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
@@ -22,6 +22,7 @@ current_year = datetime.now().year
 
 class Nationality(models.Model):
     name = models.CharField(max_length=45, unique=True, verbose_name=_('Nationality'))
+    name_en = models.CharField(max_length=45, default='', null=True, blank=True, verbose_name=_('Nationality En'))
     code = models.CharField(max_length=45, null=True)
 
     class Meta:
@@ -261,7 +262,7 @@ class YoungPerson(Person):
     parents_phone_number = models.CharField(max_length=64, blank=True, null=True)
     location = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Location'))
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True)
-    governorate = models.ForeignKey(Location, verbose_name=_('Governorate'), default='39')
+    governorate = models.ForeignKey(Location, verbose_name=_('Governorate'), blank=True, null=True)
     center = models.ForeignKey(Center, blank=True, null=True)
     disability = models.CharField(max_length=100, blank=True, null=True)
     marital_status = models.CharField(
@@ -296,6 +297,6 @@ class YoungPerson(Person):
             self.father_name,
             self.last_name,
         )
-
-    def get_absolute_url(self):
-        return reverse('youth:edit', kwargs={'pk': self.id})
+    # This is commented after throwing an error while accessing the individual youth profile.
+    # def get_absolute_url(self):
+    #     return reverse('youth:edit', kwargs={'pk': self.id})

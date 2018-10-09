@@ -10,4 +10,9 @@ urlpatterns = [
         view=views.COView.as_view(),
         name='co'
     ),
+    url(
+        regex=r'^partner/$',
+        view=views.PartnerView.as_view(),
+        name='partner'
+    ),
 ]

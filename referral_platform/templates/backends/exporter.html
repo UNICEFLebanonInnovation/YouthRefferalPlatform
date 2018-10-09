@@ -1,0 +1,148 @@
+{% extends "base2.html" %}
+{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block extra_head %}
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">-->
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">-->
+{% endblock %}
+
+{% block content-full-page %}
+<section>
+
+      {% load util_tags %}
+      <section id="page-title" class="inline-form inner-section ui-menu-color02">
+        <div class="container-fluid nopadding">
+            <h3 class="font-accident-two-light color01 uppercase"
+                data-animation-origin="right"
+                data-animation-duration="400"
+                data-animation-delay="100"
+                data-animation-distance="50px">{% trans "Full data export" %}</h3>
+
+        </div>
+    </section>
+
+    <section style="padding-top: 10px;">
+
+        <div class="row">
+
+          <div class="col-sm-3">
+            <div class="card m-3">
+              <div class="card-block">
+                <h3 class="card-title">{% trans "Export Registration" %}</h3>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-export-sign icon-white"></i>&nbsp;
+                      {% trans "Export" %}
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'backends:exporter' %}?report=export_registry_assessments" target="_blank">{% trans "Export All" %}</a></li>
+                    {% for item in partners %}
+                    <li><a href="{% url 'backends:exporter' %}?report=export_registry_assessments&partner={{ item.id }}" target="_blank">{% trans "Export partner" %} <b>{{ item.name }}</b></a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-3">
+            <div class="card m-3">
+              <div class="card-block">
+                <h3 class="card-title">{% trans "Export Civic Engagement assessments" %}</h3>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-export-sign icon-white"></i>&nbsp;
+                      {% trans "Export" %}
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_civic_assessments" target="_blank">{% trans "Export All" %}</a>
+                    {% for item in partners %}
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_civic_assessments&partner={{ item.id }}" target="_blank">{% trans "Export partner" %} <b>{{ item.name }}</b></a>
+                    {% endfor %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-3">
+            <div class="card m-3">
+              <div class="card-block">
+                <h3 class="card-title">{% trans "Export Entrepreneurship assessments" %}</h3>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-export-sign icon-white"></i>&nbsp;
+                      {% trans "Export" %}
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_entrepreneurship_assessments" target="_blank">{% trans "Export All" %}</a>
+                    {% for item in partners %}
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_entrepreneurship_assessments&partner={{ item.id }}" target="_blank">{% trans "Export partner" %} <b>{{ item.name }}</b></a>
+                    {% endfor %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-3">
+            <div class="card m-3">
+              <div class="card-block">
+                <h3 class="card-title">{% trans "Export Initiative registration & implementation" %}</h3>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-export-sign icon-white"></i>&nbsp;
+                      {% trans "Export" %}
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_initiative_assessments" target="_blank">{% trans "Export All" %}</a>
+                    {% for item in partners %}
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_initiative_assessments&partner={{ item.id }}" target="_blank">{% trans "Export partner" %} <b>{{ item.name }}</b></a>
+                    {% endfor %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-3">
+            <div class="card m-3">
+              <div class="card-block">
+                <h3 class="card-title">{% trans "Export Beneficiary list" %}</h3>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-export-sign icon-white"></i>&nbsp;
+                      {% trans "Export" %}
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_beneficiary" target="_blank">{% trans "Export All" %}</a>
+                    {% for item in partners %}
+                    <a class="dropdown-item" href="{% url 'backends:exporter' %}?report=export_beneficiary&partner={{ item.id }}" target="_blank">{% trans "Export partner" %} <b>{{ item.name }}</b></a>
+                    {% endfor %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+    </section>
+</section>
+{% endblock %}

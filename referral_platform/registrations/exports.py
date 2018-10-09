@@ -110,7 +110,6 @@ class RegistrationAssessmentFormat(base_formats.XLS):
             _('Nationality'),
             _('Marital status'),
             _('address'),
-
             _('training_type'),
             _('center_type'),
             _('concent_paper'),

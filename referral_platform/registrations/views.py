@@ -2,7 +2,6 @@
 from __future__ import absolute_import, unicode_literals
 
 import json
-import tablib
 import datetime
 import time
 
@@ -14,20 +13,30 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import RedirectView
 from django.utils.translation import ugettext as _
-
+from django.core.urlresolvers import reverse, reverse_lazy
+from referral_platform.backends.djqscsv import render_to_csv_response
 from rest_framework import status
 from rest_framework import viewsets, mixins, permissions
+from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 
+from referral_platform.backends.tasks import *
+from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
-from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
+from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
+from .mappings import *
+import zipfile
+import StringIO
+import io
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 
 class ListingView(LoginRequiredMixin,
@@ -78,6 +87,7 @@ class AddView(LoginRequiredMixin, FormView):
         return self.success_url
 
     def get_initial(self):
+        # force_default_language(self.request, 'ar-ar')
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
@@ -187,8 +197,9 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             status='enrolled'
         )
         submission.data = payload
+        # submission.update_field()
         submission.save()
-
+        post_save.connect(submission.update_field(), sender=User)
         return HttpResponse()
 
 
@@ -229,992 +240,712 @@ class ExportView(LoginRequiredMixin, ListView):
     model = Registration
     queryset = Registration.objects.all()
 
-    def get(self, request, *args, **kwargs):
-
-        if self.request.user.is_superuser and not self.request.user.partner:
+    def get_queryset(self):
+        if self.request.user.is_superuser:
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(partner_organization=self.request.user.partner)
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            queryset = queryset.filter(governorate_id=int(gov))
+        return queryset
 
-        common_headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
+    def get(self, request, *args, **kwargs):
 
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
-            _('Submission date'),
-        ]
-
-        book = tablib.Databook()
-        data = tablib.Dataset()
-        data.title = "Beneficiary List"
-        data.headers = common_headers
-
-        content = []
-        for line in queryset:
-            youth = line.youth
-            content = [
-                line.governorate.parent.name if line.governorate else '',
-                line.governorate.name if line.governorate else '',
-                line.location,
-                line.partner_organization.name if line.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                line.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name,
-                youth.marital_status,
-                youth.address,
-                line.created.strftime('%d/%m/%Y') if line.created else '',
-            ]
-            data.append(content)
-
-        book.add_sheet(data)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
+        headers = {
+            # 'country': 'Country',
+            'governorate__parent__name': 'Country',
+            'governorate__name_en': 'Governorate',
+            'partner_organization__name': 'Partner',
+            'center__name': 'Center',
+            'location': 'Location',
+            'youth__first_name': 'First Name',
+            'youth__father_name': "Father's Name",
+            'youth__last_name': 'Last Name',
+            'trainer': 'Trainer',
+            'youth__bayanati_ID': 'Bayanati ID',
+            'youth__sex': 'Gender',
+            'youth__birthday_day': 'birthday day',
+            'youth__birthday_month': 'birthday month',
+            'youth__birthday_year': 'birthday year',
+            'youth__nationality__code': 'Nationality',
+            'youth__marital_status': 'Marital status',
+            'youth__address': 'address',
+            'owner__email': 'Created By',
+            # 'youth__calculate_age': 'Age',
+            'modified_by__email': 'Modified By',
+            'created': 'created',
+            'modified': 'Modified',
+    }
+        qs = self.get_queryset().values(
+            'youth__first_name',
+            'youth__father_name',
+            'youth__last_name',
+            'trainer',
+            'youth__bayanati_ID',
+            'youth__sex',
+            'youth__birthday_day',
+            'youth__birthday_month',
+            'youth__birthday_year',
+            'location',
+            'governorate__name_en',
+            'governorate__parent__name',
+            'partner_organization__name',
+            'center__name',
+            'youth__nationality__code',
+            'youth__marital_status',
+            'youth__address',
+            'owner__email',
+            'modified_by__email',
+            'created',
+            'modified',
+            # 'youth__calculate_age',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_list.xls'
-        return response
+        filename = 'beneficiaries'
+
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
 class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.filter(assessment__slug='registration')
+    newmapping = NewMapping
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            queryset = self.queryset
+        else:
+            queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+
+        return queryset
+
+
+    # def update_field(self, key, value):
+    #
+    #     getattr(self, key)
+    #     setattr(self, key, value)
 
     def get(self, request, *args, **kwargs):
 
-        book = tablib.Databook()
 
-        if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
-        else:
-            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        headers = {
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
+            'registration__partner_organization__name': 'Partner',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__partner_organization__name': 'Partner',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__name_en': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registration__youth__sex': 'Gender',
+            'registration__youth__number': 'Unique number',
+            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__name_en': 'Governorate',
+            'registration__center__name': 'Center',
+            'registration__location': 'Location',
+            # 'nationality': 'Nationality',
+            # 'training_type': 'Training Type',
+            # 'partner': 'Partner Organization',
+            'center_type': 'Center Type',
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
 
-        data2 = tablib.Dataset()
-        data2.title = "Registration Assessment"
-        data2.headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
+            'educational_status': 'Educational Status',
+            'School_name': 'School name',
+            'School_type': 'Type of school',
+            'school_level': 'School Level',
+            'how_many_times_skipped_school': 'How many times have you missed your classes in the past 3 months ',
+            'reason_for_skipping_class': 'Reason fro skipping Classes',
+            'educ_level_stopped': 'Education level completed before leaving school',
+            'Reason_stop_study': 'Reasons for leaving school',
+            'other_five': 'Other reasons',
 
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
 
-            _('training_type'),
-            _('center_type'),
-            _('concent_paper'),
-            _('If_you_answered_Othe_the_name_of_the_NGO'),
-            _('UNHCR_ID'),
-            _('Jordanian_ID'),
-            _('training_date'),
-            _('training_end_date'),
-            _('educational_status'),
-            _('school_level'),
-            _('School_type'),
-            _('School_name'),
-            _('how_many_times_skipped_school'),
-            _('reason_for_skipping_class'),
-            _('educ_level_stopped'),
-            _('Reason_stop_study'),
-            _('other_five'),
-            _('Relation_with_labor_market'),
-            _('occupation_type'),
-            _('what_electronics_do_you_own'),
-            _('family_present'),
-            _('family_not_present'),
-            _('not_present_where'),
-            _('other_family_not_present'),
-            _('drugs_substance_use'),
-            _('feeling_of_safety_security'),
-            _('reasons_for_not_feeling_safe_a'),
-            _('Accommodation_type'),
-            _('how_many_times_displaced'),
-            _('family_steady_income'),
-            _('desired_method_for_follow_up'),
-            _('text_39911992'),
-            _('text_d45750c6'),
-            _('text_4c6fe6c9'),
-            _('submission_time'),
-        ]
+            'Accommodation_type': 'Accommodation Type',
+            'what_electronics_do_you_own': 'What electronics do you own?',
+            'family_present': 'Family composition',
+            'family_not_present': 'Please state if any of the above household members are not living with you at the moment:',
+            'not_present_where': 'Reason of family absence',
+            'other_family_not_present': 'Other reasons',
+            'drugs_substance_use': 'Any family member use drug/alcohol?',
+            'how_many_times_displaced': 'Displacement status',
+            'Relation_with_labor_market': 'Relationship with Labour Market',
+            'occupation_type': 'Occupation Type',
 
-        for line2 in submission_set:
-            content = []
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
+            'concent_paper': 'Conscent form filled',
+            'family_steady_income': 'Family Income',
+            'training_date': 'Training Date',
+            'training_type': 'Training Type',
+            'training_end_date': 'Training End Date',
+            '_submission_time': 'Submission Time and Date',
+            'desired_method_for_follow_up': 'Desired Method for follow-up',
+            'text_39911992': 'Facebook Account',
+            'text_d45750c6': 'Email Address',
+            'text_4c6fe6c9': 'Mobile phone number',
 
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
+         }
 
-                line2.data.get('training_type', ''),
-                line2.data.get('center_type', ''),
-                line2.data.get('concent_paper', ''),
-                line2.data.get('If_you_answered_Othe_the_name_of_the_NGO', ''),
-                line2.data.get('UNHCR_ID', ''),
-                line2.data.get('Jordanian_ID', ''),
-                line2.data.get('training_date', ''),
-                line2.data.get('training_end_date', ''),
-                line2.data.get('educational_status', ''),
-                line2.data.get('school_level', ''),
-                line2.data.get('School_type', ''),
-                line2.data.get('School_name', ''),
-                line2.data.get('how_many_times_skipped_school', ''),
-                line2.data.get('reason_for_skipping_class', ''),
-                line2.data.get('educ_level_stopped', ''),
-                line2.data.get('Reason_stop_study', ''),
-                line2.data.get('other_five', ''),
-                line2.data.get('Relation_with_labor_market', ''),
-                line2.data.get('occupation_type', ''),
-                line2.data.get('what_electronics_do_you_own', ''),
-                line2.data.get('family_present', ''),
-                line2.data.get('family_not_present', ''),
-                line2.data.get('not_present_where', ''),
-                line2.data.get('other_family_not_present', ''),
-                line2.data.get('drugs_substance_use', ''),
-                line2.data.get('feeling_of_safety_security', ''),
-                line2.data.get('reasons_for_not_feeling_safe_a', ''),
-                line2.data.get('Accommodation_type', ''),
-                line2.data.get('how_many_times_displaced', ''),
-                line2.data.get('family_steady_income', ''),
-                line2.data.get('desired_method_for_follow_up', ''),
-                line2.data.get('text_39911992', ''),
-                line2.data.get('text_d45750c6', ''),
-                line2.data.get('text_4c6fe6c9', ''),
-                submission_date,
-            ]
-            data2.append(content)
+        qs = self.get_queryset().extra(select={
+            # 'partner': "new_data->>'partner'",
+            'educational_status': "new_data->>'educational_status'",
+            'other_family_not_present': "new_data->>'other_family_not_present'",
+            # 'nationality': "new_data->>'nationality'",
+            # 'training_type': "new_data->>'training_type'",
 
-        book.add_sheet(data2)
+            # 'phonenumber': "new_data->>'phonenumber'",
 
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
+            'center_type': "new_data->>'center_type'",
+            'other_five': "new_data->>'other_five'",
+            'Reason_stop_study': "new_data->>'Reason_stop_study'",
+            'educ_level_stopped': "new_data->>'educ_level_stopped'",
+            'occupation_type': "new_data->>'occupation_type'",
+            'School_name': "new_data->>'School_name'",
+            'School_type': "new_data->>'School_type'",
+            'school_level': "new_data->>'School_level'",
+            'reason_for_skipping_class': "new_data->>'reason_for_skipping_class'",
+            'family_present': "new_data->>'family_present'",
+            'family_not_present': "new_data->>'family_not_present'",
+            'not_present_where': "new_data->>'not_present_where'",
+            'Accommodation_type': "new_data->>'Accommodation_type'",
+            'how_many_times_skipped_school': "new_data->>'how_many_times_skipped_school'",
+            'drugs_substance_use': "new_data->>'drugs_substance_use'",
+            'how_many_times_displaced': "new_data->>'how_many_times_displaced'",
+            'Relation_with_labor_market': "new_data->>'Relation_with_labor_market'",
+            'reasons_for_not_feeling_safe_a': "new_data->>'reasons_for_not_feeling_safe_a'",
+            'feeling_of_safety_security': "new_data->>'feeling_of_safety_security'",
+            'concent_paper': "new_data->>'concent_paper'",
+            'family_steady_income': "new_data->>'family_steady_income'",
+            'training_date': "new_data->>'training_date'",
+            'training_end_date': "new_data->>'training_end_date'",
+            'training_type': "new_data->>'training_type'",
+            '_submission_time': "new_data->>'_submission_time'",
+            'what_electronics_do_you_own': "new_data->>'what_electronics_do_you_own'",
+            'desired_method_for_follow_up': "new_data->>'desired_method_for_follow_up'",
+            'text_39911992': "new_data->>'text_39911992'",
+            'text_d45750c6': "new_data->>'text_d45750c6'",
+            'text_4c6fe6c9': "new_data->>'text_4c6fe6c9'",
+
+            # 'youth_fname':"registration->>youth__last_name",
+            # 'youth_lname':"registration->>youth__first_name",
+
+        }).values(
+            'registration__youth__first_name',
+            'registration__youth__father_name',
+            'registration__youth__last_name',
+            'registration__partner_organization__name',
+            'other_family_not_present',
+            'educational_status',
+            'registration__partner_organization__name',
+            # 'country',
+            # 'nationality',
+            # 'training_type',
+            'registration__governorate__parent__name',
+            'registration__governorate__name_en',
+            'registration__center__name',
+            'registration__location',
+            'registration__youth__bayanati_ID',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__name_en',
+            'registration__youth__marital_status',
+            'registration__youth__sex',
+            'registration__youth__number',
+            'center_type',
+            'occupation_type',
+            'School_name',
+            'School_type',
+            'school_level',
+            'reason_for_skipping_class',
+            'family_present',
+            'family_not_present',
+            'not_present_where',
+            'Accommodation_type',
+            'how_many_times_skipped_school',
+            'drugs_substance_use',
+            'how_many_times_displaced',
+            'Relation_with_labor_market',
+            'reasons_for_not_feeling_safe_a',
+            'feeling_of_safety_security',
+            'concent_paper',
+            'family_steady_income',
+            'training_date',
+            'training_end_date',
+            '_submission_time',     
+            'what_electronics_do_you_own',
+            'desired_method_for_follow_up',
+            'educ_level_stopped',
+            'Reason_stop_study',
+            'other_five',
+            'text_39911992',
+            'text_d45750c6',
+            'text_4c6fe6c9',
+            'training_type',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Registration_Assessments.xls'
-        return response
+        filename = 'registrations'
+
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
 class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.all()
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_assessment', 'post_assessment'])
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            queryset = self.queryset
+        else:
+            queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+
+        return queryset
 
     def get(self, request, *args, **kwargs):
 
-        book = tablib.Databook()
+        headers = {
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
+            'registration__partner_organization__name': 'Partner',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__name_en': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registration__youth__sex': 'Gender',
+            'registration__youth__number': 'Unique number',
+            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__name_en': 'Governorate',
+            'registration__center__name': 'Center',
+            'registration__location': 'Location',
+            'assessment__overview': 'Assessment Type',
+            # 'nationality': 'Nationality',
+            # 'training_type': 'Training Type',
+            # 'partner': 'Partner Organization',
 
-        if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
-        else:
-            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+            '_4_articulate_thoughts': 'I can articulate/state my thoughts, feelings and ideas to others well',
+            '_1_express_opinion': 'I can express my opinions when my classmates/friends/peers disagree with me',
+            '_20_discussions_with_peers_before_': 'Usually I discuss with others before making decisions',
+            '_28_discuss_opinions': 'I build on the ideas of others.',
+            '_31_willing_to_compromise': 'I am willing to compromise my own view to obtain a group consensus.',
+            '_pal_I_belong': 'I feel I belong to my community',
+            '_41_where_to_volunteer': 'I know where to volunteer in my community',
+            '_42_regularly_volunteer': 'I volunteer on a regular basis in my community',
+            '_pal_contrib_appreciated': 'I feel I am appreciated for my contributions to my community.',
+            '_pal_contribute_to_development': 'I believe I can contribute towards community development',
+            '_51_communicate_community_conc': 'I am able to address community concerns with community leaders',
+            '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
+            '_submission_time': 'Submission time',
+            '_userform_id': 'User',
+            'registration__partner_organization__name': 'Partner',
+        }
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
+        qs = self.get_queryset().extra(select={
+            '_4_articulate_thoughts': "new_data->>'_4_articulate_thoughts'",
+            '_1_express_opinion': "new_data->>'_1_express_opinion'",
+            '_20_discussions_with_peers_before_': "new_data->>'_20_discussions_with_peers_before_'",
+            '_28_discuss_opinions': "new_data->>'_28_discuss_opinions'",
+            '_31_willing_to_compromise': "new_data->>'_31_willing_to_compromise'",
+            '_pal_I_belong': "new_data->>'_pal_I_belong'",
+            '_41_where_to_volunteer': "new_data->>'_41_where_to_volunteer'",
+            '_42_regularly_volunteer': "new_data->>'_42_regularly_volunteer'",
+            '_pal_contrib_appreciated': "new_data->>'_pal_contrib_appreciated'",
+            '_pal_contribute_to_development': "new_data->>'_pal_contribute_to_development'",
+            '_51_communicate_community_conc': "new_data->>'_51_communicate_community_conc'",
+            '_52_participate_community_medi': "new_data->>'_52_participate_community_medi'",
+            '_submission_time': "new_data->>'_submission_time'",
+            '_userform_id': "new_data->>'_userform_id'",
 
-        data3 = tablib.Dataset()
-        data3.title = "Pre-Assessment"
-        data3.headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
 
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
+        }).values(
+            'registration__youth__first_name',
+            'registration__youth__father_name',
+            'registration__youth__last_name',
+            'registration__partner_organization__name',
+            'registration__governorate__parent__name',
+            'registration__governorate__name_en',
+            'registration__center__name',
+            'registration__location',
+            'registration__youth__bayanati_ID',
+            'registration__partner_organization__name',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__name_en',
+            'registration__youth__marital_status',
+            'registration__youth__sex',
+            'registration__youth__number',
+            'assessment__overview',
+            '_4_articulate_thoughts',
+            '_1_express_opinion',
+            '_20_discussions_with_peers_before_',
+            '_28_discuss_opinions',
+            '_31_willing_to_compromise',
+            '_pal_I_belong',
+            '_41_where_to_volunteer',
+            '_42_regularly_volunteer',
+            '_pal_contrib_appreciated',
+            '_pal_contribute_to_development',
+            '_51_communicate_community_conc',
+            '_52_participate_community_medi',
+            '_submission_time',
+            '_userform_id',
 
-            _('_4_articulate_thoughts'),
-            _('_1_express_opinion'),
-            _('discuss_before_decision'),
-            _('_28_discuss_opinions'),
-            _('_31_willing_to_compromise'),
-            _('_pal_I_belong'),
-            _('_41_where_to_volunteer'),
-            _('_42_regularly_volunteer'),
-            _('_pal_contrib_appreciated'),
-            _('_pal_contribute_to_development'),
-            _('_51_communicate_community_conc'),
-            _('_52_participate_community_medi'),
-            _('submission time'),
-        ]
-
-        data4 = tablib.Dataset()
-        data4.title = "Post-Assessment"
-        data4.headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
-
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
-
-            _('_4_articulate_thoughts'),
-            _('_1_express_opinion'),
-            _('_20_discussions_with_peers_before_'),
-            _('_28_discuss_opinions'),
-            _('_31_willing_to_compromise'),
-            _('_pal_I_belong'),
-            _('_41_where_to_volunteer'),
-            _('_42_regularly_volunteer'),
-            _('_pal_contrib_appreciated'),
-            _('_pal_contribute_to_development'),
-            _('_51_communicate_community_conc'),
-            _('_52_participate_community_medi'),
-            _('submission time')
-        ]
-
-        submission_set1 = submission_set.filter(assessment__slug='pre_assessment')
-        for line2 in submission_set1:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                line2.data.get('_4_articulate_thoughts', ''),
-                line2.data.get('_1_express_opinion', ''),
-                line2.data.get('discuss_before_decision', ''),
-                line2.data.get('_28_discuss_opinions', ''),
-                line2.data.get('_31_willing_to_compromise', ''),
-                line2.data.get('_pal_I_belong', ''),
-                line2.data.get('_41_where_to_volunteer', ''),
-                line2.data.get('_42_regularly_volunteer', ''),
-                line2.data.get('_pal_contrib_appreciated', ''),
-                line2.data.get('_pal_contribute_to_development', ''),
-                line2.data.get('_51_communicate_community_conc', ''),
-                line2.data.get('_52_participate_community_medi', ''),
-                submission_date,
-            ]
-            data3.append(content)
-
-        submission_set2 = submission_set.filter(assessment__slug='post_assessment')
-        for line2 in submission_set2:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                line2.data.get('_4_articulate_thoughts', ''),
-                line2.data.get('_1_express_opinion', ''),
-                line2.data.get('_20_discussions_with_peers_before_', ''),
-                line2.data.get('_28_discuss_opinions', ''),
-                line2.data.get('_31_willing_to_compromise', ''),
-                line2.data.get('_pal_I_belong', ''),
-                line2.data.get('_41_where_to_volunteer', ''),
-                line2.data.get('_42_regularly_volunteer', ''),
-                line2.data.get('_pal_contrib_appreciated', ''),
-                line2.data.get('_pal_contribute_to_development', ''),
-                line2.data.get('_51_communicate_community_conc', ''),
-                line2.data.get('_52_participate_community_medi', ''),
-                submission_date,
-            ]
-            data4.append(content)
-
-        book.add_sheet(data3)
-        book.add_sheet(data4)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Civic_Engagement_Assessments.xls'
-        return response
+        filename = 'Civic-assessment'
+
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
 class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
-
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.all()
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_entrepreneurship', 'post_entrepreneurship'])
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            queryset = self.queryset
+        else:
+            queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+
+        return queryset
 
     def get(self, request, *args, **kwargs):
 
-        book = tablib.Databook()
+        headers = {
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
+            'registration__partner_organization__name': 'Partner',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__partner_organization__name': 'Partner',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__name_en': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registration__youth__sex': 'Gender',
+            'registration__youth__number': 'Unique number',
+            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__name_en': 'Governorate',
+            'registration__center__name': 'Center',
+            'registration__location': 'Location',
+            'assessment__overview': 'Assessment Type',
+            # 'nationality': 'Nationality',
+            # 'training_type': 'Training Type',
+            # 'partner': 'Partner Organization',
 
-        if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
-        else:
-            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+            'can_plan_personal': 'I am prepared to plan my personal objectives',
+            'can_plan_career': 'I am prepared to plan my professional objectives',
+            'can_manage_financ': 'I know how to manage my monetary affairs responsibly',
+            'can_plan_time': 'I know ways to plan my time',
+            'can_suggest': 'I can give suggestions without being bossy',
+            'can_take_decision': 'I make a decision by thinking about all the information I have about available options decision making',
+            'can_determin_probs': 'I know how to identify causes for my problems and find solutions for them  problem solving',
+            'aware_resources': 'I know where and when to get support when I face a problem',
+            'can_handle_pressure': 'When I am stressed, I manage my stress in a positive way',
+            'motivated_advance_skills': 'There are opportunities in the labour market that encourage me to develop my skills',
+            'communication_skills': 'A good communicator',
+            'presentation_skills': 'The most important part of delivering a successful presentation is',
+            'team_is': 'A team is a group of people who',
+            'good_team_is': 'To work efficiently as a team',
+            'team_leader_is': 'If I am the group leader, I will',
+            'bad_decision_cause': 'One of the main reasons to NOT make the best decision',
+            'easiest_solution': 'The easiest solution for the problem is always the best solution',
+            'problem_solving': 'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
+            'bad_venue': 'If the room/ training area not convenient, please specify why',
+            'bad_venue_others': 'If other, please specify',
+            'additional_comments': 'If yes, what is it?',
 
-        data5 = tablib.Dataset()
-        data5.title = "Pre-Entrepreneurship"
-        data5.headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
+            'personal_value': 'Rate the benefits of the training to your personal life',
+            'faced_challenges': 'Have you faced any challenges with the program?',
+            'challenges': 'Challenges',
+            'has_comments': 'Do yo uhave anything else you want to tell us?',
+            '_userform_id': 'User',
+            '_submission_time': 'submission time',
+        }
 
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
+        qs = self.get_queryset().extra(select={
 
-            _('can_plan_personal'),
-            _('can_plan_career'),
-            _('can_manage_financ'),
-            _('can_plan_time'),
-            _('can_suggest'),
-            _('can_take_decision'),
-            _('can_determin_probs'),
-            _('aware_resources'),
-            _('can_handle_pressure'),
-            _('motivated_advance_skills'),
-            _('communication_skills'),
-            _('presentation_skills'),
-            _('team_is'),
-            _('good_team_is'),
-            _('team_leader_is'),
-            _('bad_decision_cause'),
-            _('easiest_solution'),
-            _('problem_solving'),
-            _('submission time'),
-        ]
+            'can_plan_personal': "new_data->>'can_plan_personal'",
+            'can_plan_career': "new_data->>'can_plan_career'",
+            'can_manage_financ': "new_data->>'can_manage_financ'",
+            'can_plan_time': "new_data->>'can_plan_time'",
+            'can_suggest': "new_data->>'can_suggest'",
+            'can_take_decision': "new_data->>'can_take_decision'",
+            'problem_solving': "new_data->>'problem_solving'",
+            'aware_resources': "new_data->>'aware_resources'",
+            'can_handle_pressure': "new_data->>'can_handle_pressure'",
+            'motivated_advance_skills': "new_data->>'motivated_advance_skills'",
+            'communication_skills': "new_data->>'communication_skills'",
+            'presentation_skills': "new_data->>'presentation_skills'",
+            'team_is': "new_data->>'team_is'",
+            'good_team_is': "new_data->>'good_team_is'",
+            'team_leader_is': "new_data->>'team_leader_is'",
+            'bad_decision_cause': "new_data->>'bad_decision_cause'",
+            'easiest_solution': "new_data->>'easiest_solution'",
+            'can_determin_probs': "new_data->>'can_determin_probs'",
+            '_submission_time': "new_data->>'_submission_time'",
 
-        data6 = tablib.Dataset()
-        data6.title = "Post-Entrepreneurship"
-        data6.headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
+            'bad_venue': "new_data->>'bad_venue'",
+            'bad_venue_others': "new_data->>'bad_venue_others'",
+            'additional_comments': "new_data->>'additional_comments'",
 
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
+            'personal_value': "new_data->>'personal_value'",
+            'faced_challenges': "new_data->>'faced_challenges'",
+            'challenges': "new_data->>'challenges'",
+            'has_comments': "new_data->>'has_comments'",
+            '_userform_id': "new_data->>'_userform_id'",
 
-            _('can_plan_personal'),
-            _('can_plan_career'),
-            _('can_manage_financ'),
-            _('can_plan_time'),
-            _('can_suggest'),
-            _('can_take_decision'),
-            _('can_determin_probs'),
-            _('aware_resources'),
-            _('can_handle_pressure'),
-            _('motivated_advance_skills'),
-            _('communication_skills'),
-            _('presentation_skills'),
-            _('team_is'),
-            _('good_team_is'),
-            _('team_leader_is'),
-            _('bad_decision_cause'),
-            _('easiest_solution'),
-            _('problem_solving'),
-            _('personal_value'),
-            _('faced_challenges'),
-            _('challenges'),
-            _('bad_venue'),
-            _('bad_venue_others'),
-            _('has_comments'),
-            _('additional_comments'),
-            _('submission_time'),
-        ]
+        }).values(
+            'registration__youth__first_name',
+            'registration__youth__father_name',
+            'registration__youth__last_name',
+            'registration__partner_organization__name',
+            'registration__governorate__parent__name',
+            'registration__governorate__name_en',
+            'registration__center__name',
+            'registration__location',
+            'registration__youth__bayanati_ID',
+            'registration__partner_organization__name',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__name_en',
+            'registration__youth__marital_status',
+            'registration__youth__sex',
+            'registration__youth__number',
+            'assessment__overview',
+            'can_plan_personal',
+            'can_plan_career',
+            'can_manage_financ',
+            'can_plan_time',
+            'can_suggest',
+            'can_take_decision',
+            'problem_solving',
+            'aware_resources',
+            'can_handle_pressure',
+            'motivated_advance_skills',
 
-        submission_set1 = submission_set.filter(assessment__slug='pre_entrepreneurship')
-        for line2 in submission_set1:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
+            'communication_skills',
+            'presentation_skills',
+            'bad_venue',
+            'bad_venue_others',
+            'additional_comments',
 
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
+            'team_is',
+            'good_team_is',
+            'team_leader_is',
+            'bad_decision_cause',
+            'easiest_solution',
+            'can_determin_probs',
+            '_submission_time',
 
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
+            'personal_value',
+            'faced_challenges',
+            'challenges',
+            'has_comments',
+            '_userform_id',
 
-                line2.data.get('can_plan_personal', ''),
-                line2.data.get('can_plan_career', ''),
-                line2.data.get('can_manage_financ', ''),
-                line2.data.get('can_plan_time', ''),
-                line2.data.get('can_suggest', ''),
-                line2.data.get('can_take_decision', ''),
-                line2.data.get('can_determin_probs', ''),
-                line2.data.get('aware_resources', ''),
-                line2.data.get('can_handle_pressure', ''),
-                line2.data.get('motivated_advance_skills', ''),
-                line2.data.get('communication_skills', ''),
-                line2.data.get('presentation_skills', ''),
-                line2.data.get('team_is', ''),
-                line2.data.get('good_team_is', ''),
-                line2.data.get('team_leader_is', ''),
-                line2.data.get('bad_decision_cause', ''),
-                line2.data.get('easiest_solution', ''),
-                line2.data.get('problem_solving', ''),
-                submission_date,
-            ]
-            data5.append(content)
-
-        submission_set2 = submission_set.filter(assessment__slug='post_entrepreneurship')
-        for line2 in submission_set2:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                line2.data.get('can_plan_personal', ''),
-                line2.data.get('can_plan_career', ''),
-                line2.data.get('can_manage_financ', ''),
-                line2.data.get('can_plan_time', ''),
-                line2.data.get('can_suggest', ''),
-                line2.data.get('can_take_decision', ''),
-                line2.data.get('can_determin_probs', ''),
-                line2.data.get('aware_resources', ''),
-                line2.data.get('can_handle_pressure', ''),
-                line2.data.get('motivated_advance_skills', ''),
-                line2.data.get('communication_skills', ''),
-                line2.data.get('presentation_skills', ''),
-                line2.data.get('team_is', ''),
-                line2.data.get('good_team_is', ''),
-                line2.data.get('team_leader_is', ''),
-                line2.data.get('bad_decision_cause', ''),
-                line2.data.get('easiest_solution', ''),
-                line2.data.get('problem_solving', ''),
-                line2.data.get('personal_value', ''),
-                line2.data.get('faced_challenges', ''),
-                line2.data.get('challenges', ''),
-                line2.data.get('bad_venue', ''),
-                line2.data.get('bad_venue_others', ''),
-                line2.data.get('has_comments', ''),
-                line2.data.get('additional_comments', ''),
-                submission_date,
-            ]
-            data6.append(content)
-
-        book.add_sheet(data5)
-        book.add_sheet(data6)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Entrepreneurship_Assessments.xls'
-        return response
+        filename = 'Entrepreneurship-assessment'
+
+        return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.all()
+    queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            queryset = self.queryset
+        else:
+            queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+
+        return queryset
 
     def get(self, request, *args, **kwargs):
 
-        book = tablib.Databook()
+        headers = {
+            'registration__youth__first_name': 'First Name',
+            'registration__youth__father_name': "Fathers's Name",
+            'registration__youth__last_name': 'Last Name',
+            'registration__partner_organization__name': 'Partner',
+            'registration__youth__bayanati_ID': 'Bayanati ID',
+            'registration__youth__birthday_day': 'Birth Day',
+            'registration__youth__birthday_month': 'Birth Month',
+            'registration__youth__birthday_year': 'Birth Year',
+            'registration__youth__nationality__code': 'Nationality',
+            'registration__youth__marital_status': 'Marital status',
+            'registration__youth__sex': 'Gender',
+            'registration__youth__number': 'Unique number',
+            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__name_en': 'Governorate',
+            'registration__center__name': 'Center',
+            'registration__location': 'Location',
+            'assessment__overview': 'Assessment Type',
 
-        if self.request.user.is_superuser and not self.request.user.partner:
-            submission_set = self.queryset
-        else:
-            submission_set = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+            'respid_initiativeID_title': 'Initiative Title',
+            'initiative_loc': 'Initiative Location',
+            'gender_implem_initiatives': 'Gender of members who were engaged in the initiative implementation',
+            'No_of_team_members_executed': 'Number of people engaged in the initiative implementation',
+            # 'integer_0259d46e': 'How many people benefited/ reached by implementing the initiative?',
+            'start_date_implementing_initia': 'Planned start date of the initiative',
+            'type_of_initiative': 'Type of Initiative',
+            'other_type_of_initiative': 'If other, please specify',
+            'duration_of_initiative': 'Duration of the initiative',
+            # 'select_multiple_e160966a': 'The Age groups of the beneficiaries reached?',
+            # 'select_one_a3c4ea99': 'Sex of beneficiaries',
+            'leadership': 'The group members expects to play leading roles for the implementation of the initiative ',
+            'challenges_faced': 'Types of challenges while implementing the initiative',
+            'other_challenges': 'Others, please specify',
+            'number_of_direct_beneficiaries': 'How many people are estimated to benefit/will be reached by implementing the initiative?',
+            'age_group_range': 'The estimated Age groups of the beneficiaries?',
+            'gender_of_beneficiaries': 'Gender of beneficiaries',
+            'mentor_assigned': 'Did your group have a mentor/facilitator/teacher to support you with planning of the initiative?',
+            'initiative_as_expected': 'The team expects to implement the initiative as expected',
+            'team_involovement': 'Team members expect to participate effectively in the implementation of the initiative',
+            'communication': 'The group aims to communicate with each other for the implementation of the initiative',
+            #'analytical_skills': 'The group expects to collect and analyse data for the implementation of the initiative ',
+            'analytical_skills': 'The group expects to collect and analyse data for the implementation of the initiative',
+            'sense_of_belonging': 'The group expects to have a sense of belonging while implementing of the initiatives',
+            'problem_solving': 'The group is confident in coming up with solutions if challenges are faced',
+            'assertiveness': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
+            'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
+            'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
+            'planned_results': 'Can you please tell us your planned results/what will the initiative achieve? ',
+            'planning_to_mobilize_resources': 'Are you planning to mobilize resources for this project?',
+            'mobilized_resources_through': 'If so, from whom?',
+            'did_you_mobilize_resources': 'Were resources mobilized for this project?',
+            '_geolocation': 'Location',
+            'if_so_who': 'If yes, from whom?',
 
-        gov = self.request.GET.get('governorate', 0)
-        if gov:
-            submission_set = submission_set.filter(registration__governorate_id=int(gov))
+            'type_of_support_required': 'What kind of support are you planning to receive?',
+            'type_of_support_received': 'What kind of support did you receive?',
+            'support_received_helpful': 'The support we received was helpful and consistent with what the group was expecting',
+            'support_not_helpful_why': 'If you answer is disagree or strongly disagree, can you tell us why?',
 
-        data5 = tablib.Dataset()
-        data5.title = "Initiative registration"
-        data5.headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
+            'start': 'Start Date',
+            'end': 'End ',
+            '_submission_time': 'submission time',
+            '_userform_id': 'Registered by',
+        }
 
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
+        qs = self.get_queryset().extra(select={
 
-            'status',
+            'respid_initiativeID_title': "new_data->>'respid_initiativeID_title'",
+            'initiative_loc': "new_data->>'initiative_loc'",
+            'gender_implem_initiatives': "new_data->>'gender_implem_initiatives'",
+            'No_of_team_members_executed': "new_data->>'No_of_team_members_executed'",
+            # 'integer_0259d46e': "new_data->>'integer_0259d46e'",
+            'start_date_implementing_initia': "new_data->>'start_date_implementing_initia'",
+            'type_of_initiative': "new_data->>'type_of_initiative'",
+            'other_type_of_initiative': "new_data->>'other_type_of_initiative'",
+            'duration_of_initiative': "new_data->>'duration_of_initiative'",
+            # 'select_multiple_e160966a': "new_data->>'select_multiple_e160966a'",
+            # 'select_one_a3c4ea99': "new_data->>'select_one_a3c4ea99'",
+            'leadership': "new_data->>'leadership'",
+            'challenges_faced': "new_data->>'challenges_faced'",
+            'other_challenges': "new_data->>'other_challenges'",
+            'number_of_direct_beneficiaries': "new_data->>'number_of_direct_beneficiaries'",
+            'age_group_range': "new_data->>'age_group_range'",
+            'gender_of_beneficiaries': "new_data->>'gender_of_beneficiaries'",
+            'mentor_assigned': "new_data->>'mentor_assigned'",
+            'initiative_as_expected': "new_data->>'initiative_as_expected'",
+            'team_involovement': "new_data->>'team_involovement'",
+            'communication': "new_data->>'communication'",
+            'problem_solving': "new_data->>'problem_solving'",
+            'analytical_skills': "new_data->>'analytical_skills'",
+            'sense_of_belonging': "new_data->>'sense_of_belonging'",
+            'assertiveness': "new_data->>'assertiveness'",
+            'mentorship_helpful': "new_data->>'mentorship_helpful'",
+            'problem_addressed': "new_data->>'problem_addressed'",
+            'planned_results': "new_data->>'planned_results'",
+            'planning_to_mobilize_resources': "new_data->>'planning_to_mobilize_resources'",
+            'mobilized_resources_through': "new_data->>'mobilized_resources_through'",
+            'did_you_mobilize_resources': "new_data->>'did_you_mobilize_resources'",
+            '_geolocation': "new_data->>'_geolocation'",
+            'if_so_who': "new_data->>'if_so_who'",
 
-            'type_of_initiative',
-            'basic_services',
-            'health_service',
-            'educational',
-            'protection',
-            'environmental',
-            'political',
-            'advocacy',
-            'economic_artis',
-            'religious_&_sp',
-            'sports',
-            'social_cohesio',
-            'other',
+            'type_of_support_required': "new_data->>'type_of_support_required'",
+            'type_of_support_received': "new_data->>'type_of_support_received'",
+            'support_received_helpful': "new_data->>'support_received_helpful'",
+            'support_not_helpful_why': "new_data->>'support_not_helpful_why'",
 
-            'assertiveness',
-            'initiative_as_expected',
+            'start': "new_data->>'start'",
+            'end': "new_data->>'end'",
+            '_submission_time': "new_data->>'_submission_time'",
+            '_userform_id': "new_data->>'_userform_id'",
+
+        }).values(
+            'registration__youth__first_name',
+            'registration__youth__father_name',
+            'registration__youth__last_name',
+            'registration__partner_organization__name',
+            'registration__youth__bayanati_ID',
+            'registration__youth__birthday_day',
+            'registration__youth__birthday_month',
+            'registration__youth__birthday_year',
+            'registration__youth__nationality__code',
+            'registration__youth__marital_status',
+            'registration__youth__sex',
+            'registration__youth__number',
+            'registration__governorate__parent__name',
+            'registration__governorate__name_en',
+            'registration__center__name',
+            'registration__location',
+            'assessment__overview',
+
+            'respid_initiativeID_title',
+            'initiative_loc',
+            'gender_implem_initiatives',
+            'No_of_team_members_executed',
+            # 'integer_0259d46e',
             'start_date_implementing_initia',
+            'type_of_initiative',
+            'other_type_of_initiative',
+            'duration_of_initiative',
+            # 'select_multiple_e160966a',
+            # 'select_one_a3c4ea99',
             'leadership',
+            'challenges_faced',
+            'other_challenges',
+            'number_of_direct_beneficiaries',
+            'age_group_range',
+            'gender_of_beneficiaries',
+            'mentor_assigned',
+            'initiative_as_expected',
             'team_involovement',
             'communication',
-            'age_group_range',
-            'gender_implem_initiatives',
-            'gender_of_beneficiaries',
-            'No_of_team_members_executed',
+            #'analytical_skills',
+            'analytical_skills',
             'sense_of_belonging',
-            'type_of_support_required',
             'problem_solving',
-            'planning_to_mobilize_resources',
+            'assertiveness',
             'mentorship_helpful',
-            'initiative_loc',
             'problem_addressed',
             'planned_results',
-            'start',
-            'end',
-            'duration_of_initiative',
-            'respid_initiativeID_title',
-            'analytical_skills',
-            'mentor_assigned',
-            'number_of_direct_beneficiaries',
-            _('submission time'),
-        ]
-
-        data6 = tablib.Dataset()
-        data6.title = "Initiative implementation"
-        data6.headers = [
-            _('Country'),
-            _('Governorate'),
-            _('Location'),
-            _('Partner'),
-
-            _('Unique number'),
-            _('First name'),
-            _('Father name'),
-            _('Last name'),
-            _('Trainer'),
-            _('Bayanati ID'),
-            _('Sex'),
-            _('birthday day'),
-            _('birthday month'),
-            _('birthday year'),
-            _('age'),
-            _('Birthday'),
-            _('Nationality'),
-            _('Marital status'),
-            _('address'),
-
-            'leadership',
-            'assertiveness',
-            'initiative_as_expected',
-            'team_involovement',
-            'communication',
+            'planning_to_mobilize_resources',
+            'mobilized_resources_through',
             'did_you_mobilize_resources',
-            'challenges_faced',
-            'select_multiple_e160966a',
+            '_geolocation',
+            'if_so_who',
 
-            'type_of_initiative',
-            'basic_services',
-            'health_service',
-            'educational',
-            'protection',
-            'environmental',
-            'political',
-            'advocacy',
-            'economic_artis',
-            'religious_&_sp',
-            'sports',
-            'social_cohesio',
-            'other',
-
-            'select_one_a3c4ea99',
-            'integer_0259d46e',
-            'sense_of_belonging',
-            'problem_solving',
+            'type_of_support_required',
+            'type_of_support_received',
             'support_received_helpful',
-            'mentorship_helpful',
+            'support_not_helpful_why',
+
             'start',
             'end',
-            'respid_initiativeID_title',
-            'analytical_skills',
-            'mentor_assigned',
-            _('submission_time'),
-        ]
-
-        submission_set1 = submission_set.filter(assessment__slug='init_registration')
-        for line2 in submission_set1:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-
-                line2.data.get('status', ''),
-
-                line2.data.get('type_of_initiative', ''),
-                line2.get_data_option('type_of_initiative', 'basic_services'),
-                line2.get_data_option('type_of_initiative', 'health_service'),
-                line2.get_data_option('type_of_initiative', 'educational'),
-                line2.get_data_option('type_of_initiative', 'protection'),
-                line2.get_data_option('type_of_initiative', 'environmental'),
-                line2.get_data_option('type_of_initiative', 'political'),
-                line2.get_data_option('type_of_initiative', 'advocacy'),
-                line2.get_data_option('type_of_initiative', 'economic_artis'),
-                line2.get_data_option('type_of_initiative', 'religious_&_sp'),
-                line2.get_data_option('type_of_initiative', 'sports'),
-                line2.get_data_option('type_of_initiative', 'social_cohesio'),
-                line2.get_data_option('type_of_initiative', 'other'),
-
-                line2.data.get('assertiveness', ''),
-                line2.data.get('initiative_as_expected', ''),
-                line2.data.get('start_date_implementing_initia', ''),
-                line2.data.get('leadership', ''),
-                line2.data.get('team_involovement', ''),
-                line2.data.get('communication', ''),
-                line2.data.get('age_group_range', ''),
-                line2.data.get('gender_implem_initiatives', ''),
-                line2.data.get('gender_of_beneficiaries', ''),
-                line2.data.get('No_of_team_members_executed', ''),
-                line2.data.get('sense_of_belonging', ''),
-                line2.data.get('type_of_support_required', ''),
-                line2.data.get('problem_solving', ''),
-                line2.data.get('planning_to_mobilize_resources', ''),
-                line2.data.get('mentorship_helpful', ''),
-                line2.data.get('initiative_loc', ''),
-                line2.data.get('problem_addressed', ''),
-                line2.data.get('planned_results', ''),
-                line2.data.get('start', ''),
-                line2.data.get('end', ''),
-                line2.data.get('duration_of_initiative', ''),
-                line2.data.get('respid_initiativeID_title', ''),
-                line2.data.get('analytical_skills', ''),
-                line2.data.get('mentor_assigned', ''),
-                line2.data.get('number_of_direct_beneficiaries', ''),
-
-                submission_date,
-            ]
-            data5.append(content)
-
-        submission_set2 = submission_set.filter(assessment__slug='init_exec')
-        for line2 in submission_set2:
-            youth = line2.youth
-            registry = line2.registration
-            submission_date = line2.data.get('_submission_time', '')
-            try:
-                submission_date = datetime.datetime.strptime(submission_date, '%Y-%m-%dT%H:%M:%S').strftime(
-                    '%d/%m/%Y') if submission_date else ''
-            except Exception:
-                submission_date = ''
-            content = [
-                registry.governorate.parent.name if registry.governorate else '',
-                registry.governorate.name if registry.governorate else '',
-                registry.location,
-                registry.partner_organization.name if registry.partner_organization else '',
-
-                youth.number,
-                youth.first_name,
-                youth.father_name,
-                youth.last_name,
-                registry.trainer,
-                youth.bayanati_ID,
-                youth.sex,
-                youth.birthday_day,
-                youth.birthday_month,
-                youth.birthday_year,
-                youth.calc_age,
-                youth.birthday,
-                youth.nationality.name if youth.nationality else '',
-                youth.marital_status,
-                youth.address,
-
-                line2.data.get('leadership', ''),
-                line2.data.get('assertiveness', ''),
-                line2.data.get('initiative_as_expected', ''),
-                line2.data.get('team_involovement', ''),
-                line2.data.get('communication', ''),
-                line2.data.get('did_you_mobilize_resources', ''),
-                line2.data.get('challenges_faced', ''),
-                line2.data.get('select_multiple_e160966a', ''),
-
-                line2.data.get('type_of_initiative', ''),
-                line2.get_data_option('type_of_initiative', 'basic_services'),
-                line2.get_data_option('type_of_initiative', 'health_service'),
-                line2.get_data_option('type_of_initiative', 'educational'),
-                line2.get_data_option('type_of_initiative', 'protection'),
-                line2.get_data_option('type_of_initiative', 'environmental'),
-                line2.get_data_option('type_of_initiative', 'political'),
-                line2.get_data_option('type_of_initiative', 'advocacy'),
-                line2.get_data_option('type_of_initiative', 'economic_artis'),
-                line2.get_data_option('type_of_initiative', 'religious_&_sp'),
-                line2.get_data_option('type_of_initiative', 'sports'),
-                line2.get_data_option('type_of_initiative', 'social_cohesio'),
-                line2.get_data_option('type_of_initiative', 'other'),
-
-                line2.data.get('select_one_a3c4ea99', ''),
-                line2.data.get('integer_0259d46e', ''),
-                line2.data.get('sense_of_belonging', ''),
-                line2.data.get('problem_solving', ''),
-                line2.data.get('support_received_helpful', ''),
-                line2.data.get('mentorship_helpful', ''),
-                line2.data.get('start', ''),
-                line2.data.get('end', ''),
-                line2.data.get('respid_initiativeID_title', ''),
-                line2.data.get('analytical_skills', ''),
-                line2.data.get('mentor_assigned', ''),
-
-                submission_date,
-            ]
-            data6.append(content)
-
-        book.add_sheet(data5)
-        book.add_sheet(data6)
-
-        response = HttpResponse(
-            book.export("xls"),
-            content_type='application/vnd.ms-excel',
+            '_submission_time',
+            '_userform_id',
         )
-        response['Content-Disposition'] = 'attachment; filename=Beneficiary_Initiative_Assessments.xls'
-        return response
+
+        filename = 'Initiative-Export'
+
+        return render_to_csv_response(qs, filename,  field_header_map=headers)
