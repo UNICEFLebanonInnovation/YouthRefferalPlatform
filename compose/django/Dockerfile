@@ -1,12 +1,14 @@
 FROM python:2.7
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app
+#WORKDIR /app
 
 # Requirements have to be pulled and installed here, otherwise caching won't work
-COPY ./requirements /requirements
+#COPY ./requirements /requirements
+COPY ./requirements.txt /production.txt
 
-RUN pip install -r /requirements/production.txt \
+#RUN pip install -r /requirements/production.txt \
+RUN pip install -r production.txt \
     && groupadd -r django \
     && useradd -r -g django django
 
