@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 set -e
+cmd="$@"
 
 #touch /home/LogFiles/node_${WEBSITE_ROLE_INSTANCE_ID}_out.log
 #echo "$(date) Container started" >> /home/LogFiles/node_${WEBSITE_ROLE_INSTANCE_ID}_out.log

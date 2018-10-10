@@ -1,38 +1,25 @@
 FROM python:2.7
+ENV PYTHONUNBUFFERED 1
 
-# SSH support on Azure
-ENV SSH_PASSWD "root:Docker!"
-RUN apt-get update \
-	&& apt-get install -y --no-install-recommends openssh-server \
-	&& echo "$SSH_PASSWD" | chpasswd
-#COPY ./compose/django/sshd_config /etc/ssh/
-COPY ./sshd_config /etc/ssh/
+# Requirements have to be pulled and installed here, otherwise caching won't work
+COPY ./requirements /requirements
 
-ARG REQUIREMENTS_FILE=production.txt
+RUN pip install -r /requirements/production.txt \
+    && groupadd -r django \
+    && useradd -r -g django django
 
-RUN mkdir /code/
-WORKDIR /code/
-COPY requirements /code/requirements
-RUN pip install -r /code/requirements/$REQUIREMENTS_FILE
+COPY . /app
+RUN chown -R django /app
 
-ADD . /code/
+COPY ./compose/django/gunicorn.sh /gunicorn.sh
+COPY ./compose/django/entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r//' /entrypoint.sh \
+    && sed -i 's/\r//' /gunicorn.sh \
+    && chmod +x /entrypoint.sh \
+    && chown django /entrypoint.sh \
+    && chmod +x /gunicorn.sh \
+    && chown django /gunicorn.sh
 
-# Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
-RUN python manage.py collectstatic --noinput --settings=config.settings.test
+WORKDIR /app
 
-# uWSGI will listen on this port
-EXPOSE 2222 80
-
-RUN service ssh start
-
-# Start
-#COPY ./compose/django/entrypoint.sh /entrypoint.sh
-#COPY ./runtests.sh ./runtest.sh
-#RUN chmod +x /entrypoint.sh
-#RUN chmod +x ./runtest.sh
-#ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
 ENTRYPOINT ["/entrypoint.sh"]
-
-#COPY ./compose/django/gunicorn.sh /gunicorn.sh
-#RUN chmod +x /gunicorn.sh
-CMD ["/gunicorn.sh"]
