@@ -1,6 +1,8 @@
 FROM python:2.7
 ENV PYTHONUNBUFFERED 1
 
+WORKDIR /app
+
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
 
