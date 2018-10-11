@@ -228,7 +228,7 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    def update_field(self, **kwargs):
+    def update_field(self):
 
         data = self.data
         assessment_type = self.assessment.slug
@@ -244,6 +244,17 @@ class AssessmentSubmission(models.Model):
 
         self.new_data = new_data
         self.save()
+
+    def save(self, **kwargs):
+        """
+        Generate unique Hash for every assessment
+        :param kwargs:
+        :return:
+        """
+        if self.pk:
+            self.update_field()
+
+        super(AssessmentSubmission, self).save(**kwargs)
 
 
 class AssessmentHash(models.Model):
