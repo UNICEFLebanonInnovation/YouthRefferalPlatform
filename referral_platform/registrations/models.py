@@ -228,7 +228,7 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    def update_field(self):
+    def update_field(self, **kwargs):
 
         data = self.data
         assessment_type = self.assessment.slug
@@ -244,8 +244,6 @@ class AssessmentSubmission(models.Model):
 
         self.new_data = new_data
         self.save()
-
-
 
 
 class AssessmentHash(models.Model):
