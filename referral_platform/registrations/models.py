@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
-from .views import YouthAssessmentSubmission
+
 from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.youth.models import YoungPerson, Disability
 from referral_platform.locations.models import Location
@@ -209,6 +209,7 @@ class Registration(TimeStampedModel):
 
 
 class AssessmentSubmission(models.Model):
+
     STATUS = Choices(
         'enrolled',
         'pre_test',
@@ -218,8 +219,9 @@ class AssessmentSubmission(models.Model):
     registration = models.ForeignKey(Registration)
     youth = models.ForeignKey(YoungPerson)
     assessment = models.ForeignKey(Assessment)
-    status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
+    status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
+    new_data = JSONField(blank=True, null=True, default=dict)
 
     def get_data_option(self, column, option):
         column_value = self.data.get(column, '')
@@ -228,7 +230,7 @@ class AssessmentSubmission(models.Model):
         return 'no'
 
     @receiver(post_save, dispatch_uid="New Mapping")
-    def update_field(self, **kwargs):
+    def update_field(self):
 
         data = self.data
         assessment_type = self.assessment.slug
