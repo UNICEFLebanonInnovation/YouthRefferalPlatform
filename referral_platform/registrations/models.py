@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _t
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.urlresolvers import reverse
-
+from .views import YouthAssessmentSubmission
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
@@ -229,8 +229,8 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-    @receiver(post_save, dispatch_uid="New Mapping")
-    def update_field(self, **kwargs):
+    @receiver(post_save, sender=YouthAssessmentSubmission, dispatch_uid="New Mapping")
+    def update_field(self, sender, **kwargs):
 
         data = self.data
         assessment_type = self.assessment.slug
