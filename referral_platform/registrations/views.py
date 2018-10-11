@@ -233,9 +233,8 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             status='enrolled'
         )
         submission.data = payload
-        # submission.update_field()
         submission.save()
-        # post_save.connect(submission.update_field(), sender=User)
+
         return HttpResponse()
 
 
