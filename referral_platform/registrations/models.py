@@ -245,7 +245,7 @@ class AssessmentSubmission(models.Model):
         self.new_data = new_data
         self.save()
 
-    post_save.connect(update_field())
+    post_save.connect(update_field(object))
 
 
 class AssessmentHash(models.Model):
