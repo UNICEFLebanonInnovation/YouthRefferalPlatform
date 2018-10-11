@@ -359,7 +359,7 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'youth__father_name',
         'youth__bayanati_ID',
         'data',
-        'new_data',
+        # 'new_data',
     )
 
 
