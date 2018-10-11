@@ -292,4 +292,4 @@ class AssessmentHash(models.Model):
         super(AssessmentHash, self).save(**kwargs)
 
 
-post_save.connect(AssessmentSubmission.update_field(), sender=AssessmentSubmission)
+post_save.connect(AssessmentSubmission.update_field, sender=AssessmentSubmission)
