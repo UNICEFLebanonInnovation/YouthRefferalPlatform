@@ -227,26 +227,25 @@ class AssessmentSubmission(models.Model):
         if column_value and option in column_value:
             return 'yes'
         return 'no'
+
+
+    # @receiver(post_save, sender=AssessmentSubmission, dispatch_uid="New Mapping")
+    def update_field(self, sender, **kwargs):
+
+        data = self.data
+        assessment_type = self.assessment.slug
+        new_data = {}
+        for key in data:
+            old_value = data[key]
+            try:
+                 obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+                 new_data[key] = obj.new_value
+            except Exception as ex:
+                new_data[key] = old_value
+                continue
+
+        self.new_data = new_data
         self.save()
-
-
-@receiver(post_save, sender=AssessmentSubmission, dispatch_uid="New Mapping")
-def update_field(self, sender, **kwargs):
-
-    data = self.data
-    assessment_type = self.assessment.slug
-    new_data = {}
-    for key in data:
-        old_value = data[key]
-        try:
-             obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
-             new_data[key] = obj.new_value
-        except Exception as ex:
-            new_data[key] = old_value
-            continue
-
-    self.new_data = new_data
-    self.save()
 
 
 
