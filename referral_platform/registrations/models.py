@@ -228,9 +228,9 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
+    post_save.connect(update_field(), sender=AssessmentSubmission)
 
-    # @receiver(post_save, sender=AssessmentSubmission, dispatch_uid="New Mapping")
-    def update_field(self, sender, **kwargs):
+    def update_field(self, **kwargs):
 
         data = self.data
         assessment_type = self.assessment.slug
