@@ -209,7 +209,6 @@ class Registration(TimeStampedModel):
 
 
 class AssessmentSubmission(models.Model):
-
     STATUS = Choices(
         'enrolled',
         'pre_test',
@@ -219,9 +218,8 @@ class AssessmentSubmission(models.Model):
     registration = models.ForeignKey(Registration)
     youth = models.ForeignKey(YoungPerson)
     assessment = models.ForeignKey(Assessment)
-    status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
+    status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
-    new_data = JSONField(blank=True, null=True, default=dict)
 
     def get_data_option(self, column, option):
         column_value = self.data.get(column, '')
