@@ -245,16 +245,16 @@ class AssessmentSubmission(models.Model):
         self.new_data = new_data
         self.save()
 
-    def save(self, **kwargs):
-        """
-        Generate unique Hash for every assessment
-        :param kwargs:
-        :return:
-        """
-        if self.pk:
-            self.update_field()
-
-        super(AssessmentSubmission, self).save(**kwargs)
+    # def save(self, **kwargs):
+    #     """
+    #     Generate unique Hash for every assessment
+    #     :param kwargs:
+    #     :return:
+    #     """
+    #     if self.pk:
+    #         self.update_field()
+    #
+    #     super(AssessmentSubmission, self).save(**kwargs)
 
 
 class AssessmentHash(models.Model):
@@ -301,3 +301,4 @@ class AssessmentHash(models.Model):
         super(AssessmentHash, self).save(**kwargs)
 
 
+# post_save.connect(AssessmentSubmission.update_field, sender=AssessmentSubmission)
