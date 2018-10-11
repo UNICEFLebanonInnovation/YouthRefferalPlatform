@@ -230,7 +230,7 @@ class AssessmentSubmission(models.Model):
         return 'no'
 
     @receiver(post_save, dispatch_uid="New Mapping")
-    def update_field(self):
+    def update_field(self, **kwargs):
 
         data = self.data
         assessment_type = self.assessment.slug
