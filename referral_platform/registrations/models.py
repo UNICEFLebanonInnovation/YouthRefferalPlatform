@@ -227,6 +227,7 @@ class AssessmentSubmission(models.Model):
         if column_value and option in column_value:
             return 'yes'
         return 'no'
+        self.save()
 
 
 @receiver(post_save, sender=AssessmentSubmission, dispatch_uid="New Mapping")
