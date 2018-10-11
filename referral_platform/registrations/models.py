@@ -245,7 +245,7 @@ class AssessmentSubmission(models.Model):
         self.new_data = new_data
         self.save()
 
-    post_save.connect(update_field(object))
+
 
 
 class AssessmentHash(models.Model):
@@ -290,3 +290,6 @@ class AssessmentHash(models.Model):
             self.hashed = generate_hash(self.name)
 
         super(AssessmentHash, self).save(**kwargs)
+
+
+post_save.connect(AssessmentSubmission.update_field(), sender=AssessmentSubmission)
