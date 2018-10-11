@@ -228,8 +228,6 @@ class AssessmentSubmission(models.Model):
             return 'yes'
         return 'no'
 
-
-
     def update_field(self):
 
         data = self.data
