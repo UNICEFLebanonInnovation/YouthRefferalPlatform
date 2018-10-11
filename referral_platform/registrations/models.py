@@ -229,7 +229,7 @@ class AssessmentSubmission(models.Model):
 
 
 @receiver(post_save, sender=AssessmentSubmission, dispatch_uid="New Mapping")
-def update_field(self):
+def update_field(self, sender, instance, **kwargs):
 
     data = self.data
     assessment_type = self.assessment.slug
