@@ -14,7 +14,7 @@ services:
     build:
       context: .
 #      dockerfile: ./compose/django/Dockerfile
-      dockerfile: /
+      dockerfile: ./
     #command: ./runtest.sh
     volumes:
       - .:/code
