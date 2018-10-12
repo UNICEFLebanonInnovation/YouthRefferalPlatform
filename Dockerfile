@@ -35,6 +35,8 @@ EXPOSE 2222 80
 RUN service ssh start
 
 # Start
+COPY entrypoint.sh /code/compose/django/
 ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
 
+COPY gunicorn.sh /code/compose/django/
 CMD ["/code/compose/django/gunicorn.sh"]
