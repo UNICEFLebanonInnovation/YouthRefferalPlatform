@@ -36,7 +36,9 @@ RUN service ssh start
 
 # Start
 COPY entrypoint.sh /code/compose/django/
+RUN chmod +x /code/compose/django/entrypoint.sh
 ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
 
 COPY gunicorn.sh /code/compose/django/
+RUN chmod +x /code/compose/django/gunicorn.sh
 CMD ["/code/compose/django/gunicorn.sh"]
