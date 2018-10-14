@@ -369,7 +369,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__last_name': 'Last Name',
             'registration__partner_organization__name': 'Partner',
             'registration__youth__bayanati_ID': 'Bayanati ID',
-            'registration__partner_organization__name': 'Partner',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
