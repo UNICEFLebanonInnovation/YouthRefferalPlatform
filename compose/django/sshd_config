@@ -15,8 +15,8 @@ PrintMotd 		no
 IgnoreRhosts 		no
 #deprecated option
 #RhostsAuthentication 	no
-#RhostsRSAAuthentication yes
-#RSAAuthentication 	no
+RhostsRSAAuthentication yes
+RSAAuthentication 	no
 PasswordAuthentication 	yes
 PermitEmptyPasswords 	no
 PermitRootLogin 	yes
