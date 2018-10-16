@@ -5,7 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import *
 import datetime
 
-from . models import EducationLevel, IDType, Nationality, YoungPerson
+from . models import Disability, IDType, Nationality, YoungPerson
 
 
 class YoungPersonResource(resources.ModelResource):
@@ -24,10 +24,6 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         (None, {
             'classes': ('suit-tab', 'suit-tab-general',),
             'fields': [
-                'partner_organization',
-                'governorate',
-                'trainer',
-                'location',
                 'first_name',
                 'father_name',
                 'last_name',
@@ -38,6 +34,7 @@ class YoungPersonAdmin(ImportExportModelAdmin):
                 'nationality',
                 'marital_status',
                 'address',
+                'number',
             ]
         })
     ]
@@ -47,10 +44,6 @@ class YoungPersonAdmin(ImportExportModelAdmin):
                     )
 
     list_display = (
-        'partner_organization',
-        'governorate',
-        'trainer',
-        'location',
         'first_name',
         'father_name',
         'last_name',
@@ -80,7 +73,23 @@ class YoungPersonAdmin(ImportExportModelAdmin):
     )
 
 
+class NationalityResource(resources.ModelResource):
+
+    class Meta:
+        model = Nationality
+        fields = (
+            'id',
+            'name',
+            'code',
+        )
+        export_order = fields
+
+
+class NationalityAdmin(ImportExportModelAdmin):
+    resource_class = NationalityResource
+
+
 admin.site.register(YoungPerson, YoungPersonAdmin)
-admin.site.register(EducationLevel)
-admin.site.register(Nationality)
-admin.site.register(IDType)
+admin.site.register(Disability)
+admin.site.register(Nationality, NationalityAdmin)
+# admin.site.register(IDType)

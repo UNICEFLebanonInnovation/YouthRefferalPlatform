@@ -1,12 +1,29 @@
-sudo: true
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq build-essential gettext python-dev zlib1g-dev libpq-dev xvfb
-  - sudo apt-get install -qq libtiff4-dev libjpeg8-dev libfreetype6-dev liblcms1-dev libwebp-dev
-  - sudo apt-get install -qq graphviz-dev python-setuptools python3-dev python-virtualenv python-pip
-  - sudo apt-get install -qq firefox automake libtool libreadline6 libreadline6-dev libreadline-dev
-  - sudo apt-get install -qq libsqlite3-dev libxml2 libxml2-dev libssl-dev libbz2-dev wget curl llvm
-language: python
-python:
+notifications:
+  email: false
 
-  - "2.7"
+sudo: required
+
+services:
+  - docker
+
+language: python
+# python versions
+python:
+  - "3.4"
+# install requirements
+install:
+  - pip install coveralls
+  - pip install codecov
+  - pip install django-coverage-plugin
+
+script:
+  - docker-compose -f test.yml run django
+
+after_success:
+  - coveralls
+  - codecov
+  - if [ "$TRAVIS_BRANCH" == "develop" -o "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
+    docker tag youthrefferalplatform_django $DOCKER_USER/$DOCKER_REPO:$TRAVIS_BRANCH;
+    docker push $DOCKER_USER/$DOCKER_REPO:$TRAVIS_BRANCH;
+    fi

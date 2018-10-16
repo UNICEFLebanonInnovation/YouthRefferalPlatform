@@ -10,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from referral_platform.partners.models import PartnerOrganization
+from referral_platform.locations.models import Location
 
 from .managers import UserManager
 
@@ -36,6 +37,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     partner = models.ForeignKey(
         PartnerOrganization,
+        null=True, blank=True
+    )
+    country = models.ForeignKey(
+        Location,
         null=True, blank=True
     )
 
@@ -65,10 +70,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
+        pass
         '''
         Sends an email to this User.
         '''
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+        # send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'email': self.email})

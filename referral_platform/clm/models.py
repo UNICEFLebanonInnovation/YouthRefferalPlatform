@@ -23,7 +23,7 @@ class Assessment(models.Model):
     capacity = models.IntegerField(blank=True, null=True)
     assessment_form = models.URLField(blank=True, null=True)
     order = models.TextField(blank=False, null=False, default=1)
-    partner = models.ForeignKey(PartnerOrganization, null=True, blank=True,)
+    partner = models.ForeignKey(PartnerOrganization, null=True, blank=True, related_name='+',)
 
     class Meta:
         ordering = ['order']
@@ -52,8 +52,8 @@ class AssessmentSubmission(models.Model):
         'post_test'
     )
 
-    youth = models.ForeignKey(YoungPerson)
-    assessment = models.ForeignKey(Assessment)
+    youth = models.ForeignKey(YoungPerson, related_name='+',)
+    assessment = models.ForeignKey(Assessment, related_name='+',)
     status = models.CharField(max_length=50, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
 

@@ -9,8 +9,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand mr-15" href="\">
-        <img src="{% static 'images/logo.png' %}" style="float: left; width: 30px; height: 30px;" class="mr-10"/>
-        {% trans "EMS" %} 1.0
+        <img src="{% static 'images/logo.png' %}" style="float: left; width: 100px; height: 40px;" class="mr-10"/>
+        <!--{% trans "EMS" %} 1.0-->
     </a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         {% if request.user.is_authenticated %}
@@ -20,9 +20,31 @@
                         <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
                     </li>
                 {% endif %}
+              {% if request.user|has_group:"YOUTH" %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url "youth:list" %}">{% trans "Youth Registration" %}</a>
+                    <a class="nav-link" href="{% url "registrations:list" %}">{% trans "Youth Registration" %}</a>
                 </li>
+              {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "dashboard:co" %}">{% trans "Global Dashboard" %}</a>
+                </li>
+              {% if request.user|has_group:"YOUTH" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "dashboard:partner" %}">{% trans "Partner Dashboard" %}</a>
+                </li>
+              {% endif %}
+              {% if request.user|has_group:"YOUTH" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "backends:files_list" %}">{% trans "Exported files" %}</a>
+                </li>
+              {% endif %}
+
+              {% if request.user|has_group:"EXPORT_FULL" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "backends:exporter" %}">{% trans "Export Full data" %}</a>
+                </li>
+              {% endif %}
+
             </ul>
         {% endif %}
 

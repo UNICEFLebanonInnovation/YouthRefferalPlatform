@@ -17,14 +17,14 @@ services:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile-dev
-    command: python /app/manage.py runserver_plus 0.0.0.0:8000
+    command: python /code/manage.py runserver_plus 0.0.0.0:8000
     depends_on:
       - postgres
     environment:
       - POSTGRES_USER=referral_platform
       - USE_DOCKER=yes
     volumes:
-      - .:/app
+      - .:/code
     ports:
       - "8000:8000"
     links:
@@ -43,7 +43,7 @@ services:
     environment:
       - POSTGRES_USER=referral_platform
     volumes:
-      - .:/app
+      - .:/code
     links:
       - postgres
 

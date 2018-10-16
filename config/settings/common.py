@@ -52,6 +52,8 @@ THIRD_PARTY_APPS = (
     'import_export',
     'prettyjson',
     'django_tables2',
+    'django_celery_beat',
+    'django_celery_results',
 )
 
 # Apps specific for this project go here.
@@ -64,7 +66,10 @@ LOCAL_APPS = (
     'referral_platform.youth',
     'referral_platform.courses',
     'referral_platform.initiatives',
+    'referral_platform.registrations',
     'referral_platform.clm',
+    'referral_platform.dashboard',
+    'referral_platform.backends',
 
 )
 
@@ -110,7 +115,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.c
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ("""James Cranwell-Ward""", 'jcranwellward@unicef.org'),
+    ("""Ali Chamseddine""", 'achamseddine@unicef.org'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -135,10 +140,11 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 TIME_ZONE = 'Asia/Beirut'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'ar-ar'
+LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'ar-ar'
 LANGUAGE_COOKIE_NAME = 'default_language'
 LANGUAGE_QUERY_PARAMETER = 'language'
+LANGUAGE_COOKIE_AGE = 32000
 
 LANGUAGES = (
     ('ar-ar', 'Arabic'),
@@ -279,21 +285,27 @@ SOCIAL_AUTH_FACEBOOK_SECRET ='ee205f6f25da8aa856ec90b39d7d61fd'
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'youth:list'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig',)
+# INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig',)
 # if you are not using the django database broker (e.g. rabbitmq, redis, memcached), you can remove the next line.
 # INSTALLED_APPS += ('kombu.transport.django',)
-BROKER_URL = env('CELERY_BROKER_URL', default='django://')
-if BROKER_URL == 'django://':
-    CELERY_RESULT_BACKEND = 'redis://'
-else:
-    CELERY_RESULT_BACKEND = BROKER_URL
+# BROKER_URL = env('CELERY_BROKER_URL', default='django://')
+# if BROKER_URL == 'django://':
+#     CELERY_RESULT_BACKEND = 'redis://'
+# else:
+#     CELERY_RESULT_BACKEND = BROKER_URL
+########## END CELERY
+
+########## CELERY
+INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig', )
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = 'django-db'
 ########## END CELERY
 
 # django-compressor
@@ -323,7 +335,7 @@ WEBPACK_LOADER = {
 # Django Suit configuration example
 SUIT_CONFIG = {
     # header
-    'ADMIN_NAME': 'Youth Platform - Partner Portal',
+    'ADMIN_NAME': 'EMS',
     'HEADER_DATE_FORMAT': 'l, j. F Y',
     'HEADER_TIME_FORMAT': 'H:i',
 
@@ -340,7 +352,8 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU_EXCLUDE': ('auth', 'sites'),
     'MENU': (
-        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/partners/profile"},
+        {'label': 'Dashboard', 'icon': 'icon-dashboard', 'url': "/dashboard/CO/"},
+        {'app': 'registrations', 'label': 'Registration', 'icon': 'icon-list'},
         {'app': 'auth', 'label': 'Groups', 'icon': 'icon-user'},
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
         {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
@@ -349,15 +362,23 @@ SUIT_CONFIG = {
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
 
     )
-    # 'MENU': (
-    #     'sites',
-    #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
-    #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
-    #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
-    # ),
-
-    # misc
-    # 'LIST_PER_PAGE': 15
 }
 
-# Your common stuff: Below this line define 3rd party library settings
+REST_FRAMEWORK = {
+    # this setting fixes the bug where user can be logged in as AnonymousUser
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
+POWERBI_JCO = env('POWERBI_JCO', default='NO_URL')
+POWERBI_SCO = env('POWERBI_SCO', default='NO_URL')
+POWERBI_PCO = env('POWERBI_PCO', default='NO_URL')

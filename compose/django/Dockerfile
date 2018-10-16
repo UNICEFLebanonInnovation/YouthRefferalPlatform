@@ -1,26 +1,38 @@
-
 FROM python:2.7
 ENV PYTHONUNBUFFERED 1
 
-# Requirements have to be pulled and installed here, otherwise caching won't work
-COPY ./requirements /requirements
+# SSH support on Azure
+ENV SSH_PASSWD "root:Docker!"
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends openssh-server \
+	&& echo "$SSH_PASSWD" | chpasswd
+COPY ./compose/django/sshd_config /etc/ssh/
 
-RUN pip install -r /requirements/production.txt \
-    && groupadd -r django \
-    && useradd -r -g django django
+ARG REQUIREMENTS_FILE=production.txt
 
-COPY . /app
-RUN chown -R django /app
+RUN mkdir /code/
+WORKDIR /code/
+COPY requirements /code/requirements
+RUN pip install -r /code/requirements/$REQUIREMENTS_FILE
 
-COPY ./compose/django/gunicorn.sh /gunicorn.sh
-COPY ./compose/django/entrypoint.sh /entrypoint.sh
-RUN sed -i 's/\r//' /entrypoint.sh \
-    && sed -i 's/\r//' /gunicorn.sh \
-    && chmod +x /entrypoint.sh \
-    && chown django /entrypoint.sh \
-    && chmod +x /gunicorn.sh \
-    && chown django /gunicorn.sh
+ADD . /code/
 
-WORKDIR /app
+# Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
+RUN python manage.py collectstatic --noinput --settings=config.settings.test
 
-ENTRYPOINT ["/entrypoint.sh"]
+# uWSGI will listen on this port
+EXPOSE 2222 80
+
+RUN service ssh start
+
+# Start
+COPY entrypoint.sh /code/compose/django/entrypoint.sh
+RUN chmod +x /code/compose/django/entrypoint.sh
+ENTRYPOINT ["sh", "/code/compose/django/entrypoint.sh"]
+
+#COPY ./runtests.sh /code/compose/django/runtests.sh
+#RUN chmod +x /code/compose/django/runtests.sh
+
+COPY gunicorn.sh /code/compose/django/gunicorn.s
+RUN chmod +x /code/compose/django/gunicorn.sh
+CMD ["sh", "/code/compose/django/gunicorn.sh"]

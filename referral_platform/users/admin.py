@@ -53,7 +53,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner',)})
+        (None, {'fields': ('partner', 'country',)})
     )
 
     add_fieldsets = (
@@ -62,10 +62,25 @@ class PlatformUserAdmin(AuthUserAdmin):
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner',)})
+        (None, {'fields': ('partner', 'country',)})
     )
 
     ordering = ('email',)
-    list_display = ('first_name', 'is_superuser')
-    search_fields = ['first_name', 'last_name']
+    list_display = (
+        'email',
+        'first_name',
+        'last_name',
+        'partner',
+        'is_superuser',
+        'is_staff',
+    )
+    list_filter = (
+        'email',
+        'is_staff',
+        'is_superuser',
+        'is_active',
+        'groups',
+        'partner',
+    )
+    search_fields = ['first_name', 'last_name', 'email']
     filter_horizontal = ('groups', 'user_permissions', )

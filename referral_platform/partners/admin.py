@@ -21,6 +21,7 @@ class PartnerOrganizationAdmin(ImportExportModelAdmin):
     resource_class = PartnerOrganizationResource
     list_display = (
         'name',
+        'locations_list',
         'phone_number',
         'email',
     )
@@ -53,6 +54,9 @@ class CenterAdmin(ImportExportModelAdmin):
     )
     list_filter = (
         'partner_organization',
+    )
+    search_fields = (
+        'name',
     )
 
 
