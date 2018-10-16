@@ -475,7 +475,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'country',
             # 'nationality',
             # 'training_type',
-            'registration__governorate__parent__name',
+            'registration__governorate__parent__name_en',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
