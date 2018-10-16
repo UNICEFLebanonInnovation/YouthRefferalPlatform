@@ -22,6 +22,7 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView,
 
 from referral_platform.users.templatetags.util_tags import has_group
 from .models import User
+from django.shortcuts import render
 
 
 class UserRegisteredMixin(UserPassesTestMixin, LoginRequiredMixin):
@@ -83,3 +84,12 @@ class UserChangeLanguageRedirectView(RedirectView):
         translation.activate(user_language)
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user_language
         return reverse('registrations:list', kwargs={})
+
+
+# def view_profile(request, pk=None):
+#     if pk:
+#         user = User.objects.get(pk=pk)
+#     else:
+#         user = request.user
+#     args = {'user': user}
+#     return render(request, '/users/profile.html', args)

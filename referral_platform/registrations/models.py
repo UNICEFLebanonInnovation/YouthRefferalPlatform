@@ -10,7 +10,6 @@ from django.utils.translation import ugettext as _t
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.urlresolvers import reverse
-
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
@@ -18,6 +17,8 @@ from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.youth.models import YoungPerson, Disability
 from referral_platform.locations.models import Location
 from .utils import generate_hash
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Assessment(models.Model):
@@ -235,14 +236,25 @@ class AssessmentSubmission(models.Model):
         for key in data:
             old_value = data[key]
             try:
-                obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
-                new_data[key] = obj.new_value
+                 obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+                 new_data[key] = obj.new_value
             except Exception as ex:
                 new_data[key] = old_value
                 continue
 
         self.new_data = new_data
         self.save()
+
+    # def save(self, **kwargs):
+    #     """
+    #     Generate unique Hash for every assessment
+    #     :param kwargs:
+    #     :return:
+    #     """
+    #     if self.pk:
+    #         self.update_field()
+    #
+    #     super(AssessmentSubmission, self).save(**kwargs)
 
 
 class AssessmentHash(models.Model):
@@ -287,3 +299,6 @@ class AssessmentHash(models.Model):
             self.hashed = generate_hash(self.name)
 
         super(AssessmentHash, self).save(**kwargs)
+
+
+# post_save.connect(AssessmentSubmission.update_field, sender=AssessmentSubmission)

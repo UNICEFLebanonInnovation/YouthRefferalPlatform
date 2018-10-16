@@ -8,7 +8,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-
+from django_filters.views import FilterView
 from referral_platform.partners.models import PartnerOrganization
 from referral_platform.locations.models import Location
 
@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     country = models.ForeignKey(
         Location,
-        null=True, blank=True
+        null=True, blank=True, limit_choices_to={'type_id': '1'}
     )
 
     objects = UserManager()

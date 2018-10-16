@@ -63,6 +63,24 @@ class ListingView(LoginRequiredMixin,
             return YouthSYFilter
         elif "JORDAN" in locations:
             return YouthFilter
+        elif "IRAK" in locations:
+            return YouthPLFilter
+        elif "IRAN" in locations:
+            return YouthSYFilter
+        elif "MOROCCO" in locations:
+            return YouthFilter
+        elif "DJIBOUTI" in locations:
+            return YouthPLFilter
+        elif "EGYPT" in locations:
+            return YouthSYFilter
+        elif "ALGERIA" in locations:
+            return YouthFilter
+        elif "TUNIS" in locations:
+            return YouthPLFilter
+        elif "LEBANON" in locations:
+            return YouthSYFilter
+        elif "SUDAN" in locations:
+            return YouthFilter
 
     def get_table_class(self):
             locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -71,6 +89,24 @@ class ListingView(LoginRequiredMixin,
             elif "SYRIA" in locations:
                 return CommonTableAlt
             elif "JORDAN" in locations:
+                return CommonTable
+            elif "IRAK" in locations:
+                return CommonTable
+            elif "IRAN" in locations:
+                return CommonTable
+            elif "MOROCCO" in locations:
+                return CommonTable
+            elif "DJIBOUTI" in locations:
+                return CommonTable
+            elif "EGYPT" in locations:
+                return CommonTable
+            elif "ALGERIA" in locations:
+                return CommonTable
+            elif "TUNIS" in locations:
+                return CommonTable
+            elif "LEBANON" in locations:
+                return CommonTable
+            elif "SUDAN" in locations:
                 return CommonTable
 
 
@@ -171,7 +207,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 partner=registry.partner_organization.name,
-                country=registry.governorate.parent.name,
+                country=registry.governorate.parent.name_en,
                 nationality=youth.nationality.code,
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
@@ -197,9 +233,9 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             status='enrolled'
         )
         submission.data = payload
-        # submission.update_field()
+        submission.update_field()
         submission.save()
-        post_save.connect(submission.update_field(), sender=User)
+
         return HttpResponse()
 
 
@@ -252,7 +288,7 @@ class ExportView(LoginRequiredMixin, ListView):
 
         headers = {
             # 'country': 'Country',
-            'governorate__parent__name': 'Country',
+            'governorate__parent__name_en': 'Country',
             'governorate__name_en': 'Governorate',
             'partner_organization__name': 'Partner',
             'center__name': 'Center',
@@ -287,7 +323,7 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__birthday_year',
             'location',
             'governorate__name_en',
-            'governorate__parent__name',
+            'governorate__parent__name_en',
             'partner_organization__name',
             'center__name',
             'youth__nationality__code',
@@ -333,7 +369,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__last_name': 'Last Name',
             'registration__partner_organization__name': 'Partner',
             'registration__youth__bayanati_ID': 'Bayanati ID',
-            'registration__partner_organization__name': 'Partner',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
@@ -341,7 +376,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__parent__name_en': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
@@ -433,10 +468,10 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__first_name',
             'registration__youth__father_name',
             'registration__youth__last_name',
-            'registration__partner_organization__name',
+            'registration__partner_organization__name_en',
             'other_family_not_present',
             'educational_status',
-            'registration__partner_organization__name',
+            # 'registration__partner_organization__name',
             # 'country',
             # 'nationality',
             # 'training_type',
@@ -516,7 +551,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__parent__name_en': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
@@ -539,7 +574,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
             '_submission_time': 'Submission time',
             '_userform_id': 'User',
-            'registration__partner_organization__name': 'Partner',
+            # 'registration__partner_organization__name': 'Partner',
         }
 
         qs = self.get_queryset().extra(select={
@@ -564,7 +599,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__father_name',
             'registration__youth__last_name',
             'registration__partner_organization__name',
-            'registration__governorate__parent__name',
+            'registration__governorate__parent__name_en',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
@@ -619,7 +654,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__last_name': 'Last Name',
             'registration__partner_organization__name': 'Partner',
             'registration__youth__bayanati_ID': 'Bayanati ID',
-            'registration__partner_organization__name': 'Partner',
+            # 'registration__partner_organization__name': 'Partner',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
@@ -627,7 +662,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__parent__name_en': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
@@ -704,7 +739,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__father_name',
             'registration__youth__last_name',
             'registration__partner_organization__name',
-            'registration__governorate__parent__name',
+            'registration__governorate__parent__name_en',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
@@ -783,7 +818,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name': 'Country',
+            'registration__governorate__parent__name_en': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
@@ -894,7 +929,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status',
             'registration__youth__sex',
             'registration__youth__number',
-            'registration__governorate__parent__name',
+            'registration__governorate__parent__name_en',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
