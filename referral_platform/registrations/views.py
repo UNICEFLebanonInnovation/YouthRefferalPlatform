@@ -468,7 +468,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__first_name',
             'registration__youth__father_name',
             'registration__youth__last_name',
-            'registration__partner_organization__name_en',
+            'registration__partner_organization__name',
             'other_family_not_present',
             'educational_status',
             # 'registration__partner_organization__name',
