@@ -11,13 +11,13 @@ language: python
 python:
   - "3.4"
 # install requirements
-#install:
-#  - pip install coveralls
-#  - pip install codecov
-#  - pip install django-coverage-plugin
+install:
+  - pip install coveralls
+  - pip install codecov
+  - pip install django-coverage-plugin
 
-#script:
-#  - docker-compose -f test.yml run django
+script:
+  - docker-compose -f test.yml run django
 
 after_success:
   - coveralls
