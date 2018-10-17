@@ -10,9 +10,9 @@ class Command(BaseCommand):
         parser.add_argument('--filename', type=str, default=None)
 
     def handle(self, *args, **options):
-
+        filename = options['filename']
         from referral_platform.registrations.models import AssessmentSubmission
-        newmaping = AssessmentSubmission.objects.filter(assessment__slug='registration')
+        newmaping = AssessmentSubmission.objects.filter(assessment__slug=filename)
         for obj in newmaping:
             obj.update_field()
 
