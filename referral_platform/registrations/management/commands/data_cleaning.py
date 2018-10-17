@@ -21,6 +21,6 @@ class Command(BaseCommand):
         #         obj.update_field()
         # else:
         from referral_platform.registrations.models import AssessmentSubmission
-        newmaping = AssessmentSubmission.objects.filter(registration__partner_organization='Nour')
+        newmaping = AssessmentSubmission.objects.filter(registration__partner_organization=25)
         for obj in newmaping:
             obj.update_field()
