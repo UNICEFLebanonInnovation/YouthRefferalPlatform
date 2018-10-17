@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         from referral_platform.registrations.models import AssessmentSubmission
-        newmaping = AssessmentSubmission.objects.filter(assessment__slug='filename')
+        newmaping = AssessmentSubmission.objects.filter(assessment__slug='registration')
         for obj in newmaping:
             obj.update_field()
 
