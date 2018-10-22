@@ -287,6 +287,10 @@ class RegistrationAdmin(ImportExportModelAdmin):
             return False
         return True
 
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()
+
 
 class AssessmentAdmin(admin.ModelAdmin):
 
@@ -300,6 +304,10 @@ class AssessmentAdmin(admin.ModelAdmin):
     )
     search_fields = (
     )
+
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()
 
 
 class AssessmentSubmissionAdmin(admin.ModelAdmin):
@@ -352,6 +360,10 @@ class AssessmentHashAdmin(admin.ModelAdmin):
         'assessment_slug',
 
     )
+
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()
 
 
 admin.site.register(Registration, RegistrationAdmin)

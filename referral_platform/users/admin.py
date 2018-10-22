@@ -84,3 +84,7 @@ class PlatformUserAdmin(AuthUserAdmin):
     )
     search_fields = ['first_name', 'last_name', 'email']
     filter_horizontal = ('groups', 'user_permissions', )
+
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()

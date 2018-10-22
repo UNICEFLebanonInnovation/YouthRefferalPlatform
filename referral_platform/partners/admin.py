@@ -33,6 +33,10 @@ class PartnerOrganizationAdmin(ImportExportModelAdmin):
     )
     filter_horizontal = ('locations',)
 
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()
+
 
 class CenterResource(resources.ModelResource):
     class Meta:
@@ -58,6 +62,10 @@ class CenterAdmin(ImportExportModelAdmin):
     search_fields = (
         'name',
     )
+
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()
 
 
 admin.site.register(PartnerOrganization, PartnerOrganizationAdmin)
