@@ -6,19 +6,25 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--id', type=int, default=None)
-        parser.add_argument('--updated', type=str, default=None)
+        parser.add_argument('--all', type=str, default=None)
 
     def handle(self, *args, **options):
         id = options['id'],
-        updated = options['updated'],
+        all = options['all'],
+
         # help = 'use all to update all, or new to update only empty new data'
         if id:
             from referral_platform.registrations.models import AssessmentSubmission
             newmaping = AssessmentSubmission.objects.filter(registration__partner_organization=id)
             for obj in newmaping:
                 obj.update_field()
-        else:
+        elif all:
             from referral_platform.registrations.models import AssessmentSubmission
             newmaping = AssessmentSubmission.objects.all()
+            for obj in newmaping:
+                obj.update_field()
+        else:
+            from referral_platform.registrations.models import AssessmentSubmission
+            newmaping = AssessmentSubmission.objects.filter(self.new_data == "")
             for obj in newmaping:
                 obj.update_field()
