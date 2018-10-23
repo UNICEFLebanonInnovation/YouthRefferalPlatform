@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         id = options['id'],
-        par = options['all'],
+        par = options['par'],
 
         # help = 'use all to update all, or new to update only empty new data'
         if id:
