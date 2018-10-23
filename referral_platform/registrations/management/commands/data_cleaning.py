@@ -18,12 +18,12 @@ class Command(BaseCommand):
             newmaping = AssessmentSubmission.objects.filter(registration__partner_organization=id)
             for obj in newmaping:
                 obj.update_field()
-        elif options['all']:
+        elif par == 'all':
             from referral_platform.registrations.models import AssessmentSubmission
             newmaping = AssessmentSubmission.objects.all()
             for obj in newmaping:
                 obj.update_field()
-        elif options['OE']:
+        elif par == 'OE':
             from referral_platform.registrations.models import AssessmentSubmission
             newmaping = AssessmentSubmission.objects.filter(self.new_data == "")
             for obj in newmaping:
