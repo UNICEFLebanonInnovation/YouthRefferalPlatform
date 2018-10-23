@@ -25,6 +25,6 @@ class Command(BaseCommand):
                 obj.update_field()
         elif par == 'OE':
             from referral_platform.registrations.models import AssessmentSubmission
-            newmaping = AssessmentSubmission.objects.filter(self.new_data == "")
+            newmaping = AssessmentSubmission.objects.filter(new_data__isnull=True)
             for obj in newmaping:
                 obj.update_field()
