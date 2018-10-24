@@ -86,6 +86,26 @@ class UserChangeLanguageRedirectView(RedirectView):
         return reverse('registrations:list', kwargs={})
 
 
+class UserOverview(LoginRequiredMixin, DetailView):
+
+    model = User
+    slug_url_kwarg = 'path'
+    template_name = 'users/profile.html'
+    partner = User.partner
+    country = User.country
+    status = User.is_staff
+
+
+    # def get_context_data(self, **kwargs):
+    #     locations = self.request.user.profile.partner_organization.locations
+    #     enrollement = Enrollment.objects.filter(
+    #         youth=self.request.user.profile,
+    #         course__path=self.object
+    #     ).last()
+    #     kwargs.update({'enrollment': enrollement, 'locations': locations})
+    #     return super(CoursesOverview, self).get_context_data(**kwargs)
+
+
 # def view_profile(request, pk=None):
 #     if pk:
 #         user = User.objects.get(pk=pk)

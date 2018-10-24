@@ -8,6 +8,12 @@ from . import views
 urlpatterns = [
     # URL pattern for the UserListView
     url(
+        regex=r'^profile/$',
+        view=views.UserOverview.as_view(),
+        name='Profile'
+    ),
+
+    url(
         regex=r'^$',
         view=views.UserListView.as_view(),
         name='list'
