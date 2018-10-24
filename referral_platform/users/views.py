@@ -93,7 +93,6 @@ class UserOverview(LoginRequiredMixin, DetailView):
     template_name = 'users/profile.html'
     partner = User.partner
     country = User.country
-    status = User.is_staff
 
 
     # def get_context_data(self, **kwargs):
