@@ -86,7 +86,7 @@ class UserChangeLanguageRedirectView(RedirectView):
         return reverse('registrations:list', kwargs={})
 
 
-class UserOverview(LoginRequiredMixin, DetailView):
+class UserOverview(LoginRequiredMixin):
 
     model = User
     slug_url_kwarg = 'path'
