@@ -9,7 +9,7 @@ urlpatterns = [
     # URL pattern for the UserListView
     url(
         regex=r'^profile/$',
-        view=views.UserOverview(),
+        view=views.user_overview(),
         name='Profile'
     ),
 
