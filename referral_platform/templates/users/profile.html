@@ -8,7 +8,7 @@
 
 {% block extra_head %}
     <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet" />
-   
+
 {% endblock %}
 
 
@@ -43,18 +43,20 @@
 
       <div class="container">
       <div class="row">
+        <br>
     <div class="col-md-6 img">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"  alt="" class="img-rounded">
     </div>
     <div class="col-md-6 details">
       <blockquote>
-        <h5>{{ user }}</h5>
-        <small><cite title="Source Title"> {{ user.partner }}, {{ user.country }} <i class="icon-map-marker"></i></cite></small>
+        <h4>{{ user }}</h4>
+        <small><cite title="Source Title"> {{ user.partner }} <i class="icon-map-marker"></i></cite></small>
       </blockquote>
       <p>
-        {{ user.email }} <br>
-        {{ user.first_name }}, {{ user.last_name }} <br>
-        {{user.date_joined}}
+        <b>{% trans "Country: " %}</b>{{ user.country.name_en }}<br>
+        <b>{% trans "Email: " %}</b> {{ user.email }} <br>
+        <b>{% trans "Name: " %}</b>{{ user.first_name }}, {{ user.last_name }} <br>
+        <b>{% trans "Date Joined: " %}</b>{{user.date_joined}}
       </p>
     </div>
   </div>
