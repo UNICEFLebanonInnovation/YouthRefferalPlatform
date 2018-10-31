@@ -88,17 +88,8 @@ class UserChangeLanguageRedirectView(RedirectView):
 
 def user_overview(request):
 
-    # model = User
-    # partner = User.partner
-    # country = User.country
-    # # username = User.email
-
     args = {
         'user': request.user,
-        # 'country': country,
-        # 'username': username,
-        # 'num_instances_available': num_instances_available,
-        # 'num_authors': num_authors,
                }
     return render(request, 'users/profile.html', args)
 
