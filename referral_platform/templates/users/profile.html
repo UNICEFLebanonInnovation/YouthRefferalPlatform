@@ -51,14 +51,14 @@
     <div class="col-md-6 details" style="text-align: left;">
       <blockquote>
         <h4>{{ user }}</h4>
-        <small><cite title="Source Title"><i class="icon-map-marker"></i></cite></small>
+        <!--<small><cite title="Source Title"><i class="icon-map-marker"></i></cite></small>-->
       </blockquote>
       <p>
         <b>{% trans "Partner: " %}</b> {{ user.partner }}<br>
         <b>{% trans "Country: " %}</b> {{ user.country.name_en }}<br>
         <b>{% trans "Email: " %}</b> {{ user.email }} <br>
         <b>{% trans "Name: " %}</b> {{ user.first_name }}, {{ user.last_name }} <br>
-        <b>{% trans "Date Joined: " %}</b> {user.date_joined}}
+        <b>{% trans "Date Joined: " %}</b> {{user.date_joined}}<br>
       </p>
     </div>
     </div>
