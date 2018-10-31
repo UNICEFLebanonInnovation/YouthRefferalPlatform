@@ -100,7 +100,7 @@ def user_overview(request):
         # 'num_instances_available': num_instances_available,
         # 'num_authors': num_authors,
                }
-    return render(request, '/users/profile.html', context=context)
+    return context
 
 
     # def get_context_data(self, **kwargs):
