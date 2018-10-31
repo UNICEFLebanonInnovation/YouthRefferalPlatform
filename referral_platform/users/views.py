@@ -91,12 +91,12 @@ def user_overview(request):
     model = User
     partner = User.partner
     country = User.country
-    username = User.email
+    # username = User.email
 
     context = {
         'partner': partner,
         'country': country,
-        'username': username,
+        # 'username': username,
         # 'num_instances_available': num_instances_available,
         # 'num_authors': num_authors,
                }
