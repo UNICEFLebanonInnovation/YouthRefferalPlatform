@@ -19,7 +19,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, TemplateView, FormView
-
+from django.contrib.auth.models import User
 from referral_platform.users.templatetags.util_tags import has_group
 from .models import User
 from django.shortcuts import render
@@ -88,19 +88,19 @@ class UserChangeLanguageRedirectView(RedirectView):
 
 def user_overview(request):
 
-    model = User
-    partner = User.partner
-    country = User.country
-    # username = User.email
+    # model = User
+    # partner = User.partner
+    # country = User.country
+    # # username = User.email
 
-    context = {
-        'partner': partner,
-        'country': country,
+    args = {
+        'user': request.user,
+        # 'country': country,
         # 'username': username,
         # 'num_instances_available': num_instances_available,
         # 'num_authors': num_authors,
                }
-    return context
+    return render(request, 'users/profile.html', args)
 
 
     # def get_context_data(self, **kwargs):
