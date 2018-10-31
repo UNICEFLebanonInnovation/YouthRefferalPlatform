@@ -21,10 +21,10 @@
 
     <ol class="breadcrumb">
       <!--<li class="breadcrumb-item"><span class="badge badge-primary">{{ table.rows|length }}</span></li>-->
-      <li >{% trans "Partner Name: " %}{{ request.user.partner }}</li>
-      <li>{% trans "Username: " %} {{ request.user }}</li>
-      <li>{% trans "Country: " %}{{ request.user.country }}</li>
-      <li> {% trans "Is the User Staff: " %} {{ request.user.is_staff}}</li>
+      <li >{{ request.user.partner }}</li>
+      <li>{{ request.user }}</li>
+      <li>{{ request.user.country }}</li>
+      <!--<li> {% trans "Is the User Staff: " %} {{ request.user.is_staff}}</li>-->
 
 
         <!--<li class="breadcrumb-item active">-->
