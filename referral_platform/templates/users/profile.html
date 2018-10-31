@@ -17,18 +17,18 @@
 
 <section>
 
-    <ol class="breadcrumb">f
+
       <!--<li class="breadcrumb-item"><span class="badge badge-primary">{{ table.rows|length }}</span></li>-->
       <li >{{ user.partner }}</li>
       <li>{{ user }}</li>
       <li>{{ user.country }}</li>
       <!--<li> {% trans "Is the User Staff: " %} {{ request.user.is_staff}}</li>-->
 
-    </ol>
+
 
   <div class="col-sm-3">
               {% if request.user.is_authenticated %}
-              <h5 class="font-accident-two-normal uppercase"><a href="{% url 'account_change_password' %}">{% trans 'Change password?' %}</a></h5>
+              <h5 class="font-accident-two-normal uppercase"><a href="{% url 'account_change_password' %}">{% trans 'Change password ' %}</a></h5>
               <h5 class="font-accident-two-normal uppercase"><a href="{% url 'account_logout' %}">{% trans 'Logout' %}</a></h5>
               {% endif %}
                 <div class="dividewhite1"></div>
