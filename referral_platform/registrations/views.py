@@ -150,8 +150,14 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
+        beneficiary_flag = self.request.user.is_beneficiary
         form.save(request=self.request)
-        return super(AddView, self).form_valid(form)
+
+        if beneficiary_flag:
+            super(AddView, self).form_valid(form)
+            EditView(self)
+        else:
+            return super(AddView, self).form_valid(form)
 
 
 class EditView(LoginRequiredMixin, FormView):
