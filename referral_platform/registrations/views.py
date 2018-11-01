@@ -155,7 +155,7 @@ class AddView(LoginRequiredMixin, FormView):
 
         if beneficiary_flag:
             super(AddView, self).form_valid(form)
-            EditView(self)
+            EditView.get_success_url()
         else:
             return super(AddView, self).form_valid(form)
 
