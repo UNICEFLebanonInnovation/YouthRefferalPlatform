@@ -55,7 +55,7 @@ class ListingView(LoginRequiredMixin,
     def get_queryset(self):
         beneficiary_flag = self.request.user.is_beneficiary
         if beneficiary_flag:
-            return self.Registration
+            return 
         else:
             return Registration.objects.filter(partner_organization=self.request.user.partner)
 
