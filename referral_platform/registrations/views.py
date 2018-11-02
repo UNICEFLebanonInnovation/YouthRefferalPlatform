@@ -174,7 +174,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     @receiver(post_save, dispatch_uid="edit")
     def get_form(self, form_class=None):
-        instance = Registration.objects.get(id=AddView.form_valid(self), partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=AddView.form_valid(self, form_class=None), partner_organization=self.request.user.partner)
         if self.request.method == "POST":
             return CommonForm(self.request.POST, instance=instance)
         else:
