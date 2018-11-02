@@ -174,7 +174,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     @receiver(post_save, dispatch_uid="edit")
     def get_form(self, form_class=None):
-        instance = Registration.objects.get(id=AddView.form_valid.youth_id, partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=AddView.form_valid(self), partner_organization=self.request.user.partner)
         if self.request.method == "POST":
             return CommonForm(self.request.POST, instance=instance)
         else:
@@ -184,10 +184,10 @@ class AddView(LoginRequiredMixin, FormView):
             data['partner'] = self.request.user.partner
             return CommonForm(data, instance=instance)
 
-    def form_valid(self, form):
+    def form_revalid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         form.save(request=self.request, instance=instance)
-        return super(self.form_valid(form))
+        return super(self.form_revalid(form))
 
 
 class YouthAssessment(SingleObjectMixin, RedirectView):
