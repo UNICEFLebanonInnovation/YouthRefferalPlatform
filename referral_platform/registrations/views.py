@@ -153,7 +153,8 @@ class AddView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         beneficiary_flag = self.request.user.is_beneficiary
         form.save(request=self.request)
-        return super(AddView, self).form_valid(form)
+        youth_id = self.request.GET.get('youth_id')
+        return super(AddView, self).form_valid(form), youth_id
 
 
 # class EditView(LoginRequiredMixin, FormView):
@@ -173,7 +174,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     @receiver(post_save, dispatch_uid="edit")
     def get_form(self, form_class=None):
-        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=AddView.youth_id, partner_organization=self.request.user.partner)
         if self.request.method == "POST":
             return CommonForm(self.request.POST, instance=instance)
         else:
