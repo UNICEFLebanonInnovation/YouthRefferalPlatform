@@ -153,8 +153,7 @@ class AddView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         beneficiary_flag = self.request.user.is_beneficiary
         form.save(request=self.request)
-
-        super(AddView, self).form_valid(form)
+        return super(AddView, self).form_valid(form)
 
 
 # class EditView(LoginRequiredMixin, FormView):
@@ -172,7 +171,7 @@ class AddView(LoginRequiredMixin, FormView):
     #     initial = data
     #     return initial
 
-    @receiver(post_save, sender=form_valid(), dispatch_uid="update_stock_count")
+    @receiver(post_save, dispatch_uid="edit")
     def get_form(self, form_class=None):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
