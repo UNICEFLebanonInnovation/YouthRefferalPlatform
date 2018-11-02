@@ -18,7 +18,8 @@ from referral_platform.backends.djqscsv import render_to_csv_response
 from rest_framework import status
 from rest_framework import viewsets, mixins, permissions
 from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
@@ -153,32 +154,25 @@ class AddView(LoginRequiredMixin, FormView):
         beneficiary_flag = self.request.user.is_beneficiary
         form.save(request=self.request)
 
-        if beneficiary_flag:
-            super(AddView, self).form_valid(form)
-            self.EditView()
-        else:
-            return super(AddView, self).form_valid(form)
+        super(AddView, self).form_valid(form)
 
 
-class EditView(LoginRequiredMixin, FormView):
-    template_name = 'registrations/form.html'
-    form_class = CommonForm
-    model = Registration
-    success_url = '/registrations/list/'
+# class EditView(LoginRequiredMixin, FormView):
 
-    def get_success_url(self):
-        if self.request.POST.get('save_add_another', None):
-            return '/registrations/add/'
-        return self.success_url
+    # def get_success_url(self):
+    #     if self.request.POST.get('save_add_another', None):
+    #         return '/registrations/add/'
+    #     return self.success_url
 
-    def get_initial(self):
-        data = dict()
-        if self.request.user.partner:
-            data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner'] = self.request.user.partner
-        initial = data
-        return initial
+    # def get_initial(self):
+    #     data = dict()
+    #     if self.request.user.partner:
+    #         data['partner_locations'] = self.request.user.partner.locations.all()
+    #         data['partner'] = self.request.user.partner
+    #     initial = data
+    #     return initial
 
+    @receiver(post_save, sender=form_valid(), dispatch_uid="update_stock_count")
     def get_form(self, form_class=None):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
@@ -193,7 +187,7 @@ class EditView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         form.save(request=self.request, instance=instance)
-        return super(EditView, self).form_valid(form)
+        return super(self.form_valid(form))
 
 
 class YouthAssessment(SingleObjectMixin, RedirectView):
