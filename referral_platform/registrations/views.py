@@ -18,8 +18,7 @@ from referral_platform.backends.djqscsv import render_to_csv_response
 from rest_framework import status
 from rest_framework import viewsets, mixins, permissions
 from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
@@ -54,11 +53,7 @@ class ListingView(LoginRequiredMixin,
     filterset_class = YouthFilter
 
     def get_queryset(self):
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            return Registration.objects.none()
-        else:
-            return Registration.objects.filter(partner_organization=self.request.user.partner)
+        return Registration.objects.filter(partner_organization=self.request.user.partner)
 
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -151,46 +146,44 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
-        beneficiary_flag = self.request.user.is_beneficiary
         form.save(request=self.request)
-
         return super(AddView, self).form_valid(form)
 
 
-# class EditView(LoginRequiredMixin, FormView):
+class EditView(LoginRequiredMixin, FormView):
+    template_name = 'registrations/form.html'
+    form_class = CommonForm
+    model = Registration
+    success_url = '/registrations/list/'
 
+    def get_success_url(self):
+        if self.request.POST.get('save_add_another', None):
+            return '/registrations/add/'
+        return self.success_url
 
-    # def get_success_url(self):
-    #     if self.request.POST.get('save_add_another', None):
-    #         return '/registrations/add/'
-    #     return self.success_url
+    def get_initial(self):
+        data = dict()
+        if self.request.user.partner:
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
+        initial = data
+        return initial
 
-    # def get_initial(self):
-    #     data = dict()
-    #     if self.request.user.partner:
-    #         data['partner_locations'] = self.request.user.partner.locations.all()
-    #         data['partner'] = self.request.user.partner
-    #     initial = data
-    #     return initial
-    @receiver(post_save, sender=form_valid(), dispatch_uid="update_stock_count")
+    def get_form(self, form_class=None):
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        if self.request.method == "POST":
+            return CommonForm(self.request.POST, instance=instance)
+        else:
+            data = RegistrationSerializer(instance).data
+            data['youth_nationality'] = data['youth_nationality_id']
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
+            return CommonForm(data, instance=instance)
 
-    def editview(self, FormView):
-
-        def get_form(self, form_class=None):
-            instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-            if self.request.method == "POST":
-                return CommonForm(self.request.POST, instance=instance)
-            else:
-                data = RegistrationSerializer(instance).data
-                data['youth_nationality'] = data['youth_nationality_id']
-                data['partner_locations'] = self.request.user.partner.locations.all()
-                data['partner'] = self.request.user.partner
-                return CommonForm(data, instance=instance)
-
-        def form_valid(self, form):
-            instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-            form.save(request=self.request, instance=instance)
-            return super(EditView, self).form_valid(form)
+    def form_valid(self, form):
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        form.save(request=self.request, instance=instance)
+        return super(EditView, self).form_valid(form)
 
 
 class YouthAssessment(SingleObjectMixin, RedirectView):
@@ -475,14 +468,14 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__first_name',
             'registration__youth__father_name',
             'registration__youth__last_name',
-            'registration__partner_organization__name_en',
+            'registration__partner_organization__name',
             'other_family_not_present',
             'educational_status',
             # 'registration__partner_organization__name',
             # 'country',
             # 'nationality',
             # 'training_type',
-            'registration__governorate__parent__name',
+            'registration__governorate__parent__name_en',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
