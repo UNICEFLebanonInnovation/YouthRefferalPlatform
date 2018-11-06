@@ -148,13 +148,10 @@ class AddView(LoginRequiredMixin, FormView):
                 data['youth_nationality'] = instance.nationality_id
                 data['youth_marital_status'] = instance.marital_status
 
-        instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
-        youth_id = instance.id
-
         initial = data
+
         print(initial)
         print(data)
-        print(youth_id)
         return initial
 
     def form_valid(self, form):
