@@ -153,8 +153,7 @@ class AddView(LoginRequiredMixin, FormView):
         initial = data
         print(initial)
         print(data)
-        print(youth_id)
-        return initial, youth_id
+        return initial
 
     def form_valid(self, form):
 
