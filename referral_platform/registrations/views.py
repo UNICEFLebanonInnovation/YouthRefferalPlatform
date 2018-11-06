@@ -154,7 +154,7 @@ class AddView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
 
         form.save(request=self.request)
-        print(self.instance.id)
+        print('youth_id')
         return super(AddView, self).form_valid(form)
 
 
