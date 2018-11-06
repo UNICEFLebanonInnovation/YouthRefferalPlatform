@@ -122,7 +122,6 @@ class AddView(LoginRequiredMixin, FormView):
     form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
-    youth_id = ''
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
@@ -153,7 +152,8 @@ class AddView(LoginRequiredMixin, FormView):
         initial = data
         print(initial)
         print(data)
-        return initial
+        print(youth_id)
+        return initial, youth_id
 
     def form_valid(self, form):
 
