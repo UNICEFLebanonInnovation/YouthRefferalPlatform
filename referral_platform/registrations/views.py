@@ -171,6 +171,7 @@ class AddView(LoginRequiredMixin, FormView):
         beneficiary_flag = self.request.user.is_beneficiary
         if beneficiary_flag:
             reverse('registrations:edit', kwargs={'pk': self.request.GET.get('youth_id')})
+            print (self.request.GET.get('youth_id'))
             return super(AddView, self).form_valid(form)
             # registration_form = Assessment.objects.get(slug="registration")
 
