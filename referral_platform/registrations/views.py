@@ -135,6 +135,21 @@ class AddView(LoginRequiredMixin, FormView):
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
 
+        beneficiary_flag = self.request.user.is_beneficiary
+        instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
+        if beneficiary_flag:
+            if instance:
+                form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
+                all_forms = Assessment.objects.filter(partner=data['partner'])
+                new_forms = OrderedDict()
+
+                registration_form = Assessment.objects.get(slug="registration")
+
+                youth_registered = AssessmentSubmission.objects.filter(
+                    assessment_id=registration_form.id,
+                    registration_id=instance.id
+                ).exists()
+
         if self.request.GET.get('youth_id'):
                 instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
                 data['youth_id'] = instance.id
@@ -149,19 +164,19 @@ class AddView(LoginRequiredMixin, FormView):
                 data['youth_marital_status'] = instance.marital_status
 
         initial = data
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            if instance:
-                form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-                all_forms = Assessment.objects.filter(partner=data['partner'])
-                new_forms = OrderedDict()
 
-                registration_form = Assessment.objects.get(slug="registration")
-
-                youth_registered = AssessmentSubmission.objects.filter(
-                    assessment_id=registration_form.id,
-                    registration_id=instance.id
-                ).exists()
+        # if beneficiary_flag:
+        #     if instance:
+        #         form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
+        #         all_forms = Assessment.objects.filter(partner=data['partner'])
+        #         new_forms = OrderedDict()
+        #
+        #         registration_form = Assessment.objects.get(slug="registration")
+        #
+        #         youth_registered = AssessmentSubmission.objects.filter(
+        #             assessment_id=registration_form.id,
+        #             registration_id=instance.id
+        #         ).exists()
 
         return initial
 
