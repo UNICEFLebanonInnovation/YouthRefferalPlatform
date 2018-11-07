@@ -22,7 +22,7 @@ from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
-
+from collections import OrderedDict
 from referral_platform.backends.tasks import *
 from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
@@ -149,9 +149,20 @@ class AddView(LoginRequiredMixin, FormView):
                 data['youth_marital_status'] = instance.marital_status
 
         initial = data
+        beneficiary_flag = self.request.user.is_beneficiary
+        if beneficiary_flag:
+            if instance:
+                form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
+                all_forms = Assessment.objects.filter(partner=data['partner'])
+                new_forms = OrderedDict()
 
-        print(initial)
-        print(data)
+                registration_form = Assessment.objects.get(slug="registration")
+
+                youth_registered = AssessmentSubmission.objects.filter(
+                    assessment_id=registration_form.id,
+                    registration_id=instance.id
+                ).exists()
+
         return initial
 
     def form_valid(self, form):
