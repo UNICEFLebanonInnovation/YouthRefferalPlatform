@@ -173,7 +173,7 @@ class AddView(LoginRequiredMixin, FormView):
             reverse('registrations:edit', kwargs={'pk': self.request.GET.get('youth_id')})
             # print (self.request.GET.get('youth_id'))
             # return super(AddView, self).form_valid(form)
-            return form.EditView()
+            return
 
         else:
             return super(AddView, self).form_valid(form)
