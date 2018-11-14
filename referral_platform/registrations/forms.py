@@ -342,15 +342,24 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        self.helper.layout.append(
-            FormActions(
-                HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
-                Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
-                Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
-                Submit('save', _('Save'), css_class='col-md-2'),
-                css_class='btn-actions'
+        if self.request.user.is_beneficiary:
+            self.helper.layout.append(
+                FormActions(
+                    HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
+                    Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
+                    css_class='btn-actions'
+                )
             )
-        )
+        else:
+            self.helper.layout.append(
+                FormActions(
+                    HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
+                    Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
+                    Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
+                    Submit('save', _('Save'), css_class='col-md-2'),
+                    css_class='btn-actions'
+                )
+            )
 
     def clean(self):
 
