@@ -78,6 +78,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
+            del self.request.session['instance_id']
             return '/registrations/add/'
         if self.request.POST.get('save_and_continue', None):
             return '/registrations/edit/' + str(self.request.session.get('instance_id')) + '/'
