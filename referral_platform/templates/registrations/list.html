@@ -29,29 +29,30 @@
       <li class="breadcrumb-item active">{{ request.user.partner }}</li>
       <li class="breadcrumb-item active">{{ request.user }}</li>
 
-        <li class="breadcrumb-item active">
-            <a href="{% url 'registrations:add' %}" class="btn btn-success">
-                <i class="icon-plus-sign icon-white"></i>
-                {% trans "Add new beneficiary" %}
-            </a>
-        </li>
-        <li>
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary">{% trans "Export data" %}</button>
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="caret"></span>
-              <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration" %}</a></li>
-              <li><a href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a></li>
-              <li><a href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a></li>
-              <li><a href="{% url 'registrations:export_initiative_assessments' %}">{% trans "Export Initiative registration & implementation" %}</a></li>
-              <li><a href="{% url 'registrations:export' %}">{% trans "Export Beneficiary list" %}</a></li>
-            </ul>
-          </div>
-        </li>
-
+          <li class="breadcrumb-item active">
+              <a href="{% url 'registrations:add' %}" class="btn btn-success">
+                  <i class="icon-plus-sign icon-white"></i>
+                  {% trans "Add new beneficiary" %}
+              </a>
+          </li>
+          {% if Not request.user.is_beneficiary %}
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary">{% trans "Export data" %}</button>
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration" %}</a></li>
+                    <li><a href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a></li>
+                    <li><a href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a></li>
+                    <li><a href="{% url 'registrations:export_initiative_assessments' %}">{% trans "Export Initiative registration & implementation" %}</a></li>
+                    <li><a href="{% url 'registrations:export' %}">{% trans "Export Beneficiary list" %}</a></li>
+                  </ul>
+                </div>
+              </li>
+          {% endif %}
     </ol>
 
     <div class="pb-5 pr-5 list-filter">
