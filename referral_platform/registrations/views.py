@@ -22,21 +22,16 @@ from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
-from collections import OrderedDict
+
 from referral_platform.backends.tasks import *
 from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
-from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
+from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
 from .mappings import *
-import zipfile
-import StringIO
-import io
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 
 
 class ListingView(LoginRequiredMixin,
@@ -53,13 +48,7 @@ class ListingView(LoginRequiredMixin,
     filterset_class = YouthFilter
 
     def get_queryset(self):
-        beneficiary_flag = self.request.user.is_beneficiary
-
-        if beneficiary_flag:
-            return Registration.objects.none()
-        else:
-            return Registration.objects.filter(partner_organization=self.request.user.partner)
-
+        return Registration.objects.filter(partner_organization=self.request.user.partner)
 
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -69,24 +58,6 @@ class ListingView(LoginRequiredMixin,
             return YouthSYFilter
         elif "JORDAN" in locations:
             return YouthFilter
-        elif "IRAK" in locations:
-            return YouthPLFilter
-        elif "IRAN" in locations:
-            return YouthSYFilter
-        elif "MOROCCO" in locations:
-            return YouthFilter
-        elif "DJIBOUTI" in locations:
-            return YouthPLFilter
-        elif "EGYPT" in locations:
-            return YouthSYFilter
-        elif "ALGERIA" in locations:
-            return YouthFilter
-        elif "TUNIS" in locations:
-            return YouthPLFilter
-        elif "LEBANON" in locations:
-            return YouthSYFilter
-        elif "SUDAN" in locations:
-            return YouthFilter
 
     def get_table_class(self):
             locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -95,24 +66,6 @@ class ListingView(LoginRequiredMixin,
             elif "SYRIA" in locations:
                 return CommonTableAlt
             elif "JORDAN" in locations:
-                return CommonTable
-            elif "IRAK" in locations:
-                return CommonTable
-            elif "IRAN" in locations:
-                return CommonTable
-            elif "MOROCCO" in locations:
-                return CommonTable
-            elif "DJIBOUTI" in locations:
-                return CommonTable
-            elif "EGYPT" in locations:
-                return CommonTable
-            elif "ALGERIA" in locations:
-                return CommonTable
-            elif "TUNIS" in locations:
-                return CommonTable
-            elif "LEBANON" in locations:
-                return CommonTable
-            elif "SUDAN" in locations:
                 return CommonTable
 
 
@@ -125,7 +78,10 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
+            del self.request.session['instance_id']
             return '/registrations/add/'
+        if self.request.POST.get('save_and_continue', None):
+            return '/registrations/edit/' + str(self.request.session.get('instance_id')) + '/'
         return self.success_url
 
     def get_initial(self):
@@ -149,34 +105,11 @@ class AddView(LoginRequiredMixin, FormView):
                 data['youth_marital_status'] = instance.marital_status
 
         initial = data
-
-        # if beneficiary_flag:
-        #     if instance:
-        #         form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-        #         all_forms = Assessment.objects.filter(partner=data['partner'])
-        #         new_forms = OrderedDict()
-        #
-        #         registration_form = Assessment.objects.get(slug="registration")
-        #
-        #         youth_registered = AssessmentSubmission.objects.filter(
-        #             assessment_id=registration_form.id,
-        #             registration_id=instance.id
-        #         ).exists()
-
         return initial
 
     def form_valid(self, form):
-
         form.save(request=self.request)
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            reverse('registrations:edit', kwargs={'pk': self.request.GET.get('youth_id')})
-            # print (self.request.GET.get('youth_id'))
-            # return super(AddView, self).form_valid(form)
-            return
-
-        else:
-            return super(AddView, self).form_valid(form)
+        return super(AddView, self).form_valid(form)
 
 
 class EditView(LoginRequiredMixin, FormView):
@@ -236,7 +169,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 partner=registry.partner_organization.name,
-                country=registry.governorate.parent.name_en,
+                country=registry.governorate.parent.name,
                 nationality=youth.nationality.code,
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
@@ -262,7 +195,6 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             status='enrolled'
         )
         submission.data = payload
-        submission.update_field()
         submission.save()
 
         return HttpResponse()
@@ -317,7 +249,7 @@ class ExportView(LoginRequiredMixin, ListView):
 
         headers = {
             # 'country': 'Country',
-            'governorate__parent__name_en': 'Country',
+            'governorate__parent__name': 'Country',
             'governorate__name_en': 'Governorate',
             'partner_organization__name': 'Partner',
             'center__name': 'Center',
@@ -336,9 +268,9 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__address': 'address',
             'owner__email': 'Created By',
             # 'youth__calculate_age': 'Age',
-            'modified_by__email': 'Modified By',
+            'modified_by__email': 'modified_by',
             'created': 'created',
-            'modified': 'Modified',
+            'modified': 'modified',
     }
         qs = self.get_queryset().values(
             'youth__first_name',
@@ -352,7 +284,7 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__birthday_year',
             'location',
             'governorate__name_en',
-            'governorate__parent__name_en',
+            'governorate__parent__name',
             'partner_organization__name',
             'center__name',
             'youth__nationality__code',
@@ -373,7 +305,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
     model = AssessmentSubmission
     queryset = AssessmentSubmission.objects.filter(assessment__slug='registration')
-    newmapping = NewMapping
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -383,14 +314,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
         return queryset
 
-
-    # def update_field(self, key, value):
-    #
-    #     getattr(self, key)
-    #     setattr(self, key, value)
-
     def get(self, request, *args, **kwargs):
-
 
         headers = {
             'registration__youth__first_name': 'First Name',
@@ -401,11 +325,11 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
-            'registration__youth__nationality__name_en': 'Nationality',
+            'registration__youth__nationality__code': 'Nationality',
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name_en': 'Country',
+            'registration__governorate__parent__name': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
@@ -413,7 +337,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
             'center_type': 'Center Type',
-
 
             'educational_status': 'Educational Status',
             'School_name': 'School name',
@@ -440,7 +363,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'concent_paper': 'Conscent form filled',
             'family_steady_income': 'Family Income',
             'training_date': 'Training Date',
-            'training_type': 'Training Type',
             'training_end_date': 'Training End Date',
             '_submission_time': 'Submission Time and Date',
             'desired_method_for_follow_up': 'Desired Method for follow-up',
@@ -451,44 +373,43 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
          }
 
         qs = self.get_queryset().extra(select={
-            # 'partner': "new_data->>'partner'",
-            'educational_status': "new_data->>'educational_status'",
-            'other_family_not_present': "new_data->>'other_family_not_present'",
-            # 'nationality': "new_data->>'nationality'",
-            # 'training_type': "new_data->>'training_type'",
+            # 'partner': "data->>'partner'",
+            'educational_status': "data->>'educational_status'",
+            'other_family_not_present': "data->>'other_family_not_present'",
+            # 'nationality': "data->>'nationality'",
+            # 'training_type': "data->>'training_type'",
 
-            # 'phonenumber': "new_data->>'phonenumber'",
+            # 'phonenumber': "data->>'phonenumber'",
 
-            'center_type': "new_data->>'center_type'",
-            'other_five': "new_data->>'other_five'",
-            'Reason_stop_study': "new_data->>'Reason_stop_study'",
-            'educ_level_stopped': "new_data->>'educ_level_stopped'",
-            'occupation_type': "new_data->>'occupation_type'",
-            'School_name': "new_data->>'School_name'",
-            'School_type': "new_data->>'School_type'",
-            'school_level': "new_data->>'School_level'",
-            'reason_for_skipping_class': "new_data->>'reason_for_skipping_class'",
-            'family_present': "new_data->>'family_present'",
-            'family_not_present': "new_data->>'family_not_present'",
-            'not_present_where': "new_data->>'not_present_where'",
-            'Accommodation_type': "new_data->>'Accommodation_type'",
-            'how_many_times_skipped_school': "new_data->>'how_many_times_skipped_school'",
-            'drugs_substance_use': "new_data->>'drugs_substance_use'",
-            'how_many_times_displaced': "new_data->>'how_many_times_displaced'",
-            'Relation_with_labor_market': "new_data->>'Relation_with_labor_market'",
-            'reasons_for_not_feeling_safe_a': "new_data->>'reasons_for_not_feeling_safe_a'",
-            'feeling_of_safety_security': "new_data->>'feeling_of_safety_security'",
-            'concent_paper': "new_data->>'concent_paper'",
-            'family_steady_income': "new_data->>'family_steady_income'",
-            'training_date': "new_data->>'training_date'",
-            'training_end_date': "new_data->>'training_end_date'",
-            'training_type': "new_data->>'training_type'",
-            '_submission_time': "new_data->>'_submission_time'",
-            'what_electronics_do_you_own': "new_data->>'what_electronics_do_you_own'",
-            'desired_method_for_follow_up': "new_data->>'desired_method_for_follow_up'",
-            'text_39911992': "new_data->>'text_39911992'",
-            'text_d45750c6': "new_data->>'text_d45750c6'",
-            'text_4c6fe6c9': "new_data->>'text_4c6fe6c9'",
+            'center_type': "data->>'center_type'",
+            'other_five': "data->>'other_five'",
+            'Reason_stop_study': "data->>'Reason_stop_study'",
+            'educ_level_stopped': "data->>'educ_level_stopped'",
+            'occupation_type': "data->>'occupation_type'",
+            'School_name': "data->>'School_name'",
+            'School_type': "data->>'School_type'",
+            'school_level': "data->>'School_level'",
+            'reason_for_skipping_class': "data->>'reason_for_skipping_class'",
+            'family_present': "data->>'family_present'",
+            'family_not_present': "data->>'family_not_present'",
+            'not_present_where': "data->>'not_present_where'",
+            'Accommodation_type': "data->>'Accommodation_type'",
+            'how_many_times_skipped_school': "data->>'how_many_times_skipped_school'",
+            'drugs_substance_use': "data->>'drugs_substance_use'",
+            'how_many_times_displaced': "data->>'how_many_times_displaced'",
+            'Relation_with_labor_market': "data->>'Relation_with_labor_market'",
+            'reasons_for_not_feeling_safe_a': "data->>'reasons_for_not_feeling_safe_a'",
+            'feeling_of_safety_security': "data->>'feeling_of_safety_security'",
+            'concent_paper': "data->>'concent_paper'",
+            'family_steady_income': "data->>'family_steady_income'",
+            'training_date': "data->>'training_date'",
+            'training_end_date': "data->>'training_end_date'",
+            '_submission_time': "data->>'_submission_time'",
+            'what_electronics_do_you_own': "data->>'what_electronics_do_you_own'",
+            'desired_method_for_follow_up': "data->>'desired_method_for_follow_up'",
+            'text_39911992': "data->>'text_39911992'",
+            'text_d45750c6': "data->>'text_d45750c6'",
+            'text_4c6fe6c9': "data->>'text_4c6fe6c9'",
 
             # 'youth_fname':"registration->>youth__last_name",
             # 'youth_lname':"registration->>youth__first_name",
@@ -500,11 +421,10 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__partner_organization__name',
             'other_family_not_present',
             'educational_status',
-            # 'registration__partner_organization__name',
             # 'country',
             # 'nationality',
             # 'training_type',
-            'registration__governorate__parent__name_en',
+            'registration__governorate__parent__name',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
@@ -512,7 +432,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__birthday_day',
             'registration__youth__birthday_month',
             'registration__youth__birthday_year',
-            'registration__youth__nationality__name_en',
+            'registration__youth__nationality__code',
             'registration__youth__marital_status',
             'registration__youth__sex',
             'registration__youth__number',
@@ -536,7 +456,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'family_steady_income',
             'training_date',
             'training_end_date',
-            '_submission_time',     
+            '_submission_time',
             'what_electronics_do_you_own',
             'desired_method_for_follow_up',
             'educ_level_stopped',
@@ -545,7 +465,6 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_39911992',
             'text_d45750c6',
             'text_4c6fe6c9',
-            'training_type',
         )
         filename = 'registrations'
 
@@ -576,15 +495,15 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
-            'registration__youth__nationality__name_en': 'Nationality',
+            'registration__youth__nationality__code': 'Nationality',
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name_en': 'Country',
+            'registration__governorate__parent__name': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
-            'assessment__overview': 'Assessment Type',
+            'assessment__slug': 'Assessment Type',
             # 'nationality': 'Nationality',
             # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
@@ -603,24 +522,23 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
             '_submission_time': 'Submission time',
             '_userform_id': 'User',
-            # 'registration__partner_organization__name': 'Partner',
         }
 
         qs = self.get_queryset().extra(select={
-            '_4_articulate_thoughts': "new_data->>'_4_articulate_thoughts'",
-            '_1_express_opinion': "new_data->>'_1_express_opinion'",
-            '_20_discussions_with_peers_before_': "new_data->>'_20_discussions_with_peers_before_'",
-            '_28_discuss_opinions': "new_data->>'_28_discuss_opinions'",
-            '_31_willing_to_compromise': "new_data->>'_31_willing_to_compromise'",
-            '_pal_I_belong': "new_data->>'_pal_I_belong'",
-            '_41_where_to_volunteer': "new_data->>'_41_where_to_volunteer'",
-            '_42_regularly_volunteer': "new_data->>'_42_regularly_volunteer'",
-            '_pal_contrib_appreciated': "new_data->>'_pal_contrib_appreciated'",
-            '_pal_contribute_to_development': "new_data->>'_pal_contribute_to_development'",
-            '_51_communicate_community_conc': "new_data->>'_51_communicate_community_conc'",
-            '_52_participate_community_medi': "new_data->>'_52_participate_community_medi'",
-            '_submission_time': "new_data->>'_submission_time'",
-            '_userform_id': "new_data->>'_userform_id'",
+            '_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
+            '_1_express_opinion': "data->>'_1_express_opinion'",
+            '_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
+            '_28_discuss_opinions': "data->>'_28_discuss_opinions'",
+            '_31_willing_to_compromise': "data->>'_31_willing_to_compromise'",
+            '_pal_I_belong': "data->>'_pal_I_belong'",
+            '_41_where_to_volunteer': "data->>'_41_where_to_volunteer'",
+            '_42_regularly_volunteer': "data->>'_42_regularly_volunteer'",
+            '_pal_contrib_appreciated': "data->>'_pal_contrib_appreciated'",
+            '_pal_contribute_to_development': "data->>'_pal_contribute_to_development'",
+            '_51_communicate_community_conc': "data->>'_51_communicate_community_conc'",
+            '_52_participate_community_medi': "data->>'_52_participate_community_medi'",
+            '_submission_time': "data->>'_submission_time'",
+            '_userform_id': "data->>'_userform_id'",
 
 
         }).values(
@@ -628,20 +546,19 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__father_name',
             'registration__youth__last_name',
             'registration__partner_organization__name',
-            'registration__governorate__parent__name_en',
+            'registration__governorate__parent__name',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
             'registration__youth__bayanati_ID',
-            'registration__partner_organization__name',
             'registration__youth__birthday_day',
             'registration__youth__birthday_month',
             'registration__youth__birthday_year',
-            'registration__youth__nationality__name_en',
+            'registration__youth__nationality__code',
             'registration__youth__marital_status',
             'registration__youth__sex',
             'registration__youth__number',
-            'assessment__overview',
+            'assessment__slug',
             '_4_articulate_thoughts',
             '_1_express_opinion',
             '_20_discussions_with_peers_before_',
@@ -683,19 +600,18 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__last_name': 'Last Name',
             'registration__partner_organization__name': 'Partner',
             'registration__youth__bayanati_ID': 'Bayanati ID',
-            # 'registration__partner_organization__name': 'Partner',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
-            'registration__youth__nationality__name_en': 'Nationality',
+            'registration__youth__nationality__code': 'Nationality',
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name_en': 'Country',
+            'registration__governorate__parent__name': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
-            'assessment__overview': 'Assessment Type',
+            'assessment__slug': 'Assessment Type',
             # 'nationality': 'Nationality',
             # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
@@ -733,55 +649,54 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset().extra(select={
 
-            'can_plan_personal': "new_data->>'can_plan_personal'",
-            'can_plan_career': "new_data->>'can_plan_career'",
-            'can_manage_financ': "new_data->>'can_manage_financ'",
-            'can_plan_time': "new_data->>'can_plan_time'",
-            'can_suggest': "new_data->>'can_suggest'",
-            'can_take_decision': "new_data->>'can_take_decision'",
-            'problem_solving': "new_data->>'problem_solving'",
-            'aware_resources': "new_data->>'aware_resources'",
-            'can_handle_pressure': "new_data->>'can_handle_pressure'",
-            'motivated_advance_skills': "new_data->>'motivated_advance_skills'",
-            'communication_skills': "new_data->>'communication_skills'",
-            'presentation_skills': "new_data->>'presentation_skills'",
-            'team_is': "new_data->>'team_is'",
-            'good_team_is': "new_data->>'good_team_is'",
-            'team_leader_is': "new_data->>'team_leader_is'",
-            'bad_decision_cause': "new_data->>'bad_decision_cause'",
-            'easiest_solution': "new_data->>'easiest_solution'",
-            'can_determin_probs': "new_data->>'can_determin_probs'",
-            '_submission_time': "new_data->>'_submission_time'",
+            'can_plan_personal': "data->>'can_plan_personal'",
+            'can_plan_career': "data->>'can_plan_career'",
+            'can_manage_financ': "data->>'can_manage_financ'",
+            'can_plan_time': "data->>'can_plan_time'",
+            'can_suggest': "data->>'can_suggest'",
+            'can_take_decision': "data->>'can_take_decision'",
+            'problem_solving': "data->>'problem_solving'",
+            'aware_resources': "data->>'aware_resources'",
+            'can_handle_pressure': "data->>'can_handle_pressure'",
+            'motivated_advance_skills': "data->>'motivated_advance_skills'",
+            'communication_skills': "data->>'communication_skills'",
+            'presentation_skills': "data->>'presentation_skills'",
+            'team_is': "data->>'team_is'",
+            'good_team_is': "data->>'good_team_is'",
+            'team_leader_is': "data->>'team_leader_is'",
+            'bad_decision_cause': "data->>'bad_decision_cause'",
+            'easiest_solution': "data->>'easiest_solution'",
+            'can_determin_probs': "data->>'can_determin_probs'",
+            '_submission_time': "data->>'_submission_time'",
 
-            'bad_venue': "new_data->>'bad_venue'",
-            'bad_venue_others': "new_data->>'bad_venue_others'",
-            'additional_comments': "new_data->>'additional_comments'",
+            'bad_venue': "data->>'bad_venue'",
+            'bad_venue_others': "data->>'bad_venue_others'",
+            'additional_comments': "data->>'additional_comments'",
 
-            'personal_value': "new_data->>'personal_value'",
-            'faced_challenges': "new_data->>'faced_challenges'",
-            'challenges': "new_data->>'challenges'",
-            'has_comments': "new_data->>'has_comments'",
-            '_userform_id': "new_data->>'_userform_id'",
+            'personal_value': "data->>'personal_value'",
+            'faced_challenges': "data->>'faced_challenges'",
+            'challenges': "data->>'challenges'",
+            'has_comments': "data->>'has_comments'",
+            '_userform_id': "data->>'_userform_id'",
 
         }).values(
             'registration__youth__first_name',
             'registration__youth__father_name',
             'registration__youth__last_name',
             'registration__partner_organization__name',
-            'registration__governorate__parent__name_en',
+            'registration__governorate__parent__name',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
             'registration__youth__bayanati_ID',
-            'registration__partner_organization__name',
             'registration__youth__birthday_day',
             'registration__youth__birthday_month',
             'registration__youth__birthday_year',
-            'registration__youth__nationality__name_en',
+            'registration__youth__nationality__code',
             'registration__youth__marital_status',
             'registration__youth__sex',
             'registration__youth__number',
-            'assessment__overview',
+            'assessment__slug',
             'can_plan_personal',
             'can_plan_career',
             'can_manage_financ',
@@ -847,23 +762,23 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status': 'Marital status',
             'registration__youth__sex': 'Gender',
             'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name_en': 'Country',
+            'registration__governorate__parent__name': 'Country',
             'registration__governorate__name_en': 'Governorate',
             'registration__center__name': 'Center',
             'registration__location': 'Location',
-            'assessment__overview': 'Assessment Type',
+            'assessment__slug': 'Assessment Type',
 
             'respid_initiativeID_title': 'Initiative Title',
             'initiative_loc': 'Initiative Location',
             'gender_implem_initiatives': 'Gender of members who were engaged in the initiative implementation',
             'No_of_team_members_executed': 'Number of people engaged in the initiative implementation',
-            # 'integer_0259d46e': 'How many people benefited/ reached by implementing the initiative?',
+            'integer_0259d46e': 'How many people benefited/ reached by implementing the initiative?',
             'start_date_implementing_initia': 'Planned start date of the initiative',
             'type_of_initiative': 'Type of Initiative',
             'other_type_of_initiative': 'If other, please specify',
             'duration_of_initiative': 'Duration of the initiative',
-            # 'select_multiple_e160966a': 'The Age groups of the beneficiaries reached?',
-            # 'select_one_a3c4ea99': 'Sex of beneficiaries',
+            'select_multiple_e160966a': 'The Age groups of the beneficiaries reached?',
+            'select_one_a3c4ea99': 'Sex of beneficiaries',
             'leadership': 'The group members expects to play leading roles for the implementation of the initiative ',
             'challenges_faced': 'Types of challenges while implementing the initiative',
             'other_challenges': 'Others, please specify',
@@ -901,49 +816,49 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset().extra(select={
 
-            'respid_initiativeID_title': "new_data->>'respid_initiativeID_title'",
-            'initiative_loc': "new_data->>'initiative_loc'",
-            'gender_implem_initiatives': "new_data->>'gender_implem_initiatives'",
-            'No_of_team_members_executed': "new_data->>'No_of_team_members_executed'",
-            # 'integer_0259d46e': "new_data->>'integer_0259d46e'",
-            'start_date_implementing_initia': "new_data->>'start_date_implementing_initia'",
-            'type_of_initiative': "new_data->>'type_of_initiative'",
-            'other_type_of_initiative': "new_data->>'other_type_of_initiative'",
-            'duration_of_initiative': "new_data->>'duration_of_initiative'",
-            # 'select_multiple_e160966a': "new_data->>'select_multiple_e160966a'",
-            # 'select_one_a3c4ea99': "new_data->>'select_one_a3c4ea99'",
-            'leadership': "new_data->>'leadership'",
-            'challenges_faced': "new_data->>'challenges_faced'",
-            'other_challenges': "new_data->>'other_challenges'",
-            'number_of_direct_beneficiaries': "new_data->>'number_of_direct_beneficiaries'",
-            'age_group_range': "new_data->>'age_group_range'",
-            'gender_of_beneficiaries': "new_data->>'gender_of_beneficiaries'",
-            'mentor_assigned': "new_data->>'mentor_assigned'",
-            'initiative_as_expected': "new_data->>'initiative_as_expected'",
-            'team_involovement': "new_data->>'team_involovement'",
-            'communication': "new_data->>'communication'",
-            'problem_solving': "new_data->>'problem_solving'",
-            'analytical_skills': "new_data->>'analytical_skills'",
-            'sense_of_belonging': "new_data->>'sense_of_belonging'",
-            'assertiveness': "new_data->>'assertiveness'",
-            'mentorship_helpful': "new_data->>'mentorship_helpful'",
-            'problem_addressed': "new_data->>'problem_addressed'",
-            'planned_results': "new_data->>'planned_results'",
-            'planning_to_mobilize_resources': "new_data->>'planning_to_mobilize_resources'",
-            'mobilized_resources_through': "new_data->>'mobilized_resources_through'",
-            'did_you_mobilize_resources': "new_data->>'did_you_mobilize_resources'",
-            '_geolocation': "new_data->>'_geolocation'",
-            'if_so_who': "new_data->>'if_so_who'",
+            'respid_initiativeID_title': "data->>'respid_initiativeID_title'",
+            'initiative_loc': "data->>'initiative_loc'",
+            'gender_implem_initiatives': "data->>'gender_implem_initiatives'",
+            'No_of_team_members_executed': "data->>'No_of_team_members_executed'",
+            'integer_0259d46e': "data->>'integer_0259d46e'",
+            'start_date_implementing_initia': "data->>'start_date_implementing_initia'",
+            'type_of_initiative': "data->>'type_of_initiative'",
+            'other_type_of_initiative': "data->>'other_type_of_initiative'",
+            'duration_of_initiative': "data->>'duration_of_initiative'",
+            'select_multiple_e160966a': "data->>'select_multiple_e160966a'",
+            'select_one_a3c4ea99': "data->>'select_one_a3c4ea99'",
+            'leadership': "data->>'leadership'",
+            'challenges_faced': "data->>'challenges_faced'",
+            'other_challenges': "data->>'other_challenges'",
+            'number_of_direct_beneficiaries': "data->>'number_of_direct_beneficiaries'",
+            'age_group_range': "data->>'age_group_range'",
+            'gender_of_beneficiaries': "data->>'gender_of_beneficiaries'",
+            'mentor_assigned': "data->>'mentor_assigned'",
+            'initiative_as_expected': "data->>'initiative_as_expected'",
+            'team_involovement': "data->>'team_involovement'",
+            'communication': "data->>'communication'",
+            'problem_solving': "data->>'problem_solving'",
+            'analytical_skills': "data->>'analytical_skills'",
+            'sense_of_belonging': "data->>'sense_of_belonging'",
+            'assertiveness': "data->>'assertiveness'",
+            'mentorship_helpful': "data->>'mentorship_helpful'",
+            'problem_addressed': "data->>'problem_addressed'",
+            'planned_results': "data->>'planned_results'",
+            'planning_to_mobilize_resources': "data->>'planning_to_mobilize_resources'",
+            'mobilized_resources_through': "data->>'mobilized_resources_through'",
+            'did_you_mobilize_resources': "data->>'did_you_mobilize_resources'",
+            '_geolocation': "data->>'_geolocation'",
+            'if_so_who': "data->>'if_so_who'",
 
-            'type_of_support_required': "new_data->>'type_of_support_required'",
-            'type_of_support_received': "new_data->>'type_of_support_received'",
-            'support_received_helpful': "new_data->>'support_received_helpful'",
-            'support_not_helpful_why': "new_data->>'support_not_helpful_why'",
+            'type_of_support_required': "data->>'type_of_support_required'",
+            'type_of_support_received': "data->>'type_of_support_received'",
+            'support_received_helpful': "data->>'support_received_helpful'",
+            'support_not_helpful_why': "data->>'support_not_helpful_why'",
 
-            'start': "new_data->>'start'",
-            'end': "new_data->>'end'",
-            '_submission_time': "new_data->>'_submission_time'",
-            '_userform_id': "new_data->>'_userform_id'",
+            'start': "data->>'start'",
+            'end': "data->>'end'",
+            '_submission_time': "data->>'_submission_time'",
+            '_userform_id': "data->>'_userform_id'",
 
         }).values(
             'registration__youth__first_name',
@@ -958,23 +873,23 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__marital_status',
             'registration__youth__sex',
             'registration__youth__number',
-            'registration__governorate__parent__name_en',
+            'registration__governorate__parent__name',
             'registration__governorate__name_en',
             'registration__center__name',
             'registration__location',
-            'assessment__overview',
+            'assessment__slug',
 
             'respid_initiativeID_title',
             'initiative_loc',
             'gender_implem_initiatives',
             'No_of_team_members_executed',
-            # 'integer_0259d46e',
+            'integer_0259d46e',
             'start_date_implementing_initia',
             'type_of_initiative',
             'other_type_of_initiative',
             'duration_of_initiative',
-            # 'select_multiple_e160966a',
-            # 'select_one_a3c4ea99',
+            'select_multiple_e160966a',
+            'select_one_a3c4ea99',
             'leadership',
             'challenges_faced',
             'other_challenges',
