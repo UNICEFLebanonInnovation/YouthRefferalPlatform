@@ -1,0 +1,74 @@
+@@ -1,73 +0,0 @@
+{% extends "base2.html" %}
+{% load staticfiles i18n %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load bootstrap3 %}
+{% load util_tags %}
+{% bootstrap_css %}
+
+{% block extra_head %}
+    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet" />
+
+{% endblock %}
+
+
+<head>
+<title>User Profile</title>
+</head>
+
+
+{% block content-full-page %}
+<section id="page-title" class="inline-form inner-section ui-menu-color02">
+        <div class="container-fluid nopadding">
+            <h3 class="font-accident-two-light color01 uppercase"
+                data-animation-origin="right"
+                data-animation-duration="400"
+                data-animation-delay="100"
+                data-animation-distance="50px">{% trans "User Profile" %}</h3>
+
+        </div>
+    </section>
+    <section>
+      <!--<div class="pb-5 pr-5 list-filter">-->
+
+      <!--<li > {% trans "Partner Name: " %} {{ user.partner }}</li>-->
+      <!--<li>{% trans "Username: " %} {{ user }}</li>-->
+      <!--<li>{% trans "Country: " %} {{ user.country }}</li>-->
+      <!--&lt;!&ndash;<li> {% trans "Is the User Staff: " %} {{ request.user.is_staff}}</li>&ndash;&gt;-->
+
+      <!--<ol class="font-accident-two-normal uppercase"><a href="{% url 'account_change_password' %}">{% trans 'Change password ' %}</a></ol>-->
+      <!--<ol class="font-accident-two-normal uppercase"><a href="{% url 'account_logout' %}">{% trans 'Logout' %}</a></ol>-->
+
+      <!--</div>-->
+
+      	<div class="profile-content">
+            <div class="container">
+                <div class="row">
+                      <br>
+        	           <div class="profile text-center">
+	                        <div class="avatar"><img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar"></a></div>
+
+    <div class="name text-center">
+      <blockquote>
+        <h4>{{ user }}</h4>
+        <!--<small><cite title="Source Title"><i class="icon-map-marker"></i></cite></small>-->
+      </blockquote>
+    </div>
+        <div class="description text-center">
+      <p>
+        <b>{% trans "Partner: " %}</b> {{ user.partner }}<br>
+        <b>{% trans "Country: " %}</b> {{ user.country.name_en }}<br>
+        <b>{% trans "Email: " %}</b> {{ user.email }} <br>
+        <b>{% trans "Name: " %}</b> {{ user.first_name }}, {{ user.last_name }} <br>
+        <b>{% trans "Date Joined: " %}</b> {{ user.date_joined }}<br>
+      </p>
+    </div>
+    </div>
+
+</div>
+      </div>
+        </div>
+
+</section>
+{% endblock %}
