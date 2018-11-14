@@ -195,7 +195,7 @@ class CommonForm(forms.ModelForm):
         my_fields[_('Location Information')] = ['governorate', 'center', 'trainer', 'location']
 
         # Add Trainer name to Jordan
-        jordan_location = Location.objects.get(name_en="Jordan")
+        jordan_location = Location.objects.get(name="Jordan")
         if jordan_location not in partner_locations:
             del self.fields['trainer']
             del self.fields['youth_bayanati_ID']
@@ -346,6 +346,7 @@ class CommonForm(forms.ModelForm):
             FormActions(
                 HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
                 Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
+                Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
                 Submit('save', _('Save'), css_class='col-md-2'),
                 css_class='btn-actions'
             )
@@ -408,6 +409,7 @@ class CommonForm(forms.ModelForm):
             serializer = RegistrationSerializer(instance, data=request.POST)
             if serializer.is_valid():
                 serializer.update(validated_data=serializer.validated_data, instance=instance)
+                request.session['instance_id'] = instance.id
                 messages.success(request, _('Your data has been sent successfully to the server'))
             else:
                 messages.warning(request, serializer.errors)
@@ -419,6 +421,7 @@ class CommonForm(forms.ModelForm):
                 instance.modified_by = request.user
                 instance.partner_organization = request.user.partner
                 instance.save()
+                request.session['instance_id'] = instance.id
                 messages.success(request, _('Your data has been sent successfully to the server'))
             else:
                 messages.warning(request, serializer.errors)
