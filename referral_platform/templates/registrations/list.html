@@ -29,13 +29,25 @@
       <li class="breadcrumb-item active">{{ request.user.partner }}</li>
       <li class="breadcrumb-item active">{{ request.user }}</li>
 
-          <li class="breadcrumb-item active">
+
+          {% if request.user.is_beneficiary %}
+
+            <li class="breadcrumb-item active">
               <a href="{% url 'registrations:add' %}" class="btn btn-success">
                   <i class="icon-plus-sign icon-white"></i>
                   {% trans "Add new beneficiary" %}
               </a>
-          </li>
-          {% if Not request.user.is_beneficiary %}
+            </li>
+
+          {% else %}
+
+               <li class="breadcrumb-item active">
+              <a href="{% url 'registrations:add' %}" class="btn btn-success">
+                  <i class="icon-plus-sign icon-white"></i>
+                  {% trans "Add new beneficiary" %}
+              </a>
+            </li>
+
               <li>
                 <div class="btn-group">
                   <button type="button" class="btn btn-primary">{% trans "Export data" %}</button>
