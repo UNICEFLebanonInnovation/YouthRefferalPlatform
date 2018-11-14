@@ -195,7 +195,7 @@ class CommonForm(forms.ModelForm):
         my_fields[_('Location Information')] = ['governorate', 'center', 'trainer', 'location']
 
         # Add Trainer name to Jordan
-        jordan_location = Location.objects.get(name="Jordan")
+        jordan_location = Location.objects.get(name_en="Jordan")
         if jordan_location not in partner_locations:
             del self.fields['trainer']
             del self.fields['youth_bayanati_ID']
