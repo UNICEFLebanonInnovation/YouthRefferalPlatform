@@ -23,7 +23,7 @@ from referral_platform.youth.models import YoungPerson, Nationality, Center
 from .serializers import RegistrationSerializer
 from .models import Registration
 from django.utils.safestring import mark_safe
-from django.contrib.auth.models import User
+
 
 
 current_year = datetime.today().year

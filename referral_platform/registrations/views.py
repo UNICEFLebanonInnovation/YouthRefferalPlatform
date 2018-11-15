@@ -81,7 +81,7 @@ class AddView(LoginRequiredMixin, FormView):
     model = Registration
     success_url = '/registrations/list/'
 
-    def get_user(self):
+    def get_user_form(self):
 
         if self.request.user.is_beneficiary:
             form_class = CommonForm
@@ -89,6 +89,8 @@ class AddView(LoginRequiredMixin, FormView):
             form_class = CommonForm
 
         return form_class
+
+    get_user_form()
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
@@ -129,7 +131,8 @@ class AddView(LoginRequiredMixin, FormView):
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
-    def get_user(self):
+
+    def get_user_form(self):
 
         if self.request.user.is_beneficiary:
             form_class = CommonForm
@@ -137,6 +140,8 @@ class EditView(LoginRequiredMixin, FormView):
             form_class = CommonForm
 
         return form_class
+
+    get_user_form()
     model = Registration
     success_url = '/registrations/list/'
 
