@@ -30,7 +30,7 @@ from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from .forms import CommonForm
+from .forms import CommonForm, BeneficiaryCommonForm
 from .mappings import *
 
 
@@ -81,18 +81,10 @@ class AddView(LoginRequiredMixin, FormView):
     model = Registration
     success_url = '/registrations/list/'
 
-    def get_user_form(self):
-
-        if self.request.user.is_beneficiary:
-            form_class = CommonForm
-        else:
-            form_class = CommonForm
-
-        return form_class
-
-    get_user_form()
-
     def get_success_url(self):
+
+
+
         if self.request.POST.get('save_add_another', None):
             del self.request.session['instance_id']
             return '/registrations/add/'
@@ -102,6 +94,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
+
         data = dict()
 
         if self.request.user.partner:
@@ -125,6 +118,11 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
+
+        if self.request.user.is_beneficiary:
+            form_class = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
         form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
@@ -132,16 +130,6 @@ class AddView(LoginRequiredMixin, FormView):
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
 
-    def get_user_form(self):
-
-        if self.request.user.is_beneficiary:
-            form_class = CommonForm
-        else:
-            form_class = CommonForm
-
-        return form_class
-
-    get_user_form()
     model = Registration
     success_url = '/registrations/list/'
 
@@ -151,6 +139,10 @@ class EditView(LoginRequiredMixin, FormView):
         return self.success_url
 
     def get_initial(self):
+        if self.request.user.is_beneficiary:
+            form_class = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
@@ -159,6 +151,10 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
+        if self.request.user.is_beneficiary:
+            form_class = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
             return CommonForm(self.request.POST, instance=instance)
@@ -167,7 +163,7 @@ class EditView(LoginRequiredMixin, FormView):
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            return CommonForm(data, instance=instance)
+            return form_class(data, instance=instance)
 
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
