@@ -19,10 +19,12 @@ from referral_platform.registrations.models import Assessment, AssessmentSubmiss
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
-from referral_platform.youth.models import YoungPerson, Nationality, Center, User
+from referral_platform.youth.models import YoungPerson, Nationality, Center
 from .serializers import RegistrationSerializer
 from .models import Registration
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
+
 
 current_year = datetime.today().year
 
@@ -173,7 +175,6 @@ class CommonForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(CommonForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
 
         instance = kwargs.get('instance', '')
         if instance:
@@ -343,7 +344,7 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        if user.is_beneficiary:
+        if self.request.user.is_beneficiary:
             self.helper.layout.append(
                 FormActions(
                     HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
