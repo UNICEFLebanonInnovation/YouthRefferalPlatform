@@ -27,7 +27,7 @@ from referral_platform.backends.tasks import *
 from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
-from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash,
+from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
