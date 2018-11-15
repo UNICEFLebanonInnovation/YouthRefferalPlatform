@@ -80,7 +80,8 @@ class AddView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     model = Registration
     success_url = '/registrations/list/'
-    form_class = CommonForm
+    if self.request.user.is_beneficiary:
+        form_class = CommonForm
 
     def get_success_url(self):
 
@@ -117,11 +118,6 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
-        #
-        # if self.request.user.is_beneficiary:
-        #     form_class = BeneficiaryCommonForm
-        # else:
-        # form_class = CommonForm
         form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
@@ -138,10 +134,6 @@ class EditView(LoginRequiredMixin, FormView):
         return self.success_url
 
     def get_initial(self):
-        # if self.request.user.is_beneficiary:
-        #     form_class = BeneficiaryCommonForm
-        # else:
-        #     form_class = CommonForm
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
