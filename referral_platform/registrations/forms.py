@@ -344,7 +344,7 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        if self.request.user.is_beneficiary:
+        if instance.user.is_beneficiary:
             self.helper.layout.append(
                 FormActions(
                     HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
