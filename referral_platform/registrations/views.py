@@ -22,12 +22,12 @@ from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
-
+from django.contrib.auth.models import User
 from referral_platform.backends.tasks import *
 from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
-from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
+from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash,
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm
@@ -78,9 +78,17 @@ class ListingView(LoginRequiredMixin,
 class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'registrations/form.html'
-    form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
+
+    def get_user(self):
+
+        if self.request.user.is_beneficiary:
+            form_class = CommonForm
+        else:
+            form_class = CommonForm
+
+        return form_class
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
@@ -93,6 +101,7 @@ class AddView(LoginRequiredMixin, FormView):
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
         data = dict()
+
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
@@ -120,7 +129,14 @@ class AddView(LoginRequiredMixin, FormView):
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
-    form_class = CommonForm
+    def get_user(self):
+
+        if self.request.user.is_beneficiary:
+            form_class = CommonForm
+        else:
+            form_class = CommonForm
+
+        return form_class
     model = Registration
     success_url = '/registrations/list/'
 
