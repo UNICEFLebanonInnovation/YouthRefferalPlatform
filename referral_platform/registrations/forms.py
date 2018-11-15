@@ -19,7 +19,7 @@ from referral_platform.registrations.models import Assessment, AssessmentSubmiss
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
-from referral_platform.youth.models import YoungPerson, Nationality, Center
+from referral_platform.youth.models import YoungPerson, Nationality, Center, User
 from .serializers import RegistrationSerializer
 from .models import Registration
 from django.utils.safestring import mark_safe
@@ -342,7 +342,7 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        if self.request.user.is_beneficiary:
+        if instance.owner.is_beneficiary:
             self.helper.layout.append(
                 FormActions(
                     HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
