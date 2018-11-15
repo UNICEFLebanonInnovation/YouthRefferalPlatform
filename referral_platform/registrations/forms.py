@@ -24,8 +24,6 @@ from .serializers import RegistrationSerializer
 from .models import Registration
 from django.utils.safestring import mark_safe
 
-
-
 current_year = datetime.today().year
 
 YEARS = list(((str(x), x) for x in range(current_year - 26, current_year - 6)))
@@ -344,24 +342,15 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        if user:
-            self.helper.layout.append(
-                FormActions(
-                    HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
-                    Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
-                    css_class='btn-actions'
-                )
+        self.helper.layout.append(
+            FormActions(
+                HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
+                Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
+                Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
+                Submit('save', _('Save'), css_class='col-md-2'),
+                css_class='btn-actions'
             )
-        else:
-            self.helper.layout.append(
-                FormActions(
-                    HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
-                    Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
-                    Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
-                    Submit('save', _('Save'), css_class='col-md-2'),
-                    css_class='btn-actions'
-                )
-            )
+        )
 
     def clean(self):
 
