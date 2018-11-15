@@ -30,7 +30,7 @@ from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from .forms import CommonForm, BeneficiaryCommonForm
+from .forms import CommonForm
 from .mappings import *
 
 
@@ -83,8 +83,6 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_success_url(self):
 
-
-
         if self.request.POST.get('save_add_another', None):
             del self.request.session['instance_id']
             return '/registrations/add/'
@@ -118,11 +116,11 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
-
-        if self.request.user.is_beneficiary:
-            form_class = BeneficiaryCommonForm
-        else:
-            form_class = CommonForm
+        #
+        # if self.request.user.is_beneficiary:
+        #     form_class = BeneficiaryCommonForm
+        # else:
+        form_class = CommonForm
         form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
@@ -151,10 +149,8 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
-        if self.request.user.is_beneficiary:
-            form_class = BeneficiaryCommonForm
-        else:
-            form_class = CommonForm
+
+        form_class = CommonForm
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
             return CommonForm(self.request.POST, instance=instance)
