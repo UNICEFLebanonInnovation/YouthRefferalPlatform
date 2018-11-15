@@ -172,7 +172,7 @@ class CommonForm(forms.ModelForm):
 
         )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(CommonForm, self).__init__(*args, **kwargs)
 
@@ -344,7 +344,7 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        if instance.user.is_beneficiary:
+        if self.user.is_beneficiary:
             self.helper.layout.append(
                 FormActions(
                     HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
