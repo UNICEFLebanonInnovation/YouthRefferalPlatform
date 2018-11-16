@@ -80,11 +80,14 @@ class AddView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     model = Registration
     success_url = '/registrations/list/'
-    flag = Registration.objects.get('owner.is_beneficiary')
-    if flag:
-        form_class = BeneficiaryCommonForm
-    else:
-        form_class = CommonForm
+
+    def get_form(self, form_class=None):
+        beneficiary_flag = self.request.user.is_beneficiary
+        if beneficiary_flag:
+            form_class = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
+        return form_class
 
     def get_success_url(self):
 
@@ -102,6 +105,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+            # data['is_beneficiary'] = self.request.user.is_beneficiary
 
         if self.request.GET.get('youth_id'):
                 instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
