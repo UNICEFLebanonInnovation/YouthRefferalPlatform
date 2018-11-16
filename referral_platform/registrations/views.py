@@ -93,9 +93,6 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
         data = dict()
 
         if self.request.user.partner:
@@ -119,9 +116,6 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
         form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
@@ -153,7 +147,10 @@ class EditView(LoginRequiredMixin, FormView):
             form_class = CommonForm
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return CommonForm(self.request.POST, instance=instance)
+            if beneficiary_flag:
+                return BeneficiaryCommonForm(self.request.POST, instance=instance)
+            else:
+                return CommonForm(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
