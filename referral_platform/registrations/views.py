@@ -22,17 +22,21 @@ from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
-from django.contrib.auth.models import User
+
 from referral_platform.backends.tasks import *
 from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
-from .models import Registration, Assessment, AssessmentSubmission, AssessmentHash, NewMapping
+from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from .forms import CommonForm, BeneficiaryCommonForm
+from .forms import CommonForm
 from .mappings import *
-
+import zipfile
+import StringIO
+import io
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 class ListingView(LoginRequiredMixin,
                   FilterView,
