@@ -80,7 +80,11 @@ class AddView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     model = Registration
     success_url = '/registrations/list/'
-    form_class = BeneficiaryCommonForm
+
+    if Registration.owner.is_beneficiary:
+        form_class = BeneficiaryCommonForm
+    else:
+        form_class = CommonForm
 
     def get_success_url(self):
 
