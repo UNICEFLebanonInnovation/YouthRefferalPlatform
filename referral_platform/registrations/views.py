@@ -30,13 +30,14 @@ from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from .forms import CommonForm, BeneficiaryCommonForm
+from .forms import CommonForm
 from .mappings import *
 import zipfile
 import StringIO
 import io
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+
 
 class ListingView(LoginRequiredMixin,
                   FilterView,
@@ -52,13 +53,7 @@ class ListingView(LoginRequiredMixin,
     filterset_class = YouthFilter
 
     def get_queryset(self):
-        beneficiary_flag = self.request.user.is_beneficiary
-
-        if beneficiary_flag:
-            return Registration.objects.none()
-        else:
-            return Registration.objects.filter(partner_organization=self.request.user.partner)
-        # return Registration.objects.filter(partner_organization=self.request.user.partner)
+        return Registration.objects.filter(partner_organization=self.request.user.partner)
 
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -67,6 +62,24 @@ class ListingView(LoginRequiredMixin,
         elif "SYRIA" in locations:
             return YouthSYFilter
         elif "JORDAN" in locations:
+            return YouthFilter
+        elif "IRAK" in locations:
+            return YouthPLFilter
+        elif "IRAN" in locations:
+            return YouthSYFilter
+        elif "MOROCCO" in locations:
+            return YouthFilter
+        elif "DJIBOUTI" in locations:
+            return YouthPLFilter
+        elif "EGYPT" in locations:
+            return YouthSYFilter
+        elif "ALGERIA" in locations:
+            return YouthFilter
+        elif "TUNIS" in locations:
+            return YouthPLFilter
+        elif "LEBANON" in locations:
+            return YouthSYFilter
+        elif "SUDAN" in locations:
             return YouthFilter
 
     def get_table_class(self):
@@ -77,39 +90,44 @@ class ListingView(LoginRequiredMixin,
                 return CommonTableAlt
             elif "JORDAN" in locations:
                 return CommonTable
+            elif "IRAK" in locations:
+                return CommonTable
+            elif "IRAN" in locations:
+                return CommonTable
+            elif "MOROCCO" in locations:
+                return CommonTable
+            elif "DJIBOUTI" in locations:
+                return CommonTable
+            elif "EGYPT" in locations:
+                return CommonTable
+            elif "ALGERIA" in locations:
+                return CommonTable
+            elif "TUNIS" in locations:
+                return CommonTable
+            elif "LEBANON" in locations:
+                return CommonTable
+            elif "SUDAN" in locations:
+                return CommonTable
 
 
 class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'registrations/form.html'
+    form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
 
-    def get_form(self, form_class=None):
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
-        else:
-            form_class = CommonForm
-        return form_class
-
     def get_success_url(self):
-
         if self.request.POST.get('save_add_another', None):
-            del self.request.session['instance_id']
             return '/registrations/add/'
-        if self.request.POST.get('save_and_continue', None):
-            return '/registrations/edit/' + str(self.request.session.get('instance_id')) + '/'
         return self.success_url
 
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
         data = dict()
-
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            # data['is_beneficiary'] = self.request.user.is_beneficiary
 
         if self.request.GET.get('youth_id'):
                 instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
@@ -134,7 +152,7 @@ class AddView(LoginRequiredMixin, FormView):
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
-
+    form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
 
@@ -152,23 +170,15 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
-        else:
-            form_class = CommonForm
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            if beneficiary_flag:
-                return BeneficiaryCommonForm(self.request.POST, instance=instance)
-            else:
-                return CommonForm(self.request.POST, instance=instance)
+            return CommonForm(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            return form_class(data, instance=instance)
+            return CommonForm(data, instance=instance)
 
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
@@ -197,7 +207,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 partner=registry.partner_organization.name,
-                country=registry.governorate.parent.name,
+                country=registry.governorate.parent.name_en,
                 nationality=youth.nationality.code,
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
@@ -223,6 +233,7 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             status='enrolled'
         )
         submission.data = payload
+        submission.update_field()
         submission.save()
 
         return HttpResponse()
@@ -277,7 +288,7 @@ class ExportView(LoginRequiredMixin, ListView):
 
         headers = {
             # 'country': 'Country',
-            'governorate__parent__name': 'Country',
+            'governorate__parent__name_en': 'Country',
             'governorate__name_en': 'Governorate',
             'partner_organization__name': 'Partner',
             'center__name': 'Center',
@@ -296,9 +307,9 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__address': 'address',
             'owner__email': 'Created By',
             # 'youth__calculate_age': 'Age',
-            'modified_by__email': 'modified_by',
+            'modified_by__email': 'Modified By',
             'created': 'created',
-            'modified': 'modified',
+            'modified': 'Modified',
     }
         qs = self.get_queryset().values(
             'youth__first_name',
@@ -312,7 +323,7 @@ class ExportView(LoginRequiredMixin, ListView):
             'youth__birthday_year',
             'location',
             'governorate__name_en',
-            'governorate__parent__name',
+            'governorate__parent__name_en',
             'partner_organization__name',
             'center__name',
             'youth__nationality__code',
@@ -325,176 +336,6 @@ class ExportView(LoginRequiredMixin, ListView):
             # 'youth__calculate_age',
         )
         filename = 'beneficiaries'
-
-        return render_to_csv_response(qs, filename, field_header_map=headers)
-
-
-class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
-
-    model = AssessmentSubmission
-    queryset = AssessmentSubmission.objects.filter(assessment__slug='registration')
-
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            queryset = self.queryset
-        else:
-            queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
-
-        return queryset
-
-    def get(self, request, *args, **kwargs):
-
-        headers = {
-            'registration__youth__first_name': 'First Name',
-            'registration__youth__father_name': "Fathers's Name",
-            'registration__youth__last_name': 'Last Name',
-            'registration__partner_organization__name': 'Partner',
-            'registration__youth__bayanati_ID': 'Bayanati ID',
-            'registration__youth__birthday_day': 'Birth Day',
-            'registration__youth__birthday_month': 'Birth Month',
-            'registration__youth__birthday_year': 'Birth Year',
-            'registration__youth__nationality__code': 'Nationality',
-            'registration__youth__marital_status': 'Marital status',
-            'registration__youth__sex': 'Gender',
-            'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name': 'Country',
-            'registration__governorate__name_en': 'Governorate',
-            'registration__center__name': 'Center',
-            'registration__location': 'Location',
-            # 'nationality': 'Nationality',
-            # 'training_type': 'Training Type',
-            # 'partner': 'Partner Organization',
-            'center_type': 'Center Type',
-
-            'educational_status': 'Educational Status',
-            'School_name': 'School name',
-            'School_type': 'Type of school',
-            'school_level': 'School Level',
-            'how_many_times_skipped_school': 'How many times have you missed your classes in the past 3 months ',
-            'reason_for_skipping_class': 'Reason fro skipping Classes',
-            'educ_level_stopped': 'Education level completed before leaving school',
-            'Reason_stop_study': 'Reasons for leaving school',
-            'other_five': 'Other reasons',
-
-
-            'Accommodation_type': 'Accommodation Type',
-            'what_electronics_do_you_own': 'What electronics do you own?',
-            'family_present': 'Family composition',
-            'family_not_present': 'Please state if any of the above household members are not living with you at the moment:',
-            'not_present_where': 'Reason of family absence',
-            'other_family_not_present': 'Other reasons',
-            'drugs_substance_use': 'Any family member use drug/alcohol?',
-            'how_many_times_displaced': 'Displacement status',
-            'Relation_with_labor_market': 'Relationship with Labour Market',
-            'occupation_type': 'Occupation Type',
-
-            'concent_paper': 'Conscent form filled',
-            'family_steady_income': 'Family Income',
-            'training_date': 'Training Date',
-            'training_end_date': 'Training End Date',
-            '_submission_time': 'Submission Time and Date',
-            'desired_method_for_follow_up': 'Desired Method for follow-up',
-            'text_39911992': 'Facebook Account',
-            'text_d45750c6': 'Email Address',
-            'text_4c6fe6c9': 'Mobile phone number',
-
-         }
-
-        qs = self.get_queryset().extra(select={
-            # 'partner': "data->>'partner'",
-            'educational_status': "data->>'educational_status'",
-            'other_family_not_present': "data->>'other_family_not_present'",
-            # 'nationality': "data->>'nationality'",
-            # 'training_type': "data->>'training_type'",
-
-            # 'phonenumber': "data->>'phonenumber'",
-
-            'center_type': "data->>'center_type'",
-            'other_five': "data->>'other_five'",
-            'Reason_stop_study': "data->>'Reason_stop_study'",
-            'educ_level_stopped': "data->>'educ_level_stopped'",
-            'occupation_type': "data->>'occupation_type'",
-            'School_name': "data->>'School_name'",
-            'School_type': "data->>'School_type'",
-            'school_level': "data->>'School_level'",
-            'reason_for_skipping_class': "data->>'reason_for_skipping_class'",
-            'family_present': "data->>'family_present'",
-            'family_not_present': "data->>'family_not_present'",
-            'not_present_where': "data->>'not_present_where'",
-            'Accommodation_type': "data->>'Accommodation_type'",
-            'how_many_times_skipped_school': "data->>'how_many_times_skipped_school'",
-            'drugs_substance_use': "data->>'drugs_substance_use'",
-            'how_many_times_displaced': "data->>'how_many_times_displaced'",
-            'Relation_with_labor_market': "data->>'Relation_with_labor_market'",
-            'reasons_for_not_feeling_safe_a': "data->>'reasons_for_not_feeling_safe_a'",
-            'feeling_of_safety_security': "data->>'feeling_of_safety_security'",
-            'concent_paper': "data->>'concent_paper'",
-            'family_steady_income': "data->>'family_steady_income'",
-            'training_date': "data->>'training_date'",
-            'training_end_date': "data->>'training_end_date'",
-            '_submission_time': "data->>'_submission_time'",
-            'what_electronics_do_you_own': "data->>'what_electronics_do_you_own'",
-            'desired_method_for_follow_up': "data->>'desired_method_for_follow_up'",
-            'text_39911992': "data->>'text_39911992'",
-            'text_d45750c6': "data->>'text_d45750c6'",
-            'text_4c6fe6c9': "data->>'text_4c6fe6c9'",
-
-            # 'youth_fname':"registration->>youth__last_name",
-            # 'youth_lname':"registration->>youth__first_name",
-
-        }).values(
-            'registration__youth__first_name',
-            'registration__youth__father_name',
-            'registration__youth__last_name',
-            'registration__partner_organization__name',
-            'other_family_not_present',
-            'educational_status',
-            # 'country',
-            # 'nationality',
-            # 'training_type',
-            'registration__governorate__parent__name',
-            'registration__governorate__name_en',
-            'registration__center__name',
-            'registration__location',
-            'registration__youth__bayanati_ID',
-            'registration__youth__birthday_day',
-            'registration__youth__birthday_month',
-            'registration__youth__birthday_year',
-            'registration__youth__nationality__code',
-            'registration__youth__marital_status',
-            'registration__youth__sex',
-            'registration__youth__number',
-            'center_type',
-            'occupation_type',
-            'School_name',
-            'School_type',
-            'school_level',
-            'reason_for_skipping_class',
-            'family_present',
-            'family_not_present',
-            'not_present_where',
-            'Accommodation_type',
-            'how_many_times_skipped_school',
-            'drugs_substance_use',
-            'how_many_times_displaced',
-            'Relation_with_labor_market',
-            'reasons_for_not_feeling_safe_a',
-            'feeling_of_safety_security',
-            'concent_paper',
-            'family_steady_income',
-            'training_date',
-            'training_end_date',
-            '_submission_time',
-            'what_electronics_do_you_own',
-            'desired_method_for_follow_up',
-            'educ_level_stopped',
-            'Reason_stop_study',
-            'other_five',
-            'text_39911992',
-            'text_d45750c6',
-            'text_4c6fe6c9',
-        )
-        filename = 'registrations'
 
         return render_to_csv_response(qs, filename, field_header_map=headers)
 
