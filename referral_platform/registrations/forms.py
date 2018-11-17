@@ -342,7 +342,7 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        flag=self.instance.owner
+        flag = self.instance.owner
 
         if flag=='rsweidane':
             self.helper.layout.append(

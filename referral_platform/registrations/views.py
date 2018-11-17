@@ -52,7 +52,12 @@ class ListingView(LoginRequiredMixin,
     filterset_class = YouthFilter
 
     def get_queryset(self):
-        return Registration.objects.filter(partner_organization=self.request.user.partner)
+        beneficiary_flag = self.request.user.is_beneficiary
+
+        if beneficiary_flag:
+            return Registration.objects.none()
+        else:
+            return Registration.objects.filter(partner_organization=self.request.user.partner)
 
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()]
