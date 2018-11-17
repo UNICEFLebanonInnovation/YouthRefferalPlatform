@@ -114,14 +114,15 @@ class AddView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     model = Registration
     success_url = '/registrations/list/'
+    form_class = CommonForm
 
-    def get_form(self, form_class=None):
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
-        else:
-            form_class = CommonForm
-        return form_class
+    # def get_form(self, form_class=None):
+    #     beneficiary_flag = self.request.user.is_beneficiary
+    #     if beneficiary_flag:
+    #         form_class = BeneficiaryCommonForm
+    #     else:
+    #         form_class = CommonForm
+    #     return form_class
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
@@ -163,6 +164,7 @@ class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     model = Registration
     success_url = '/registrations/list/'
+    form_class = CommonForm
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
@@ -178,17 +180,17 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
-        else:
-            form_class = CommonForm
+        # beneficiary_flag = self.request.user.is_beneficiary
+        # if beneficiary_flag:
+        #     form_class = BeneficiaryCommonForm
+        # else:
+        #     form_class = CommonForm
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            if beneficiary_flag:
-                return BeneficiaryCommonForm(self.request.POST, instance=instance)
-            else:
-                return CommonForm(self.request.POST, instance=instance)
+            # if beneficiary_flag:
+            #     return BeneficiaryCommonForm(self.request.POST, instance=instance)
+            # else:
+            return CommonForm(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
