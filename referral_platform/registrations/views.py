@@ -30,8 +30,7 @@ from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from .forms import CommonForm
-from .mappings import *
+from .forms import CommonForm, BeneficiaryCommonForm
 import zipfile
 import StringIO
 import io
@@ -113,13 +112,23 @@ class ListingView(LoginRequiredMixin,
 class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'registrations/form.html'
-    form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
 
+    def get_form(self, form_class=None):
+        beneficiary_flag = self.request.user.is_beneficiary
+        if beneficiary_flag:
+            form_class = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
+        return form_class
+
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
+            del self.request.session['instance_id']
             return '/registrations/add/'
+        if self.request.POST.get('save_and_continue', None):
+            return '/registrations/edit/' + str(self.request.session.get('instance_id')) + '/'
         return self.success_url
 
     def get_initial(self):
@@ -170,20 +179,56 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
+        beneficiary_flag = self.request.user.is_beneficiary
+        if beneficiary_flag:
+            form_class = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return CommonForm(self.request.POST, instance=instance)
+            if beneficiary_flag:
+                return BeneficiaryCommonForm(self.request.POST, instance=instance)
+            else:
+                return CommonForm(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            return CommonForm(data, instance=instance)
+            return form_class(data, instance=instance)
 
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
+
+
+class YouthAssessment(SingleObjectMixin, RedirectView):
+    model = Assessment
+
+    def get_redirect_url(self, *args, **kwargs):
+        assessment = self.get_object()
+        registry = Registration.objects.get(id=self.request.GET.get('registry'),
+                                            partner_organization=self.request.user.partner)
+        youth = registry.youth
+        hashing = AssessmentHash.objects.create(
+            registration=registry.id,
+            assessment_slug=assessment.slug,
+            partner=self.request.user.partner_id,
+            user=self.request.user.id,
+            timestamp=time.time()
+        )
+
+        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
+              '&returnURL={callback}'.format(
+                form=assessment.assessment_form,
+                registry=hashing.hashed,
+                partner=registry.partner_organization.name,
+                country=registry.governorate.parent.name,
+                nationality=youth.nationality.code,
+                callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
+        )
+        return url
 
 
 class YouthAssessment(SingleObjectMixin, RedirectView):
