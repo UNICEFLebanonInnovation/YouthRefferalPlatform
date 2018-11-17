@@ -30,7 +30,7 @@ from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from .forms import CommonForm, BeneficiaryCommonForm
+from .forms import CommonForm
 import zipfile
 import StringIO
 import io
