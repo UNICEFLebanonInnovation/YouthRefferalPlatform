@@ -342,7 +342,7 @@ class CommonForm(forms.ModelForm):
 
         self.helper.form_action = form_action
 
-        flag=self.instance.owner.is_beneficiary
+        flag=self.instance.owner
 
         self.helper.layout.append(
             FormActions(
