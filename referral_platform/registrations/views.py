@@ -161,7 +161,6 @@ class AddView(LoginRequiredMixin, FormView):
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
-    form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
 
