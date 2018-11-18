@@ -167,9 +167,9 @@ class AddView(LoginRequiredMixin, FormView):
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
+    form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
-    form_class = CommonForm
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
@@ -185,23 +185,15 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
-        # beneficiary_flag = self.request.user.is_beneficiary
-        # if beneficiary_flag:
-        #     form_class = BeneficiaryCommonForm
-        # else:
-        #     form_class = CommonForm
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            # if beneficiary_flag:
-            #     return BeneficiaryCommonForm(self.request.POST, instance=instance)
-            # else:
             return CommonForm(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            return form_class(data, instance=instance)
+            return CommonForm(data, instance=instance)
 
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
