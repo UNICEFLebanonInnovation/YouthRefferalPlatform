@@ -118,7 +118,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'registrations/form.html'
     model = Registration
-    success_url = '/registrations/list/'
+    # success_url = '/registrations/list/'
 
     def get_form(self, form_class=None):
         beneficiary_flag = self.request.user.is_beneficiary
