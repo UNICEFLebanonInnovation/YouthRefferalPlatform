@@ -125,7 +125,7 @@ class AddView(LoginRequiredMixin, FormView):
         if beneficiary_flag:
             form_class = BeneficiaryCommonForm
         else:
-            form_class = CommonForm
+            form_class = PartnerCommonForm
         return form_class
 
     def get_success_url(self):
