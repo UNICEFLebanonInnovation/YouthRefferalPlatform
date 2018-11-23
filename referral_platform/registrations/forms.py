@@ -170,188 +170,188 @@ class CommonForm(forms.ModelForm):
 
         )
 
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(CommonForm, self).__init__(*args, **kwargs)
-
-        instance = kwargs.get('instance', '')
-        if instance:
-            initials = {}
-            initials['partner_locations'] = instance.partner_organization.locations.all()
-            initials['partner'] = instance.partner_organization
-
-        else:
-            initials = kwargs.get('initial', '')
-
-        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-        partner = initials['partner'] if 'partner' in initials else 0
-        self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-        self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
-        my_fields = OrderedDict()
-
-        if not instance:
-            my_fields['Search Youth'] = ['search_youth']
-
-        my_fields[_('Location Information')] = ['governorate', 'center', 'trainer', 'location']
-
-        # Add Trainer name to Jordan
-        jordan_location = Location.objects.get(name_en="Jordan")
-        if jordan_location not in partner_locations:
-            del self.fields['trainer']
-            del self.fields['youth_bayanati_ID']
-            my_fields[_('Location Information')].remove('trainer')
-        else:
-            self.fields['youth_bayanati_ID'].required = True
-            self.fields['trainer'].required = True
-            my_fields['Bayanati'] = ['youth_bayanati_ID', ]
-
-        # Add Centers for the partner having ones (For now only Jordan)
-        if self.fields['center'].queryset.count() < 1:
-            del self.fields['center']
-            my_fields[_('Location Information')].remove('center')
-
-        my_fields[_('Personal Details')] = ['youth_first_name',
-                                            'youth_father_name',
-                                            'youth_last_name',
-                                            'youth_birthday_day',
-                                            'youth_birthday_month',
-                                            'youth_birthday_year',
-                                            'youth_sex',
-                                            'youth_nationality',
-                                            'youth_marital_status',
-                                            'youth_address',
-                                            'comments', ]
-
-        self.helper = FormHelper()
-        self.helper.form_show_labels = True
-        form_action = reverse('registrations:add')
-        self.helper.layout = Layout()
-
-        for title in my_fields:
-            main_fieldset = Fieldset(None)
-            main_div = Div(css_class='row')
-
-            # Title Div
-            main_fieldset.fields.append(
-                Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
-                )
-            )
-            # remaining fields, every 3 on a row
-            for myField in my_fields[title]:
-                index = my_fields[title].index(myField) + 1
-                main_div.append(
-                    HTML('<span class="badge badge-default">' + str(index) + '</span>'),
-                )
-                main_div.append(
-                    Div(myField, css_class='col-md-3'),
-                )
-                # to keep every 3 on a row, or the last field in the list
-                if index % 3 == 0 or len(my_fields[title]) == index:
-                    main_fieldset.fields.append(main_div)
-                    main_div = Div(css_class='row')
-
-            main_fieldset.css_class = 'bd-callout bd-callout-warning'
-            self.helper.layout.append(main_fieldset)
-
-        # Rendering the assessments
-        if instance:
-            form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
-            new_forms = OrderedDict()
-
-            registration_form = Assessment.objects.get(slug="registration")
-
-            youth_registered = AssessmentSubmission.objects.filter(
-                assessment_id=registration_form.id,
-                registration_id=instance.id
-            ).exists()
-
-            for specific_form in all_forms:
-                formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
-                    registry=instance.id,
-                )
-                disabled = ""
-
-                if youth_registered:
-                    if specific_form.slug == "registration":
-                        disabled = "disabled"
-                    # check if the pre is already filled
-                    else:
-                        order = 1  # int(specific_form.order.split(".")[1])
-                        if order == 1:
-                            # If the user filled the form disable it
-                            form_submitted = AssessmentSubmission.objects.filter(
-                                assessment_id=specific_form.id, registration_id=instance.id).exists()
-                            if form_submitted:
-                                disabled = "disabled"
-                        else:
-                            # make sure the user filled the form behind this one in order to enable it
-                            if previous_status == "disabled":
-                                previous_submitted = AssessmentSubmission.objects.filter(
-                                    assessment_id=specific_form.id, registration_id=instance.id).exists()
-                                if previous_submitted:
-                                    disabled = "disabled"
-                            else:
-                                disabled = "disabled"
-                else:
-                    if specific_form.slug != "registration":
-                        disabled = "disabled"
-
-                if specific_form.name not in new_forms:
-                    new_forms[specific_form.name] = OrderedDict()
-                new_forms[specific_form.name][specific_form.order] = {
-                    'title': specific_form.overview,
-                    'form': formtxt,
-                    'overview': specific_form.name,
-                    'disabled': disabled
-                }
-                previous_status = disabled
-            assessment_fieldset = []
-
-            for name in new_forms:
-                test_html = ""
-
-                for test_order in new_forms[name]:
-                    test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
-                                + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
-                                    'form'] \
-                                + '">' + new_forms[name][test_order][
-                                    'title'] + '</a></div> '
-                assessment_div = Div(
-                    HTML(test_html),
-                    css_class='row'
-                )
-                test_fieldset = Fieldset(
-                    None,
-                    Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
-                            'overview'] + '</h4>')
-                    ),
-                    assessment_div,
-                    Div(
-                        HTML('<div class="p-3"></div>'),
-                        css_class='row'
-                    ),
-                    css_class='bd-callout bd-callout-warning'
-                )
-                assessment_fieldset.append(test_fieldset)
-            for myflds in assessment_fieldset:
-                self.helper.layout.append(myflds)
-
-        self.helper.form_action = form_action
-
-        self.helper.layout.append(
-            FormActions(
-                HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
-                Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
-                Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
-                Submit('save', _('Save'), css_class='col-md-2'),
-                css_class='btn-actions'
-
-                )
-            )
+    # def __init__(self, *args, **kwargs):
+    #     self.request = kwargs.pop('request', None)
+    #     super(CommonForm, self).__init__(*args, **kwargs)
+    #
+    #     instance = kwargs.get('instance', '')
+    #     if instance:
+    #         initials = {}
+    #         initials['partner_locations'] = instance.partner_organization.locations.all()
+    #         initials['partner'] = instance.partner_organization
+    #
+    #     else:
+    #         initials = kwargs.get('initial', '')
+    #
+    #     partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
+    #     partner = initials['partner'] if 'partner' in initials else 0
+    #     self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+    #     self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
+    #     my_fields = OrderedDict()
+    #
+    #     if not instance:
+    #         my_fields['Search Youth'] = ['search_youth']
+    #
+    #     my_fields[_('Location Information')] = ['governorate', 'center', 'trainer', 'location']
+    #
+    #     # Add Trainer name to Jordan
+    #     jordan_location = Location.objects.get(name_en="Jordan")
+    #     if jordan_location not in partner_locations:
+    #         del self.fields['trainer']
+    #         del self.fields['youth_bayanati_ID']
+    #         my_fields[_('Location Information')].remove('trainer')
+    #     else:
+    #         self.fields['youth_bayanati_ID'].required = True
+    #         self.fields['trainer'].required = True
+    #         my_fields['Bayanati'] = ['youth_bayanati_ID', ]
+    #
+    #     # Add Centers for the partner having ones (For now only Jordan)
+    #     if self.fields['center'].queryset.count() < 1:
+    #         del self.fields['center']
+    #         my_fields[_('Location Information')].remove('center')
+    #
+    #     my_fields[_('Personal Details')] = ['youth_first_name',
+    #                                         'youth_father_name',
+    #                                         'youth_last_name',
+    #                                         'youth_birthday_day',
+    #                                         'youth_birthday_month',
+    #                                         'youth_birthday_year',
+    #                                         'youth_sex',
+    #                                         'youth_nationality',
+    #                                         'youth_marital_status',
+    #                                         'youth_address',
+    #                                         'comments', ]
+    #
+    #     self.helper = FormHelper()
+    #     self.helper.form_show_labels = True
+    #     form_action = reverse('registrations:add')
+    #     self.helper.layout = Layout()
+    #
+    #     for title in my_fields:
+    #         main_fieldset = Fieldset(None)
+    #         main_div = Div(css_class='row')
+    #
+    #         # Title Div
+    #         main_fieldset.fields.append(
+    #             Div(
+    #                 HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
+    #             )
+    #         )
+    #         # remaining fields, every 3 on a row
+    #         for myField in my_fields[title]:
+    #             index = my_fields[title].index(myField) + 1
+    #             main_div.append(
+    #                 HTML('<span class="badge badge-default">' + str(index) + '</span>'),
+    #             )
+    #             main_div.append(
+    #                 Div(myField, css_class='col-md-3'),
+    #             )
+    #             # to keep every 3 on a row, or the last field in the list
+    #             if index % 3 == 0 or len(my_fields[title]) == index:
+    #                 main_fieldset.fields.append(main_div)
+    #                 main_div = Div(css_class='row')
+    #
+    #         main_fieldset.css_class = 'bd-callout bd-callout-warning'
+    #         self.helper.layout.append(main_fieldset)
+    #
+    #     # Rendering the assessments
+    #     if instance:
+    #         form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
+    #         all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
+    #         new_forms = OrderedDict()
+    #
+    #         registration_form = Assessment.objects.get(slug="registration")
+    #
+    #         youth_registered = AssessmentSubmission.objects.filter(
+    #             assessment_id=registration_form.id,
+    #             registration_id=instance.id
+    #         ).exists()
+    #
+    #         for specific_form in all_forms:
+    #             formtxt = '{assessment}?registry={registry}'.format(
+    #                 assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
+    #                 registry=instance.id,
+    #             )
+    #             disabled = ""
+    #
+    #             if youth_registered:
+    #                 if specific_form.slug == "registration":
+    #                     disabled = "disabled"
+    #                 # check if the pre is already filled
+    #                 else:
+    #                     order = 1  # int(specific_form.order.split(".")[1])
+    #                     if order == 1:
+    #                         # If the user filled the form disable it
+    #                         form_submitted = AssessmentSubmission.objects.filter(
+    #                             assessment_id=specific_form.id, registration_id=instance.id).exists()
+    #                         if form_submitted:
+    #                             disabled = "disabled"
+    #                     else:
+    #                         # make sure the user filled the form behind this one in order to enable it
+    #                         if previous_status == "disabled":
+    #                             previous_submitted = AssessmentSubmission.objects.filter(
+    #                                 assessment_id=specific_form.id, registration_id=instance.id).exists()
+    #                             if previous_submitted:
+    #                                 disabled = "disabled"
+    #                         else:
+    #                             disabled = "disabled"
+    #             else:
+    #                 if specific_form.slug != "registration":
+    #                     disabled = "disabled"
+    #
+    #             if specific_form.name not in new_forms:
+    #                 new_forms[specific_form.name] = OrderedDict()
+    #             new_forms[specific_form.name][specific_form.order] = {
+    #                 'title': specific_form.overview,
+    #                 'form': formtxt,
+    #                 'overview': specific_form.name,
+    #                 'disabled': disabled
+    #             }
+    #             previous_status = disabled
+    #         assessment_fieldset = []
+    #
+    #         for name in new_forms:
+    #             test_html = ""
+    #
+    #             for test_order in new_forms[name]:
+    #                 test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
+    #                             + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
+    #                                 'form'] \
+    #                             + '">' + new_forms[name][test_order][
+    #                                 'title'] + '</a></div> '
+    #             assessment_div = Div(
+    #                 HTML(test_html),
+    #                 css_class='row'
+    #             )
+    #             test_fieldset = Fieldset(
+    #                 None,
+    #                 Div(
+    #                     HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
+    #                         'overview'] + '</h4>')
+    #                 ),
+    #                 assessment_div,
+    #                 Div(
+    #                     HTML('<div class="p-3"></div>'),
+    #                     css_class='row'
+    #                 ),
+    #                 css_class='bd-callout bd-callout-warning'
+    #             )
+    #             assessment_fieldset.append(test_fieldset)
+    #         for myflds in assessment_fieldset:
+    #             self.helper.layout.append(myflds)
+    #
+    #     self.helper.form_action = form_action
+    #
+    #     self.helper.layout.append(
+    #         FormActions(
+    #             HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
+    #             Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
+    #             Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
+    #             Submit('save', _('Save'), css_class='col-md-2'),
+    #             css_class='btn-actions'
+    #
+    #             )
+    #         )
 
     def clean(self):
 
