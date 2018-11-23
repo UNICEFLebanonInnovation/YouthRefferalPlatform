@@ -140,35 +140,35 @@ class CommonForm(forms.ModelForm):
         required=True, initial='single'
     )
 
-    class Meta:
-        model = Registration
-        fields = (
-            'governorate',
-            'location',
-            'center',
-            'trainer',
-            'youth_bayanati_ID',
-            'youth_id',
-            'youth_first_name',
-            'youth_father_name',
-            'youth_last_name',
-            'youth_sex',
-            'youth_birthday_year',
-            'youth_birthday_month',
-            'youth_birthday_day',
-            'youth_nationality',
-            'youth_address',
-            'youth_marital_status',
-            'override_submit',
-            'comments',
-        )
-        initial_fields = fields
-        widgets = {}
-
-    class Media:
-        js = (
-
-        )
+    # class Meta:
+    #     model = Registration
+    #     fields = (
+    #         'governorate',
+    #         'location',
+    #         'center',
+    #         'trainer',
+    #         'youth_bayanati_ID',
+    #         'youth_id',
+    #         'youth_first_name',
+    #         'youth_father_name',
+    #         'youth_last_name',
+    #         'youth_sex',
+    #         'youth_birthday_year',
+    #         'youth_birthday_month',
+    #         'youth_birthday_day',
+    #         'youth_nationality',
+    #         'youth_address',
+    #         'youth_marital_status',
+    #         'override_submit',
+    #         'comments',
+    #     )
+    #     initial_fields = fields
+    #     widgets = {}
+    #
+    # class Media:
+    #     js = (
+    #
+    #     )
 
     # def __init__(self, *args, **kwargs):
     #     self.request = kwargs.pop('request', None)
@@ -430,6 +430,36 @@ class CommonForm(forms.ModelForm):
 
 class BeneficiaryCommonForm(CommonForm):
 
+    class Meta:
+        model = Registration
+        fields = (
+            'governorate',
+            'location',
+            'center',
+            'trainer',
+            'youth_bayanati_ID',
+            'youth_id',
+            'youth_first_name',
+            'youth_father_name',
+            'youth_last_name',
+            'youth_sex',
+            'youth_birthday_year',
+            'youth_birthday_month',
+            'youth_birthday_day',
+            'youth_nationality',
+            'youth_address',
+            'youth_marital_status',
+            'override_submit',
+            'comments',
+        )
+        initial_fields = fields
+        widgets = {}
+
+    class Media:
+        js = (
+
+        )
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(CommonForm, self).__init__(*args, **kwargs)
@@ -689,6 +719,36 @@ class BeneficiaryCommonForm(CommonForm):
 
 
 class PartnerCommonForm(CommonForm):
+
+    class Meta:
+        model = Registration
+        fields = (
+            'governorate',
+            'location',
+            'center',
+            'trainer',
+            'youth_bayanati_ID',
+            'youth_id',
+            'youth_first_name',
+            'youth_father_name',
+            'youth_last_name',
+            'youth_sex',
+            'youth_birthday_year',
+            'youth_birthday_month',
+            'youth_birthday_day',
+            'youth_nationality',
+            'youth_address',
+            'youth_marital_status',
+            'override_submit',
+            'comments',
+        )
+        initial_fields = fields
+        widgets = {}
+
+    class Media:
+        js = (
+
+        )
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
