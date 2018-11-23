@@ -432,7 +432,7 @@ class BeneficiaryCommonForm(CommonForm):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        super(CommonForm, self).__init__(*args, **kwargs)
+        super(BeneficiaryCommonForm, self).__init__(*args, **kwargs)
 
         instance = kwargs.get('instance', '')
         print("Instance is" + instance)
@@ -618,7 +618,7 @@ class PartnerCommonForm(CommonForm):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        super(CommonForm, self).__init__(*args, **kwargs)
+        super(PartnerCommonForm, self).__init__(*args, **kwargs)
 
         instance = kwargs.get('instance', '')
         if instance:
