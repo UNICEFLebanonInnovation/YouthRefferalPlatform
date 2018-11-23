@@ -435,9 +435,11 @@ class BeneficiaryCommonForm(CommonForm):
         super(CommonForm, self).__init__(*args, **kwargs)
 
         instance = kwargs.get('instance', '')
+        print("Instance is" + instance)
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
+            print("Initial Governprate"+ initials['partner_locations'])
             initials['partner'] = instance.partner_organization
 
         else:
