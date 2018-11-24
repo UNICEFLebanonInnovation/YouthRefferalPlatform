@@ -118,18 +118,20 @@ class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'registrations/form.html'
     model = Registration
-    # success_url = '/registrations/list/'
+    success_url = '/registrations/list/'
 
     def get_form(self, form_class=None):
         beneficiary_flag = self.request.user.is_beneficiary
         if beneficiary_flag:
             form_class = BeneficiaryCommonForm
+            # success_url = '/registrations/list/'
         else:
             form_class = PartnerCommonForm
+            # success_url = '/registrations/list/'
 
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return CommonForm(self.request.POST, instance=instance)
+            return form_class(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
@@ -203,7 +205,7 @@ class EditView(LoginRequiredMixin, FormView):
 
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return CommonForm(self.request.POST, instance=instance)
+            return form_class(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
