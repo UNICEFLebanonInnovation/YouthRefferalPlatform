@@ -160,7 +160,8 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
-        form.save(request=self.request)
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        form.save(request=self.request, instance=instance)
         return super(AddView, self).form_valid(form)
 
 
