@@ -178,18 +178,18 @@ class AddView(LoginRequiredMixin, FormView):
         else:
             form_class = PartnerCommonForm
 
-        # instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        # if self.request.method == "POST":
-        #     return form_class(self.request.POST, instance=instance)
-        # else:
-        #     data = RegistrationSerializer(instance).data
-        #     data['youth_nationality'] = data['youth_nationality_id']
-        #     data['partner_locations'] = self.request.user.partner.locations.all()
-        #     data['partner'] = self.request.user.partner
-        #     return form_class(data, instance=instance)
+        instance = Registration.objects.get(partner_organization=self.request.user.partner)
+        if self.request.method == "POST":
+            return form_class(self.request.POST, instance=instance)
+        else:
+            data = RegistrationSerializer(instance).data
+            data['youth_nationality'] = data['youth_nationality_id']
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
+            return form_class(data, instance=instance)
 
     def form_valid(self, form):
-        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(partner_organization=self.request.user.partner)
         print("instance is: " + instance)
         form.save(request=self.request, instance=instance)
         return super(AddView, self).form_valid(form)
