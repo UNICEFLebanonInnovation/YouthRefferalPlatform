@@ -154,10 +154,11 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_form(self, form_class=None):
         beneficiary_flag = self.request.user.is_beneficiary
+        instance = str(self.request.session.get('instance_id')) + '/'
         if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
+            form_class = BeneficiaryCommonForm, instance
         else:
-            form_class = PartnerCommonForm
+            form_class = PartnerCommonForm, instance
 
         # instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         # if self.request.method == "POST":

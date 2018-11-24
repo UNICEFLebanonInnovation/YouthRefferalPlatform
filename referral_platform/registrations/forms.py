@@ -478,7 +478,7 @@ class BeneficiaryCommonForm(CommonForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner = initials['partner'] if 'partner' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-        # self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
+        self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
         my_fields = OrderedDict()
 
         if not instance:
