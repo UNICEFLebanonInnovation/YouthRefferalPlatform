@@ -30,7 +30,7 @@ from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from .forms import CommonForm, BeneficiaryCommonForm, PartnerCommonForm
+from .forms import CommonForm, BeneficiaryCommonForm
 import zipfile
 import StringIO
 import io
@@ -154,11 +154,11 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_form(self, form_class=None):
         beneficiary_flag = self.request.user.is_beneficiary
-        instance = str(self.request.session.get('instance_id')) + '/'
+
         if beneficiary_flag:
-            form_class = BeneficiaryCommonForm, instance
+            form_class = BeneficiaryCommonForm
         else:
-            form_class = PartnerCommonForm, instance
+            form_class = CommonForm
 
         # instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         # if self.request.method == "POST":
