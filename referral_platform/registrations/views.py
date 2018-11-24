@@ -178,7 +178,7 @@ class AddView(LoginRequiredMixin, FormView):
         else:
             form_class = PartnerCommonForm
 
-        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=self.request.GET.get('owner', 'partner_organization'))
         if self.request.method == "POST":
             return form_class(self.request.POST, instance=instance)
         else:
