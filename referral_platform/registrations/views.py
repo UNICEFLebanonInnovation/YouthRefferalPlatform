@@ -120,7 +120,7 @@ class AddView(LoginRequiredMixin, FormView):
     model = Registration
     success_url = '/registrations/list/'
     form_class = CommonForm
-    
+
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
             del self.request.session['instance_id']
@@ -173,8 +173,6 @@ class AddView(LoginRequiredMixin, FormView):
         return form_class
 
     def form_valid(self, form):
-        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        print("instance is: " + instance)
         form.save(request=self.request, instance=instance)
         return super(AddView, self).form_valid(form)
 
