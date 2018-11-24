@@ -199,18 +199,27 @@ class EditView(LoginRequiredMixin, FormView):
         beneficiary_flag = self.request.user.is_beneficiary
         if beneficiary_flag:
             form_class = BeneficiaryCommonForm
+            instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+            if self.request.method == "POST":
+                return BeneficiaryCommonForm(self.request.POST, instance=instance)
+            else:
+                data = RegistrationSerializer(instance).data
+                data['youth_nationality'] = data['youth_nationality_id']
+                data['partner_locations'] = self.request.user.partner.locations.all()
+                data['partner'] = self.request.user.partner
+                return BeneficiaryCommonForm(data, instance=instance)
         else:
-            form_class = CommonForm
+            form_class=CommonForm
+            instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+            if self.request.method == "POST":
+                return CommonForm(self.request.POST, instance=instance)
+            else:
+                data = RegistrationSerializer(instance).data
+                data['youth_nationality'] = data['youth_nationality_id']
+                data['partner_locations'] = self.request.user.partner.locations.all()
+                data['partner'] = self.request.user.partner
+                return CommonForm(data, instance=instance)
 
-        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        if self.request.method == "POST":
-            return form_class(self.request.POST, instance=instance)
-        else:
-            data = RegistrationSerializer(instance).data
-            data['youth_nationality'] = data['youth_nationality_id']
-            data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner'] = self.request.user.partner
-            return form_class(data, instance=instance)
 
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
