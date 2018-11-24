@@ -178,7 +178,7 @@ class AddView(LoginRequiredMixin, FormView):
         else:
             form_class = PartnerCommonForm
 
-        instance = Registration.objects.get(partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
             return form_class(self.request.POST, instance=instance)
         else:
@@ -189,7 +189,7 @@ class AddView(LoginRequiredMixin, FormView):
             return form_class(data, instance=instance)
 
     def form_valid(self, form):
-        instance = Registration.objects.get(partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         print("instance is: " + instance)
         form.save(request=self.request, instance=instance)
         return super(AddView, self).form_valid(form)
