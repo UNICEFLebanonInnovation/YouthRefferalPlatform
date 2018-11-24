@@ -173,7 +173,7 @@ class AddView(LoginRequiredMixin, FormView):
         return form_class
 
     def form_valid(self, form):
-        form.save(request=self.request, instance=instance)
+        form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
 
