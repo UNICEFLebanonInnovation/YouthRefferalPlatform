@@ -568,7 +568,7 @@ class BeneficiaryCommonForm(CommonForm):
         def __init__(self, *args, **kwargs):
 
             self.request = kwargs.pop('request', None)
-            super(CommonForm, self).__init__(*args, **kwargs)
+            super(BeneficiaryCommonForm, self).__init__(*args, **kwargs)
             instance = kwargs.get('instance', '')
             if instance:
                 initials = {}
@@ -749,7 +749,7 @@ class BeneficiaryCommonForm(CommonForm):
 
         def clean(self):
 
-            cleaned_data = super(CommonForm, self).clean()
+            cleaned_data = super(BeneficiaryCommonForm, self).clean()
             youth_id = cleaned_data.get('youth_search_id')
             youth_id_edit = cleaned_data.get('youth_id')
             birthday_year = cleaned_data.get('youth_birthday_year')
