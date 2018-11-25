@@ -130,7 +130,7 @@ class AddView(LoginRequiredMixin, FormView):
         else:
             form_class = CommonForm
             form = CommonForm
-        return form_class, form
+        return form_class
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
