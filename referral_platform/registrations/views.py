@@ -118,7 +118,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'registrations/form.html'
     model = Registration
-    # success_url = '/registrations/list/'
+    success_url = '/registrations/list/'
     # form_class = CommonForm
 
     def get_form_class(self):
