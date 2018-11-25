@@ -747,81 +747,81 @@ class BeneficiaryCommonForm(CommonForm):
                     )
                 )
 
-        def clean(self):
+        # def clean(self):
+        #
+        #     cleaned_data = super(BeneficiaryCommonForm, self).clean()
+        #     youth_id = cleaned_data.get('youth_search_id')
+        #     youth_id_edit = cleaned_data.get('youth_id')
+        #     birthday_year = cleaned_data.get('youth_birthday_year')
+        #     birthday_day = cleaned_data.get('youth_birthday_day')
+        #     birthday_month = cleaned_data.get('youth_birthday_month')
+        #     nationality = cleaned_data.get('youth_nationality')
+        #     sex = cleaned_data.get('youth_sex')
+        #     first_name = cleaned_data.get('youth_first_name')
+        #     last_name = cleaned_data.get('youth_last_name')
+        #     father_name = cleaned_data.get('youth_father_name')
+        #     override_submit = cleaned_data.get('override_submit')
+        #     form_str = '{} {} {}'.format(first_name, father_name, last_name)
+        #     is_matching = False
+        #     exists = False
+        #     queryset = Registration.objects.all()
+        #     continue_button = '<br/><button  class="btn btn-info" type="button" name="continue" value="continue" id="continue">Continue</button>'
+        #
+        #     if not override_submit:
+        #         if youth_id:
+        #             if queryset.filter(youth_id=youth_id, partner_organization=self.initial["partner"]).exists():
+        #                 exists = True
+        #
+        #         if exists:
+        #             raise forms.ValidationError(
+        #                 "Youth is already registered with current partner"
+        #             )
+        #
+        #         if self.instance.id:
+        #             queryset = queryset.exclude(id=self.instance.id,
+        #                                         partner_organization=self.instance.partner_organization)
+        #
+        #         filtered_results = queryset.filter(youth__birthday_year=birthday_year,
+        #                                            youth__birthday_day=birthday_day,
+        #                                            youth__birthday_month=birthday_month,
+        #                                            youth__sex=sex)
+        #         if not youth_id_edit:
+        #             matching_results = ''
+        #             for result in filtered_results:
+        #                 result_str = '{} {} {}'.format(result.youth.first_name, result.youth.father_name,
+        #                                                result.youth.last_name)
+        #                 fuzzy_match = fuzz.ratio(form_str, result_str)
+        #                 if fuzzy_match > 85:
+        #                     matching_results = matching_results + "<a href='/registrations/add/?youth_id=" + str(
+        #                         result.youth_id) + "'>" + result_str + " - birthday:" + birthday_day + "/" + birthday_month + "/" + birthday_year + " - gender:" + sex + "</a><br/>"
+        #                     is_matching = True
+        #
+        #             if is_matching:
+        #                 raise forms.ValidationError(
+        #                     mark_safe("Youth is already registered with another partner, "
+        #                               "please check which one would you like to add:<br/>" + matching_results + "<br/> Or if new Youth click on continue:<br/>" + continue_button)
+        #                 )
 
-            cleaned_data = super(BeneficiaryCommonForm, self).clean()
-            youth_id = cleaned_data.get('youth_search_id')
-            youth_id_edit = cleaned_data.get('youth_id')
-            birthday_year = cleaned_data.get('youth_birthday_year')
-            birthday_day = cleaned_data.get('youth_birthday_day')
-            birthday_month = cleaned_data.get('youth_birthday_month')
-            nationality = cleaned_data.get('youth_nationality')
-            sex = cleaned_data.get('youth_sex')
-            first_name = cleaned_data.get('youth_first_name')
-            last_name = cleaned_data.get('youth_last_name')
-            father_name = cleaned_data.get('youth_father_name')
-            override_submit = cleaned_data.get('override_submit')
-            form_str = '{} {} {}'.format(first_name, father_name, last_name)
-            is_matching = False
-            exists = False
-            queryset = Registration.objects.all()
-            continue_button = '<br/><button  class="btn btn-info" type="button" name="continue" value="continue" id="continue">Continue</button>'
-
-            if not override_submit:
-                if youth_id:
-                    if queryset.filter(youth_id=youth_id, partner_organization=self.initial["partner"]).exists():
-                        exists = True
-
-                if exists:
-                    raise forms.ValidationError(
-                        "Youth is already registered with current partner"
-                    )
-
-                if self.instance.id:
-                    queryset = queryset.exclude(id=self.instance.id,
-                                                partner_organization=self.instance.partner_organization)
-
-                filtered_results = queryset.filter(youth__birthday_year=birthday_year,
-                                                   youth__birthday_day=birthday_day,
-                                                   youth__birthday_month=birthday_month,
-                                                   youth__sex=sex)
-                if not youth_id_edit:
-                    matching_results = ''
-                    for result in filtered_results:
-                        result_str = '{} {} {}'.format(result.youth.first_name, result.youth.father_name,
-                                                       result.youth.last_name)
-                        fuzzy_match = fuzz.ratio(form_str, result_str)
-                        if fuzzy_match > 85:
-                            matching_results = matching_results + "<a href='/registrations/add/?youth_id=" + str(
-                                result.youth_id) + "'>" + result_str + " - birthday:" + birthday_day + "/" + birthday_month + "/" + birthday_year + " - gender:" + sex + "</a><br/>"
-                            is_matching = True
-
-                    if is_matching:
-                        raise forms.ValidationError(
-                            mark_safe("Youth is already registered with another partner, "
-                                      "please check which one would you like to add:<br/>" + matching_results + "<br/> Or if new Youth click on continue:<br/>" + continue_button)
-                        )
-
-        def save(self, request=None, instance=None):
-            if instance:
-                serializer = RegistrationSerializer(instance, data=request.POST)
-                if serializer.is_valid():
-                    serializer.update(validated_data=serializer.validated_data, instance=instance)
-                    request.session['instance_id'] = instance.id
-                    messages.success(request, _('Your data has been sent successfully to the server'))
-                else:
-                    messages.warning(request, serializer.errors)
-            else:
-                serializer = RegistrationSerializer(data=request.POST)
-                if serializer.is_valid():
-                    instance = serializer.create(validated_data=serializer.validated_data)
-                    instance.owner = request.user
-                    instance.modified_by = request.user
-                    instance.partner_organization = request.user.partner
-                    instance.save()
-                    request.session['instance_id'] = instance.id
-                    messages.success(request, _('Your data has been sent successfully to the server'))
-                else:
-                    messages.warning(request, serializer.errors)
+        # def save(self, request=None, instance=None):
+        #     if instance:
+        #         serializer = RegistrationSerializer(instance, data=request.POST)
+        #         if serializer.is_valid():
+        #             serializer.update(validated_data=serializer.validated_data, instance=instance)
+        #             request.session['instance_id'] = instance.id
+        #             messages.success(request, _('Your data has been sent successfully to the server'))
+        #         else:
+        #             messages.warning(request, serializer.errors)
+        #     else:
+        #         serializer = RegistrationSerializer(data=request.POST)
+        #         if serializer.is_valid():
+        #             instance = serializer.create(validated_data=serializer.validated_data)
+        #             instance.owner = request.user
+        #             instance.modified_by = request.user
+        #             instance.partner_organization = request.user.partner
+        #             instance.save()
+        #             request.session['instance_id'] = instance.id
+        #             messages.success(request, _('Your data has been sent successfully to the server'))
+        #         else:
+        #             messages.warning(request, serializer.errors)
 
 
