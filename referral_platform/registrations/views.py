@@ -207,7 +207,7 @@ class EditView(LoginRequiredMixin, FormView):
 
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return form_class(self.request.POST, instance=instance)
+            return form(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
