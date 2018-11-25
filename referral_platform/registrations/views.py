@@ -119,7 +119,7 @@ class AddView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
     model = Registration
     success_url = '/registrations/list/'
-    form_class = CommonForm
+    # form_class = CommonForm
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
@@ -153,24 +153,24 @@ class AddView(LoginRequiredMixin, FormView):
         initial = data
         return initial
 
-    # def get_form(self, form_class=None):
-    #     beneficiary_flag = self.request.user.is_beneficiary
-    #
-    #     if beneficiary_flag:
-    #         form_class = BeneficiaryCommonForm
-    #     else:
-    #         form_class = CommonForm
+    def get_form(self, form_class=None):
+        beneficiary_flag = self.request.user.is_beneficiary
+        if beneficiary_flag:
+            form_class = BeneficiaryCommonForm
+            form = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
+            form = CommonForm
 
-        # instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        # if self.request.method == "POST":
-        #     return form_class(self.request.POST, instance=instance)
-        # else:
-        #     data = RegistrationSerializer(instance).data
-        #     data['youth_nationality'] = data['youth_nationality_id']
-        #     data['partner_locations'] = self.request.user.partner.locations.all()
-        #     data['partner'] = self.request.user.partner
-        #     return form_class(data, instance=instance)
-        return form_class
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        if self.request.method == "POST":
+            return form(self.request.POST, instance=instance)
+        else:
+            data = RegistrationSerializer(instance).data
+            data['youth_nationality'] = data['youth_nationality_id']
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner'] = self.request.user.partner
+            return form(data, instance=instance)
 
     def form_valid(self, form):
         form.save(request=self.request)
