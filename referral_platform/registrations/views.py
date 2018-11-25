@@ -179,9 +179,17 @@ class AddView(LoginRequiredMixin, FormView):
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'registrations/form.html'
-    form_class = CommonForm
+    # form_class = CommonForm
     model = Registration
     success_url = '/registrations/list/'
+
+    def get_form_class(self):
+        beneficiary_flag = self.request.user.is_beneficiary
+        if beneficiary_flag:
+            form_class = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
+        return form_class
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
