@@ -592,8 +592,8 @@ class BeneficiaryCommonForm(CommonForm):
             # Add Trainer name to Jordan
             jordan_location = Location.objects.get(name_en="Jordan")
             if jordan_location not in partner_locations:
-                del self.fields['trainer']
-                del self.fields['youth_bayanati_ID']
+                # del self.fields['trainer']
+                # del self.fields['youth_bayanati_ID']
                 my_fields[_('Location Information')].remove('trainer')
             else:
                 self.fields['youth_bayanati_ID'].required = True
