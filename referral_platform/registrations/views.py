@@ -204,7 +204,6 @@ class EditView(LoginRequiredMixin, FormView):
         else:
             form_class = CommonForm
             form = CommonForm
-        return form_class, form
 
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
