@@ -131,14 +131,6 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
-        beneficiary_flag = self.request.user.is_beneficiary
-        if beneficiary_flag:
-            form_class = BeneficiaryCommonForm
-            form = BeneficiaryCommonForm
-        else:
-            form_class = CommonForm
-            form = CommonForm
-            
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
