@@ -207,13 +207,13 @@ class EditView(LoginRequiredMixin, FormView):
     def get_form(self, form_class=None):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return CommonForm(self.request.POST, instance=instance)
+            return form_class(self.request.POST, instance=instance)
         else:
             data = RegistrationSerializer(instance).data
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            return CommonForm(data, instance=instance)
+            return form_class(data, instance=instance)
 
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
