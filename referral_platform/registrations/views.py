@@ -200,9 +200,11 @@ class EditView(LoginRequiredMixin, FormView):
         beneficiary_flag = self.request.user.is_beneficiary
         if beneficiary_flag:
             form_class = BeneficiaryCommonForm
+            form = BeneficiaryCommonForm
         else:
             form_class = CommonForm
-        return form_class
+            form = CommonForm
+        return form_class, form
 
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
@@ -212,7 +214,7 @@ class EditView(LoginRequiredMixin, FormView):
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            return form_class(data, instance=instance)
+            return form(data, instance=instance)
 
     def form_valid(self, form):
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
