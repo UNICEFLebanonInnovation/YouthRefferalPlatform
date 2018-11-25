@@ -121,6 +121,17 @@ class AddView(LoginRequiredMixin, FormView):
     success_url = '/registrations/list/'
     # form_class = CommonForm
 
+    def get_form_class(self):
+        beneficiary_flag = self.request.user.is_beneficiary
+
+        if beneficiary_flag:
+            form_class = BeneficiaryCommonForm
+            form = BeneficiaryCommonForm
+        else:
+            form_class = CommonForm
+            form = CommonForm
+        return form_class, form
+
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
             del self.request.session['instance_id']
