@@ -425,8 +425,6 @@ class CommonForm(forms.ModelForm):
                 instance.save()
                 request.session['instance_id'] = instance.id
                 messages.success(request, _('Your data has been sent successfully to the server'))
-                for key in request.session.keys():
-                    del request.session[key]
             else:
                 messages.warning(request, serializer.errors)
 
