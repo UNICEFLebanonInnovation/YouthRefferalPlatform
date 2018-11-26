@@ -431,110 +431,110 @@ class CommonForm(forms.ModelForm):
 
 class BeneficiaryCommonForm(CommonForm):
 
-        search_youth = forms.CharField(
-            label=_("Search for youth by name or id"),
-            widget=forms.TextInput,
-            required=False
-        )
-        governorate = forms.ModelChoiceField(
-            label=_('Governorate'),
-            queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-            required=True, to_field_name='id',
-        )
-        location = forms.CharField(
-            label=_("Location"),
-            widget=forms.TextInput,
-            required=False
-        )
-        center = forms.ModelChoiceField(
-            label=_('Center'),
-            queryset=Center.objects.all(), widget=forms.Select,
-            empty_label=_('Center'),
-            required=True, to_field_name='id',
-        )
-        youth_id = forms.IntegerField(
-            widget=forms.HiddenInput,
-            required=False
-        )
-        override_submit = forms.IntegerField(
-            widget=forms.HiddenInput,
-            required=False
-        )
-        youth_bayanati_ID = forms.CharField(
-            label=_('Bayanati ID'),
-            widget=forms.TextInput, required=False
-        )
-        youth_first_name = forms.CharField(
-            label=_("First name"),
-            widget=forms.TextInput, required=True
-        )
-        youth_father_name = forms.CharField(
-            label=_("Father name"),
-            widget=forms.TextInput, required=True
-        )
-        youth_last_name = forms.CharField(
-            label=_("Last name"),
-            widget=forms.TextInput, required=True
-        )
-        youth_sex = forms.ChoiceField(
-            label=_("Gender"),
-            widget=forms.Select, required=True,
-            choices=(
-                ('', '----------'),
-                ('male', _('Male')),
-                ('female', _('Female')),
-            )
-        )
-        youth_birthday_year = forms.ChoiceField(
-            label=_("Birthday year"),
-            widget=forms.Select, required=True,
-            choices=YEARS
-        )
-        youth_birthday_month = forms.ChoiceField(
-            label=_("Birthday month"),
-            widget=forms.Select, required=True,
-            choices=(
-                ('', '----------'),
-                ('1', _('January')),
-                ('2', _('February')),
-                ('3', _('March')),
-                ('4', _('April')),
-                ('5', _('May')),
-                ('6', _('June')),
-                ('7', _('July')),
-                ('8', _('August')),
-                ('9', _('September')),
-                ('10', _('October')),
-                ('11', _('November')),
-                ('12', _('December')),
-            )
-        )
-        youth_birthday_day = forms.ChoiceField(
-            label=_("Birthday day"),
-            widget=forms.Select, required=True,
-            choices=DAYS
-        )
-        youth_nationality = forms.ModelChoiceField(
-            label=_("Nationality"),
-            queryset=Nationality.objects.all(), widget=forms.Select,
-            required=True, to_field_name='id',
-        )
-        youth_address = forms.CharField(
-            label=_("Address"),
-            widget=forms.Textarea, required=False,
-        )
-        youth_marital_status = forms.ChoiceField(
-            label=_('Marital status'),
-            widget=forms.Select,
-            choices=(
-                ('married', _('Married')),
-                ('engaged', _('Engaged')),
-                ('divorced', _('Divorced')),
-                ('widower', _('Widower')),
-                ('single', _('Single')),
-            ),
-            required=True, initial='single'
-        )
+        # search_youth = forms.CharField(
+        #     label=_("Search for youth by name or id"),
+        #     widget=forms.TextInput,
+        #     required=False
+        # )
+        # governorate = forms.ModelChoiceField(
+        #     label=_('Governorate'),
+        #     queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
+        #     required=True, to_field_name='id',
+        # )
+        # location = forms.CharField(
+        #     label=_("Location"),
+        #     widget=forms.TextInput,
+        #     required=False
+        # )
+        # center = forms.ModelChoiceField(
+        #     label=_('Center'),
+        #     queryset=Center.objects.all(), widget=forms.Select,
+        #     empty_label=_('Center'),
+        #     required=True, to_field_name='id',
+        # )
+        # youth_id = forms.IntegerField(
+        #     widget=forms.HiddenInput,
+        #     required=False
+        # )
+        # override_submit = forms.IntegerField(
+        #     widget=forms.HiddenInput,
+        #     required=False
+        # )
+        # youth_bayanati_ID = forms.CharField(
+        #     label=_('Bayanati ID'),
+        #     widget=forms.TextInput, required=False
+        # )
+        # youth_first_name = forms.CharField(
+        #     label=_("First name"),
+        #     widget=forms.TextInput, required=True
+        # )
+        # youth_father_name = forms.CharField(
+        #     label=_("Father name"),
+        #     widget=forms.TextInput, required=True
+        # )
+        # youth_last_name = forms.CharField(
+        #     label=_("Last name"),
+        #     widget=forms.TextInput, required=True
+        # )
+        # youth_sex = forms.ChoiceField(
+        #     label=_("Gender"),
+        #     widget=forms.Select, required=True,
+        #     choices=(
+        #         ('', '----------'),
+        #         ('male', _('Male')),
+        #         ('female', _('Female')),
+        #     )
+        # )
+        # youth_birthday_year = forms.ChoiceField(
+        #     label=_("Birthday year"),
+        #     widget=forms.Select, required=True,
+        #     choices=YEARS
+        # )
+        # youth_birthday_month = forms.ChoiceField(
+        #     label=_("Birthday month"),
+        #     widget=forms.Select, required=True,
+        #     choices=(
+        #         ('', '----------'),
+        #         ('1', _('January')),
+        #         ('2', _('February')),
+        #         ('3', _('March')),
+        #         ('4', _('April')),
+        #         ('5', _('May')),
+        #         ('6', _('June')),
+        #         ('7', _('July')),
+        #         ('8', _('August')),
+        #         ('9', _('September')),
+        #         ('10', _('October')),
+        #         ('11', _('November')),
+        #         ('12', _('December')),
+        #     )
+        # )
+        # youth_birthday_day = forms.ChoiceField(
+        #     label=_("Birthday day"),
+        #     widget=forms.Select, required=True,
+        #     choices=DAYS
+        # )
+        # youth_nationality = forms.ModelChoiceField(
+        #     label=_("Nationality"),
+        #     queryset=Nationality.objects.all(), widget=forms.Select,
+        #     required=True, to_field_name='id',
+        # )
+        # youth_address = forms.CharField(
+        #     label=_("Address"),
+        #     widget=forms.Textarea, required=False,
+        # )
+        # youth_marital_status = forms.ChoiceField(
+        #     label=_('Marital status'),
+        #     widget=forms.Select,
+        #     choices=(
+        #         ('married', _('Married')),
+        #         ('engaged', _('Engaged')),
+        #         ('divorced', _('Divorced')),
+        #         ('widower', _('Widower')),
+        #         ('single', _('Single')),
+        #     ),
+        #     required=True, initial='single'
+        # )
 
         class Meta:
             model = Registration
