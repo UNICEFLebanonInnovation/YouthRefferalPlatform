@@ -19,7 +19,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, TemplateView, FormView
-
+from django.contrib.auth.models import User
 from referral_platform.users.templatetags.util_tags import has_group
 from .models import User
 from django.shortcuts import render
@@ -84,6 +84,24 @@ class UserChangeLanguageRedirectView(RedirectView):
         translation.activate(user_language)
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user_language
         return reverse('registrations:list', kwargs={})
+
+
+def user_overview(request):
+
+    args = {
+        'user': request.user,
+               }
+    return render(request, 'users/profile.html', args)
+
+
+    # def get_context_data(self, **kwargs):
+    #     locations = self.request.user.profile.partner_organization.locations
+    #     enrollement = Enrollment.objects.filter(
+    #         youth=self.request.user.profile,
+    #         course__path=self.object
+    #     ).last()
+    #     kwargs.update({'enrollment': enrollement, 'locations': locations})
+    #     return super(CoursesOverview, self).get_context_data(**kwargs)
 
 
 # def view_profile(request, pk=None):

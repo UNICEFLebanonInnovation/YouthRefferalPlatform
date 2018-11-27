@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-
+from django.core.urlresolvers import reverse
 from django.conf.urls import url
 
 from . import views
 
 urlpatterns = [
     # URL pattern for the UserListView
+    url(
+        regex=r'^profile/$',
+        view=views.user_overview,
+        name='Profile'
+    ),
+
     url(
         regex=r'^$',
         view=views.UserListView.as_view(),

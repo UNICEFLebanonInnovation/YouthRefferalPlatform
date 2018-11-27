@@ -25,6 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('staff status'),
         default=False,
     )
+    is_beneficiary = models.BooleanField(default=False)
     is_active = models.BooleanField(
         _('active'),
         default=True,
