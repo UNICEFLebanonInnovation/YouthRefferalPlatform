@@ -610,6 +610,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__center__name': 'Center',
             'registration__location': 'Location',
             'assessment__overview': 'Assessment Type',
+            'Type_of_training': 'Type of Training ',
             # 'nationality': 'Nationality',
             # 'training_type': 'Training Type',
             # 'partner': 'Partner Organization',
@@ -632,6 +633,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
         }
 
         qs = self.get_queryset().extra(select={
+            'Type_of_training': "new_data->>'Type_of_training'",
             '_4_articulate_thoughts': "new_data->>'_4_articulate_thoughts'",
             '_1_express_opinion': "new_data->>'_1_express_opinion'",
             '_20_discussions_with_peers_before_': "new_data->>'_20_discussions_with_peers_before_'",
@@ -667,6 +669,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             'registration__youth__sex',
             'registration__youth__number',
             'assessment__overview',
+            'Type_of_training',
             '_4_articulate_thoughts',
             '_1_express_opinion',
             '_20_discussions_with_peers_before_',
