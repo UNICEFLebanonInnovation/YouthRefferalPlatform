@@ -854,7 +854,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            queryset = self.queryset.filter(date__range=["2018-09-01", "2018-12-03"])
+            queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
