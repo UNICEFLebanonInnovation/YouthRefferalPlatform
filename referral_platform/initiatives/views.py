@@ -8,7 +8,6 @@ from referral_platform.users.views import UserRegisteredMixin
 
 from .forms import YouthLedInitiativePlanningForm
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
 
 import json
 import datetime
