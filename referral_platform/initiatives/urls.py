@@ -5,6 +5,6 @@ from .views import AddInitiativeView
 
 urlpatterns = [
 
-    url(r'^youth-led$', AddInitiativeView(), name='youth-led'),
+    url(r'^youth-led$', AddInitiativeView, name='youth-led'),
 
 ]
