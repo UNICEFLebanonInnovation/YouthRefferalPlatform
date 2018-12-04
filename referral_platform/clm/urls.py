@@ -30,4 +30,5 @@ urlpatterns = [
         view=views.YouthListView.as_view(),
         name='list'
     ),
+
 ]

@@ -1,0 +1,55 @@
+{% extends "base2.html" %}
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Initiatives{% endblock %}
+
+{% block extra_head %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.12.1.css' %}">
+
+{% endblock %}
+
+{% block content-full-page %}
+<section>
+    <div id="resume" class="inner-content">
+
+      <script>
+      function myFunction(id) {
+      var x = document.getElementById(id);
+      x.style.display = "none";
+      }
+}
+</script>
+
+        <section id="page-title" class="inline-form inner-section ui-menu-color02">
+            <div class="container-fluid nopadding">
+                <h3 class="font-accident-two-light color01 uppercase"
+                    data-animation-origin="right"
+                    data-animation-duration="400"
+                    data-animation-delay="100"
+                    data-animation-distance="50px">{% trans "Initiatives" %}</h3>
+
+            </div>
+        </section>
+
+        <section class="inline-form inner-section light bg-color01">
+            <div class="container-fluid nopadding">
+                {% crispy form 'bootstrap4' %}
+            </div>
+        </section>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/validators.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>
+
+
+{% endblock %}
