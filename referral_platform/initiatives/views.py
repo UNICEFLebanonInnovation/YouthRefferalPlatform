@@ -53,40 +53,40 @@ class AddInitiativeView(LoginRequiredMixin, FormView):
     success_url = '/registrations/list/'
     form_class = YouthLedInitiativePlanningForm
 
-    def get_success_url(self):
-        if self.request.POST.get('save', None):
-            del self.request.session['instance_id']
-            return '/initiatives/add/'
-        # if self.request.POST.get('save_and_continue', None):
-        #     return '/registrations/edit/' + str(self.request.session.get('instance_id')) + '/'
-        # return self.success_url
-
-    def get_initial(self):
-        # force_default_language(self.request, 'ar-ar')
-        data = dict()
-        if self.request.user.partner:
-            data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner'] = self.request.user.partner
-
-        if self.request.GET.get('youth_id'):
-                instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
-                data['youth_id'] = instance.id
-                data['youth_first_name'] = instance.first_name
-                data['youth_father_name'] = instance.father_name
-                data['youth_last_name'] = instance.last_name
-                data['youth_birthday_day'] = instance.birthday_day
-                data['youth_birthday_month'] = instance.birthday_month
-                data['youth_birthday_year'] = instance.birthday_year
-                data['youth_sex'] = instance.sex
-                data['youth_nationality'] = instance.nationality_id
-                data['youth_marital_status'] = instance.marital_status
-
-        initial = data
-        return initial
-
-    def form_valid(self, form):
-        form.save(request=self.request)
-        return super(AddInitiativeView, self).form_valid(form)
+    # def get_success_url(self):
+    #     if self.request.POST.get('save', None):
+    #         del self.request.session['instance_id']
+    #         return '/initiatives/add/'
+    #     # if self.request.POST.get('save_and_continue', None):
+    #     #     return '/registrations/edit/' + str(self.request.session.get('instance_id')) + '/'
+    #     # return self.success_url
+    #
+    # def get_initial(self):
+    #     # force_default_language(self.request, 'ar-ar')
+    #     data = dict()
+    #     if self.request.user.partner:
+    #         data['partner_locations'] = self.request.user.partner.locations.all()
+    #         data['partner'] = self.request.user.partner
+    #
+    #     if self.request.GET.get('youth_id'):
+    #             instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
+    #             data['youth_id'] = instance.id
+    #             data['youth_first_name'] = instance.first_name
+    #             data['youth_father_name'] = instance.father_name
+    #             data['youth_last_name'] = instance.last_name
+    #             data['youth_birthday_day'] = instance.birthday_day
+    #             data['youth_birthday_month'] = instance.birthday_month
+    #             data['youth_birthday_year'] = instance.birthday_year
+    #             data['youth_sex'] = instance.sex
+    #             data['youth_nationality'] = instance.nationality_id
+    #             data['youth_marital_status'] = instance.marital_status
+    #
+    #     initial = data
+    #     return initial
+    #
+    # def form_valid(self, form):
+    #     form.save(request=self.request)
+    #     return super(AddInitiativeView, self).form_valid(form)
 
 
 # class EditView(LoginRequiredMixin, FormView):
