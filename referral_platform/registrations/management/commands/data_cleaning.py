@@ -28,3 +28,8 @@ class Command(BaseCommand):
             newmaping = AssessmentSubmission.objects.filter(new_data__isnull=True)
             for obj in newmaping:
                 obj.update_field()
+        elif par == 'id':
+            from referral_platform.registrations.models import AssessmentSubmission
+            newmaping = AssessmentSubmission.objects.filter(registration__youth__number=id)
+            for obj in newmaping:
+                obj.update_field()
