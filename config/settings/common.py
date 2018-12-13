@@ -359,8 +359,9 @@ SUIT_CONFIG = {
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
         {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
         {'app': 'partners', 'label': 'Partners', 'icon': 'icon-user'},
-        {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
+        # {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
+        {'app': 'initiatives', 'label': 'Initiatives', 'icon': 'icon-th-list'},
 
     )
 }
