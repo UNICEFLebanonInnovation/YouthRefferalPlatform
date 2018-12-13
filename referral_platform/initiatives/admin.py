@@ -79,5 +79,6 @@ class InitAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(YouthLedInitiative, InitAdmin)
+admin.site.register(YouthLedInitiative, InitResource)
 #
 
