@@ -27,11 +27,14 @@ from .models import YouthLedInitiative
 #         )
 #         export_order = fields
 #
+
+
 class InitiativeAdmin(ImportExportModelAdmin):
     #
     # formfield_overrides = {
     #     JSONField: {'widget': PrettyJSONWidget}
     # }
+    model = YouthLedInitiative
     list_display = (
             'title',
             'members',
