@@ -29,24 +29,34 @@ from .models import YouthLedInitiative
 #
 
 
-class InitiativeAdmin(ImportExportModelAdmin):
-    #
-    # formfield_overrides = {
-    #     JSONField: {'widget': PrettyJSONWidget}
-    # }
-    model = YouthLedInitiative
-    list_display = (
+class InitResource(resources.ModelResource):
+    class Meta:
+        model = YouthLedInitiative
+        fields = (
             'title',
             'members',
             'location',
-            'partner',
+        )
+        export_order = fields
+
+
+class InitAdmin(ImportExportModelAdmin):
+    resource_class = InitResource
+    list_display = (
+        'title',
+        'members',
+        'location',
+
     )
     list_filter = (
-            'title',
-            'members',
-            'location',
-            'partner',
+        'location',
     )
+    search_fields = (
+        'title',
+    )
+    filter_horizontal = ('location',)
+
+
     #
     # def enrolled(self, obj):
     #     if obj.status == 'enrolled':
@@ -67,6 +77,6 @@ class InitiativeAdmin(ImportExportModelAdmin):
     # post_test_done.boolean = True
 
 
-admin.site.register(InitiativeAdmin)
+admin.site.register(YouthLedInitiative, InitAdmin)
 #
 
