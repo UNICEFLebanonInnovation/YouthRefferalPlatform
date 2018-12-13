@@ -36,6 +36,7 @@ class InitResource(resources.ModelResource):
             'title',
             'members',
             'location',
+            'partner_organization',
         )
         export_order = fields
 
@@ -43,7 +44,7 @@ class InitResource(resources.ModelResource):
 class InitAdmin(ImportExportModelAdmin):
     resource_class = InitResource
     list_display = (
-        'members',
+        'partner_organization',
         'title',
         'location',
 
