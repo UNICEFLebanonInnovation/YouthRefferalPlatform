@@ -13,8 +13,7 @@ from referral_platform.locations.models import Location
 from referral_platform.partners.models import PartnerOrganization
 from .models import YouthLedInitiative
 
-admin.site.register(YouthLedInitiative)
-
+# admin.site.register(YouthLedInitiative)
 # class InitiativeResource(resources.ModelResource):
 #     class Meta:
 #         model = YouthLedInitiative
@@ -28,44 +27,43 @@ admin.site.register(YouthLedInitiative)
 #         )
 #         export_order = fields
 #
-#
-# class InitiativeAdmin(ImportExportModelAdmin):
-#     resource_class = InitiativeResource
-#     formfield_overrides = {
-#         JSONField: {'widget': PrettyJSONWidget}
-#     }
-#     list_display = (
-#             'title',
-#             'members',
-#             'location',
-#             'partner',
-#     )
-#     list_filter = (
-#             'title',
-#             'members',
-#             'location',
-#             'partner',
-#     )
-#     #
-#     # def enrolled(self, obj):
-#     #     if obj.status == 'enrolled':
-#     #         return True
-#     #     return False
-#     # enrolled.boolean = True
-#     #
-#     # def pre_test_done(self, obj):
-#     #     if obj.status == 'pre_test':
-#     #         return True
-#     #     return False
-#     # pre_test_done.boolean = True
-#     #
-#     # def post_test_done(self, obj):
-#     #     if obj.status == 'post_test':
-#     #         return True
-#     #     return False
-#     # post_test_done.boolean = True
-#
-#
-# admin.site.register(InitiativeResource, InitiativeAdmin)
+class InitiativeAdmin(ImportExportModelAdmin):
+    #
+    # formfield_overrides = {
+    #     JSONField: {'widget': PrettyJSONWidget}
+    # }
+    list_display = (
+            'title',
+            'members',
+            'location',
+            'partner',
+    )
+    list_filter = (
+            'title',
+            'members',
+            'location',
+            'partner',
+    )
+    #
+    # def enrolled(self, obj):
+    #     if obj.status == 'enrolled':
+    #         return True
+    #     return False
+    # enrolled.boolean = True
+    #
+    # def pre_test_done(self, obj):
+    #     if obj.status == 'pre_test':
+    #         return True
+    #     return False
+    # pre_test_done.boolean = True
+    #
+    # def post_test_done(self, obj):
+    #     if obj.status == 'post_test':
+    #         return True
+    #     return False
+    # post_test_done.boolean = True
+
+
+admin.site.register(InitiativeAdmin)
 #
 
