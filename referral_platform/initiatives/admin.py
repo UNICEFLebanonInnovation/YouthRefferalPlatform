@@ -1,31 +1,17 @@
-import tablib
-
 
 from django.contrib import admin
 from import_export import resources, fields
+from import_export import fields
 from import_export.admin import ImportExportModelAdmin
-from import_export.formats import base_formats
-from import_export.widgets import *
-from django.utils.translation import ugettext as _
+from django.contrib.postgres.fields import JSONField
 
-from referral_platform.users.utils import has_group, force_default_language
-from referral_platform.locations.models import Location
-from referral_platform.partners.models import PartnerOrganization
+from prettyjson import PrettyJSONWidget
+
 from .models import YouthLedInitiative
 
-# admin.site.register(YouthLedInitiative)
-# class InitiativeResource(resources.ModelResource):
-#     class Meta:
-#         model = YouthLedInitiative
-#         fields = (
-#             'title',
-#             'members',
-#             'location',
-#             'partner',
-#             # 'pre_init_done',
-#             # 'post_init_done',
-#         )
-#         export_order = fields
+
+class SlugAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
 #
 
 
@@ -79,6 +65,5 @@ class InitAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(YouthLedInitiative, InitAdmin)
-admin.site.register(YouthLedInitiative, InitResource)
 #
 
