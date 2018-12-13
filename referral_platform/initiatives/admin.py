@@ -43,8 +43,8 @@ class InitResource(resources.ModelResource):
 class InitAdmin(ImportExportModelAdmin):
     resource_class = InitResource
     list_display = (
-        'title',
         'members',
+        'title',
         'location',
 
     )
@@ -54,7 +54,7 @@ class InitAdmin(ImportExportModelAdmin):
     search_fields = (
         'title',
     )
-    filter_horizontal = ('location',)
+    filter_horizontal = ('members',)
 
 
     #
