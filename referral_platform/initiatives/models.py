@@ -73,27 +73,20 @@ class YouthLedInitiative(models.Model):
         )
     )
 
-    initiative_types = ArrayField(
-        models.CharField(
+    initiative_types = models.CharField(
             choices=INITIATIVE_TYPES,
             max_length=254,
             blank=True,
             null=True,
         ),
-        blank=True,
-        null=True,
-    )
 
-    knowledge_areas = ArrayField(
-        models.CharField(
+    knowledge_areas = models.CharField(
             choices=SKILL_AREAS,
             max_length=254,
             blank=True,
             null=True,
         ),
-        blank=True,
-        null=True,
-    )
+
     why_this_initiative = models.TextField(blank=True, null=True)
 
     other_groups = models.CharField(
@@ -157,6 +150,7 @@ class YouthLedInitiative(models.Model):
             ('organization', _('Organisation')),
         )
     )
+
     resources_type = models.CharField(
         max_length=254,
         blank=True, null=True,
