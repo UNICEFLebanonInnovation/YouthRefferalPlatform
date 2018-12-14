@@ -51,9 +51,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
-            initials2 = {}
-            initials2['members'] = instance.YoungPerson.all()
-            initials2['partner_organization'] = instance.memebrs.partner_organization
+            # initials2 = {}
+            # initials2['members'] = instance.YoungPerson.all()
+            # initials2['partner_organization'] = instance.memebrs.partner_organization
 
 
         else:
@@ -62,7 +62,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner'] if 'partner' in initials else 0
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
-        self.fields['members'].queryset = YoungPerson.objects.filter(partner_organization=initials['partner_organization'])
+        self.fields['members'].queryset = YoungPerson.objects.filter(partner_organization=partner_organization)
         my_fields = OrderedDict()
 
         if not instance:
