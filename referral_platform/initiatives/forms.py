@@ -52,8 +52,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
             initials2 = {}
-            initials2['members'] = instance.YoungPerson.partner_organization.all()
-            initials2['partner_organization'] = instance.partner_organization
+            initials2['members'] = instance.YoungPerson.all()
+            initials2['partner_organization'] = instance.memebrs.partner_organization
 
 
         else:
@@ -142,9 +142,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # Field('how_to_ensure_sustainability', placeholder=_('not more than 5 sentences')),
 
             FormActions(
-                Submit('save', _('Save')),
-                HTML('<a class="btn btn-info cancel-button" href="/enrollments/list/" translation="' +
-                     _('Are you sure you want to cancel this registration?') + '">' + _('Back to list') + '</a>'),
+                Submit('save_add_another', _('Save and Add Another')),
+                Button('cancel', _('Cancel'))
             )
         )
 
