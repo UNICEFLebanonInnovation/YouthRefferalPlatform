@@ -76,9 +76,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             ),
             HTML(_('How many group members planned the initiative?')),
             'members',
-            'location',
-            'initiative_types',
-            'duration',
+            HTML(_('How many group members planned the initiative?'), 'location',),
+
+            HTML(_('How many group members planned the initiative?'), 'initiative_types',),
+            HTML(_('How many group members planned the initiative?'), 'duration',),
             # Div(
             #     Div(PrependedText('start_date', _('Planned start date')), css_class='col-md-6', ),
             #     Div('duration', css_class='col-md-6', ),
