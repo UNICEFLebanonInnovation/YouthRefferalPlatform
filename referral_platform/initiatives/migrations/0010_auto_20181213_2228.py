@@ -16,8 +16,8 @@ class Migration(migrations.Migration):
         #     model_name='youthledinitiative',
         #     name='initiative_types',
         # ),
-        migrations.RemoveField(
-            model_name='youthledinitiative',
-            name='knowledge_areas',
-        ),
+        # migrations.RemoveField(
+        #     model_name='youthledinitiative',
+        #     name='knowledge_areas',
+        # ),
     ]
