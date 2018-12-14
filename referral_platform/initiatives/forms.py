@@ -62,7 +62,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner'] if 'partner' in initials else 0
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
-        self.fields['members'].queryset = YoungPerson.objects.filter(YoungPerson__partner_organization=partner_organization)
+        self.fields['members'].queryset = YoungPerson.objects.filter(partner_organization=partner_organization)
         my_fields = OrderedDict()
 
         if not instance:
@@ -79,6 +79,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             HTML(_('How many group members planned the initiative?')),
             'members',
             'location',
+            'initiative_types',
+            'duration',
             # Div(
             #     Div(PrependedText('start_date', _('Planned start date')), css_class='col-md-6', ),
             #     Div('duration', css_class='col-md-6', ),
