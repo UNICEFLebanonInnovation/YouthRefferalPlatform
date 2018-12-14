@@ -152,7 +152,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         )
 
     def save(self, instance=None, request=None):
-        instance = super(YouthLedInitiativePlanningForm, self).save()
+        super(YouthLedInitiativePlanningForm, self).save()
         messages.success(request, _('Your data has been sent successfully to the server'))
 
 
