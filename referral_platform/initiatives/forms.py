@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from django import forms
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-
+from collections import OrderedDict
 from dal import autocomplete
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
@@ -15,7 +15,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, InlineField, Alert
 from bootstrap3_datetime.widgets import DateTimePicker
 
-from .models import YouthLedInitiative
+from .models import YouthLedInitiative, YoungPerson, Location
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
@@ -25,6 +25,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     class Meta:
         model = YouthLedInitiative
         fields = '__all__'
+
 
     start_date = forms.DateField(
         widget=DateTimePicker(
@@ -41,30 +42,46 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         widget=forms.RadioSelect
     )
 
+    members = forms.ModelChoiceField(
+        label=_('Members'),
+        queryset=YoungPerson.objects.all(), widget=forms.Select,
+        empty_label=_('Members'),
+        required=True, to_field_name='id',
+    )
+
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
 
+        self.request = kwargs.pop('request', None)
+        instance = kwargs.get('instance', '')
+        if instance:
+            initials = {}
+            initials['partner_locations'] = instance.partner_organization.locations.all()
+            initials['partner'] = instance.partner_organization
 
+        else:
+            initials = kwargs.get('initial', '')
 
-        instance = kwargs['instance'] if 'instance' in kwargs else ''
+        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
+        partner_organazation = initials['partner'] if 'partner' in initials else 0
+        self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
 
-        display_registry = ''
+        my_fields = OrderedDict()
 
-        self.fields['partner_organization'].empty_label = _('Partner Organisation')
-        self.fields['location'].empty_label = _('Select Location for the initiative')
-        self.fields['duration'].empty_label = _('Duration of the initiative')
+        if not instance:
+            my_fields['Search Youth'] = ['search_youth']
 
         self.helper = FormHelper()
         self.helper.form_show_labels = False
         self.helper.layout = Layout(
-            # Div(
-            #     Div('partner_organization', css_class='col-md-6', ),
-            #     Div(PrependedText('title', _('Initiative Title')), css_class='col-md-6', ),
-            #     css_class='row',
-            # ),
-            # HTML(_('How many group members planned the initiative?')),
-            # 'members',
-            # 'location',
+            Div(
+                Div('partner_organization', css_class='col-md-6', ),
+                Div(PrependedText('title', _('Initiative Title')), css_class='col-md-6', ),
+                css_class='row',
+            ),
+            HTML(_('How many group members planned the initiative?')),
+            'members',
+            'location',
             # Div(
             #     Div(PrependedText('start_date', _('Planned start date')), css_class='col-md-6', ),
             #     Div('duration', css_class='col-md-6', ),
