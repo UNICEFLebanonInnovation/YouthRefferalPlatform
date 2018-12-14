@@ -65,6 +65,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organazation = initials['partner'] if 'partner' in initials else 0
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
+        self.fields['members'].queryset = YoungPerson.objects.filter(parent__in=partner_locations)
 
         my_fields = OrderedDict()
 
