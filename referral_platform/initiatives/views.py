@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from referral_platform.users.views import UserRegisteredMixin
 
 from .forms import YouthLedInitiativePlanningForm
-from .models import YouthLedInitiative
+from .models import YouthLedInitiative, YoungPerson
 
 
 class YouthInitiativeView(UserRegisteredMixin, FormView):
@@ -37,6 +37,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner
+            data['members'] = YoungPerson.objects.filter(partner_organization=data['partner_organization'])
 
         # if self.request.GET.get('youth_id'):
         #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
