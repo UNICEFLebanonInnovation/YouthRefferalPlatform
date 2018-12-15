@@ -1,5 +1,5 @@
 from __future__ import absolute_import, unicode_literals
-
+from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from django.views.generic import TemplateView, FormView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,16 +11,20 @@ from .models import YouthLedInitiative, YoungPerson
 
 
 class YouthInitiativeView(UserRegisteredMixin, FormView):
+    table_class = CommonTable
+    model = YouthLedInitiative
+    template_name = 'registrations/list.html'
+    table = BootstrapTable(YouthLedInitiative.objects.all(), order_by='id')
 
-    template_name = 'courses/community/initiative.html'
-    form_class = YouthLedInitiativePlanningForm
+    def get_queryset(self):
+        return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner)
 
 
 class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'initiatives/form.html'
     model = YouthLedInitiative
-    success_url = '/initiatives/form.html'
+    success_url = '/initiatives/list.html'
     form_class = YouthLedInitiativePlanningForm
 
     def get_success_url(self):
