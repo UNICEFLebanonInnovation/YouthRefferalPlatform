@@ -157,7 +157,7 @@ class YouthLedInitiative(models.Model):
     #     choices=RESOURCE_TYPES
     # )
 
-    # description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     # planned_results = models.TextField(blank=True, null=True)
     # anticpated_challenges = models.TextField(blank=True, null=True)
     # mitigation_of_challenges = models.TextField(blank=True, null=True)
