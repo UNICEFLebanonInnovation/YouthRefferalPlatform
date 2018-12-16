@@ -29,7 +29,6 @@ class CommonTable(tables.Table):
         model = YouthLedInitiative
         fields = (
             'title',
-            'members',
             'initiative_types',
         )
 
@@ -49,6 +48,5 @@ class CommonTableAlt(tables.Table):
         model = YouthLedInitiative
         fields = (
             'title',
-            'members',
             'initiative_types',
         )
