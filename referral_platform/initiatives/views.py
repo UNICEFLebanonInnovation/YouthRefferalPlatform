@@ -24,7 +24,7 @@ from .forms import YouthLedInitiativePlanningForm
 from .models import YouthLedInitiative, YoungPerson
 
 
-class YouthInitiativeView(LoginRequiredMixin, FilterView, ExportMixin, SingleTableView, RequestConfig):
+class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
 
     table_class = CommonTable
     model = YouthLedInitiative
