@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
             name='duration',
             field=models.CharField(blank=True, choices=[('1_2', '1-2 weeks'), ('3_4', '3-4 weeks'), ('4_6', '4-6 weeks'), ('6_plus', 'More than 6 weeks')], max_length=254, null=True),
         ),
-        migrations.AlterField(
-            model_name='youthledinitiative',
-            name='initiative_types',
-            field=models.CharField(blank=True, choices=[('basic_services', 'Improving or installing basic services (electricity, water, sanitation, and waste removal)'), ('social', 'Enhancing social cohesion'), ('environmental', 'Environmental'), ('health_services', 'Health Services'), ('informational', 'Educational, informational or knowledge sharing'), ('advocacy', 'Advocacy or Raising awareness'), ('political', 'Political'), ('religious', 'Spiritual/Religious'), ('culture', 'Artistic/Cultural/Sports'), ('safety', 'Enhancing public safety'), ('public_spaces', 'Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)'), ('other', 'Other')], max_length=254, null=True),
-        ),
+        # migrations.AlterField(
+        #     model_name='youthledinitiative',
+        #     name='initiative_types',
+        #     field=models.CharField(blank=True, choices=[('basic_services', 'Improving or installing basic services (electricity, water, sanitation, and waste removal)'), ('social', 'Enhancing social cohesion'), ('environmental', 'Environmental'), ('health_services', 'Health Services'), ('informational', 'Educational, informational or knowledge sharing'), ('advocacy', 'Advocacy or Raising awareness'), ('political', 'Political'), ('religious', 'Spiritual/Religious'), ('culture', 'Artistic/Cultural/Sports'), ('safety', 'Enhancing public safety'), ('public_spaces', 'Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)'), ('other', 'Other')], max_length=254, null=True),
+        # ),
         migrations.AlterField(
             model_name='youthledinitiative',
             name='location',

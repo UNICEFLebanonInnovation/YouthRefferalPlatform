@@ -78,20 +78,22 @@ class YouthLedInitiative(models.Model):
         blank=True,
         null=True,
         choices=Choices(
-            ('basic_services', _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
-            ('social', _('Enhancing social cohesion')),
-            ('environmental', _('Environmental')),
-            ('health_services', _('Health Services')),
-            ('informational', _('Educational, informational or knowledge sharing')),
-            ('advocacy', _('Advocacy or Raising awareness')),
-            ('political', _('Political')),
-            ('religious', _('Spiritual/Religious')),
-            ('culture', _('Artistic/Cultural/Sports')),
-            ('safety', _('Enhancing public safety')),
-            ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
-            ('other', _('Other')),
-         )
+                ('basic_services',
+                 _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
+                ('social', _('Enhancing social cohesion')),
+                ('environmental', _('Environmental')),
+                ('health_services', _('Health Services')),
+                ('informational', _('Educational, informational or knowledge sharing')),
+                ('advocacy', _('Advocacy or Raising awareness')),
+                ('political', _('Political')),
+                ('religious', _('Spiritual/Religious')),
+                ('culture', _('Artistic/Cultural/Sports')),
+                ('safety', _('Enhancing public safety')),
+                ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
+                ('other', _('Other'))
+        )
     )
+
 
     # knowledge_areas = models.CharField(
     #         choices=SKILL_AREAS,
