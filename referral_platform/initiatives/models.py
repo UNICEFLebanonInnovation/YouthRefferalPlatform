@@ -74,8 +74,9 @@ class YouthLedInitiative(models.Model):
     )
 
     initiative_types = models.CharField(
-        max_length=254,
+        max_length=255,
         blank=True,
+        verbose_name=_('Initiative Types'),
         null=True,
         choices=Choices(
                 ('basic_services',
@@ -92,6 +93,7 @@ class YouthLedInitiative(models.Model):
                 ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
                 ('other', _('Other'))
         )
+
     )
 
 
