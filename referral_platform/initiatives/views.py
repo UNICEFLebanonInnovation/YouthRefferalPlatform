@@ -13,7 +13,7 @@ from .models import YouthLedInitiative, YoungPerson
 class YouthInitiativeView(UserRegisteredMixin, FormView):
     table_class = CommonTable
     model = YouthLedInitiative
-    template_name = 'registrations/list.html'
+    template_name = 'initiatives/list.html'
     table = BootstrapTable(YouthLedInitiative.objects.all(), order_by='id')
 
     def get_queryset(self):
