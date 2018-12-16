@@ -11,10 +11,10 @@ class Migration(migrations.Migration):
         ('initiatives', '0002_auto_20181216_1216'),
     ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='youthledinitiative',
-            name='initiative_types',
-            field=models.CharField(blank=True, choices=[('basic_services', 'Improving or installing basic services (electricity, water, sanitation, and waste removal)'), ('social', 'Enhancing social cohesion'), ('environmental', 'Environmental'), ('health_services', 'Health Services'), ('informational', 'Educational, informational or knowledge sharing'), ('advocacy', 'Advocacy or Raising awareness'), ('political', 'Political'), ('religious', 'Spiritual/Religious'), ('culture', 'Artistic/Cultural/Sports'), ('safety', 'Enhancing public safety'), ('public_spaces', 'Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)'), ('other', 'Other')], max_length=254, null=True),
-        ),
-    ]
+    # operations = [
+    #     migrations.AlterField(
+    #         model_name='youthledinitiative',
+    #         name='initiative_types',
+    #         field=models.CharField(blank=True, choices=[('basic_services', 'Improving or installing basic services (electricity, water, sanitation, and waste removal)'), ('social', 'Enhancing social cohesion'), ('environmental', 'Environmental'), ('health_services', 'Health Services'), ('informational', 'Educational, informational or knowledge sharing'), ('advocacy', 'Advocacy or Raising awareness'), ('political', 'Political'), ('religious', 'Spiritual/Religious'), ('culture', 'Artistic/Cultural/Sports'), ('safety', 'Enhancing public safety'), ('public_spaces', 'Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)'), ('other', 'Other')], max_length=254, null=True),
+    #     ),
+    # ]

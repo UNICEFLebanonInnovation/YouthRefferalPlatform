@@ -103,7 +103,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             'location',
 
             HTML(_('Initiative Type')),
-            'initiative_types',
+            'type',
             HTML(_('Duration')),
             'duration',)
             # Div(

@@ -73,8 +73,8 @@ class YouthLedInitiative(models.Model):
         )
     )
 
-    initiative_types = models.CharField(
-        max_length=255,
+    type = models.CharField(
+        max_length=254,
         blank=True,
         verbose_name=_('Initiative Types'),
         null=True,
