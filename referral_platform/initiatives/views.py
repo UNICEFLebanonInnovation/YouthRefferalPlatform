@@ -1,7 +1,21 @@
 from __future__ import absolute_import, unicode_literals
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from django.views.generic import TemplateView, FormView
+from django.views.generic import ListView, FormView, TemplateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, JsonResponse
+from django.utils.translation import ugettext as _
+from django.db.models import Q
 
+from rest_framework import status
+from rest_framework import viewsets, mixins, permissions
+from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
+from import_export.formats import base_formats
+
+
+from django_filters.views import FilterView
+from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
+from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from referral_platform.users.views import UserRegisteredMixin
@@ -10,7 +24,7 @@ from .forms import YouthLedInitiativePlanningForm
 from .models import YouthLedInitiative, YoungPerson
 
 
-class YouthInitiativeView(UserRegisteredMixin, FormView):
+class YouthInitiativeView(LoginRequiredMixin, GroupRequiredMixin, FilterView, ExportMixin, SingleTableView, RequestConfig):
     table_class = CommonTable
     model = YouthLedInitiative
     template_name = 'initiatives/list.html'
