@@ -30,12 +30,12 @@
       <li class="breadcrumb-item active">{{ request.user }}</li>
 
 
-               <li class="breadcrumb-item active">
-              <a href="{% url 'registrations:add' %}" class="btn btn-success">
-                  <i class="icon-plus-sign icon-white"></i>
-                  {% trans "Add new beneficiary" %}
-              </a>
-            </li>
+               <!--<li class="breadcrumb-item active">-->
+              <!--<a href="{% url 'registrations:add' %}" class="btn btn-success">-->
+                  <!--<i class="icon-plus-sign icon-white"></i>-->
+                  <!--{% trans "Add new beneficiary" %}-->
+              <!--</a>-->
+            <!--</li>-->
 
              <li class="breadcrumb-item active">
               <a href="{% url 'initiatives:add-initiative' %}" class="btn btn-success">
@@ -44,22 +44,22 @@
               </a>
             </li>
 
-              <li>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-primary">{% trans "Export data" %}</button>
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration" %}</a></li>
-                    <li><a href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a></li>
-                    <li><a href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a></li>
-                    <li><a href="{% url 'registrations:export_initiative_assessments' %}">{% trans "Export Initiative registration & implementation" %}</a></li>
-                    <li><a href="{% url 'registrations:export' %}">{% trans "Export Beneficiary list" %}</a></li>
-                  </ul>
-                </div>
-              </li>
+              <!--<li>-->
+                <!--<div class="btn-group">-->
+                  <!--<button type="button" class="btn btn-primary">{% trans "Export data" %}</button>-->
+                  <!--<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--<span class="caret"></span>-->
+                    <!--<span class="sr-only">Toggle Dropdown</span>-->
+                  <!--</button>-->
+                  <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="{% url 'registrations:export_registry_assessments' %}">{% trans "Export Registration" %}</a></li>-->
+                    <!--<li><a href="{% url 'registrations:export_civic_assessments' %}">{% trans "Export Civic Engagement assessments" %}</a></li>-->
+                    <!--<li><a href="{% url 'registrations:export_entrepreneurship_assessments' %}">{% trans "Export Entrepreneurship assessments" %}</a></li>-->
+                    <!--<li><a href="{% url 'registrations:export_initiative_assessments' %}">{% trans "Export Initiative registration & implementation" %}</a></li>-->
+                    <!--<li><a href="{% url 'registrations:export' %}">{% trans "Export Beneficiary list" %}</a></li>-->
+                  <!--</ul>-->
+                <!--</div>-->
+              <!--</li>-->
     </ol>
 
     <div class="pb-5 pr-5 list-filter">
@@ -81,37 +81,37 @@
     {% get_user_token request.user.id as user_token %}
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
-    <script>
-        var export_url = '/api/backend-exporter/';
-        var user_token = '{{ user_token }}';
-        var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+    <!--<script>-->
+        <!--var export_url = '/api/backend-exporter/';-->
+        <!--var user_token = '{{ user_token }}';-->
+        <!--var csrftoken = $('input[name=csrfmiddlewaretoken]').val();-->
 
-        $(document).ready(function() {
-            $('.export-link').click(function(){
-                export_file($(this).attr('itemref'));
-            });
-        });
+        <!--$(document).ready(function() {-->
+            <!--$('.export-link').click(function(){-->
+                <!--export_file($(this).attr('itemref'));-->
+            <!--});-->
+        <!--});-->
 
-        function export_file(params)
-        {
+        <!--function export_file(params)-->
+        <!--{-->
 
-            $.ajax({
-                type: "GET",
-                url: export_url,
-                data: params,
-                cache: false,
-                headers: getHeader(),
-                dataType: 'json',
-                success: function (response, result, jqXHR) {
-                    if(jqXHR.status == 200){
-                      alert("Your export request has been sent, you will find in exported file in the Exported file page");
-                    }
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            });
-        }
+            <!--$.ajax({-->
+                <!--type: "GET",-->
+                <!--url: export_url,-->
+                <!--data: params,-->
+                <!--cache: false,-->
+                <!--headers: getHeader(),-->
+                <!--dataType: 'json',-->
+                <!--success: function (response, result, jqXHR) {-->
+                    <!--if(jqXHR.status == 200){-->
+                      <!--alert("Your export request has been sent, you will find in exported file in the Exported file page");-->
+                    <!--}-->
+                <!--},-->
+                <!--error: function (response) {-->
+                    <!--console.log(response);-->
+                <!--}-->
+            <!--});-->
+        <!--}-->
 
-    </script>
+    <!--</script>-->
 {% endblock %}
