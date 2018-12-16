@@ -70,7 +70,6 @@ LOCAL_APPS = (
     'referral_platform.clm',
     'referral_platform.dashboard',
     'referral_platform.backends',
-    'referral_platform.INIT',
 
 )
 
