@@ -74,11 +74,11 @@ class YouthLedInitiative(models.Model):
     )
 
     initiative_types = models.CharField(
-            choices=INITIATIVE_TYPES,
-            max_length=254,
-            blank=True,
-            null=True,
-        )
+        choices=INITIATIVE_TYPES,
+        max_length=254,
+        blank=True,
+        null=True,
+    )
 
     # knowledge_areas = models.CharField(
     #         choices=SKILL_AREAS,
