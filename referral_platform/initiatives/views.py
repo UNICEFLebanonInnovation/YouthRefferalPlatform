@@ -52,8 +52,8 @@ class AddView(LoginRequiredMixin, FormView):
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
-            # data['partner_organization'] = self.request.user.partner
-            # data['members'] = YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+            data['partner_organization'] = self.request.user.partner
+            data['partner_members'] = YoungPerson.objects.filter(partner_organization=self.request.user.partner)
 
         # if self.request.GET.get('youth_id'):
         #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))

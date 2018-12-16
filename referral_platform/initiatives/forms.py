@@ -51,6 +51,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
+            # initials['partner_members']=instance
 
 
 
