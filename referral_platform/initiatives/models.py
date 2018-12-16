@@ -19,20 +19,20 @@ from referral_platform.locations.models import Location
 
 class YouthLedInitiative(models.Model):
 
-    INITIATIVE_TYPES = Choices(
-        ('basic_services', _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
-        ('social', _('Enhancing social cohesion')),
-        ('environmental', _('Environmental')),
-        ('health_services', _('Health Services')),
-        ('informational', _('Educational, informational or knowledge sharing')),
-        ('advocacy', _('Advocacy or Raising awareness')),
-        ('political', _('Political')),
-        ('religious', _('Spiritual/Religious')),
-        ('culture', _('Artistic/Cultural/Sports')),
-        ('safety', _('Enhancing public safety')),
-        ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
-        ('other', _('Other')),
-    )
+    # INITIATIVE_TYPES = Choices(
+    #     ('basic_services', _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
+    #     ('social', _('Enhancing social cohesion')),
+    #     ('environmental', _('Environmental')),
+    #     ('health_services', _('Health Services')),
+    #     ('informational', _('Educational, informational or knowledge sharing')),
+    #     ('advocacy', _('Advocacy or Raising awareness')),
+    #     ('political', _('Political')),
+    #     ('religious', _('Spiritual/Religious')),
+    #     ('culture', _('Artistic/Cultural/Sports')),
+    #     ('safety', _('Enhancing public safety')),
+    #     ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
+    #     ('other', _('Other')),
+    # )
 
     # SKILL_AREAS = Choices(
     #     ('self-management', _('Self-Management')),
@@ -74,10 +74,23 @@ class YouthLedInitiative(models.Model):
     )
 
     initiative_types = models.CharField(
-        choices=INITIATIVE_TYPES,
         max_length=254,
         blank=True,
         null=True,
+        choices=Choices(
+            ('basic_services', _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
+            ('social', _('Enhancing social cohesion')),
+            ('environmental', _('Environmental')),
+            ('health_services', _('Health Services')),
+            ('informational', _('Educational, informational or knowledge sharing')),
+            ('advocacy', _('Advocacy or Raising awareness')),
+            ('political', _('Political')),
+            ('religious', _('Spiritual/Religious')),
+            ('culture', _('Artistic/Cultural/Sports')),
+            ('safety', _('Enhancing public safety')),
+            ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
+            ('other', _('Other')),
+         )
     )
 
     # knowledge_areas = models.CharField(
