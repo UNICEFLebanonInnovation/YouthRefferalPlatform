@@ -13,10 +13,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='youthledinitiative',
-            name='knowledge_areas',
-        ),
+        # migrations.RemoveField(
+        #     model_name='youthledinitiative',
+        #     name='knowledge_areas',
+        # ),
         migrations.AddField(
             model_name='youthledinitiative',
             name='description',
