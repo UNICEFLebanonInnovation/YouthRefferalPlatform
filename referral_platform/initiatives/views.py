@@ -39,7 +39,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'initiatives/form.html'
     model = YouthLedInitiative
-    success_url = '/initiatives/list.html'
+    success_url = 'initiatives/list.html'
     form_class = YouthLedInitiativePlanningForm
 
     def get_success_url(self):

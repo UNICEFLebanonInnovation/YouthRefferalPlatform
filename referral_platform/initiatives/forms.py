@@ -258,18 +258,71 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         #         self.helper.layout.append(myflds)
         #
         # self.helper.form_action = form_action
-        self.helper.layout.append(
-            FormActions(
-                HTML('<a class="btn btn-info col-md-2" href="/initiatives/list/">' + _t('Cancel') + '</a>'),
-                Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
-                css_class='btn-actions'
+        FormActions(
+            HTML('<a class="btn btn-info col-md-2" href="/registrations/list/">' + _t('Cancel') + '</a>'),
+            Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
+            Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
+            Submit('save', _('Save'), css_class='col-md-2'),
+            css_class='btn-actions'
 
-            )
         )
+
+    def clean(self):
+
+        cleaned_data = super(YouthLedInitiativePlanningForm, self).clean()
+        title = cleaned_data.get('title')
+        members = cleaned_data.get('members')
+        duration = cleaned_data.get('duration')
+        types = cleaned_data.get('types')
+        location = cleaned_data.get('location')
+        # nationality = cleaned_data.get('youth_nationality')
+        # sex = cleaned_data.get('youth_sex')
+        # first_name = cleaned_data.get('youth_first_name')
+        # last_name = cleaned_data.get('youth_last_name')
+        # father_name = cleaned_data.get('youth_father_name')
+        # override_submit = cleaned_data.get('override_submit')
+        # # form_str = '{} {} {}'.format(first_name, father_name, last_name)
+        # is_matching = False
+        # exists = False
+        # queryset = YouthLedInitiative.objects.all()
+        # continue_button = '<br/><button  class="btn btn-info" type="button" name="continue" value="continue" id="continue">Continue</button>'
+        #
+        # if not override_submit:
+        #     if youth_id:
+        #         if queryset.filter(youth_id=youth_id, partner_organization=self.initial["partner"]).exists():
+        #             exists = True
+        #
+        #     if exists:
+        #         raise forms.ValidationError(
+        #             "Youth is already registered with current partner"
+        #         )
+        #
+        #     if self.instance.id:
+        #         queryset = queryset.exclude(id=self.instance.id, partner_organization=self.instance.partner_organization)
+        #
+        #     filtered_results = queryset.filter(youth__birthday_year=birthday_year,
+        #                                            youth__birthday_day=birthday_day,
+        #                                            youth__birthday_month=birthday_month,
+        #                                            youth__sex=sex)
+        #     if not youth_id_edit:
+        #         matching_results = ''
+        #         for result in filtered_results:
+        #             result_str = '{} {} {}'.format(result.youth.first_name, result.youth.father_name, result.youth.last_name)
+        #             fuzzy_match = fuzz.ratio(form_str, result_str)
+        #             if fuzzy_match > 85:
+        #                 matching_results = matching_results + "<a href='/registrations/add/?youth_id="+str(result.youth_id)+"'>"+result_str+" - birthday:"+birthday_day+"/"+birthday_month+"/"+birthday_year+" - gender:"+sex+"</a><br/>"
+        #                 is_matching = True
+        #
+        #         if is_matching:
+        #             raise forms.ValidationError(
+        #                 mark_safe("Youth is already registered with another partner, "
+        #                           "please check which one would you like to add:<br/>"+matching_results+"<br/> Or if new Youth click on continue:<br/>"+continue_button)
+        #                 )
 
     def save(self, instance=None, request=None):
         super(YouthLedInitiativePlanningForm, self).save()
         messages.success(request, _('Your data has been sent successfully to the server'))
+
 
 
 
