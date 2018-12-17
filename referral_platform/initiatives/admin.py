@@ -41,7 +41,7 @@ class InitAdmin(ImportExportModelAdmin):
     search_fields = (
         'title',
     )
-    filter_horizontal = ('members',)
+    # filter_horizontal = ('members',)
 
 
     #
