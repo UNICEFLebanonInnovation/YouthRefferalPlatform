@@ -11,12 +11,19 @@ from rest_framework import status
 from rest_framework import viewsets, mixins, permissions
 from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 from import_export.formats import base_formats
+from django.shortcuts import render, get_object_or_404
 
+from django.shortcuts import render
+
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 from django_filters.views import FilterView
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from referral_platform.users.views import UserRegisteredMixin
 
@@ -54,7 +61,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner
-            data['members'] = YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+            data['members'] = YoungPerson.objects.filter(partner_organization=self.request.user.partner, )
 
         # if self.request.GET.get('youth_id'):
         #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
@@ -72,7 +79,19 @@ class AddView(LoginRequiredMixin, FormView):
         initial = data
         return initial
 
+    def get_form(self, form_class=None):
+        form_class = YouthLedInitiativePlanningForm
+        # instance = YouthLedInitiative.objects.get(partner_organization=self.request.user.partner)
+        if self.request.method == "POST":
+            return form_class(self.request.POST)
+        else:
+            return form_class()
+
     def form_valid(self, form):
         # instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        form.save(request=self.request, instance=instance)
+        form.save(request=self.request)
         return super(AddView, self).form_valid(form)
+
+
+
+
