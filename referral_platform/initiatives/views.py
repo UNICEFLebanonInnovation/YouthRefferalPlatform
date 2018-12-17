@@ -41,6 +41,7 @@ class AddView(LoginRequiredMixin, FormView):
     model = YouthLedInitiative
     success_url = 'initiatives/list.html'
     form_class = YouthLedInitiativePlanningForm
+    form = YouthLedInitiativePlanningForm
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
