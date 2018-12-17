@@ -54,7 +54,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner
-            # data['partner_members'] = YoungPerson.objects.filter(partner_organization=self.request.user.partner)
+            data['members'] = YoungPerson.objects.filter(partner_organization=self.request.user.partner)
 
         # if self.request.GET.get('youth_id'):
         #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
@@ -73,6 +73,6 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
-        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        # instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         form.save(request=self.request, instance=instance)
         return super(AddView, self).form_valid(form)
