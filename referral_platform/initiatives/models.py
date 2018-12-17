@@ -13,6 +13,7 @@ from model_utils.models import TimeStampedModel
 
 from referral_platform.users.models import User
 from referral_platform.youth.models import YoungPerson
+from referral_platform.registrations.models import Registration
 from referral_platform.partners.models import PartnerOrganization
 from referral_platform.locations.models import Location
 
@@ -58,7 +59,7 @@ class YouthLedInitiative(models.Model):
     title = models.CharField(max_length=255)
     location = models.ForeignKey(Location, blank=True, null=True, verbose_name="location")
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="partner_organization")
-    members = models.ManyToManyField(YoungPerson, blank=True)
+    members = models.ManyToManyField(Registration, blank=True)
 
     # start_date = models.DateField(blank=True, null=True)
     duration = models.CharField(
