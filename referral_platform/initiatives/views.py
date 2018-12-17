@@ -56,14 +56,17 @@ class AddView(LoginRequiredMixin, FormView):
             return '/initiatives/add/'
         return self.success_url
 
+    def get_queryset(self):
+        queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+        return queryset
+
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
-        members = Registration.objects.filter(partner_organization=self.request.user.partner)
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner
-            data['members'] = members
+            data['members'] = AddView.get_queryset(self)
 
         # if self.request.GET.get('youth_id'):
         #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
@@ -81,13 +84,13 @@ class AddView(LoginRequiredMixin, FormView):
         initial = data
         return initial
 
-    # def get_form(self, form_class=None):
-    #     form_class = YouthLedInitiativePlanningForm
-    #     # instance = YouthLedInitiativePlanningForm.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.school)
-    #     if self.request.method == "POST":
-    #         return form_class(self.request.POST)
-    #     else:
-    #         return form_class()
+    def get_form(self, form_class=None):
+        form_class = YouthLedInitiativePlanningForm
+        instance = YouthLedInitiativePlanningForm.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.school)
+        if self.request.method == "POST":
+            return form_class(self.request.POST)
+        else:
+            return form_class()
 
     def form_valid(self, form):
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
