@@ -320,9 +320,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         #                           "please check which one would you like to add:<br/>"+matching_results+"<br/> Or if new Youth click on continue:<br/>"+continue_button)
         #                 )
 
-    def save(self, instance=None, request=None):
-        super(YouthLedInitiativePlanningForm, self).save()
-        messages.success(request, _('Your data has been sent successfully to the server'))
+    # def save(self, instance=None, request=None):
+    #     super(YouthLedInitiativePlanningForm, self).save()
+    #     messages.success(request, _('Your data has been sent successfully to the server'))
 
 
 
