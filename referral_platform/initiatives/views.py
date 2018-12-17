@@ -84,18 +84,22 @@ class AddView(LoginRequiredMixin, FormView):
         initial = data
         return initial
 
-    def get_form(self, form_class=None):
-        form_class = YouthLedInitiativePlanningForm
+    # def get_form(self, form_class=None):
+    #     form_class = YouthLedInitiativePlanningForm
+    #     instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+    #     if self.request.method == "POST":
+    #         return form_class(self.request.POST)
+    #     else:
+    #         return form_class()
+
+    def form_valid(self, form, form_class=None):
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return form_class(self.request.POST)
+            return form_class(self.request.POST, instance=instance)
         else:
-            return form_class()
-
-    def form_valid(self, form):
-        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        form.save(request=self.request, instance=instance)
-        return super(AddView, self).form_valid(form)
+            return form_class(instance=instance)
+        # form.save(request=self.request, instance=instance)
+        # return super(AddView, self).form_valid(form)
 
 
 
