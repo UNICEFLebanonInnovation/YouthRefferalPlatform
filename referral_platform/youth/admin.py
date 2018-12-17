@@ -72,6 +72,10 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         'father_name'
     )
 
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()
+
 
 class NationalityResource(resources.ModelResource):
 
@@ -88,6 +92,9 @@ class NationalityResource(resources.ModelResource):
 class NationalityAdmin(ImportExportModelAdmin):
     resource_class = NationalityResource
 
+    def get_export_formats(self):
+        from referral_platform.users.utils import get_default_export_formats
+        return get_default_export_formats()
 
 admin.site.register(YoungPerson, YoungPersonAdmin)
 admin.site.register(Disability)

@@ -23,3 +23,15 @@ def has_group(user, group_name):
         return True if user and group in user.groups.all() else False
     except Group.DoesNotExist:
         return False
+
+
+def get_default_export_formats():
+    from import_export.admin import base_formats
+    """
+    Return available export formats.
+    """
+    return (
+        base_formats.XLS,
+        base_formats.XLSX,
+        base_formats.JSON
+    )
