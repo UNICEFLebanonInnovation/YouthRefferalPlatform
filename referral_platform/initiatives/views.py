@@ -51,6 +51,10 @@ class AddView(LoginRequiredMixin, FormView):
     form_class = YouthLedInitiativePlanningForm
     form = YouthLedInitiativePlanningForm
 
+    def get_form_class(self):
+        form_class = YouthLedInitiativePlanningForm
+        return form_class
+
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
             return '/initiatives/add/'
