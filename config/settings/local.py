@@ -26,9 +26,9 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='j49r%gsnj&t!ys+qz^*-lsupfnk(268+1
 # Mail settings
 # ------------------------------------------------------------------------------
 
-EMAIL_PORT = 1025
-
-EMAIL_HOST = env("EMAIL_HOST", default='mailhog')
+# EMAIL_PORT = 1025
+#
+# EMAIL_HOST = env("EMAIL_HOST", default='mailhog')
 
 
 # CACHING

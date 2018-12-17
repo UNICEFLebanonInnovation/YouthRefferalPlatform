@@ -76,6 +76,7 @@
     <script>
         var export_url = '/api/backend-exporter/';
         var user_token = '{{ user_token }}';
+        var href_full_path = '{{ request.build_absolute_uri }}';
         var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
 
         $(document).ready(function() {

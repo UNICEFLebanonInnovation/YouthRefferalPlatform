@@ -21,6 +21,7 @@ Issues with the above approach:
 $('.form-group').removeClass('row');
 var user_token = null;
 var csrftoken = getCookie('csrftoken');
+var href_full_path = '';
 var db = null;
 
 hashCode = function(str){
@@ -137,7 +138,8 @@ function getHeader()
 {
     var header = {
         'Authorization': 'Token '+user_token,
-        'HTTP_REFERER': $(location).attr('href'),
+//        'HTTP_REFERER': $(location).attr('href'),
+        'HTTP_REFERER': href_full_path,
         'Cookie': 'token=Token '+user_token,
         'X-CSRFToken': csrftoken
     };
