@@ -79,8 +79,7 @@ class YouthLedInitiative(models.Model):
         verbose_name=_('Initiative Types'),
         null=True,
         choices=Choices(
-                ('basic_services',
-                 _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
+                ('basic_services', _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
                 ('social', _('Enhancing social cohesion')),
                 ('environmental', _('Environmental')),
                 ('health_services', _('Health Services')),
