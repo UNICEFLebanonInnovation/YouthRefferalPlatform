@@ -23,6 +23,7 @@ from django_filters.views import FilterView
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from referral_platform.registrations.models import Registration
 
 
 from referral_platform.users.views import UserRegisteredMixin
@@ -57,11 +58,12 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
+        members = Registration.objects.filter(partner_organization=self.request.user.partner)
         data = dict()
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner
-            data['members'] = YoungPerson.objects.filter(partner_organization=self.request.user.partner, )
+            data['members'] = members
 
         # if self.request.GET.get('youth_id'):
         #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
@@ -81,15 +83,15 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_form(self, form_class=None):
         form_class = YouthLedInitiativePlanningForm
-        # instance = YouthLedInitiative.objects.get(partner_organization=self.request.user.partner)
+        # instance = YouthLedInitiativePlanningForm.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.school)
         if self.request.method == "POST":
             return form_class(self.request.POST)
         else:
             return form_class()
 
     def form_valid(self, form):
-        # instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        form.save(request=self.request)
+        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        form.save(request=self.request, instance=instance)
         return super(AddView, self).form_valid(form)
 
 
