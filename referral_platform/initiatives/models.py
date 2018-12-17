@@ -13,7 +13,6 @@ from model_utils.models import TimeStampedModel
 
 from referral_platform.users.models import User
 from referral_platform.youth.models import YoungPerson
-from referral_platform.registrations.models import Registration
 from referral_platform.partners.models import PartnerOrganization
 from referral_platform.locations.models import Location
 
