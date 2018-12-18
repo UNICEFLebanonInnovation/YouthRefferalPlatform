@@ -84,11 +84,12 @@ class EditView(LoginRequiredMixin, FormView):
     template_name = 'initiatives/form.html'
     form_class = YouthLedInitiativePlanningForm
     model = YouthLedInitiative
-    success_url = 'initiatives/list/'
+    success_url = '/initiatives/list/'
+    form = YouthLedInitiativePlanningForm
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return 'initiatives/add/'
+            return '/initiatives/add/'
         return self.success_url
 
     def get_initial(self):
@@ -100,11 +101,12 @@ class EditView(LoginRequiredMixin, FormView):
         return initial
 
     def get_form(self, form_class=None):
+        form = YouthLedInitiativePlanningForm
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return form_class(self.request.POST, instance=instance)
+            return form(self.request.POST, instance=instance)
         else:
-            return form_class
+            return form
 
     def form_valid(self, form):
         # instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
