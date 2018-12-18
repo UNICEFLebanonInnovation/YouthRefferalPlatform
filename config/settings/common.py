@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = (
     'django_tables2',
     'django_celery_beat',
     'django_celery_results',
+    'djangosecure',
 )
 
 # Apps specific for this project go here.
@@ -87,11 +88,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
 )
 
-SECURE_SSL_REDIRECT = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+# SECURITY CONFIGURATION
+X_FRAME_OPTIONS = 'DENY'
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
