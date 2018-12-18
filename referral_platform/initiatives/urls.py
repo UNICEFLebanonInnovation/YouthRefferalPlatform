@@ -16,5 +16,10 @@ urlpatterns = [
         view=views.YouthInitiativeView.as_view(),
         name='list-initiatives'
     ),
+    url(
+        regex=r'^edit/(?P<pk>[\w.@+-]+)/$',
+        view=views.EditView.as_view(),
+        name='edit'
+    ),
 
 ]
