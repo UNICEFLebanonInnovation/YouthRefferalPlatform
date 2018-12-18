@@ -57,7 +57,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return '/initiatives/add/'
+            return 'initiatives/add/'
         return self.success_url
 
     def get_queryset(self):
@@ -84,11 +84,11 @@ class EditView(LoginRequiredMixin, FormView):
     template_name = 'initiatives/form.html'
     form_class = YouthLedInitiativePlanningForm
     model = YouthLedInitiative
-    success_url = '/initiatives/list/'
+    success_url = 'initiatives/list/'
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return '/initiatives/add/'
+            return 'initiatives/add/'
         return self.success_url
 
     def get_initial(self):
