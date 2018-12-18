@@ -43,76 +43,18 @@ class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
         return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner)
 
 
-class AddSubnet(CreateView):
-    form_class = YouthLedInitiativePlanningForm
-    template_name = "initiatives/form.html"
-
-    # @method_decorator(user_passes_test(lambda u: u.has_perm('config.add_subnet')))
-    # def dispatch(self, *args, **kwargs):
-    #     self.site_id = self.kwargs['site_id']
-    #     self.site = get_object_or_404(SiteData, pk=self.site_id)
-    #     return super(AddSubnet, self).dispatch(*args, **kwargs)
-
-    def get_form_class(self):
-
-        form_class = YouthLedInitiativePlanningForm
-        return form_class
-
-    def get_success_url(self):
-        if self.request.POST.get('save_add_another', None):
-            return '/initiatives/add/'
-        return self.success_url
-
-    def get_queryset(self):
-        queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
-        return queryset
-
-    def get_initial(self):
-            # force_default_language(self.request, 'ar-ar')
-            data = dict()
-            if self.request.user.partner:
-                data['partner_locations'] = self.request.user.partner.locations.all()
-                data['partner_organization'] = self.request.user.partner
-                data['members'] = AddSubnet.get_queryset(self)
-
-            # if self.request.GET.get('youth_id'):
-            #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
-            #         data['youth_id'] = instance.id
-            #         data['youth_first_name'] = instance.first_name
-            #         data['youth_father_name'] = instance.father_name
-            #         data['youth_last_name'] = instance.last_name
-            #         data['youth_birthday_day'] = instance.birthday_day
-            #         data['youth_birthday_month'] = instance.birthday_month
-            #         data['youth_birthday_year'] = instance.birthday_year
-            #         data['youth_sex'] = instance.sex
-            #         data['youth_nationality'] = instance.nationality_id
-            #         data['youth_marital_status'] = instance.marital_status
-
-            initial = data
-            return initial
-
-    def form_valid(self, form):
-        form.save(self.request)
-        return super(AddSubnet, self).form_valid(form)
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['SiteID']=self.site_id
-    #     context['SiteName']=self.site.location
-    #     context['FormType']='Add'
-    #     context['active_subnets']='class="active"'
-    #
-    #     return context
-
-# class AddView(LoginRequiredMixin, FormView):
-#
-#     template_name = 'initiatives/form.html'
-#     model = YouthLedInitiative
-#     success_url = 'initiatives/list.html'
+# class AddSubnet(CreateView):
 #     form_class = YouthLedInitiativePlanningForm
-#     form = YouthLedInitiativePlanningForm
+#     template_name = "initiatives/form.html"
+#
+#     # @method_decorator(user_passes_test(lambda u: u.has_perm('config.add_subnet')))
+#     # def dispatch(self, *args, **kwargs):
+#     #     self.site_id = self.kwargs['site_id']
+#     #     self.site = get_object_or_404(SiteData, pk=self.site_id)
+#     #     return super(AddSubnet, self).dispatch(*args, **kwargs)
 #
 #     def get_form_class(self):
+#
 #         form_class = YouthLedInitiativePlanningForm
 #         return form_class
 #
@@ -126,41 +68,99 @@ class AddSubnet(CreateView):
 #         return queryset
 #
 #     def get_initial(self):
-#         # force_default_language(self.request, 'ar-ar')
-#         data = dict()
-#         if self.request.user.partner:
-#             data['partner_locations'] = self.request.user.partner.locations.all()
-#             data['partner_organization'] = self.request.user.partner
-#             data['members'] = AddView.get_queryset(self)
+#             # force_default_language(self.request, 'ar-ar')
+#             data = dict()
+#             if self.request.user.partner:
+#                 data['partner_locations'] = self.request.user.partner.locations.all()
+#                 data['partner_organization'] = self.request.user.partner
+#                 data['members'] = AddSubnet.get_queryset(self)
 #
-#         # if self.request.GET.get('youth_id'):
-#         #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
-#         #         data['youth_id'] = instance.id
-#         #         data['youth_first_name'] = instance.first_name
-#         #         data['youth_father_name'] = instance.father_name
-#         #         data['youth_last_name'] = instance.last_name
-#         #         data['youth_birthday_day'] = instance.birthday_day
-#         #         data['youth_birthday_month'] = instance.birthday_month
-#         #         data['youth_birthday_year'] = instance.birthday_year
-#         #         data['youth_sex'] = instance.sex
-#         #         data['youth_nationality'] = instance.nationality_id
-#         #         data['youth_marital_status'] = instance.marital_status
+#             # if self.request.GET.get('youth_id'):
+#             #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
+#             #         data['youth_id'] = instance.id
+#             #         data['youth_first_name'] = instance.first_name
+#             #         data['youth_father_name'] = instance.father_name
+#             #         data['youth_last_name'] = instance.last_name
+#             #         data['youth_birthday_day'] = instance.birthday_day
+#             #         data['youth_birthday_month'] = instance.birthday_month
+#             #         data['youth_birthday_year'] = instance.birthday_year
+#             #         data['youth_sex'] = instance.sex
+#             #         data['youth_nationality'] = instance.nationality_id
+#             #         data['youth_marital_status'] = instance.marital_status
 #
-#         initial = data
-#         return initial
-#     #
-#     # # def get_form(self, form_class=None):
-#     # #     form_class = YouthLedInitiativePlanningForm
-#     # #     instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-#     # #     if self.request.method == "POST":
-#     # #         return form_class(self.request.POST)
-#     # #     else:
-#     # #         return form_class()
-#     #
+#             initial = data
+#             return initial
 #
 #     def form_valid(self, form):
 #         form.save(self.request)
-#         return super(AddView, self).form_valid(form)
+#         return super(AddSubnet, self).form_valid(form)
+#
+#     # def get_context_data(self, **kwargs):
+#     #     context = super().get_context_data(**kwargs)
+#     #     context['SiteID']=self.site_id
+#     #     context['SiteName']=self.site.location
+#     #     context['FormType']='Add'
+#     #     context['active_subnets']='class="active"'
+#     #
+#     #     return context
+
+class AddView(LoginRequiredMixin, FormView):
+
+    template_name = 'initiatives/form.html'
+    model = YouthLedInitiative
+    success_url = 'initiatives/list.html'
+    form_class = YouthLedInitiativePlanningForm
+    form = YouthLedInitiativePlanningForm
+
+    def get_form_class(self):
+        form_class = YouthLedInitiativePlanningForm
+        return form_class
+
+    def get_success_url(self):
+        if self.request.POST.get('save_add_another', None):
+            return '/initiatives/add/'
+        return self.success_url
+
+    def get_queryset(self):
+        queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+        return queryset
+
+    def get_initial(self):
+        # force_default_language(self.request, 'ar-ar')
+        data = dict()
+        if self.request.user.partner:
+            data['partner_locations'] = self.request.user.partner.locations.all()
+            data['partner_organization'] = self.request.user.partner
+            data['members'] = AddView.get_queryset(self)
+
+        # if self.request.GET.get('youth_id'):
+        #         instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
+        #         data['youth_id'] = instance.id
+        #         data['youth_first_name'] = instance.first_name
+        #         data['youth_father_name'] = instance.father_name
+        #         data['youth_last_name'] = instance.last_name
+        #         data['youth_birthday_day'] = instance.birthday_day
+        #         data['youth_birthday_month'] = instance.birthday_month
+        #         data['youth_birthday_year'] = instance.birthday_year
+        #         data['youth_sex'] = instance.sex
+        #         data['youth_nationality'] = instance.nationality_id
+        #         data['youth_marital_status'] = instance.marital_status
+
+        initial = data
+        return initial
+    #
+    # # def get_form(self, form_class=None):
+    # #     form_class = YouthLedInitiativePlanningForm
+    # #     instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+    # #     if self.request.method == "POST":
+    # #         return form_class(self.request.POST)
+    # #     else:
+    # #         return form_class()
+    #
+
+    def form_valid(self, form):
+        form.save(self.request)
+        return super(AddView, self).form_valid(form)
 
     # def get_form(self, form_class=None):
     #     if self.request.method == "POST":

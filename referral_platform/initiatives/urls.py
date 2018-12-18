@@ -8,7 +8,7 @@ urlpatterns = [
     # url(r'^youth-led$', YouthInitiativeView.as_view(), name='youth-led'),
     url(
         regex=r'^add/$',
-        view=views.AddSubnet.as_view(),
+        view=views.AddView.as_view(),
         name='add-initiative'
     ),
     url(
