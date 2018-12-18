@@ -117,9 +117,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             )
         )
 
-    def save(self, instance=None, request=None):
+    def save(self, request=None):
         super(YouthLedInitiativePlanningForm, self).save()
-        messages.success(request._request, 'Your data has been sent successfully to the server')
+        messages.success(request, _('Your data has been sent successfully to the server'))
 
 
 
