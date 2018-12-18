@@ -49,20 +49,20 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         fields = '__all__'
 
 
-    start_date = forms.DateField(
-        widget=DateTimePicker(
-            options={
-                "format": "mm/dd/yyyy",
-                "pickTime": False
-            }),
-        required=True
-    )
-
-    needs_resources = forms.TypedChoiceField(
-        coerce=lambda x: x == 'True',
-        choices=YES_NO_CHOICE,
-        widget=forms.RadioSelect
-    )
+    # start_date = forms.DateField(
+    #     widget=DateTimePicker(
+    #         options={
+    #             "format": "mm/dd/yyyy",
+    #             "pickTime": False
+    #         }),
+    #     required=True
+    # )
+    #
+    # needs_resources = forms.TypedChoiceField(
+    #     coerce=lambda x: x == 'True',
+    #     choices=YES_NO_CHOICE,
+    #     widget=forms.RadioSelect
+    # )
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
