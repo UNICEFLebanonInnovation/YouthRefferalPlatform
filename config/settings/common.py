@@ -194,6 +194,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                # 'django.core.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
@@ -363,8 +364,10 @@ SUIT_CONFIG = {
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
         {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
         {'app': 'partners', 'label': 'Partners', 'icon': 'icon-user'},
-        {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
+        # {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
+        {'app': 'initiatives', 'label': 'Initiatives', 'icon': 'icon-th-list'},
+        {'app': 'INIT', 'label': 'INITIATIVES', 'icon': 'icon-th-list'},
 
     )
 }

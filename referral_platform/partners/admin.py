@@ -24,6 +24,7 @@ class PartnerOrganizationAdmin(ImportExportModelAdmin):
         'locations_list',
         'phone_number',
         'email',
+        'id',
     )
     list_filter = (
         'locations',
@@ -45,6 +46,7 @@ class CenterResource(resources.ModelResource):
             'id',
             'name',
             'partner_organization',
+
         )
         export_order = fields
 
@@ -55,6 +57,8 @@ class CenterAdmin(ImportExportModelAdmin):
         'id',
         'name',
         'partner_organization',
+        'id',
+        'partner_organization_id',
     )
     list_filter = (
         'partner_organization',

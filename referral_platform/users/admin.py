@@ -47,10 +47,11 @@ class PlatformUserAdmin(AuthUserAdmin):
     #     (_('Partner'), {'fields': ('partner',)}),
     # )
 
+
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_beneficiary',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
         (None, {'fields': ('partner', 'country',)})
@@ -59,7 +60,7 @@ class PlatformUserAdmin(AuthUserAdmin):
     add_fieldsets = (
         (None, {'fields': ('email', 'password1', 'password2')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_beneficiary',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
         (None, {'fields': ('partner', 'country',)})
@@ -73,6 +74,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         'partner',
         'is_superuser',
         'is_staff',
+        'is_beneficiary',
     )
     list_filter = (
         'email',
@@ -81,6 +83,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         'is_active',
         'groups',
         'partner',
+        'is_beneficiary',
     )
     search_fields = ['first_name', 'last_name', 'email']
     filter_horizontal = ('groups', 'user_permissions', )
