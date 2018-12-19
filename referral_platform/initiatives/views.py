@@ -47,7 +47,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'initiatives/form.html'
     model = YouthLedInitiative
-    success_url = 'initiatives/list.html'
+    success_url = '/initiatives/list.html'
     form_class = YouthLedInitiativePlanningForm
     form = YouthLedInitiativePlanningForm
 
@@ -57,7 +57,7 @@ class AddView(LoginRequiredMixin, FormView):
 
     def get_success_url(self):
         if self.request.POST.get('save_add_another', None):
-            return 'initiatives/add/'
+            return '/initiatives/add/'
         return self.success_url
 
     def get_queryset(self):
@@ -70,7 +70,9 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner
-            data['members'] = AddView.get_queryset(self)
+            data['members'] = Registration.objects.all()
+
+            print(data['members'])
 
         initial = data
         return initial
@@ -87,30 +89,26 @@ class EditView(LoginRequiredMixin, FormView):
     success_url = '/initiatives/list/'
     form = YouthLedInitiativePlanningForm
 
-    def get_success_url(self):
-        if self.request.POST.get('save_add_another', None):
-            return '/initiatives/add/'
-        return self.success_url
+    def get_context_data(self, **kwargs):
+        if 'form' not in kwargs:
+            kwargs['form'] = self.get_form()
+        return super(EditView, self).get_context_data(**kwargs)
 
-    def get_initial(self):
-        data = dict()
-        if self.request.user.partner:
-            data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner'] = self.request.user.partner
-        initial = data
-        return initial
+    # def get_form_class(self):
+    #     # if int(self.kwargs['term']) == 4:
+    #     #     return GradingIncompleteForm
+    #     return YouthLedInitiativePlanningForm
 
     def get_form(self, form_class=None):
-        form = YouthLedInitiativePlanningForm
+        form_class = self.get_form_class()
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         if self.request.method == "POST":
-            return form(self.request.POST, instance=instance)
+            return form_class(self.request.POST, instance=instance)
         else:
-            return form
+            return form_class(instance=instance)
 
     def form_valid(self, form):
-        # instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        form.save(request=self.request)
+        instance = YouthLedInitiativePlanningForm.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
-
 
