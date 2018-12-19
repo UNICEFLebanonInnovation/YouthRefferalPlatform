@@ -10,7 +10,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
 
-
+from django.contrib.admin import site, ModelAdmin
 from django import forms
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -62,6 +62,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     coerce=lambda x: x == 'True',
     #     choices=YES_NO_CHOICE,
     #     widget=forms.RadioSelect
+    # )
+
+    member = forms.ModelMultipleChoiceField(queryset=Registration.objects.all())
+    #     label=_('Member'),
+    #     queryset=Registration.objects.get(), widget=forms.Select,
+    #     required=True, to_field_name='id',
     # )
 
     def __init__(self, *args, **kwargs):
