@@ -105,7 +105,7 @@ class EditView(LoginRequiredMixin, FormView):
             return form_class(instance=instance)
 
     def form_valid(self, form):
-        # instance = YouthLedInitiativePlanningForm.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
 
