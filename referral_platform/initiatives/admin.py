@@ -20,7 +20,7 @@ class InitResource(resources.ModelResource):
         model = YouthLedInitiative
         fields = (
             'title',
-            'members',
+            'member',
             'location',
             'partner_organization',
         )
@@ -41,7 +41,7 @@ class InitAdmin(ImportExportModelAdmin):
     search_fields = (
         'title',
     )
-    filter_horizontal = ('members',)
+    filter_horizontal = ('member',)
 
 
     #
