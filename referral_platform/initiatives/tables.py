@@ -15,7 +15,6 @@ class BootstrapTable(tables.Table):
 
 
 class CommonTable(tables.Table):
-
     edit_column = tables.TemplateColumn(verbose_name=_('Edit'), orderable=False,
                                         template_name='django_tables2/edit_column.html',
                                         attrs={'url': '/initiatives/edit/'})
