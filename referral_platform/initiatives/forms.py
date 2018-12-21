@@ -43,6 +43,7 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
+    member = forms.ModelMultipleChoiceField(queryset=Registration.objects.all())
 
     class Meta:
         model = YouthLedInitiative
@@ -64,11 +65,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     widget=forms.RadioSelect
     # )
 
-    member = forms.ModelMultipleChoiceField(queryset=Registration.objects.all())
-    #     label=_('Member'),
-    #     queryset=Registration.objects.get(), widget=forms.Select,
-    #     required=True, to_field_name='id',
-    # )
+
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
