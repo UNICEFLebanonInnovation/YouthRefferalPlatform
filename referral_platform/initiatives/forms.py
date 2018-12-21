@@ -76,7 +76,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
-            self.fields['member'].queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+            # self.fields['member'].queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
 
 
 
@@ -84,7 +84,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials = kwargs.get('initial', '')
 
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-        partner_organization = initials['partner'] if 'partner' in initials else 0
+        partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['member'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         my_fields = OrderedDict()
