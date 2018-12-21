@@ -76,7 +76,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
-            # initials['partner_members']=instance.memebrs
+            self.fields['member'].queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
 
 
 
