@@ -19,7 +19,7 @@
                 data-animation-origin="right"
                 data-animation-duration="400"
                 data-animation-delay="100"
-                data-animation-distance="50px">{% trans "Youth Registration" %}</h3>
+                data-animation-distance="50px">{% trans "Initiatives" %}</h3>
 
         </div>
     </section>
@@ -29,17 +29,6 @@
       <li class="breadcrumb-item active">{{ request.user.partner }}</li>
       <li class="breadcrumb-item active">{{ request.user }}</li>
 
-
-          {% if request.user.is_beneficiary %}
-
-            <li class="breadcrumb-item active">
-              <a href="{% url 'registrations:add' %}" class="btn btn-success">
-                  <i class="icon-plus-sign icon-white"></i>
-                  {% trans "Add new beneficiary" %}
-              </a>
-            </li>
-
-          {% else %}
 
                <li class="breadcrumb-item active">
               <a href="{% url 'registrations:add' %}" class="btn btn-success">
@@ -71,16 +60,15 @@
                   </ul>
                 </div>
               </li>
-          {% endif %}
     </ol>
 
-    <div class="pb-5 pr-5 list-filter">
-        <form action="" method="get" class="form form-inline">
-            {% bootstrap_form filter.form layout='inline' %}
-            {% bootstrap_button _('filter') button_class="btn-primary" %}
-            {% bootstrap_button _('reset') button_type="link" button_class="btn-warning" href='/registrations/list/' %}
-        </form>
-    </div>
+    <!--<div class="pb-5 pr-5 list-filter">-->
+        <!--<form action="" method="get" class="form form-inline">-->
+            <!--{% bootstrap_form filter.form layout='inline' %}-->
+            <!--{% bootstrap_button _('filter') button_class="btn-primary" %}-->
+            <!--{% bootstrap_button _('reset') button_type="link" button_class="btn-warning" href='/initiatives/list/' %}-->
+        <!--</form>-->
+    <!--</div>-->
     <div class="">
         {% csrf_token %}
         {% render_table table 'django_tables2/bootstrap.html' %}
@@ -93,38 +81,37 @@
     {% get_user_token request.user.id as user_token %}
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
-    <script>
-        var export_url = '/api/backend-exporter/';
-        var user_token = '{{ user_token }}';
-        var href_full_path = '{{ request.build_absolute_uri }}';
-        var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+    <!--<script>-->
+        <!--var export_url = '/api/backend-exporter/';-->
+        <!--var user_token = '{{ user_token }}';-->
+        <!--var csrftoken = $('input[name=csrfmiddlewaretoken]').val();-->
 
-        $(document).ready(function() {
-            $('.export-link').click(function(){
-                export_file($(this).attr('itemref'));
-            });
-        });
+        <!--$(document).ready(function() {-->
+            <!--$('.export-link').click(function(){-->
+                <!--export_file($(this).attr('itemref'));-->
+            <!--});-->
+        <!--});-->
 
-        function export_file(params)
-        {
+        <!--function export_file(params)-->
+        <!--{-->
 
-            $.ajax({
-                type: "GET",
-                url: export_url,
-                data: params,
-                cache: false,
-                headers: getHeader(),
-                dataType: 'json',
-                success: function (response, result, jqXHR) {
-                    if(jqXHR.status == 200){
-                      alert("Your export request has been sent, you will find in exported file in the Exported file page");
-                    }
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            });
-        }
+            <!--$.ajax({-->
+                <!--type: "GET",-->
+                <!--url: export_url,-->
+                <!--data: params,-->
+                <!--cache: false,-->
+                <!--headers: getHeader(),-->
+                <!--dataType: 'json',-->
+                <!--success: function (response, result, jqXHR) {-->
+                    <!--if(jqXHR.status == 200){-->
+                      <!--alert("Your export request has been sent, you will find in exported file in the Exported file page");-->
+                    <!--}-->
+                <!--},-->
+                <!--error: function (response) {-->
+                    <!--console.log(response);-->
+                <!--}-->
+            <!--});-->
+        <!--}-->
 
-    </script>
+    <!--</script>-->
 {% endblock %}

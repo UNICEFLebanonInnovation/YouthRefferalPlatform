@@ -2,7 +2,7 @@
 {% load staticfiles i18n %}
 {% load crispy_forms_tags %}
 
-{% block head_title %}Registration{% endblock %}
+{% block head_title %}Initiative{% endblock %}
 
 {% block extra_head %}
 
@@ -14,13 +14,13 @@
 <section>
     <div id="resume" class="inner-content">
 
-      <script>
-      function myFunction(id) {
-      var x = document.getElementById(id);
-      x.style.display = "none";
-      }
-}
-</script>
+      <!--<script>-->
+      <!--function myFunction(id) {-->
+      <!--var x = document.getElementById(id);-->
+      <!--x.style.display = "none";-->
+      <!--}-->
+<!--}-->
+<!--</script>-->
 
         <section id="page-title" class="inline-form inner-section ui-menu-color02">
             <div class="container-fluid nopadding">
@@ -28,13 +28,14 @@
                     data-animation-origin="right"
                     data-animation-duration="400"
                     data-animation-delay="100"
-                    data-animation-distance="50px">{% trans "Youth Registration" %}</h3>
+                    data-animation-distance="50px">{% trans "Initiatives" %}</h3>
 
             </div>
         </section>
 
         <section class="inline-form inner-section light bg-color01">
             <div class="container-fluid nopadding">
+                 {{ form.errors }}
                 {% crispy form 'bootstrap4' %}
             </div>
         </section>
@@ -49,7 +50,7 @@
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/validators.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>
+    <!--<script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>-->
 
 
 {% endblock %}

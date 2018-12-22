@@ -74,3 +74,4 @@ openpyxl==2.4.9
 azure-storage==0.20.0
 unicodecsv==0.14.1
 requests==2.18.4
+django-secure==1.0.1

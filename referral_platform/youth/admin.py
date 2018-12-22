@@ -84,13 +84,21 @@ class NationalityResource(resources.ModelResource):
         fields = (
             'id',
             'name',
+            'name_en',
             'code',
         )
+
         export_order = fields
 
 
 class NationalityAdmin(ImportExportModelAdmin):
     resource_class = NationalityResource
+    list_display = (
+        'id',
+        'name',
+        'name_en',
+        'code',
+    )
 
     def get_export_formats(self):
         from referral_platform.users.utils import get_default_export_formats

@@ -58,5 +58,6 @@
     <script>
         var user_token = '{{ user_token }}';
         var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+        var href_full_path = '{{ request.build_absolute_uri }}';
     </script>
 {% endblock %}

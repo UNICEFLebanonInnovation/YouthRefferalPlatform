@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = (
     'django_tables2',
     'django_celery_beat',
     'django_celery_results',
+    'djangosecure',
 )
 
 # Apps specific for this project go here.
@@ -87,7 +88,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
 )
+
+# SECURITY CONFIGURATION
+X_FRAME_OPTIONS = 'DENY'
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -189,6 +194,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                # 'django.core.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
@@ -358,8 +364,10 @@ SUIT_CONFIG = {
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
         {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
         {'app': 'partners', 'label': 'Partners', 'icon': 'icon-user'},
-        {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
+        # {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
+        {'app': 'initiatives', 'label': 'Initiatives', 'icon': 'icon-th-list'},
+        {'app': 'INIT', 'label': 'INITIATIVES', 'icon': 'icon-th-list'},
 
     )
 }
