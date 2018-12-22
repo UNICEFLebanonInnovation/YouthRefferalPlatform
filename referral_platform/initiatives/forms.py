@@ -100,7 +100,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.helper.form_show_labels = False
         self.helper = FormHelper()
         self.helper.form_show_labels = True
-        form_action = reverse('registrations:add')
+        form_action = reverse('initiatives:add')
         # self.helper.layout = Layout()
         self.helper.layout = Layout(
             Div(
