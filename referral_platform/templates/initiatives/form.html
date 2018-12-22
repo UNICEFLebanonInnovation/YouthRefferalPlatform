@@ -57,8 +57,35 @@
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/validators.js' %}"></script>
     <!--<script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>-->
-    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+      <link rel="stylesheet" type="text/css" href=""/>
+  <link rel="stylesheet" type="text/css" href="/static/suit/bootstrap/css/bootstrap.min.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/static/suit/css/suit.css" media="all">
+
+  
+
+
+  <script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+  <script src="/static/suit/js/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
+  <script src="/static/suit/bootstrap/js/bootstrap.min.js"></script>
+
+  <style type="text/css">.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
+
+
+
+  <script type="text/javascript" src="/admin/jsi18n/"></script>
+
+  <script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+<script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+<script type="text/javascript" src="/static/admin/js/SelectBox.js"></script>
+<script type="text/javascript" src="/static/admin/js/SelectFilter2.js"></script>
+
 
 
 {% endblock %}
