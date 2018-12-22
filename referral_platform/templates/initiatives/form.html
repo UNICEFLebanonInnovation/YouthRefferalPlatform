@@ -35,8 +35,13 @@
 
         <section class="inline-form inner-section light bg-color01">
             <div class="container-fluid nopadding">
-                 {{ form.errors }}
+                  {{ form.media }}
+                  <form>
+                    {{ form.member }}
+                    {{ form.errors }}
                 {% crispy form 'bootstrap4' %}
+                  </form>
+
             </div>
         </section>
 
