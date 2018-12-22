@@ -9,7 +9,8 @@ from dal import autocomplete
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Layout, Fieldset, Button, Submit, Div, Field, HTML
-
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.contrib.admin import site, ModelAdmin
 from django import forms
 from django.core.urlresolvers import reverse
@@ -17,7 +18,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.utils.translation import ugettext as _t
 from django.utils.translation import ugettext_lazy as _
-
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from datetime import datetime
 from collections import OrderedDict
 from crispy_forms.bootstrap import FormActions
@@ -43,7 +44,7 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
-    member = forms.ModelMultipleChoiceField(queryset=Registration.objects.all())
+    member = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("member", is_stacked=False))
 
     class Meta:
         model = YouthLedInitiative
@@ -265,6 +266,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     def save(self, request=None, instance=None):
         super(YouthLedInitiativePlanningForm, self).save()
         request.session['instance_id'] = instance.id
+        print(instance)
         messages.success(request, _('Your data has been sent successfully to the server'))
 
 
