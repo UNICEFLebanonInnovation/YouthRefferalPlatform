@@ -60,7 +60,7 @@ class AddView(LoginRequiredMixin, FormView):
         #     return '/initiatives/add/'
         # return self.success_url
         if self.request.POST.get('save_add_another', None):
-            del self.request.session['instance_id']
+            # del self.request.session['instance_id']
             return '/initiatives/add/'
         if self.request.POST.get('save_and_continue', None):
             return '/initiatives/edit/' + str(self.request.session.get('instance_id')) + '/'
