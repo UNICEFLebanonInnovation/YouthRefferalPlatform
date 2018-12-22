@@ -60,7 +60,7 @@ class AddView(LoginRequiredMixin, FormView):
         #     return '/initiatives/add/'
         # return self.success_url
         if self.request.POST.get('save_add_another', None):
-            # del self.request.session['instance_id']
+            del self.request.session['instance_id']
             return '/initiatives/add/'
         if self.request.POST.get('save_and_continue', None):
             return '/initiatives/edit/' + str(self.request.session.get('instance_id')) + '/'
@@ -107,7 +107,7 @@ class EditView(LoginRequiredMixin, FormView):
         # form_class = self.get_form_class()
         form = YouthLedInitiativePlanningForm
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        print(instance)
+        print('instace is '+ instance)
         if self.request.method == "POST":
             return form(self.request.POST, instance=instance)
         else:
