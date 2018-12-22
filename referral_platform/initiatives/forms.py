@@ -268,8 +268,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
     def save(self, request=None, instance=None):
         super(YouthLedInitiativePlanningForm, self).save()
-        # request.session['instance_id'] = instance.id
-        print('key is ' + request.session.get('id'))
+        instance.id = int(request.session.session_key)
+        request.session['instance_id'] = instance.id
+        print('key is ' + instance.id)
         messages.success(request, _('Your data has been sent successfully to the server'))
 
 
