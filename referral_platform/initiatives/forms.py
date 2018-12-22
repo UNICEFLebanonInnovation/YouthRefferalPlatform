@@ -98,6 +98,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         self.helper = FormHelper()
         self.helper.form_show_labels = False
+        self.helper = FormHelper()
+        self.helper.form_show_labels = True
+        form_action = reverse('registrations:add')
+        # self.helper.layout = Layout()
         self.helper.layout = Layout(
             Div(
                 Div('partner_organization', css_class='col-md-6', ),
@@ -201,6 +205,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             for myflds in assessment_fieldset:
                 self.helper.layout.append(myflds)
 
+        self.helper.form_action = form_action
         self.helper.layout.append(
             FormActions(
                 HTML('<a class="btn btn-info col-md-2" href="/initiatives/list/">' + _t('Cancel') + '</a>'),
