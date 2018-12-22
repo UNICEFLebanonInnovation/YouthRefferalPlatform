@@ -21,5 +21,6 @@ urlpatterns = [
         view=views.EditView.as_view(),
         name='edit'
     ),
+    # (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
 ]
