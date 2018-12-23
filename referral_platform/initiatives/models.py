@@ -15,7 +15,8 @@ from referral_platform.users.models import User
 from referral_platform.youth.models import YoungPerson
 from referral_platform.partners.models import PartnerOrganization
 from referral_platform.locations.models import Location
-from referral_platform.registrations.models import Registration
+from referral_platform.registrations.models import Registration, Assessment, AssessmentSubmission, AssessmentHash
+
 
 class YouthLedInitiative(models.Model):
 
@@ -233,3 +234,17 @@ class YouthLedInitiative(models.Model):
     # )
     # challenges_face = models.TextField(blank=True, null=True)
     # lessons_learnt = models.TextField(blank=True, null=True)
+
+    def get_assessment(self, slug):
+        assessment = self.assessmentsubmission_set.filter(assessment__slug=slug).first()
+        if assessment:
+            return assessment.data
+        return '------'
+
+    @property
+    def initiative_registration(self):
+        return self.get_assessment('init_registration')
+
+    @property
+    def initiative_implementation(self):
+        return self.get_assessment('init_exec')
