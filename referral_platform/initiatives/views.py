@@ -107,7 +107,7 @@ class EditView(LoginRequiredMixin, FormView):
         # form_class = self.get_form_class()
         form = YouthLedInitiativePlanningForm
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        print('instace is '+ instance)
+        # print('instace is '+ instance)
         if self.request.method == "POST":
             return form(self.request.POST, instance=instance)
         else:
