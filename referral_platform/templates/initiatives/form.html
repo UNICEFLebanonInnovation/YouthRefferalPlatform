@@ -2,6 +2,7 @@
 {% load staticfiles i18n %}
 {% load crispy_forms_tags %}
 
+
 {% block head_title %}Initiative{% endblock %}
 
 {% block extra_head %}
@@ -36,13 +37,13 @@
         <section class="inline-form inner-section light bg-color01">
             <div class="container-fluid nopadding">
 
-
+                  <form method="post" class="uniForm">
 
                     {{ form.media }}
                     {{ form.errors }}
                     {% crispy form 'bootstrap4' %}
 
-
+                  </form>
             </div>
         </section>
 
