@@ -45,6 +45,7 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     member = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("member", is_stacked=False))
+    id = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = YouthLedInitiative
@@ -272,7 +273,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     def save(self, request=None, instance=None):
         super(YouthLedInitiativePlanningForm, self).save()
         # instance.id = int(request.session.session_id)
-        request.session['instance_id'] = request.session.session_id
+        request.session['instance_id'] = instance.id
         # print('key is ' + instance.id)
         messages.success(request, _('Your data has been sent successfully to the server'))
 
