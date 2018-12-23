@@ -66,7 +66,6 @@ class AddView(LoginRequiredMixin, FormView):
             return '/initiatives/edit/' + str(self.request.session.get('instance_id')) + '/'
         return self.success_url
 
-
     def get_queryset(self):
         queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
         return queryset
