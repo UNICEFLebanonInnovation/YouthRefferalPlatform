@@ -121,7 +121,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner_organization))
+            all_forms = Assessment.objects.filter( Q(partner=partner_organization) | Q(slug="init_registration")| Q(slug="init_exec"))
             new_forms = OrderedDict()
 
             registration_form = Assessment.objects.get(slug="init_registration")
@@ -139,10 +139,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 disabled = ""
 
                 if youth_registered:
-                    if specific_form.slug == "registration":
-                        disabled = "disabled"
-                    # check if the pre is already filled
-                    else:
+                    # if specific_form.slug == "registration":
+                    #     disabled = "disabled"
+                    # # check if the pre is already filled
+                    # else:
                         order = 1  # int(specific_form.order.split(".")[1])
                         if order == 1:
                             # If the user filled the form disable it
@@ -160,7 +160,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                             else:
                                 disabled = "disabled"
                 else:
-                    if specific_form.slug != "registration":
+                    if specific_form.slug != "init_registration":
                         disabled = "disabled"
 
                 if specific_form.name not in new_forms:
