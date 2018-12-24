@@ -27,7 +27,7 @@ from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
 
 from referral_platform.locations.models import Location
 from referral_platform.partners.models import Center
-from referral_platform.registrations.models import Assessment, AssessmentSubmission
+from referral_platform.registrations.models import Assessment, AssessmentSubmission, Registration
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
@@ -120,11 +120,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             'duration',)
 
         if instance:
-            form_action = reverse('initiatives:edit', kwargs={'pk': instance.id})
+            form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
             all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner_organization))
             new_forms = OrderedDict()
 
-            registration_form = Assessment.objects.get(slug="registration")
+            registration_form = Assessment.objects.get(slug="init_registration")
 
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,

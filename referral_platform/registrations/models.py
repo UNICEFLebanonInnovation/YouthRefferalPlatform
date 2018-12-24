@@ -16,6 +16,8 @@ from model_utils.models import TimeStampedModel
 from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.youth.models import YoungPerson, Disability
 from referral_platform.locations.models import Location
+# from referral_platform.initiatives.models import YouthLedInitiative
+
 from .utils import generate_hash
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -216,6 +218,7 @@ class AssessmentSubmission(models.Model):
     )
 
     registration = models.ForeignKey(Registration)
+    # initiative = models.ForeignKey(YouthLedInitiative)
     youth = models.ForeignKey(YoungPerson)
     assessment = models.ForeignKey(Assessment)
     status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
