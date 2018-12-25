@@ -240,32 +240,32 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         return url
 
 
-class YouthAssessment(SingleObjectMixin, RedirectView):
-    model = Assessment
-
-    def get_redirect_url(self, *args, **kwargs):
-        assessment = self.get_object()
-        registry = Registration.objects.get(id=self.request.GET.get('registry'),
-                                            partner_organization=self.request.user.partner)
-        youth = registry.youth
-        hashing = AssessmentHash.objects.create(
-            registration=registry.id,
-            assessment_slug=assessment.slug,
-            partner=self.request.user.partner_id,
-            user=self.request.user.id,
-            timestamp=time.time()
-        )
-
-        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
-              '&returnURL={callback}'.format(
-                form=assessment.assessment_form,
-                registry=hashing.hashed,
-                partner=registry.partner_organization.name,
-                country=registry.governorate.parent.name_en,
-                nationality=youth.nationality.code,
-                callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
-        )
-        return url
+# class YouthAssessment(SingleObjectMixin, RedirectView):
+#     model = Assessment
+#
+#     def get_redirect_url(self, *args, **kwargs):
+#         assessment = self.get_object()
+#         registry = Registration.objects.get(id=self.request.GET.get('registry'),
+#                                             partner_organization=self.request.user.partner)
+#         youth = registry.youth
+#         hashing = AssessmentHash.objects.create(
+#             registration=registry.id,
+#             assessment_slug=assessment.slug,
+#             partner=self.request.user.partner_id,
+#             user=self.request.user.id,
+#             timestamp=time.time()
+#         )
+#
+#         url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
+#               '&returnURL={callback}'.format(
+#                 form=assessment.assessment_form,
+#                 registry=hashing.hashed,
+#                 partner=registry.partner_organization.name,
+#                 country=registry.governorate.parent.name_en,
+#                 nationality=youth.nationality.code,
+#                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
+#         )
+#         return url
 
 
 @method_decorator(csrf_exempt, name='dispatch')
