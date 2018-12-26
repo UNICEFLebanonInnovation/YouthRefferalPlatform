@@ -128,7 +128,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
-        registry = Registration.objects.get(partner_organization=self.request.user.partner)
+        registry = [Registration.objects.get(partner_organization=self.request.user.partner)]
 
         for reg in registry:
             youth = reg.youth
