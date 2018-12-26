@@ -120,7 +120,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             'duration',)
 
         if instance:
-            form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
+            form_action = reverse('initiatives:edit', kwargs={'pk': instance.id})
             all_forms = Assessment.objects.filter( Q(partner=partner_organization) | Q(slug="init_registration")| Q(slug="init_exec"))
             new_forms = OrderedDict()
 
@@ -133,7 +133,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
+                    assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
                 )
                 disabled = ""

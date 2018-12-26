@@ -1,6 +1,9 @@
 from __future__ import absolute_import, unicode_literals
+
+import json
+import datetime
+import time
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from django.views.generic import TemplateView, FormView
 from django.views.generic import ListView, FormView, TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, JsonResponse
@@ -12,7 +15,8 @@ from rest_framework import viewsets, mixins, permissions
 from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
 from import_export.formats import base_formats
 from django.shortcuts import render, get_object_or_404
-
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic import RedirectView
 from django.shortcuts import render
 
 from django.conf import settings
@@ -23,7 +27,7 @@ from django_filters.views import FilterView
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from referral_platform.registrations.models import Registration
+from referral_platform.registrations.models import Registration, Assessment, AssessmentSubmission, AssessmentHash
 
 
 from referral_platform.users.views import UserRegisteredMixin
@@ -118,3 +122,30 @@ class EditView(LoginRequiredMixin, FormView):
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
 
+
+class YouthAssessment(SingleObjectMixin, RedirectView):
+    model = Assessment
+
+    def get_redirect_url(self, *args, **kwargs):
+        assessment = self.get_object()
+        registry = Registration.objects.get(id=self.request.GET.get('registry'),
+                                            partner_organization=self.request.user.partner)
+        youth = registry.youth
+        hashing = AssessmentHash.objects.create(
+            registration=registry.id,
+            assessment_slug=assessment.slug,
+            partner=self.request.user.partner_id,
+            user=self.request.user.id,
+            timestamp=time.time()
+        )
+
+        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
+              '&returnURL={callback}'.format(
+                form=assessment.assessment_form,
+                registry=hashing.hashed,
+                partner=registry.partner_organization.name,
+                country=registry.governorate.parent.name,
+                nationality=youth.nationality.code,
+                callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
+        )
+        return url
