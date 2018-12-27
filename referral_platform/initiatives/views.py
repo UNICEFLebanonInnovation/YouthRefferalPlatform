@@ -128,25 +128,26 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
-        registry = {Registration.objects.get(partner_organization=self.request.user.partner)}
+        # registry = {Registration.objects.get(partner_organization=self.request.user.partner)}
 
-        for reg in registry:
-            youth = reg.youth
-            hashing = AssessmentHash.objects.create(
-                registration=reg.id,
-                assessment_slug=assessment.slug,
-                partner=self.request.user.partner_id,
-                user=self.request.user.id,
-                timestamp=time.time()
+
+        hashing = AssessmentHash.objects.create(
+            # registration=reg.id,
+            assessment_slug=assessment.slug,
+            partner=self.request.user.partner_id,
+            user=self.request.user.id,
+            timestamp=time.time()
+
             )
 
-            url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}' \
-                  '&returnURL={callback}'.format(
-                    form=assessment.assessment_form,
-                    registry=hashing.hashed,
-                    partner=reg.partner_organization.name,
-                    country=reg.governorate.parent.name,
-                    nationality=youth.nationality.code,
-                    callback=self.request.META.get('HTTP_REFERER', reg.get_absolute_url())
-            )
+        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}' \
+                '&returnURL={callback}'.format(
+                        form=assessment.assessment_form,
+                        registry=hashing.hashed,
+                        # partner=reg.partner_organization.name,
+                        # country=reg.governorate.parent.name,
+                        # nationality=youth.nationality.code,
+                        # callback=self.request.META.get('HTTP_REFERER', reg.get_absolute_url())
+                    )
+
         return url
