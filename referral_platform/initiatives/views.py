@@ -129,8 +129,8 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
         # registry = {Registration.objects.get(partner_organization=self.request.user.partner)}
-
-
+        partner = self.request.user.partner
+        country = self.request.user.partner.locations
         hashing = AssessmentHash.objects.create(
             # registration=reg.id,
             assessment_slug=assessment.slug,
@@ -144,8 +144,8 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 '&returnURL={callback}'.format(
                         form=assessment.assessment_form,
                         registry=hashing.hashed,
-                        # partner=reg.partner_organization.name,
-                        # country=reg.governorate.parent.name,
+                        partner=partner,
+                        country=country
                         # nationality=youth.nationality.code,
                         # callback=self.request.META.get('HTTP_REFERER', reg.get_absolute_url())
                     )
