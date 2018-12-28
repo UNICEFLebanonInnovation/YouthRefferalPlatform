@@ -21,11 +21,11 @@ urlpatterns = [
         view=views.EditView.as_view(),
         name='edit'
     ),
-    # url(
-    #     regex=r'^assessment/list/(?P<slug>[\w.@+-]+)/$',
-    #     view=views.YouthAssessment.as_view(),
-    #     name='assessment'
-    # ),
+    url(
+        regex=r'^assessment/list/(?P<slug>[\w.@+-]+)/$',
+        view=views.YouthAssessment.as_view(),
+        name='assessment'
+    ),
     # url(
     #     regex=r'^assessment/submission/$',
     #     view=views.YouthAssessmentSubmission.as_view(),
