@@ -218,7 +218,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
         registry = Registration.objects.get(id=self.request.GET.get('registry'),
-                                            partner_organization=self.request.user.partner)
+                                            partner_organization=self.request.user.partner_id)
         youth = registry.youth
         hashing = AssessmentHash.objects.create(
             registration=registry.id,
