@@ -10,7 +10,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext as _
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
-
+from django.core.urlresolvers import reverse
 from referral_platform.users.models import User
 from referral_platform.youth.models import YoungPerson
 from referral_platform.partners.models import PartnerOrganization
@@ -248,3 +248,6 @@ class YouthLedInitiative(models.Model):
     @property
     def initiative_implementation(self):
         return self.get_assessment('init_exec')
+
+    def get_absolute_url(self):
+        return reverse('initiatives:edit', kwargs={'pk': self.id})
