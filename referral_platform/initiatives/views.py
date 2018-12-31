@@ -128,26 +128,24 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
-        # registry = {Registration.objects.get(partner_organization=self.request.user.partner)}
-        partner = self.request.user.partner
-        # country = self.request.user.partner.locations
+        registry = YouthLedInitiative.objects.get(id=self.request.GET.get('registry'),
+                                            partner_organization=self.request.user.partner_id)
+        youth = registry.youth
         hashing = AssessmentHash.objects.create(
-            # registration=reg.id,
+            registration=registry.id,
             assessment_slug=assessment.slug,
             partner=self.request.user.partner_id,
             user=self.request.user.id,
             timestamp=time.time()
+        )
 
-            )
-
-        url = '{form}?d[partner]={partner}' \
-                '&returnURL={callback}'.format(
-                        form=assessment.assessment_form,
-                        registry=hashing.hashed,
-                        partner=partner,
-                        # country=country,
-                        # nationality=youth.nationality.code,
-                        callback=self.request.META.get('HTTP_REFERER', self.get_absolute_url())
-                    )
-
+        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
+              '&returnURL={callback}'.format(
+                form=assessment.assessment_form,
+                registry=hashing.hashed,
+                partner=registry.partner_organization.name,
+                country=registry.governorate.parent.name,
+                nationality=youth.nationality.code,
+                callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
+        )
         return url
