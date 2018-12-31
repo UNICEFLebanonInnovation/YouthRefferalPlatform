@@ -139,12 +139,12 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             timestamp=time.time()
         )
 
-        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}' \
+        url = '{form}?d[registry]={registry}&d[partner]={partner}' \
               '&returnURL={callback}'.format(
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 partner=registry.partner_organization.name,
-                country=registry.governorate.parent.name,
+                # country=registry.governorate.parent.name,
                 # nationality=youth.nationality.code,
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
