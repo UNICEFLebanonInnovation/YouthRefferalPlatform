@@ -137,13 +137,15 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             registration=registry.id,
             assessment_slug=assessment.slug,
             partner=self.request.user.partner_id,
+            respid_initiativeID_title=registry.title,
             user=self.request.user.id,
             timestamp=time.time()
         )
 
-        url = '{form}?d[registry]={registry}&d[partner]={partner}' \
+        url = '{form}?d[registry]={registry}&d[partner]={partner}&d[respid_initiativeID_title]={respid_initiativeID_title}' \
               '&returnURL={callback}'.format(
                 form=assessment.assessment_form,
+                respid_initiativeID_title=registry.title,
                 registry=hashing.hashed,
                 partner=registry.partner_organization.name,
                 # country=registry.governorate.parent.name,
