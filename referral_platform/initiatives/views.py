@@ -4,9 +4,11 @@ import json
 import datetime
 import time
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from django.views.generic import ListView, FormView, TemplateView, UpdateView
+from django.views.generic import ListView, FormView, TemplateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 from django.db.models import Q
 from django.views.generic.edit import CreateView
@@ -149,3 +151,27 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
         return url
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class YouthAssessmentSubmission(SingleObjectMixin, View):
+    def post(self, request, *args, **kwargs):
+        if 'registry' not in request.body:
+            return HttpResponseBadRequest()
+
+        payload = json.loads(request.body.decode('utf-8'))
+
+        hashing = AssessmentHash.objects.get(hashed=payload['registry'])
+
+        registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
+        assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+        submission, new = AssessmentSubmission.objects.get_or_create(
+            registration=registration,
+            assessment=assessment,
+            status='enrolled'
+        )
+        submission.data = payload
+        submission.update_field()
+        submission.save()
+
+        return HttpResponse()
