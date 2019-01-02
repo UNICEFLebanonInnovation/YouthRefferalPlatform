@@ -151,7 +151,6 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 # nationality=youth.nationality.code,
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
-        print('hash is ' + registry)
         return url
 
 
