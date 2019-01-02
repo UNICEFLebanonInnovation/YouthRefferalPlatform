@@ -133,7 +133,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         registry = YouthLedInitiative.objects.get(id=self.request.GET.get('registry'),
                                             partner_organization=self.request.user.partner_id)
         # youth = registry.youth
-        hashing, new = AssessmentHash.objects.create(
+        hashing = AssessmentHash.objects.create(
             registration=registry.id,
             assessment_slug=assessment.slug,
             partner=self.request.user.partner_id,
