@@ -26,11 +26,11 @@ urlpatterns = [
         view=views.YouthAssessment.as_view(),
         name='assessment'
     ),
-    url(
-        regex=r'^assessment/submission/$',
-        view=views.YouthAssessmentSubmission.as_view(),
-        name='submission'
-    ),
+    # url(
+    #     regex=r'^assessment/submission/$',
+    #     view=views.YouthAssessmentSubmission.as_view(),
+    #     name='submission'
+    # ),
     # (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
 ]
