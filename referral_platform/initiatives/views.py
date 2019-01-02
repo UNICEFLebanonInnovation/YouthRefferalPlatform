@@ -156,6 +156,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 @method_decorator(csrf_exempt, name='dispatch')
 class YouthAssessmentSubmission(SingleObjectMixin, View):
     def post(self, request, *args, **kwargs):
+        print('request body' + request.body)
         if 'registry' not in request.body:
             return HttpResponseBadRequest()
 
@@ -163,10 +164,9 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
 
-        registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
         submission, new = AssessmentSubmission.objects.get_or_create(
-            registration=registration,
+            registration_id=int(hashing.registration),
             assessment=assessment,
             status='enrolled'
         )
