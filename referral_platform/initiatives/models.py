@@ -15,8 +15,7 @@ from referral_platform.users.models import User
 from referral_platform.youth.models import YoungPerson
 from referral_platform.partners.models import PartnerOrganization
 from referral_platform.locations.models import Location
-from referral_platform.registrations.models import Registration, Assessment, AssessmentSubmission, AssessmentHash
-
+from referral_platform.registrations.models import Registration, NewMapping, JSONField, Assessment
 
 class YouthLedInitiative(models.Model):
 
@@ -251,3 +250,51 @@ class YouthLedInitiative(models.Model):
 
     def get_absolute_url(self):
         return reverse('initiatives:edit', kwargs={'pk': self.id})
+
+
+class AssessmentSubmission(models.Model):
+    STATUS = Choices(
+        'enrolled',
+        'pre_test',
+        'post_test'
+    )
+
+    initiative = models.ForeignKey(YouthLedInitiative, null=True)
+    assessment = models.ForeignKey(Assessment, related_name='+')
+    status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
+    data = JSONField(blank=True, null=True, default=dict)
+    new_data = JSONField(blank=True, null=True, default=dict)
+
+    def get_data_option(self, column, option):
+        column_value = self.data.get(column, '')
+        if column_value and option in column_value:
+            return 'yes'
+        return 'no'
+
+    def update_field(self):
+
+        data = self.data
+        assessment_type = self.assessment.slug
+        new_data = {}
+        for key in data:
+            old_value = data[key]
+            try:
+                 obj = NewMapping.objects.get(type=assessment_type, key=key, old_value=old_value)
+                 new_data[key] = obj.new_value
+            except Exception as ex:
+                new_data[key] = old_value
+                continue
+
+        self.new_data = new_data
+        self.save()
+
+    # def save(self, **kwargs):
+    #     """
+    #     Generate unique Hash for every assessment
+    #     :param kwargs:
+    #     :return:
+    #     """
+    #     if self.pk:
+    #         self.update_field()
+    #
+    #     super(AssessmentSubmission, self).save(**kwargs)

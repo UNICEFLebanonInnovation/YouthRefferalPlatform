@@ -7,7 +7,7 @@ from django.contrib.postgres.fields import JSONField
 
 from prettyjson import PrettyJSONWidget
 
-from .models import YouthLedInitiative
+from .models import YouthLedInitiative, AssessmentSubmission
 
 
 class SlugAdmin(admin.ModelAdmin):
@@ -63,7 +63,23 @@ class InitAdmin(ImportExportModelAdmin):
     #     return False
     # post_test_done.boolean = True
 
+class AssessmentSubmissionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'assessment',
+        'initiative',
+        'data',
+        'new_data',
+    )
+    list_filter = (
+        'assessment__name',
+        'assessment__overview',
+        'assessment__slug',
+
+    )
+
 
 admin.site.register(YouthLedInitiative, InitAdmin)
+admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
 #
 
