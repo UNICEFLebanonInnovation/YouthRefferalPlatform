@@ -28,6 +28,7 @@ from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
+from referral_platform.initiatives.models import AssessmentSubmission as initiativesubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
@@ -277,15 +278,24 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         payload = json.loads(request.body.decode('utf-8'))
 
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
-
-        registration = Registration.objects.get(id=int(hashing.registration))
         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-        submission, new = AssessmentSubmission.objects.get_or_create(
-            registration=registration,
-            youth=registration.youth,
-            assessment=assessment,
-            status='enrolled'
-        )
+
+        if assessment in {'init_registration','init_exec'}:
+            # registration = Y.objects.get(id=int(hashing.registration))
+
+            submission, new = initiativesubmission.objects.get_or_create(
+                assessment=assessment,
+                status='enrolled'
+            )
+        else:
+            registration = Registration.objects.get(id=int(hashing.registration))
+
+            submission, new = AssessmentSubmission.objects.get_or_create(
+                registration=registration,
+                youth=registration.youth,
+                assessment=assessment,
+                status='enrolled'
+            )
         submission.data = payload
         submission.update_field()
         submission.save()
