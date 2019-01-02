@@ -165,7 +165,6 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         payload = json.loads(request.body.decode('utf-8'))
 
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
-        registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
         # print('hash submission is ' + registry)
         # print('hashion is ' + hashing.registration)
         # assessment = Assessment.objects.get(slug=hashing.assessment_slug)
