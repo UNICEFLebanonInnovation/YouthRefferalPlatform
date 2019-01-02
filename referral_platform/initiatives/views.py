@@ -133,7 +133,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         registry = YouthLedInitiative.objects.get(id=self.request.GET.get('registry'),
                                             partner_organization=self.request.user.partner_id)
         # youth = registry.youth
-        hashing = AssessmentHash.objects.create(
+        hashing, new = AssessmentHash.objects.get_or_create(
             registration=registry.id,
             assessment_slug=assessment.slug,
             partner=self.request.user.partner_id,
@@ -156,7 +156,6 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 @method_decorator(csrf_exempt, name='dispatch')
 class YouthAssessmentSubmission(SingleObjectMixin, View):
     def post(self, request, *args, **kwargs):
-        print('request body' + request.body)
         if 'registry' not in request.body:
             return HttpResponseBadRequest()
 
