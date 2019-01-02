@@ -163,15 +163,15 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         payload = json.loads(request.body.decode('utf-8'))
         print( 'payload is ' + payload)
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
-
+        print('hash submission is ' + registry)
+        print('hashion is ' + hashing.registration)
         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
         submission, new = AssessmentSubmission.objects.get_or_create(
             registration_id=int(hashing.registration),
             assessment=assessment,
             status='enrolled'
         )
-        print('hash submission is ' + registry)
-        print('hashion is ' + hashing.registration)
+
         submission.data = payload
         submission.update_field()
         submission.save()
