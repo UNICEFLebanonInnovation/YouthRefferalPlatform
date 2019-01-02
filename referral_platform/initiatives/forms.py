@@ -223,7 +223,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 disabled = ""
 
                 if youth_registered:
-                    if specific_form.slug == "registration":
+                    if specific_form.slug == "init_registration":
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
