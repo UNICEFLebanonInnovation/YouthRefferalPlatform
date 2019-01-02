@@ -161,7 +161,6 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             return HttpResponseBadRequest()
 
         payload = json.loads(request.body.decode('utf-8'))
-        print( 'payload is ' + payload)
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
         print('hash submission is ' + registry)
         print('hashion is ' + hashing.registration)
