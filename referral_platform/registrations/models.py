@@ -219,7 +219,7 @@ class AssessmentSubmission(models.Model):
 
     registration = models.ForeignKey(Registration)
     # initiative = models.ForeignKey(YouthLedInitiative)
-    youth = models.ForeignKey(YoungPerson)
+    youth = models.ForeignKey(YoungPerson, null=True)
     assessment = models.ForeignKey(Assessment)
     status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
