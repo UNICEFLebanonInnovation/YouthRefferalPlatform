@@ -154,7 +154,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         return url
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+# @method_decorator(csrf_exempt, name='dispatch')
 class YouthAssessmentSubmission(SingleObjectMixin, View):
     def post(self, request, *args, **kwargs):
         print('***********************fetet 3al submission**********************')
