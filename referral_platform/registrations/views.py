@@ -281,9 +281,11 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
 
         if assessment.slug in {'init_registration','init_exec'}:
-            # registration = Y.objects.get(id=int(hashing.registration))
+            from referral_platform.initiatives.models import YouthLedInitiative
+            registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
 
             submission, new = initiativesubmission.objects.get_or_create(
+                registration=registration,
                 assessment=assessment,
                 status='enrolled'
             )
