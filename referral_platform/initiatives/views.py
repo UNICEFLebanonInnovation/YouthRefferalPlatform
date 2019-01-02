@@ -154,43 +154,43 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         return url
 
 
-# @method_decorator(csrf_exempt, name='dispatch')
-class YouthAssessmentSubmission(SingleObjectMixin, View):
-    def post(self, request, *args, **kwargs):
-        print('***********************fetet 3al submission**********************')
-        if 'registry' not in request.body:
-            print('***********************fetet 3al if **********************')
-            return HttpResponseBadRequest()
-
-        payload = json.loads(request.body.decode('utf-8'))
-
-        hashing = AssessmentHash.objects.get(hashed=payload['registry'])
-        # print('hash submission is ' + registry)
-        # print('hashion is ' + hashing.registration)
-        # assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-        # submission, new = AssessmentSubmission.objects.get_or_create(
-        #     registration_id=int(hashing.registration),
-        #     assessment=assessment,
-        #     status='enrolled'
-        # )
-        #
-        # submission.data = payload
-        # submission.update_field()
-        # submission.save()
-        #
-        # return HttpResponse()
-        print('***********************fetet barra l if **********************)')
-        registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
-        assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-        print('***********************l hash hiye********************** ' + hashing.registration)
-        submission, new = AssessmentSubmission.objects.get_or_create(
-            registration=registration,
-            youth=registration.youth,
-            assessment=assessment,
-            status='enrolled'
-        )
-        submission.data = payload
-        submission.update_field()
-        submission.save()
-
-        return HttpResponse()
+# # @method_decorator(csrf_exempt, name='dispatch')
+# class YouthAssessmentSubmission(SingleObjectMixin, View):
+#     def post(self, request, *args, **kwargs):
+#         print('***********************fetet 3al submission**********************')
+#         if 'registry' not in request.body:
+#             print('***********************fetet 3al if **********************')
+#             return HttpResponseBadRequest()
+#
+#         payload = json.loads(request.body.decode('utf-8'))
+#
+#         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
+#         # print('hash submission is ' + registry)
+#         # print('hashion is ' + hashing.registration)
+#         # assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+#         # submission, new = AssessmentSubmission.objects.get_or_create(
+#         #     registration_id=int(hashing.registration),
+#         #     assessment=assessment,
+#         #     status='enrolled'
+#         # )
+#         #
+#         # submission.data = payload
+#         # submission.update_field()
+#         # submission.save()
+#         #
+#         # return HttpResponse()
+#         print('***********************fetet barra l if **********************)')
+#         registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
+#         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+#         print('***********************l hash hiye********************** ' + hashing.registration)
+#         submission, new = AssessmentSubmission.objects.get_or_create(
+#             registration=registration,
+#             youth=registration.youth,
+#             assessment=assessment,
+#             status='enrolled'
+#         )
+#         submission.data = payload
+#         submission.update_field()
+#         submission.save()
+#
+#         return HttpResponse()
