@@ -59,7 +59,7 @@ class YouthLedInitiative(models.Model):
     location = models.ForeignKey(Location, blank=True, null=True, verbose_name="location")
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="partner_organization")
     # members = models.ManyToManyField(YoungPerson, blank=True, )
-    member = models.ManyToManyField(Registration, blank=True,)
+    member = models.ManyToManyField(Registration, blank=True, related_name='+')
 
     # start_date = models.DateField(blank=True, null=True)
     duration = models.CharField(
