@@ -181,6 +181,8 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
         registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+        print('hash submission is ' + registry)
+        print('hashion is ' + hashing.registration)
         submission, new = AssessmentSubmission.objects.get_or_create(
             registration=registration,
             youth=registration.youth,
