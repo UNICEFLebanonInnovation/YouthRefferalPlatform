@@ -145,11 +145,13 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
               '&returnURL={callback}'.format(
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
+
                 partner=registry.partner_organization.name,
                 # country=registry.governorate.parent.name,
                 # nationality=youth.nationality.code,
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
+        print('hash is ' + registry)
         return url
 
 
@@ -169,6 +171,8 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
             assessment=assessment,
             status='enrolled'
         )
+        print('hash submission is ' + registry)
+        print('hashion is ' + hashing.registration)
         submission.data = payload
         submission.update_field()
         submission.save()
