@@ -157,7 +157,9 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 @method_decorator(csrf_exempt, name='dispatch')
 class YouthAssessmentSubmission(SingleObjectMixin, View):
     def post(self, request, *args, **kwargs):
+
         if 'registry' not in request.body:
+            print('It is in the if')
             return HttpResponseBadRequest()
 
         payload = json.loads(request.body.decode('utf-8'))
