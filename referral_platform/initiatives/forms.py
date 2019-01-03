@@ -122,48 +122,42 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             HTML(_('Initiative Type')),
             'type',
 
-            # HTML(_('Knowledge Areas')),
-            # 'knowledge_areas',
-            #
-            # HTML(_('Why this initiative')),
-            # 'why_this_initiative',
-            #
-            # HTML(_('Other Groups')),
-            # 'other_groups',
-            #
-            # HTML(_('Number of beneficiaries')),
-            # 'number_of_beneficiaries',
-            #
-            # HTML(_('Age of beneficiaries')),
-            # 'age_of_beneficiaries',
-            #
-            # HTML(_('Sex of beneficiaries')),
-            # 'sex_of_beneficiaries',
+            HTML(_('Knowledge Areas')),
+            'knowledge_areas',
 
-            # HTML(_('Indirect beneficiaries')),
-            # 'indirect_beneficiaries',
-            #
-            # HTML(_('Needing Resources')),
-            # 'needs_resources',
-            #
-            # HTML(_('Resources From')),
-            # 'resources_from',
-            #
-            # HTML(_('Resources Type')),
-            # 'resources_type',
-            #
-            # HTML(_('Description')),
-            # 'description',
-            # HTML(_('Planned Results')),
-            # 'planned_results',
-            # HTML(_('Anticipated Challenges')),
-            # 'anticpated_challenges',
-            # HTML(_('Description')),
-            # 'mitigation_of_challenges',
-            # HTML(_('Description')),
-            # 'description',
-            # HTML(_('Description')),
-            # 'description',
+            HTML(_('Why this initiative')),
+            'why_this_initiative',
+
+            HTML(_('Other Groups')),
+            'other_groups',
+
+            HTML(_('Number of beneficiaries')),
+            'number_of_beneficiaries',
+
+            HTML(_('Age of beneficiaries')),
+            'age_of_beneficiaries',
+
+            HTML(_('Sex of beneficiaries')),
+            'sex_of_beneficiaries',
+
+            HTML(_('Indirect beneficiaries')),
+            'indirect_beneficiaries',
+
+            HTML(_('Needing Resources')),
+            'needs_resources',
+
+            HTML(_('Resources From')),
+            'resources_from',
+
+            HTML(_('Resources Type')),
+            'resources_type',
+
+            HTML(_('Description')),
+            'description',
+            HTML(_('Planned Results')),
+            'planned_results',
+            HTML(_('Anticipated Challenges')),
+            'anticpated_challenges',
         )
 
         # Rendering the assessments
