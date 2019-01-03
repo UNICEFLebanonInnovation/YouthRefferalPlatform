@@ -33,7 +33,7 @@ class YouthLedInitiative(models.Model):
     #     ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
     #     ('other', _('Other')),
     # )
-
+    #
     # SKILL_AREAS = Choices(
     #     ('self-management', _('Self-Management')),
     #     ('teamwork', _('Cooperation & Teamwork')),
@@ -103,7 +103,7 @@ class YouthLedInitiative(models.Model):
     #         blank=True,
     #         null=True,
     #     ),
-
+    #
     # why_this_initiative = models.TextField(blank=True, null=True)
     #
     # other_groups = models.CharField(
@@ -167,20 +167,20 @@ class YouthLedInitiative(models.Model):
     #         ('organization', _('Organisation')),
     #     )
     # )
-
+    #
     # resources_type = models.CharField(
     #     max_length=254,
     #     blank=True, null=True,
     #     choices=RESOURCE_TYPES
     # )
-
-    description = models.TextField(blank=True, null=True)
+    #
+    # description = models.TextField(blank=True, null=True)
     # planned_results = models.TextField(blank=True, null=True)
     # anticpated_challenges = models.TextField(blank=True, null=True)
     # mitigation_of_challenges = models.TextField(blank=True, null=True)
     # how_to_measure_progress = models.TextField(blank=True, null=True)
     # how_to_ensure_sustainability = models.TextField(blank=True, null=True)
-    #
+
     # team_participation_rating = models.CharField(
     #     max_length=100,
     #     blank=True, null=True,
@@ -190,7 +190,7 @@ class YouthLedInitiative(models.Model):
     #         ('low', _('Low - Some team members stopped participating')),
     #     )
     # )
-    #
+
     # initiative_activities = ArrayField(
     #     models.CharField(
     #         choices=INITIATIVE_TYPES,
