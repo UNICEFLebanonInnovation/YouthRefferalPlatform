@@ -156,8 +156,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             'description',
             HTML(_('Planned Results')),
             'planned_results',
-            HTML(_('Anticipated Challenges')),
-            'anticpated_challenges',
+
         )
 
         # Rendering the assessments
