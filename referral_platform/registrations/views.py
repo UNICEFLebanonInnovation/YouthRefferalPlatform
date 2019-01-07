@@ -592,7 +592,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
-        if self.request.user.country == 'Jordan':
+        if self.request.user.country.name_en == 'Jordan':
             headers = {
                 'registration__youth__first_name': 'First Name',
                 'registration__youth__father_name': "Fathers's Name",
