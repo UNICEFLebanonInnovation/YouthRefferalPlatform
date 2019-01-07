@@ -587,7 +587,6 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
-            country= self.request.user.partner.locations
         return queryset
 
     def get(self, request, *args, **kwargs):
