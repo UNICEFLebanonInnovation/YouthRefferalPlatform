@@ -587,12 +587,12 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
-
+            country= self.request.user.partner.locations
         return queryset
 
     def get(self, request, *args, **kwargs):
 
-        if 'registration__governorate__parent__name_en' == 'Jordan':
+        if self.request.user.country == 'Jordan':
             headers = {
                 'registration__youth__first_name': 'First Name',
                 'registration__youth__father_name': "Fathers's Name",
@@ -638,8 +638,8 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
                 'I_am_happy_most_of_the_time': 'I am happy most of the time',
                 'I_feel_I_fit_in_my_famlily_school_community': 'I feel I fit in my family school community',
                 'I_have_high_expectations_for_what_I_will_achieve_in_life': 'I have high expectations for what I will achieve in life',
-                'If_I_get_engaged_in_his_is_how_I_respond': 'If I get engaged in his is how I respond',
-                'If_your_teacher_faci_roblem_or_hesitation': 'If your teacher faci roblem or hesitation',
+                'If_I_get_engaged_in_his_is_how_I_respond': 'If I get engaged in a fight with someone at school or home, this is how I respond',
+                'If_your_teacher_faci_roblem_or_hesitation': 'If your teacher/facilitator ask you to present a story or give a speech I would do it without any problem or hesitation',
                 'which_of_the_following_do_you_agree_with': 'which of the following do you agree with',
                 '_submission_time': 'Submission time',
                 '_userform_id': 'User',
@@ -761,7 +761,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
                 '_pal_contribute_to_development': 'I believe I can contribute towards community development',
                 '_51_communicate_community_conc': 'I am able to address community concerns with community leaders',
                 '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
-              
+
                 '_submission_time': 'Submission time',
                 '_userform_id': 'User',
                 # 'registration__partner_organization__name': 'Partner',
