@@ -28,7 +28,6 @@ from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
-from referral_platform.initiatives.models import AssessmentSubmission as initiativesubmission
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
@@ -219,7 +218,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         assessment = self.get_object()
         registry = Registration.objects.get(id=self.request.GET.get('registry'),
-                                            partner_organization=self.request.user.partner_id)
+                                            partner_organization=self.request.user.partner)
         youth = registry.youth
         hashing = AssessmentHash.objects.create(
             registration=registry.id,
@@ -241,32 +240,32 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         return url
 
 
-# class YouthAssessment(SingleObjectMixin, RedirectView):
-#     model = Assessment
-#
-#     def get_redirect_url(self, *args, **kwargs):
-#         assessment = self.get_object()
-#         registry = Registration.objects.get(id=self.request.GET.get('registry'),
-#                                             partner_organization=self.request.user.partner)
-#         youth = registry.youth
-#         hashing = AssessmentHash.objects.create(
-#             registration=registry.id,
-#             assessment_slug=assessment.slug,
-#             partner=self.request.user.partner_id,
-#             user=self.request.user.id,
-#             timestamp=time.time()
-#         )
-#
-#         url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
-#               '&returnURL={callback}'.format(
-#                 form=assessment.assessment_form,
-#                 registry=hashing.hashed,
-#                 partner=registry.partner_organization.name,
-#                 country=registry.governorate.parent.name_en,
-#                 nationality=youth.nationality.code,
-#                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
-#         )
-#         return url
+class YouthAssessment(SingleObjectMixin, RedirectView):
+    model = Assessment
+
+    def get_redirect_url(self, *args, **kwargs):
+        assessment = self.get_object()
+        registry = Registration.objects.get(id=self.request.GET.get('registry'),
+                                            partner_organization=self.request.user.partner)
+        youth = registry.youth
+        hashing = AssessmentHash.objects.create(
+            registration=registry.id,
+            assessment_slug=assessment.slug,
+            partner=self.request.user.partner_id,
+            user=self.request.user.id,
+            timestamp=time.time()
+        )
+
+        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
+              '&returnURL={callback}'.format(
+                form=assessment.assessment_form,
+                registry=hashing.hashed,
+                partner=registry.partner_organization.name,
+                country=registry.governorate.parent.name_en,
+                nationality=youth.nationality.code,
+                callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
+        )
+        return url
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -278,26 +277,15 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         payload = json.loads(request.body.decode('utf-8'))
 
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
+
+        registration = Registration.objects.get(id=int(hashing.registration))
         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-
-        if assessment.slug in {'init_registration','init_exec'}:
-            from referral_platform.initiatives.models import YouthLedInitiative
-            registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
-
-            submission, new = initiativesubmission.objects.get_or_create(
-                initiative=registration,
-                assessment=assessment,
-                status='enrolled'
-            )
-        else:
-            registration = Registration.objects.get(id=int(hashing.registration))
-
-            submission, new = AssessmentSubmission.objects.get_or_create(
-                registration=registration,
-                youth=registration.youth,
-                assessment=assessment,
-                status='enrolled'
-            )
+        submission, new = AssessmentSubmission.objects.get_or_create(
+            registration=registration,
+            youth=registration.youth,
+            assessment=assessment,
+            status='enrolled'
+        )
         submission.data = payload
         submission.update_field()
         submission.save()
@@ -599,105 +587,241 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
-
         return queryset
 
     def get(self, request, *args, **kwargs):
 
-        headers = {
-            'registration__youth__first_name': 'First Name',
-            'registration__youth__father_name': "Fathers's Name",
-            'registration__youth__last_name': 'Last Name',
-            'registration__partner_organization__name': 'Partner',
-            'registration__youth__bayanati_ID': 'Bayanati ID',
-            'registration__youth__birthday_day': 'Birth Day',
-            'registration__youth__birthday_month': 'Birth Month',
-            'registration__youth__birthday_year': 'Birth Year',
-            'registration__youth__nationality__name_en': 'Nationality',
-            'registration__youth__marital_status': 'Marital status',
-            'registration__youth__sex': 'Gender',
-            'registration__youth__number': 'Unique number',
-            'registration__governorate__parent__name_en': 'Country',
-            'registration__governorate__name_en': 'Governorate',
-            'registration__center__name': 'Center',
-            'registration__location': 'Location',
-            'assessment__overview': 'Assessment Type',
-            'Type_of_training': 'Type of Training ',
-            # 'nationality': 'Nationality',
-            # 'training_type': 'Training Type',
-            # 'partner': 'Partner Organization',
+        if self.request.user.country.name_en == 'Jordan':
+            headers = {
+                'registration__youth__first_name': 'First Name',
+                'registration__youth__father_name': "Fathers's Name",
+                'registration__youth__last_name': 'Last Name',
+                'registration__partner_organization__name': 'Partner',
+                'registration__youth__bayanati_ID': 'Bayanati ID',
+                'registration__youth__birthday_day': 'Birth Day',
+                'registration__youth__birthday_month': 'Birth Month',
+                'registration__youth__birthday_year': 'Birth Year',
+                'registration__youth__nationality__name_en': 'Nationality',
+                'registration__youth__marital_status': 'Marital status',
+                'registration__youth__sex': 'Gender',
+                'registration__youth__number': 'Unique number',
+                'registration__governorate__parent__name_en': 'Country',
+                'registration__governorate__name_en': 'Governorate',
+                'registration__center__name': 'Center',
+                'registration__location': 'Location',
+                'assessment__overview': 'Assessment Type',
+                'Type_of_training': 'Type of Training ',
+                # 'nationality': 'Nationality',
+                # 'training_type': 'Training Type',
+                # 'partner': 'Partner Organization',
 
-            '_4_articulate_thoughts': 'I can articulate/state my thoughts, feelings and ideas to others well',
-            '_1_express_opinion': 'I can express my opinions when my classmates/friends/peers disagree with me',
-            '_20_discussions_with_peers_before_': 'Usually I discuss with others before making decisions',
-            '_28_discuss_opinions': 'I build on the ideas of others.',
-            '_31_willing_to_compromise': 'I am willing to compromise my own view to obtain a group consensus.',
-            '_pal_I_belong': 'I feel I belong to my community',
-            '_41_where_to_volunteer': 'I know where to volunteer in my community',
-            '_42_regularly_volunteer': 'I volunteer on a regular basis in my community',
-            '_pal_contrib_appreciated': 'I feel I am appreciated for my contributions to my community.',
-            '_pal_contribute_to_development': 'I believe I can contribute towards community development',
-            '_51_communicate_community_conc': 'I am able to address community concerns with community leaders',
-            '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
-            '_submission_time': 'Submission time',
-            '_userform_id': 'User',
-            # 'registration__partner_organization__name': 'Partner',
-        }
+                '_4_articulate_thoughts': 'I can articulate/state my thoughts, feelings and ideas to others well',
+                '_1_express_opinion': 'I can express my opinions when my classmates/friends/peers disagree with me',
+                '_20_discussions_with_peers_before_': 'Usually I discuss with others before making decisions',
+                '_28_discuss_opinions': 'I build on the ideas of others.',
+                '_31_willing_to_compromise': 'I am willing to compromise my own view to obtain a group consensus.',
+                '_pal_I_belong': 'I feel I belong to my community',
+                '_41_where_to_volunteer': 'I know where to volunteer in my community',
+                '_42_regularly_volunteer': 'I volunteer on a regular basis in my community',
+                '_pal_contrib_appreciated': 'I feel I am appreciated for my contributions to my community.',
+                '_pal_contribute_to_development': 'I believe I can contribute towards community development',
+                '_51_communicate_community_conc': 'I am able to address community concerns with community leaders',
+                '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
+                'I_can_accept_diversity_of_ideas_differences_of_opinion_from_my_classmates_friends_peers': 'I can accept diversity of ideas differences of opinion from my classmates friends peers',
+                'When_I_have_to_make_a_decision_I_find_it_easy_to_think_of_all_the_different_options_and_alternatives_I_have_to_choose_from': 'Decision Making',
+                'I_tend_to_question_information_that_people_tell_me_and_make_my_own_mind_up_about_things': 'Question Information',
+                'Even_when_others_are_discouraged_I_keep_going_until_I_ve_found_a_way_to_fix_a_problem': 'Even when others are discouraged I keep going until I ve found a way to fix a problem',
+                'I_apply_the_lessons_I_learnt_from_my_mistakes_to_focus_on_moving_forward_with_positive_action': 'I apply the lessons I learnt from my mistakes to focus on moving forward with positive action',
+                'I_feel_I_have_the_opportunties_to_be_engaged_in_my_community': 'I feel I have the opportunties to be engaged in my community',
+                'I_love_my_life_a_lot': 'I love my life a lot',
+                'I_am_happy_most_of_the_time': 'I am happy most of the time',
+                'I_feel_I_fit_in_my_famlily_school_community': 'I feel I fit in my family school community',
+                'I_have_high_expectations_for_what_I_will_achieve_in_life': 'I have high expectations for what I will achieve in life',
+                'If_I_get_engaged_in_his_is_how_I_respond': 'If I get engaged in a fight with someone at school or home, this is how I respond',
+                'If_your_teacher_faci_roblem_or_hesitation': 'If your teacher/facilitator ask you to present a story or give a speech I would do it without any problem or hesitation',
+                'which_of_the_following_do_you_agree_with': 'which of the following do you agree with',
+                '_submission_time': 'Submission time',
+                '_userform_id': 'User',
+                # 'registration__partner_organization__name': 'Partner',
+            }
 
-        qs = self.get_queryset().extra(select={
-            'Type_of_training': "new_data->>'Type_of_training'",
-            '_4_articulate_thoughts': "new_data->>'_4_articulate_thoughts'",
-            '_1_express_opinion': "new_data->>'_1_express_opinion'",
-            '_20_discussions_with_peers_before_': "new_data->>'_20_discussions_with_peers_before_'",
-            '_28_discuss_opinions': "new_data->>'_28_discuss_opinions'",
-            '_31_willing_to_compromise': "new_data->>'_31_willing_to_compromise'",
-            '_pal_I_belong': "new_data->>'_pal_I_belong'",
-            '_41_where_to_volunteer': "new_data->>'_41_where_to_volunteer'",
-            '_42_regularly_volunteer': "new_data->>'_42_regularly_volunteer'",
-            '_pal_contrib_appreciated': "new_data->>'_pal_contrib_appreciated'",
-            '_pal_contribute_to_development': "new_data->>'_pal_contribute_to_development'",
-            '_51_communicate_community_conc': "new_data->>'_51_communicate_community_conc'",
-            '_52_participate_community_medi': "new_data->>'_52_participate_community_medi'",
-            '_submission_time': "new_data->>'_submission_time'",
-            '_userform_id': "new_data->>'_userform_id'",
+            qs = self.get_queryset().extra(select={
+                'Type_of_training': "data->>'Type_of_training'",
+                '_4_articulate_thoughts': "data->>'_4_articulate_thoughts'",
+                '_1_express_opinion': "data->>'_1_express_opinion'",
+                '_20_discussions_with_peers_before_': "data->>'_20_discussions_with_peers_before_'",
+                '_28_discuss_opinions': "data->>'_28_discuss_opinions'",
+                '_31_willing_to_compromise': "data->>'_31_willing_to_compromise'",
+                '_pal_I_belong': "new_data->>'_pal_I_belong'",
+                '_41_where_to_volunteer': "data->>'_41_where_to_volunteer'",
+                '_42_regularly_volunteer': "data->>'_42_regularly_volunteer'",
+                '_pal_contrib_appreciated': "data->>'_pal_contrib_appreciated'",
+                '_pal_contribute_to_development': "data->>'_pal_contribute_to_development'",
+                '_51_communicate_community_conc': "data->>'_51_communicate_community_conc'",
+                '_52_participate_community_medi': "data->>'_52_participate_community_medi'",
+                '_submission_time': "new_data->>'_submission_time'",
+                'I_can_accept_diversity_of_ideas_differences_of_opinion_from_my_classmates_friends_peers': "data->>'_I_can_accept_diversity_of_ideas_differences_of_opinion_from_my_classmates_friends_peers'",
+                'When_I_have_to_make_a_decision_I_find_it_easy_to_think_of_all_the_different_options_and_alternatives_I_have_to_choose_from': "data->>'When_I_have_to_make_a_decision_I_find_it_easy_to_think_of_all_the_different_options_and_alternatives_I_have_to_choose_from'",
+                'I_tend_to_question_information_that_people_tell_me_and_make_my_own_mind_up_about_things': "data->>'I_tend_to_question_information_that_people_tell_me_and_make_my_own_mind_up_about_things'",
+                'Even_when_others_are_discouraged_I_keep_going_until_I_ve_found_a_way_to_fix_a_problem': "data->>'Even_when_others_are_discouraged_I_keep_going_until_I_ve_found_a_way_to_fix_a_problem'",
+                'I_apply_the_lessons_I_learnt_from_my_mistakes_to_focus_on_moving_forward_with_positive_action': "data->>'I_apply_the_lessons_I_learnt_from_my_mistakes_to_focus_on_moving_forward_with_positive_action'",
+                'I_feel_I_have_the_opportunties_to_be_engaged_in_my_community': "data->>'I_feel_I_have_the_opportunties_to_be_engaged_in_my_community'",
+                'I_love_my_life_a_lot': "data->>'I_love_my_life_a_lot'",
+                'I_am_happy_most_of_the_time':"data->>'I_am_happy_most_of_the_time'",
+                'I_feel_I_fit_in_my_famlily_school_community': "data->>'I_feel_I_fit_in_my_famlily_school_community'",
+                'I_have_high_expectations_for_what_I_will_achieve_in_life':"data->>'I_have_high_expectations_for_what_I_will_achieve_in_life'",
+                'If_I_get_engaged_in_his_is_how_I_respond': "data->>'If_I_get_engaged_in_his_is_how_I_respond'",
+                'If_your_teacher_faci_roblem_or_hesitation': "data->>'If_your_teacher_faci_roblem_or_hesitation'",
+                'which_of_the_following_do_you_agree_with': "data->>'which_of_the_following_do_you_agree_with'",
+                '_userform_id': "new_data->>'_userform_id'",
 
 
-        }).values(
-            'registration__youth__first_name',
-            'registration__youth__father_name',
-            'registration__youth__last_name',
-            'registration__partner_organization__name',
-            'registration__governorate__parent__name_en',
-            'registration__governorate__name_en',
-            'registration__center__name',
-            'registration__location',
-            'registration__youth__bayanati_ID',
-            'registration__partner_organization__name',
-            'registration__youth__birthday_day',
-            'registration__youth__birthday_month',
-            'registration__youth__birthday_year',
-            'registration__youth__nationality__name_en',
-            'registration__youth__marital_status',
-            'registration__youth__sex',
-            'registration__youth__number',
-            'assessment__overview',
-            'Type_of_training',
-            '_4_articulate_thoughts',
-            '_1_express_opinion',
-            '_20_discussions_with_peers_before_',
-            '_28_discuss_opinions',
-            '_31_willing_to_compromise',
-            '_pal_I_belong',
-            '_41_where_to_volunteer',
-            '_42_regularly_volunteer',
-            '_pal_contrib_appreciated',
-            '_pal_contribute_to_development',
-            '_51_communicate_community_conc',
-            '_52_participate_community_medi',
-            '_submission_time',
-            '_userform_id',
+            }).values(
+                'registration__youth__first_name',
+                'registration__youth__father_name',
+                'registration__youth__last_name',
+                'registration__partner_organization__name',
+                'registration__governorate__parent__name_en',
+                'registration__governorate__name_en',
+                'registration__center__name',
+                'registration__location',
+                'registration__youth__bayanati_ID',
+                'registration__partner_organization__name',
+                'registration__youth__birthday_day',
+                'registration__youth__birthday_month',
+                'registration__youth__birthday_year',
+                'registration__youth__nationality__name_en',
+                'registration__youth__marital_status',
+                'registration__youth__sex',
+                'registration__youth__number',
+                'assessment__overview',
+                'Type_of_training',
+                '_4_articulate_thoughts',
+                '_1_express_opinion',
+                '_20_discussions_with_peers_before_',
+                '_28_discuss_opinions',
+                '_31_willing_to_compromise',
+                '_pal_I_belong',
+                '_41_where_to_volunteer',
+                '_42_regularly_volunteer',
+                '_pal_contrib_appreciated',
+                '_pal_contribute_to_development',
+                '_51_communicate_community_conc',
+                '_52_participate_community_medi',
+                '_submission_time',
+                'I_can_accept_diversity_of_ideas_differences_of_opinion_from_my_classmates_friends_peers',
+                'When_I_have_to_make_a_decision_I_find_it_easy_to_think_of_all_the_different_options_and_alternatives_I_have_to_choose_from',
+                'I_tend_to_question_information_that_people_tell_me_and_make_my_own_mind_up_about_things',
+                'Even_when_others_are_discouraged_I_keep_going_until_I_ve_found_a_way_to_fix_a_problem',
+                'I_apply_the_lessons_I_learnt_from_my_mistakes_to_focus_on_moving_forward_with_positive_action',
+                'I_feel_I_have_the_opportunties_to_be_engaged_in_my_community',
+                'I_love_my_life_a_lot',
+                'I_am_happy_most_of_the_time',
+                'I_feel_I_fit_in_my_famlily_school_community',
+                'I_have_high_expectations_for_what_I_will_achieve_in_life',
+                'If_I_get_engaged_in_his_is_how_I_respond',
+                'If_your_teacher_faci_roblem_or_hesitation',
+                'which_of_the_following_do_you_agree_with',
+                '_userform_id',
+            )
+        else:
+            headers = {
+                'registration__youth__first_name': 'First Name',
+                'registration__youth__father_name': "Fathers's Name",
+                'registration__youth__last_name': 'Last Name',
+                'registration__partner_organization__name': 'Partner',
+                'registration__youth__bayanati_ID': 'Bayanati ID',
+                'registration__youth__birthday_day': 'Birth Day',
+                'registration__youth__birthday_month': 'Birth Month',
+                'registration__youth__birthday_year': 'Birth Year',
+                'registration__youth__nationality__name_en': 'Nationality',
+                'registration__youth__marital_status': 'Marital status',
+                'registration__youth__sex': 'Gender',
+                'registration__youth__number': 'Unique number',
+                'registration__governorate__parent__name_en': 'Country',
+                'registration__governorate__name_en': 'Governorate',
+                'registration__center__name': 'Center',
+                'registration__location': 'Location',
+                'assessment__overview': 'Assessment Type',
+                'Type_of_training': 'Type of Training ',
+                # 'nationality': 'Nationality',
+                # 'training_type': 'Training Type',
+                # 'partner': 'Partner Organization',
 
-        )
+                '_4_articulate_thoughts': 'I can articulate/state my thoughts, feelings and ideas to others well',
+                '_1_express_opinion': 'I can express my opinions when my classmates/friends/peers disagree with me',
+                '_20_discussions_with_peers_before_': 'Usually I discuss with others before making decisions',
+                '_28_discuss_opinions': 'I build on the ideas of others.',
+                '_31_willing_to_compromise': 'I am willing to compromise my own view to obtain a group consensus.',
+                '_pal_I_belong': 'I feel I belong to my community',
+                '_41_where_to_volunteer': 'I know where to volunteer in my community',
+                '_42_regularly_volunteer': 'I volunteer on a regular basis in my community',
+                '_pal_contrib_appreciated': 'I feel I am appreciated for my contributions to my community.',
+                '_pal_contribute_to_development': 'I believe I can contribute towards community development',
+                '_51_communicate_community_conc': 'I am able to address community concerns with community leaders',
+                '_52_participate_community_medi': 'I participate in addressing my community concerns through SMedia',
+
+                '_submission_time': 'Submission time',
+                '_userform_id': 'User',
+                # 'registration__partner_organization__name': 'Partner',
+            }
+
+            qs = self.get_queryset().extra(select={
+                'Type_of_training': "new_data->>'Type_of_training'",
+                '_4_articulate_thoughts': "new_data->>'_4_articulate_thoughts'",
+                '_1_express_opinion': "new_data->>'_1_express_opinion'",
+                '_20_discussions_with_peers_before_': "new_data->>'_20_discussions_with_peers_before_'",
+                '_28_discuss_opinions': "new_data->>'_28_discuss_opinions'",
+                '_31_willing_to_compromise': "new_data->>'_31_willing_to_compromise'",
+                '_pal_I_belong': "new_data->>'_pal_I_belong'",
+                '_41_where_to_volunteer': "new_data->>'_41_where_to_volunteer'",
+                '_42_regularly_volunteer': "new_data->>'_42_regularly_volunteer'",
+                '_pal_contrib_appreciated': "new_data->>'_pal_contrib_appreciated'",
+                '_pal_contribute_to_development': "new_data->>'_pal_contribute_to_development'",
+                '_51_communicate_community_conc': "new_data->>'_51_communicate_community_conc'",
+                '_52_participate_community_medi': "new_data->>'_52_participate_community_medi'",
+                '_submission_time': "new_data->>'_submission_time'",
+
+                '_userform_id': "new_data->>'_userform_id'",
+
+            }).values(
+                'registration__youth__first_name',
+                'registration__youth__father_name',
+                'registration__youth__last_name',
+                'registration__partner_organization__name',
+                'registration__governorate__parent__name_en',
+                'registration__governorate__name_en',
+                'registration__center__name',
+                'registration__location',
+                'registration__youth__bayanati_ID',
+                'registration__partner_organization__name',
+                'registration__youth__birthday_day',
+                'registration__youth__birthday_month',
+                'registration__youth__birthday_year',
+                'registration__youth__nationality__name_en',
+                'registration__youth__marital_status',
+                'registration__youth__sex',
+                'registration__youth__number',
+                'assessment__overview',
+                'Type_of_training',
+                '_4_articulate_thoughts',
+                '_1_express_opinion',
+                '_20_discussions_with_peers_before_',
+                '_28_discuss_opinions',
+                '_31_willing_to_compromise',
+                '_pal_I_belong',
+                '_41_where_to_volunteer',
+                '_42_regularly_volunteer',
+                '_pal_contrib_appreciated',
+                '_pal_contribute_to_development',
+                '_51_communicate_community_conc',
+                '_52_participate_community_medi',
+                '_submission_time',
+
+                '_userform_id',
+
+                )
+
         filename = 'Civic-assessment'
 
         return render_to_csv_response(qs, filename, field_header_map=headers)
@@ -941,49 +1065,49 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset().extra(select={
 
-            'respid_initiativeID_title': "data->>'respid_initiativeID_title'",
-            'initiative_loc': "data->>'initiative_loc'",
-            'gender_implem_initiatives': "data->>'gender_implem_initiatives'",
-            'No_of_team_members_executed': "data->>'No_of_team_members_executed'",
-            # 'integer_0259d46e': "data->>'integer_0259d46e'",
-            'start_date_implementing_initia': "data->>'start_date_implementing_initia'",
-            'type_of_initiative': "data->>'type_of_initiative'",
-            'other_type_of_initiative': "data->>'other_type_of_initiative'",
-            'duration_of_initiative': "data->>'duration_of_initiative'",
-            # 'select_multiple_e160966a': "data->>'select_multiple_e160966a'",
-            # 'select_one_a3c4ea99': "data->>'select_one_a3c4ea99'",
-            'leadership': "data->>'leadership'",
-            'challenges_faced': "data->>'challenges_faced'",
-            'other_challenges': "data->>'other_challenges'",
-            'number_of_direct_beneficiaries': "data->>'number_of_direct_beneficiaries'",
-            'age_group_range': "data->>'age_group_range'",
-            'gender_of_beneficiaries': "data->>'gender_of_beneficiaries'",
-            'mentor_assigned': "data->>'mentor_assigned'",
-            'initiative_as_expected': "data->>'initiative_as_expected'",
-            'team_involovement': "data->>'team_involovement'",
-            'communication': "data->>'communication'",
-            'problem_solving': "data->>'problem_solving'",
-            'analytical_skills': "data->>'analytical_skills'",
-            'sense_of_belonging': "data->>'sense_of_belonging'",
-            'assertiveness': "data->>'assertiveness'",
-            'mentorship_helpful': "data->>'mentorship_helpful'",
-            'problem_addressed': "data->>'problem_addressed'",
-            'planned_results': "data->>'planned_results'",
-            'planning_to_mobilize_resources': "data->>'planning_to_mobilize_resources'",
-            'mobilized_resources_through': "data->>'mobilized_resources_through'",
-            'did_you_mobilize_resources': "data->>'did_you_mobilize_resources'",
-            '_geolocation': "data->>'_geolocation'",
-            'if_so_who': "data->>'if_so_who'",
+            'respid_initiativeID_title': "new_data->>'respid_initiativeID_title'",
+            'initiative_loc': "new_data->>'initiative_loc'",
+            'gender_implem_initiatives': "new_data->>'gender_implem_initiatives'",
+            'No_of_team_members_executed': "new_data->>'No_of_team_members_executed'",
+            # 'integer_0259d46e': "new_data->>'integer_0259d46e'",
+            'start_date_implementing_initia': "new_data->>'start_date_implementing_initia'",
+            'type_of_initiative': "new_data->>'type_of_initiative'",
+            'other_type_of_initiative': "new_data->>'other_type_of_initiative'",
+            'duration_of_initiative': "new_data->>'duration_of_initiative'",
+            # 'select_multiple_e160966a': "new_data->>'select_multiple_e160966a'",
+            # 'select_one_a3c4ea99': "new_data->>'select_one_a3c4ea99'",
+            'leadership': "new_data->>'leadership'",
+            'challenges_faced': "new_data->>'challenges_faced'",
+            'other_challenges': "new_data->>'other_challenges'",
+            'number_of_direct_beneficiaries': "new_data->>'number_of_direct_beneficiaries'",
+            'age_group_range': "new_data->>'age_group_range'",
+            'gender_of_beneficiaries': "new_data->>'gender_of_beneficiaries'",
+            'mentor_assigned': "new_data->>'mentor_assigned'",
+            'initiative_as_expected': "new_data->>'initiative_as_expected'",
+            'team_involovement': "new_data->>'team_involovement'",
+            'communication': "new_data->>'communication'",
+            'problem_solving': "new_data->>'problem_solving'",
+            'analytical_skills': "new_data->>'analytical_skills'",
+            'sense_of_belonging': "new_data->>'sense_of_belonging'",
+            'assertiveness': "new_data->>'assertiveness'",
+            'mentorship_helpful': "new_data->>'mentorship_helpful'",
+            'problem_addressed': "new_data->>'problem_addressed'",
+            'planned_results': "new_data->>'planned_results'",
+            'planning_to_mobilize_resources': "new_data->>'planning_to_mobilize_resources'",
+            'mobilized_resources_through': "new_data->>'mobilized_resources_through'",
+            'did_you_mobilize_resources': "new_data->>'did_you_mobilize_resources'",
+            '_geolocation': "new_data->>'_geolocation'",
+            'if_so_who': "new_data->>'if_so_who'",
 
-            'type_of_support_required': "data->>'type_of_support_required'",
-            'type_of_support_received': "data->>'type_of_support_received'",
-            'support_received_helpful': "data->>'support_received_helpful'",
-            'support_not_helpful_why': "data->>'support_not_helpful_why'",
+            'type_of_support_required': "new_data->>'type_of_support_required'",
+            'type_of_support_received': "new_data->>'type_of_support_received'",
+            'support_received_helpful': "new_data->>'support_received_helpful'",
+            'support_not_helpful_why': "new_data->>'support_not_helpful_why'",
 
-            'start': "data->>'start'",
-            'end': "data->>'end'",
-            '_submission_time': "data->>'_submission_time'",
-            '_userform_id': "data->>'_userform_id'",
+            'start': "new_data->>'start'",
+            'end': "new_data->>'end'",
+            '_submission_time': "new_data->>'_submission_time'",
+            '_userform_id': "new_data->>'_userform_id'",
 
         }).values(
             'registration__youth__first_name',
