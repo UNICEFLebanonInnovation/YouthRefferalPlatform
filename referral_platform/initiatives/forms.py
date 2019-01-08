@@ -27,7 +27,7 @@ from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
 
 from referral_platform.locations.models import Location
 from referral_platform.partners.models import Center
-from referral_platform.registrations.models import Assessment, AssessmentSubmission, Registration
+from referral_platform.registrations.models import Assessment, Registration
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
@@ -38,7 +38,7 @@ from model_utils import Choices
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, InlineField, Alert
 from bootstrap3_datetime.widgets import DateTimePicker
-from .models import YouthLedInitiative, YoungPerson, Location
+from .models import YouthLedInitiative, YoungPerson, Location, AssessmentSubmission
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
@@ -168,7 +168,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # registration_form = Assessment.objects.get(slug="registration")
 
             youth_registered = AssessmentSubmission.objects.filter(
-                registration=instance.id
+                initiative_id=instance.id
             ).exists()
 
             for specific_form in all_forms:
@@ -178,30 +178,30 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 )
                 disabled = ""
 
-                # if youth_registered:
-                #     if specific_form.slug == "init_registration":
-                #         disabled = "disabled"
-                #     # check if the pre is already filled
-                #     else:
-                #         order = 1  # int(specific_form.order.split(".")[1])
-                #         if order == 1:
-                #             # If the user filled the form disable it
-                #             form_submitted = AssessmentSubmission.objects.filter(
-                #                 assessment_id=specific_form.id, registration_id=instance.id).exists()
-                #             if form_submitted:
-                #                 disabled = "disabled"
-                #         else:
-                #             # make sure the user filled the form behind this one in order to enable it
-                #             if previous_status == "disabled":
-                #                 previous_submitted = AssessmentSubmission.objects.filter(
-                #                     assessment_id=specific_form.id, registration_id=instance.id).exists()
-                #                 if previous_submitted:
-                #                     disabled = "disabled"
-                #             else:
-                #                 disabled = "disabled"
-                # else:
-                #     if specific_form.slug != "init_registration":
-                #         disabled = "disabled"
+                if youth_registered:
+                    if specific_form.slug == "init_registration":
+                        disabled = "disabled"
+                    # check if the pre is already filled
+                    else:
+                        order = 1  # int(specific_form.order.split(".")[1])
+                        if order == 1:
+                            # If the user filled the form disable it
+                            form_submitted = AssessmentSubmission.objects.filter(
+                                assessment_id=specific_form.id, registration_id=instance.id).exists()
+                            if form_submitted:
+                                disabled = "disabled"
+                        else:
+                            # make sure the user filled the form behind this one in order to enable it
+                            if previous_status == "disabled":
+                                previous_submitted = AssessmentSubmission.objects.filter(
+                                    assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                if previous_submitted:
+                                    disabled = "disabled"
+                            else:
+                                disabled = "disabled"
+                else:
+                    if specific_form.slug != "init_registration":
+                        disabled = "disabled"
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
