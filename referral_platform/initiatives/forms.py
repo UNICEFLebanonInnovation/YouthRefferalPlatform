@@ -178,30 +178,30 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 )
                 disabled = ""
 
-                if youth_registered:
-                    if specific_form.slug == "init_registration":
-                        disabled = "disabled"
-                    # check if the pre is already filled
-                    else:
-                        order = 1  # int(specific_form.order.split(".")[1])
-                        if order == 1:
-                            # If the user filled the form disable it
-                            form_submitted = AssessmentSubmission.objects.filter(
-                                assessment_id=specific_form.id, registration_id=instance.id).exists()
-                            if form_submitted:
-                                disabled = "disabled"
-                        else:
-                            # make sure the user filled the form behind this one in order to enable it
-                            if previous_status == "disabled":
-                                previous_submitted = AssessmentSubmission.objects.filter(
-                                    assessment_id=specific_form.id, registration_id=instance.id).exists()
-                                if previous_submitted:
-                                    disabled = "disabled"
-                            else:
-                                disabled = "disabled"
-                else:
-                    if specific_form.slug != "init_registration":
-                        disabled = "disabled"
+                # if youth_registered:
+                #     if specific_form.slug == "init_registration":
+                #         disabled = "disabled"
+                #     # check if the pre is already filled
+                #     else:
+                #         order = 1  # int(specific_form.order.split(".")[1])
+                #         if order == 1:
+                #             # If the user filled the form disable it
+                #             form_submitted = AssessmentSubmission.objects.filter(
+                #                 assessment_id=specific_form.id, registration_id=instance.id).exists()
+                #             if form_submitted:
+                #                 disabled = "disabled"
+                #         else:
+                #             # make sure the user filled the form behind this one in order to enable it
+                #             if previous_status == "disabled":
+                #                 previous_submitted = AssessmentSubmission.objects.filter(
+                #                     assessment_id=specific_form.id, registration_id=instance.id).exists()
+                #                 if previous_submitted:
+                #                     disabled = "disabled"
+                #             else:
+                #                 disabled = "disabled"
+                # else:
+                #     if specific_form.slug != "init_registration":
+                #         disabled = "disabled"
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
