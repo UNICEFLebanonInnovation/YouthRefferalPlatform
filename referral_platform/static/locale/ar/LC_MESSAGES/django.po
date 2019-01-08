@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-08 16:03+0200\n"
+"POT-Creation-Date: 2019-01-08 16:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -720,7 +720,6 @@ msgid "Location"
 msgstr "الموقع الجغرافي"
 
 #: referral_platform/initiatives/forms.py:122
-#: referral_platform/initiatives/forms.py:127
 #, fuzzy
 #| msgid "Initiative Title"
 msgid "Initiative Type"
@@ -732,57 +731,57 @@ msgstr "عنوان المبادرة"
 msgid "Duration"
 msgstr "الموقع الجغرافي"
 
-#: referral_platform/initiatives/forms.py:130
+#: referral_platform/initiatives/forms.py:127
 msgid "Knowledge Areas"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:133
+#: referral_platform/initiatives/forms.py:130
 #, fuzzy
 #| msgid "Duration of the initiative"
 msgid "Why this initiative"
 msgstr " مدة المبادرة "
 
-#: referral_platform/initiatives/forms.py:139
+#: referral_platform/initiatives/forms.py:136
 #, fuzzy
 #| msgid "Sex of beneficiaries"
 msgid "Number of beneficiaries"
 msgstr " جنس المستفيدين"
 
-#: referral_platform/initiatives/forms.py:142
+#: referral_platform/initiatives/forms.py:139
 #, fuzzy
 #| msgid "Sex of beneficiaries"
 msgid "Age of beneficiaries"
 msgstr " جنس المستفيدين"
 
-#: referral_platform/initiatives/forms.py:145
+#: referral_platform/initiatives/forms.py:142
 msgid "Sex of beneficiaries"
 msgstr " جنس المستفيدين"
 
-#: referral_platform/initiatives/forms.py:148
+#: referral_platform/initiatives/forms.py:145
 #, fuzzy
 #| msgid "Sex of beneficiaries"
 msgid "Indirect beneficiaries"
 msgstr " جنس المستفيدين"
 
-#: referral_platform/initiatives/forms.py:151
+#: referral_platform/initiatives/forms.py:148
 msgid "Needing Resources"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:154
+#: referral_platform/initiatives/forms.py:151
 msgid "Resources From"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:157
+#: referral_platform/initiatives/forms.py:154
 msgid "Resources Type"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:160
+#: referral_platform/initiatives/forms.py:157
 #, fuzzy
 #| msgid "Registration"
 msgid "Description"
 msgstr "التسجيل"
 
-#: referral_platform/initiatives/forms.py:256
+#: referral_platform/initiatives/forms.py:253
 #: referral_platform/registrations/forms.py:349
 #: referral_platform/registrations/forms.py:640
 #, fuzzy
@@ -790,7 +789,7 @@ msgstr "التسجيل"
 msgid "Save and continue"
 msgstr "احفظ وأضف آخر"
 
-#: referral_platform/initiatives/forms.py:268
+#: referral_platform/initiatives/forms.py:265
 #: referral_platform/registrations/forms.py:414
 #: referral_platform/registrations/forms.py:427
 msgid "Your data has been sent successfully to the server"
