@@ -67,7 +67,7 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
 
     list_display = (
         'assessment',
-        'member',
+        # 'member',
         'initiative',
         'data',
         'new_data',
