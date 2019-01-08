@@ -70,7 +70,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     widget=forms.RadioSelect
     # )
 
-
+    needs_resources = forms.ChoiceField(
+        label=_("Needs Resources?"),
+        widget=forms.Select, required=False,
+        choices=(('yes', _("Yes")), ('no', _("No"))),
+        initial='no'
+    )
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
@@ -128,8 +133,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             HTML(_('Why this initiative')),
             'why_this_initiative',
 
-            HTML(_('Other Groups')),
-            'other_groups',
+            # HTML(_('Other Groups')),
+            # 'other_groups',
 
             HTML(_('Number of beneficiaries')),
             'number_of_beneficiaries',
@@ -154,8 +159,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
             HTML(_('Description')),
             'description',
-            HTML(_('Planned Results')),
-            'planned_results',
 
         )
 
