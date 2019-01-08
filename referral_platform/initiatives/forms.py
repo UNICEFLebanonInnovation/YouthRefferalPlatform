@@ -187,14 +187,14 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                         if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
-                                assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                assessment_id=specific_form.id, initiative_id=instance.id).exists()
                             if form_submitted:
                                 disabled = "disabled"
                         else:
                             # make sure the user filled the form behind this one in order to enable it
                             if previous_status == "disabled":
                                 previous_submitted = AssessmentSubmission.objects.filter(
-                                    assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                    assessment_id=specific_form.id, initiative_id=instance.id).exists()
                                 if previous_submitted:
                                     disabled = "disabled"
                             else:
