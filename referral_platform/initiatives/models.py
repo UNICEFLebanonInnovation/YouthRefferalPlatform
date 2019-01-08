@@ -19,6 +19,20 @@ from referral_platform.registrations.models import Registration, NewMapping, JSO
 
 class YouthLedInitiative(models.Model):
 
+    def __unicode__(self):
+        return '{} - {}'.format(self.title, self.member)
+
+    # def __iter__(self):
+    #     return iter([self.name,
+    #                  self.slug,
+    #                  self.overview,
+    #                  self.start_date,
+    #                  self.end_date,
+    #                  self.capacity,
+    #                  self.assessment_form,
+    #                  self.order,
+    #                  self.partner])
+
     INITIATIVE_TYPES = Choices(
         ('basic_services', _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
         ('social', _('Enhancing social cohesion')),
