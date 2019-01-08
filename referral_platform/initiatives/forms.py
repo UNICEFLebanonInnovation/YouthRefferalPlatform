@@ -124,9 +124,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             HTML(_('Duration')),
             'duration',
 
-            HTML(_('Initiative Type')),
-            'type',
-
             HTML(_('Knowledge Areas')),
             'knowledge_areas',
 

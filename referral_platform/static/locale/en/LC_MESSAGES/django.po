@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 14:30+0300\n"
+"POT-Creation-Date: 2019-01-08 16:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "File name"
 msgstr ""
 
 #: referral_platform/backends/models.py:24
-#: referral_platform/registrations/models.py:63
+#: referral_platform/registrations/models.py:93
 msgid "Partner organization"
 msgstr ""
 
@@ -36,16 +36,13 @@ msgstr ""
 
 #: referral_platform/clm/forms.py:220 referral_platform/courses/forms.py:245
 #: referral_platform/courses/forms.py:490
-#: referral_platform/initiatives/forms.py:119
-#: referral_platform/registrations/forms.py:349
+#: referral_platform/registrations/forms.py:350
 #: referral_platform/youth/forms.py:243
 msgid "Save"
 msgstr ""
 
 #: referral_platform/clm/forms.py:221 referral_platform/courses/forms.py:246
-#: referral_platform/courses/forms.py:491
-#: referral_platform/initiatives/forms.py:120
-#: referral_platform/youth/forms.py:250
+#: referral_platform/courses/forms.py:491 referral_platform/youth/forms.py:250
 msgid "Cancel"
 msgstr ""
 
@@ -62,17 +59,19 @@ msgid "French/Arabic"
 msgstr "العربية"
 
 #: referral_platform/clm/models.py:73 referral_platform/courses/forms.py:11
-#: referral_platform/initiatives/forms.py:14
-#: referral_platform/initiatives/models.py:209
-#: referral_platform/initiatives/models.py:218
+#: referral_platform/initiatives/forms.py:43
+#: referral_platform/initiatives/forms.py:76
+#: referral_platform/initiatives/models.py:234
+#: referral_platform/initiatives/models.py:243
 msgid "Yes"
 msgstr ""
 
 #: referral_platform/clm/models.py:74 referral_platform/clm/models.py:98
 #: referral_platform/courses/forms.py:11
-#: referral_platform/initiatives/forms.py:14
-#: referral_platform/initiatives/models.py:210
-#: referral_platform/initiatives/models.py:219
+#: referral_platform/initiatives/forms.py:43
+#: referral_platform/initiatives/forms.py:76
+#: referral_platform/initiatives/models.py:235
+#: referral_platform/initiatives/models.py:244
 msgid "No"
 msgstr ""
 
@@ -132,8 +131,9 @@ msgstr ""
 
 #: referral_platform/clm/models.py:95 referral_platform/clm/models.py:109
 #: referral_platform/courses/forms.py:274
-#: referral_platform/initiatives/models.py:34
-#: referral_platform/initiatives/models.py:106
+#: referral_platform/initiatives/models.py:48
+#: referral_platform/initiatives/models.py:108
+#: referral_platform/initiatives/models.py:130
 msgid "Other"
 msgstr ""
 
@@ -680,388 +680,359 @@ msgstr ""
 msgid "Website skills"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:41
-#: referral_platform/registrations/admin.py:103
-msgid "Partner Organisation"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:42
-msgid "Select Location for the initiative"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:43
-msgid "Duration of the initiative"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:50
-msgid "Initiative Title"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:53
-msgid "How many group members planned the initiative?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:57
-msgid "Planned start date"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:61
-msgid ""
-"The below question is to be answered by the team representative of the "
-"initiative"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:64
-msgid "Type of Initiative: (Select All That Apply)"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:68
-msgid ""
-"Can you please select the skills that your team used to plan the initiative?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:73
-msgid "What problem are you solving? How did you choose to do this initiative?"
-msgstr ""
-
 #: referral_platform/initiatives/forms.py:74
-#: referral_platform/initiatives/forms.py:101
-#: referral_platform/initiatives/forms.py:104
-#: referral_platform/initiatives/forms.py:107
-#: referral_platform/initiatives/forms.py:110
-#: referral_platform/initiatives/forms.py:113
-#: referral_platform/initiatives/forms.py:116
-msgid "not more than 5 sentences"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:76
-msgid ""
-"What organizations, groups, or other people will you collaborate with on "
-"this project?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:79
-msgid ""
-"How many direct beneficiaries will benefit from your planned initiative?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:82
-msgid "Please select the age Groups of the beneficiaries"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:85
-msgid "Sex of beneficiaries"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:88
-msgid ""
-"How many indirect beneficiaries will benefit from your planned initiative?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:91
-msgid "Are you planning to mobilize resources for this project?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:94
-msgid "If so, from whom?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:97
-msgid ""
-"What kind of support are you planning to receive? (you can select more than "
-"one option)"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:100
-msgid ""
-"Can you please tell us what your initiative is about, its objective and why "
-"is it important?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:103
-msgid "Can you please tell us your planned results?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:106
-msgid "Can you please tell us your anticipated challenges?"
-msgstr ""
-
-#: referral_platform/initiatives/forms.py:109
-msgid "How are you planning to mitigate those challenges?"
+msgid "Needs Resources?"
 msgstr ""
 
 #: referral_platform/initiatives/forms.py:112
-msgid "How are you planning to measure progress achieved against your results?"
+msgid "Initiative Title"
 msgstr ""
 
-#: referral_platform/initiatives/forms.py:115
-msgid "How will you ensure the project is sustainable?"
+#: referral_platform/initiatives/forms.py:117
+msgid "Member"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:23
+#: referral_platform/initiatives/forms.py:119
+#: referral_platform/registrations/exports.py:23
+#: referral_platform/registrations/exports.py:96
+#: referral_platform/registrations/forms.py:49
+#: referral_platform/registrations/models.py:87
+#: referral_platform/youth/models.py:263
+msgid "Location"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:122
+#: referral_platform/initiatives/forms.py:127
+msgid "Initiative Type"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:124
+msgid "Duration"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:130
+msgid "Knowledge Areas"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:133
+msgid "Why this initiative"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:139
+msgid "Number of beneficiaries"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:142
+msgid "Age of beneficiaries"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:145
+msgid "Sex of beneficiaries"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:148
+msgid "Indirect beneficiaries"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:151
+msgid "Needing Resources"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:154
+msgid "Resources From"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:157
+msgid "Resources Type"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:160
+msgid "Description"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:256
+#: referral_platform/registrations/forms.py:349
+#: referral_platform/registrations/forms.py:640
+msgid "Save and continue"
+msgstr ""
+
+#: referral_platform/initiatives/forms.py:268
+#: referral_platform/registrations/forms.py:414
+#: referral_platform/registrations/forms.py:427
+msgid "Your data has been sent successfully to the server"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:37
+#: referral_platform/initiatives/models.py:97
 msgid ""
 "Improving or installing basic services (electricity, water, sanitation, and "
 "waste removal)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:24
+#: referral_platform/initiatives/models.py:38
+#: referral_platform/initiatives/models.py:98
 msgid "Enhancing social cohesion"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:25
+#: referral_platform/initiatives/models.py:39
+#: referral_platform/initiatives/models.py:99
 msgid "Environmental"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:26
+#: referral_platform/initiatives/models.py:40
+#: referral_platform/initiatives/models.py:100
 msgid "Health Services"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:27
+#: referral_platform/initiatives/models.py:41
+#: referral_platform/initiatives/models.py:101
 msgid "Educational, informational or knowledge sharing"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:28
+#: referral_platform/initiatives/models.py:42
+#: referral_platform/initiatives/models.py:102
 msgid "Advocacy or Raising awareness"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:29
+#: referral_platform/initiatives/models.py:43
+#: referral_platform/initiatives/models.py:103
 msgid "Political"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:30
+#: referral_platform/initiatives/models.py:44
+#: referral_platform/initiatives/models.py:104
 msgid "Spiritual/Religious"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:31
+#: referral_platform/initiatives/models.py:45
+#: referral_platform/initiatives/models.py:105
 msgid "Artistic/Cultural/Sports"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:32
+#: referral_platform/initiatives/models.py:46
+#: referral_platform/initiatives/models.py:106
 msgid "Enhancing public safety"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:33
+#: referral_platform/initiatives/models.py:47
+#: referral_platform/initiatives/models.py:107
 msgid ""
 "Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:38
+#: referral_platform/initiatives/models.py:52
 msgid "Self-Management"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:39
+#: referral_platform/initiatives/models.py:53
 msgid "Cooperation & Teamwork"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:40
+#: referral_platform/initiatives/models.py:54
 msgid "Creativity"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:41
+#: referral_platform/initiatives/models.py:55
 msgid "Critical Thinking"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:42
+#: referral_platform/initiatives/models.py:56
 msgid "Negotiation"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:43
+#: referral_platform/initiatives/models.py:57
 msgid "Respect for diversity"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:44
+#: referral_platform/initiatives/models.py:58
 msgid "Decision Making"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:45
+#: referral_platform/initiatives/models.py:59
 msgid "Participation"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:46
+#: referral_platform/initiatives/models.py:60
 msgid "Communication"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:47
+#: referral_platform/initiatives/models.py:61
 msgid "Empathy"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:48
+#: referral_platform/initiatives/models.py:62
 msgid "Problem-Solving"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:49
+#: referral_platform/initiatives/models.py:63
 msgid "Resilience"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:53
+#: referral_platform/initiatives/models.py:67
 msgid "Financial (self-explanatory)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:54
+#: referral_platform/initiatives/models.py:68
 msgid ""
 "Technical (for ex. developing awareness tools materials, trainings..etc)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:55
+#: referral_platform/initiatives/models.py:69
 msgid "In-Kind (posters, booklet,etc)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:68
+#: referral_platform/initiatives/models.py:83
 msgid "1-2 weeks"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:69
+#: referral_platform/initiatives/models.py:84
 msgid "3-4 weeks"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:70
+#: referral_platform/initiatives/models.py:85
 msgid "4-6 weeks"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:71
+#: referral_platform/initiatives/models.py:86
 msgid "More than 6 weeks"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:103
-msgid "Other NGOs"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:104
-msgid "Schools"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:105
-msgid "Municipality"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:114
-#: referral_platform/initiatives/models.py:144
-msgid "1-50"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:115
-#: referral_platform/initiatives/models.py:145
-msgid "51-100"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:116
-#: referral_platform/initiatives/models.py:146
-msgid "501-1000"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:117
-#: referral_platform/initiatives/models.py:147
-msgid "greater than 1000"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:124
-msgid "1-6 years"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:125
-msgid "7-13 years"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:126
-msgid "14-24 years"
+#: referral_platform/initiatives/models.py:94
+msgid "Initiative Types"
 msgstr ""
 
 #: referral_platform/initiatives/models.py:127
-msgid "25-50 years"
+msgid "Other NGOs"
 msgstr ""
 
 #: referral_platform/initiatives/models.py:128
+msgid "Schools"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:129
+msgid "Municipality"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:138
+#: referral_platform/initiatives/models.py:168
+msgid "1-50"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:139
+#: referral_platform/initiatives/models.py:169
+msgid "51-100"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:140
+#: referral_platform/initiatives/models.py:170
+msgid "501-1000"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:141
+#: referral_platform/initiatives/models.py:171
+msgid "greater than 1000"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:148
+msgid "1-6 years"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:149
+msgid "7-13 years"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:150
+msgid "14-24 years"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:151
+msgid "25-50 years"
+msgstr ""
+
+#: referral_platform/initiatives/models.py:152
 msgid "50 years and above"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:135
+#: referral_platform/initiatives/models.py:159
 msgid "Both male and females"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:136
+#: referral_platform/initiatives/models.py:160
 msgid "Only males"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:137
+#: referral_platform/initiatives/models.py:161
 msgid "only female"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:155
+#: referral_platform/initiatives/models.py:179
 msgid "UNICEF"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:156
+#: referral_platform/initiatives/models.py:180
 msgid "Local Business"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:157
+#: referral_platform/initiatives/models.py:181
 msgid "Organisation"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:177
-msgid "Excellent - All of our team members were committed to the initiative"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:178
-msgid "Good - Most of our team was committed to the initiative"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:179
-msgid "Low - Some team members stopped participating"
-msgstr ""
-
-#: referral_platform/initiatives/models.py:198
+#: referral_platform/initiatives/models.py:223
 msgid ""
 "Exceeded the total number of direct beneficiaries that we planned to reach "
 "(greater than 100%)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:199
+#: referral_platform/initiatives/models.py:224
 msgid "Reached all of the direct beneficiaries planned (100%)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:200
+#: referral_platform/initiatives/models.py:225
 #, python-format
 msgid ""
 "Reached more than half of the direct beneficiaries planned (50% or more)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:201
+#: referral_platform/initiatives/models.py:226
 msgid ""
 "Reached less than half of the direct beneficiaries planned (Less then "
 "49%)\" (50% or more)"
 msgstr ""
 
-#: referral_platform/initiatives/models.py:211
-#: referral_platform/initiatives/models.py:220
+#: referral_platform/initiatives/models.py:236
+#: referral_platform/initiatives/models.py:245
 msgid "Somewhat"
 msgstr ""
 
-#: referral_platform/registrations/admin.py:136
+#: referral_platform/initiatives/tables.py:18
+#: referral_platform/registrations/tables.py:19
+#: referral_platform/registrations/tables.py:52
+#: referral_platform/templates/django_tables2/edit_column.html:4
+#: referral_platform/youth/tables.py:18
+msgid "Edit"
+msgstr ""
+
+#: referral_platform/registrations/admin.py:104
+msgid "Partner Organisation"
+msgstr ""
+
+#: referral_platform/registrations/admin.py:137
 #: referral_platform/registrations/exports.py:22
 #: referral_platform/registrations/exports.py:95
 #: referral_platform/registrations/filters.py:14
 #: referral_platform/registrations/filters.py:40
 #: referral_platform/registrations/filters.py:61
 #: referral_platform/registrations/forms.py:44
-#: referral_platform/registrations/models.py:69
+#: referral_platform/registrations/models.py:99
 #: referral_platform/youth/filters.py:11 referral_platform/youth/filters.py:37
 #: referral_platform/youth/filters.py:58 referral_platform/youth/forms.py:41
-#: referral_platform/youth/forms.py:43 referral_platform/youth/models.py:264
+#: referral_platform/youth/forms.py:43 referral_platform/youth/models.py:265
 msgid "Governorate"
 msgstr ""
 
 #: referral_platform/registrations/exports.py:21
 #: referral_platform/registrations/exports.py:94
 msgid "Country"
-msgstr ""
-
-#: referral_platform/registrations/exports.py:23
-#: referral_platform/registrations/exports.py:96
-#: referral_platform/registrations/forms.py:49
-#: referral_platform/registrations/models.py:57
-#: referral_platform/youth/models.py:262
-msgid "Location"
 msgstr ""
 
 #: referral_platform/registrations/exports.py:24
@@ -1094,15 +1065,15 @@ msgstr ""
 
 #: referral_platform/registrations/exports.py:29
 #: referral_platform/registrations/exports.py:102
-#: referral_platform/registrations/models.py:80
-#: referral_platform/youth/models.py:275
+#: referral_platform/registrations/models.py:110
+#: referral_platform/youth/models.py:276
 msgid "Trainer"
 msgstr ""
 
 #: referral_platform/registrations/exports.py:30
 #: referral_platform/registrations/exports.py:103
 #: referral_platform/registrations/forms.py:68
-#: referral_platform/youth/models.py:282
+#: referral_platform/youth/models.py:283
 msgid "Bayanati ID"
 msgstr ""
 
@@ -1128,7 +1099,7 @@ msgstr ""
 
 #: referral_platform/registrations/exports.py:35
 #: referral_platform/registrations/exports.py:108
-#: referral_platform/youth/models.py:155 referral_platform/youth/tables.py:24
+#: referral_platform/youth/models.py:156 referral_platform/youth/tables.py:24
 msgid "age"
 msgstr ""
 
@@ -1145,14 +1116,14 @@ msgstr ""
 #: referral_platform/registrations/forms.py:122
 #: referral_platform/youth/filters.py:13 referral_platform/youth/filters.py:39
 #: referral_platform/youth/filters.py:60 referral_platform/youth/models.py:24
-#: referral_platform/youth/models.py:167
+#: referral_platform/youth/models.py:168
 msgid "Nationality"
 msgstr ""
 
 #: referral_platform/registrations/exports.py:38
 #: referral_platform/registrations/exports.py:111
 #: referral_platform/registrations/forms.py:131
-#: referral_platform/youth/models.py:252 referral_platform/youth/models.py:271
+#: referral_platform/youth/models.py:253 referral_platform/youth/models.py:272
 msgid "Marital status"
 msgstr ""
 
@@ -1161,139 +1132,139 @@ msgstr ""
 msgid "address"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:114
+#: referral_platform/registrations/exports.py:113
 msgid "training_type"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:115
+#: referral_platform/registrations/exports.py:114
 msgid "center_type"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:116
+#: referral_platform/registrations/exports.py:115
 msgid "concent_paper"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:117
+#: referral_platform/registrations/exports.py:116
 msgid "If_you_answered_Othe_the_name_of_the_NGO"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:118
+#: referral_platform/registrations/exports.py:117
 msgid "UNHCR_ID"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:119
+#: referral_platform/registrations/exports.py:118
 msgid "Jordanian_ID"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:120
+#: referral_platform/registrations/exports.py:119
 msgid "training_date"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:121
+#: referral_platform/registrations/exports.py:120
 msgid "training_end_date"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:122
+#: referral_platform/registrations/exports.py:121
 msgid "educational_status"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:123
+#: referral_platform/registrations/exports.py:122
 msgid "school_level"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:124
+#: referral_platform/registrations/exports.py:123
 msgid "School_type"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:125
+#: referral_platform/registrations/exports.py:124
 msgid "School_name"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:126
+#: referral_platform/registrations/exports.py:125
 msgid "how_many_times_skipped_school"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:127
+#: referral_platform/registrations/exports.py:126
 msgid "reason_for_skipping_class"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:128
+#: referral_platform/registrations/exports.py:127
 msgid "educ_level_stopped"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:129
+#: referral_platform/registrations/exports.py:128
 msgid "Reason_stop_study"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:130
+#: referral_platform/registrations/exports.py:129
 msgid "other_five"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:131
+#: referral_platform/registrations/exports.py:130
 msgid "Relation_with_labor_market"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:132
+#: referral_platform/registrations/exports.py:131
 msgid "occupation_type"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:133
+#: referral_platform/registrations/exports.py:132
 msgid "what_electronics_do_you_own"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:134
+#: referral_platform/registrations/exports.py:133
 msgid "family_present"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:135
+#: referral_platform/registrations/exports.py:134
 msgid "family_not_present"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:136
+#: referral_platform/registrations/exports.py:135
 msgid "not_present_where"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:137
+#: referral_platform/registrations/exports.py:136
 msgid "other_family_not_present"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:138
+#: referral_platform/registrations/exports.py:137
 msgid "drugs_substance_use"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:139
+#: referral_platform/registrations/exports.py:138
 msgid "feeling_of_safety_security"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:140
+#: referral_platform/registrations/exports.py:139
 msgid "reasons_for_not_feeling_safe_a"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:141
+#: referral_platform/registrations/exports.py:140
 msgid "Accommodation_type"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:142
+#: referral_platform/registrations/exports.py:141
 msgid "how_many_times_displaced"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:143
+#: referral_platform/registrations/exports.py:142
 msgid "family_steady_income"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:144
+#: referral_platform/registrations/exports.py:143
 msgid "desired_method_for_follow_up"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:145
+#: referral_platform/registrations/exports.py:144
 msgid "text_39911992"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:146
+#: referral_platform/registrations/exports.py:145
 msgid "text_d45750c6"
 msgstr ""
 
-#: referral_platform/registrations/exports.py:147
+#: referral_platform/registrations/exports.py:146
 msgid "text_4c6fe6c9"
 msgstr ""
 
@@ -1303,138 +1274,142 @@ msgstr ""
 
 #: referral_platform/registrations/forms.py:54
 #: referral_platform/registrations/forms.py:56
-#: referral_platform/registrations/models.py:75
+#: referral_platform/registrations/models.py:105
 #: referral_platform/youth/forms.py:47 referral_platform/youth/forms.py:49
 msgid "Center"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:84
-#: referral_platform/youth/models.py:112 referral_platform/youth/models.py:128
+#: referral_platform/youth/models.py:113 referral_platform/youth/models.py:129
 msgid "Gender"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:88
-#: referral_platform/youth/models.py:113
+#: referral_platform/youth/models.py:114
 msgid "Male"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:89
-#: referral_platform/youth/models.py:114
+#: referral_platform/youth/models.py:115
 msgid "Female"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:93
-#: referral_platform/youth/models.py:136
+#: referral_platform/youth/models.py:137
 msgid "Birthday year"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:98
-#: referral_platform/youth/models.py:145
+#: referral_platform/youth/models.py:146
 msgid "Birthday month"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:102
-#: referral_platform/youth/models.py:97
+#: referral_platform/youth/models.py:98
 msgid "January"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:103
-#: referral_platform/youth/models.py:98
+#: referral_platform/youth/models.py:99
 msgid "February"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:104
-#: referral_platform/youth/models.py:99
+#: referral_platform/youth/models.py:100
 msgid "March"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:105
-#: referral_platform/youth/models.py:100
+#: referral_platform/youth/models.py:101
 msgid "April"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:106
-#: referral_platform/youth/models.py:101
+#: referral_platform/youth/models.py:102
 msgid "May"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:107
-#: referral_platform/youth/models.py:102
+#: referral_platform/youth/models.py:103
 msgid "June"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:108
-#: referral_platform/youth/models.py:103
+#: referral_platform/youth/models.py:104
 msgid "July"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:109
-#: referral_platform/youth/models.py:104
+#: referral_platform/youth/models.py:105
 msgid "August"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:110
-#: referral_platform/youth/models.py:105
+#: referral_platform/youth/models.py:106
 msgid "September"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:111
-#: referral_platform/youth/models.py:106
+#: referral_platform/youth/models.py:107
 msgid "October"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:112
-#: referral_platform/youth/models.py:107
+#: referral_platform/youth/models.py:108
 msgid "November"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:113
-#: referral_platform/youth/models.py:108
+#: referral_platform/youth/models.py:109
 msgid "December"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:117
-#: referral_platform/youth/models.py:153
+#: referral_platform/youth/models.py:154
 msgid "Birthday day"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:127
-#: referral_platform/youth/models.py:177
+#: referral_platform/youth/models.py:178
 msgid "Address"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:134
-#: referral_platform/youth/models.py:253
+#: referral_platform/youth/models.py:254
 msgid "Married"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:135
-#: referral_platform/youth/models.py:254
+#: referral_platform/youth/models.py:255
 msgid "Engaged"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:136
-#: referral_platform/youth/models.py:255
+#: referral_platform/youth/models.py:256
 msgid "Divorced"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:137
-#: referral_platform/youth/models.py:256
+#: referral_platform/youth/models.py:257
 msgid "Widower"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:138
-#: referral_platform/youth/models.py:257
+#: referral_platform/youth/models.py:258
 msgid "Single"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:195
 #: referral_platform/registrations/forms.py:202
 #: referral_platform/registrations/forms.py:211
+#: referral_platform/registrations/forms.py:486
+#: referral_platform/registrations/forms.py:493
+#: referral_platform/registrations/forms.py:502
 msgid "Location Information"
 msgstr ""
 
 #: referral_platform/registrations/forms.py:213
+#: referral_platform/registrations/forms.py:504
 msgid "Personal Details"
 msgstr ""
 
@@ -1443,43 +1418,47 @@ msgstr ""
 msgid "Save and add another"
 msgstr ""
 
-#: referral_platform/registrations/forms.py:411
-#: referral_platform/registrations/forms.py:422
-msgid "Your data has been sent successfully to the server"
+#: referral_platform/registrations/models.py:63
+msgid "Assessment Type"
 msgstr ""
 
-#: referral_platform/registrations/models.py:86
-#: referral_platform/youth/models.py:287 referral_platform/youth/models.py:288
+#: referral_platform/registrations/models.py:68
+msgid "Key"
+msgstr ""
+
+#: referral_platform/registrations/models.py:73
+msgid "Old Value"
+msgstr ""
+
+#: referral_platform/registrations/models.py:78
+msgid "New Value"
+msgstr ""
+
+#: referral_platform/registrations/models.py:116
+#: referral_platform/youth/models.py:288 referral_platform/youth/models.py:289
 msgid "Youth"
 msgstr ""
 
-#: referral_platform/registrations/models.py:92
+#: referral_platform/registrations/models.py:122
 msgid "Created by"
 msgstr ""
 
-#: referral_platform/registrations/models.py:98
+#: referral_platform/registrations/models.py:128
 msgid "Modified by"
 msgstr ""
 
-#: referral_platform/registrations/models.py:108
+#: referral_platform/registrations/models.py:139
 msgid "Comments"
 msgstr ""
 
-#: referral_platform/registrations/models.py:113
+#: referral_platform/registrations/models.py:144
 #: referral_platform/templates/pages/registration.html:17
 #: referral_platform/templates/youth/form.html:23
 msgid "Registration"
 msgstr ""
 
-#: referral_platform/registrations/models.py:114
+#: referral_platform/registrations/models.py:145
 msgid "Registrations"
-msgstr ""
-
-#: referral_platform/registrations/tables.py:19
-#: referral_platform/registrations/tables.py:52
-#: referral_platform/templates/django_tables2/edit_column.html:4
-#: referral_platform/youth/tables.py:18
-msgid "Edit"
 msgstr ""
 
 #: referral_platform/registrations/tables.py:22
@@ -1771,7 +1750,8 @@ msgid "Full data export"
 msgstr ""
 
 #: referral_platform/templates/backends/exporter.html:32
-#: referral_platform/templates/registrations/list.html:46
+#: referral_platform/templates/initiatives/list.html:55
+#: referral_platform/templates/registrations/list.html:66
 msgid "Export Registration"
 msgstr ""
 
@@ -1801,80 +1781,106 @@ msgid "Export partner"
 msgstr ""
 
 #: referral_platform/templates/backends/exporter.html:55
-#: referral_platform/templates/registrations/list.html:47
+#: referral_platform/templates/initiatives/list.html:56
+#: referral_platform/templates/registrations/list.html:67
 msgid "Export Civic Engagement assessments"
 msgstr ""
 
 #: referral_platform/templates/backends/exporter.html:78
-#: referral_platform/templates/registrations/list.html:48
+#: referral_platform/templates/initiatives/list.html:57
+#: referral_platform/templates/registrations/list.html:68
 msgid "Export Entrepreneurship assessments"
 msgstr ""
 
 #: referral_platform/templates/backends/exporter.html:101
-#: referral_platform/templates/registrations/list.html:49
+#: referral_platform/templates/initiatives/list.html:58
+#: referral_platform/templates/registrations/list.html:69
 msgid "Export Initiative registration & implementation"
 msgstr ""
 
 #: referral_platform/templates/backends/exporter.html:124
-#: referral_platform/templates/registrations/list.html:50
+#: referral_platform/templates/initiatives/list.html:59
+#: referral_platform/templates/registrations/list.html:70
 msgid "Export Beneficiary list"
 msgstr ""
 
 #: referral_platform/templates/backends/files.html:22
-#: referral_platform/templates/base2.html:105
+#: referral_platform/templates/base2.html:112
 #: referral_platform/templates/header.html:38
 msgid "Exported files"
 msgstr ""
 
-#: referral_platform/templates/base2.html:88
+#: referral_platform/templates/base2.html:89
 #: referral_platform/templates/youth/base.html:90
 msgid "home"
 msgstr ""
 
-#: referral_platform/templates/base2.html:92
+#: referral_platform/templates/base2.html:94
 #: referral_platform/templates/header.html:25
-#: referral_platform/templates/registrations/form.html:23
+#: referral_platform/templates/registrations/form.html:31
 #: referral_platform/templates/registrations/list.html:22
 msgid "Youth Registration"
 msgstr ""
 
-#: referral_platform/templates/base2.html:97
-#: referral_platform/templates/dashboard/co.html:12
-msgid "Global dashboard"
+#: referral_platform/templates/base2.html:98
+#: referral_platform/templates/initiatives/form.html:46
+#: referral_platform/templates/initiatives/list.html:22
+msgid "Initiatives"
 msgstr ""
 
-#: referral_platform/templates/base2.html:101
+#: referral_platform/templates/base2.html:103
+#: referral_platform/templates/dashboard/co.html:12
+msgid "Dashboard"
+msgstr ""
+
+#: referral_platform/templates/base2.html:108
 #: referral_platform/templates/dashboard/partner.html:12
 msgid "Partner dashboard"
 msgstr ""
 
-#: referral_platform/templates/base2.html:110
+#: referral_platform/templates/base2.html:118
+#: referral_platform/templates/header.html:20
+msgid "Admin"
+msgstr ""
+
+#: referral_platform/templates/base2.html:124
 msgid "Profile"
 msgstr ""
 
-#: referral_platform/templates/base2.html:148
+#: referral_platform/templates/base2.html:131
+msgid "Login"
+msgstr ""
+
+#: referral_platform/templates/base2.html:170
 msgid "Engagement Monitoring System"
 msgstr ""
 
-#: referral_platform/templates/base2.html:158
+#: referral_platform/templates/base2.html:180
+#: referral_platform/templates/base2.html:197
 msgid "Change password?"
 msgstr ""
 
-#: referral_platform/templates/base2.html:163
+#: referral_platform/templates/base2.html:185
 #: referral_platform/templates/youth/base.html:162
 msgid "Follow us"
 msgstr ""
 
-#: referral_platform/templates/base2.html:179
-#: referral_platform/templates/base2.html:192
+#: referral_platform/templates/base2.html:198
+#: referral_platform/templates/header.html:57
+#: referral_platform/templates/users/profile.html:41
+msgid "Logout"
+msgstr ""
+
+#: referral_platform/templates/base2.html:209
+#: referral_platform/templates/base2.html:222
 #: referral_platform/templates/header.html:68
 #: referral_platform/templates/youth/base.html:147
 #: referral_platform/templates/youth/base.html:185
 msgid "Arabic"
 msgstr "العربية"
 
-#: referral_platform/templates/base2.html:181
-#: referral_platform/templates/base2.html:187
+#: referral_platform/templates/base2.html:211
+#: referral_platform/templates/base2.html:217
 #: referral_platform/templates/header.html:62
 #: referral_platform/templates/youth/base.html:146
 #: referral_platform/templates/youth/base.html:180
@@ -1887,10 +1893,6 @@ msgstr ""
 
 #: referral_platform/templates/header.html:13
 msgid "EMS"
-msgstr ""
-
-#: referral_platform/templates/header.html:20
-msgid "Admin"
 msgstr ""
 
 #: referral_platform/templates/header.html:29
@@ -1909,31 +1911,78 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: referral_platform/templates/header.html:57
-msgid "Logout"
-msgstr ""
-
 #: referral_platform/templates/header.html:74
 msgid "Log In"
 msgstr ""
 
-#: referral_platform/templates/registrations/list.html:35
+#: referral_platform/templates/initiatives/list.html:36
+#: referral_platform/templates/registrations/list.html:38
+#: referral_platform/templates/registrations/list.html:47
 #: referral_platform/templates/youth/list.html:28
 msgid "Add new beneficiary"
 msgstr ""
 
-#: referral_platform/templates/registrations/list.html:40
+#: referral_platform/templates/initiatives/list.html:43
+#: referral_platform/templates/registrations/list.html:54
+msgid "Add Initiatives"
+msgstr ""
+
+#: referral_platform/templates/initiatives/list.html:49
+#: referral_platform/templates/registrations/list.html:60
 msgid "Export data"
 msgstr ""
 
-#: referral_platform/templates/registrations/list.html:60
+#: referral_platform/templates/initiatives/list.html:68
+#: referral_platform/templates/registrations/list.html:80
 #: referral_platform/templates/youth/list.html:42
 msgid "filter"
 msgstr ""
 
-#: referral_platform/templates/registrations/list.html:61
+#: referral_platform/templates/initiatives/list.html:69
+#: referral_platform/templates/registrations/list.html:81
 #: referral_platform/templates/youth/list.html:43
 msgid "reset"
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:28
+msgid "User Profile"
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:35
+msgid "Partner Name: "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:36
+msgid "Username: "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:37
+#: referral_platform/templates/users/profile.html:61
+msgid "Country: "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:38
+msgid "Is the User Staff: "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:40
+msgid "Change password "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:60
+msgid "Partner: "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:62
+msgid "Email: "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:63
+msgid "Name: "
+msgstr ""
+
+#: referral_platform/templates/users/profile.html:64
+msgid "Date Joined: "
 msgstr ""
 
 #: referral_platform/templates/youth/base.html:94
@@ -1984,15 +2033,15 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: referral_platform/users/admin.py:52 referral_platform/users/admin.py:61
+#: referral_platform/users/admin.py:53 referral_platform/users/admin.py:62
 msgid "Personal info"
 msgstr ""
 
-#: referral_platform/users/admin.py:53 referral_platform/users/admin.py:62
+#: referral_platform/users/admin.py:54 referral_platform/users/admin.py:63
 msgid "Permissions"
 msgstr ""
 
-#: referral_platform/users/admin.py:55 referral_platform/users/admin.py:64
+#: referral_platform/users/admin.py:56 referral_platform/users/admin.py:65
 msgid "Important dates"
 msgstr ""
 
@@ -2000,11 +2049,11 @@ msgstr ""
 msgid "email address"
 msgstr ""
 
-#: referral_platform/users/models.py:22 referral_platform/youth/models.py:118
+#: referral_platform/users/models.py:22 referral_platform/youth/models.py:119
 msgid "first name"
 msgstr ""
 
-#: referral_platform/users/models.py:23 referral_platform/youth/models.py:119
+#: referral_platform/users/models.py:23 referral_platform/youth/models.py:120
 msgid "last name"
 msgstr ""
 
@@ -2012,48 +2061,52 @@ msgstr ""
 msgid "staff status"
 msgstr ""
 
-#: referral_platform/users/models.py:29
+#: referral_platform/users/models.py:30
 msgid "active"
 msgstr ""
 
-#: referral_platform/users/models.py:32
+#: referral_platform/users/models.py:33
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
 
-#: referral_platform/users/models.py:36
+#: referral_platform/users/models.py:37
 msgid "date joined"
 msgstr ""
 
-#: referral_platform/users/models.py:56
+#: referral_platform/users/models.py:57
 msgid "user"
 msgstr ""
 
-#: referral_platform/users/models.py:57
+#: referral_platform/users/models.py:58
 msgid "users"
 msgstr ""
 
-#: referral_platform/youth/models.py:29
+#: referral_platform/youth/models.py:25
+msgid "Nationality En"
+msgstr ""
+
+#: referral_platform/youth/models.py:30
 msgid "Nationalities"
 msgstr ""
 
-#: referral_platform/youth/models.py:51 referral_platform/youth/models.py:52
+#: referral_platform/youth/models.py:52 referral_platform/youth/models.py:53
 msgid "ID Type"
 msgstr ""
 
-#: referral_platform/youth/models.py:64 referral_platform/youth/models.py:65
+#: referral_platform/youth/models.py:65 referral_platform/youth/models.py:66
 msgid "ALP Level"
 msgstr ""
 
-#: referral_platform/youth/models.py:116
+#: referral_platform/youth/models.py:117
 msgid "Only Arabic characters are allowed."
 msgstr ""
 
-#: referral_platform/youth/models.py:120
+#: referral_platform/youth/models.py:121
 msgid "Father Name"
 msgstr ""
 
-#: referral_platform/youth/models.py:121
+#: referral_platform/youth/models.py:122
 msgid "full name"
 msgstr ""
