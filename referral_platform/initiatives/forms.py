@@ -174,7 +174,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
-                    registry=instance.id,
+                    registry_id=instance.id,
                 )
                 disabled = ""
 
