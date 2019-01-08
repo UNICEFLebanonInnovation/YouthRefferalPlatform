@@ -168,7 +168,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # registration_form = Assessment.objects.get(slug="registration")
 
             youth_registered = AssessmentSubmission.objects.filter(
-                initiatives_id=instance.id
+                registration=instance.id
             ).exists()
 
             for specific_form in all_forms:
