@@ -23,6 +23,7 @@ class InitResource(resources.ModelResource):
             'member',
             'location',
             'partner_organization',
+
         )
         export_order = fields
 
@@ -44,24 +45,7 @@ class InitAdmin(ImportExportModelAdmin):
     filter_horizontal = ('member',)
 
 
-    #
-    # def enrolled(self, obj):
-    #     if obj.status == 'enrolled':
-    #         return True
-    #     return False
-    # enrolled.boolean = True
-    #
-    # def pre_test_done(self, obj):
-    #     if obj.status == 'pre_test':
-    #         return True
-    #     return False
-    # pre_test_done.boolean = True
-    #
-    # def post_test_done(self, obj):
-    #     if obj.status == 'post_test':
-    #         return True
-    #     return False
-    # post_test_done.boolean = True
+
 
 class AssessmentSubmissionAdmin(admin.ModelAdmin):
 
@@ -79,6 +63,23 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
 
     )
 
+    def enrolled(self, obj):
+        if obj.status == 'enrolled':
+            return True
+        return False
+    enrolled.boolean = True
+
+    def pre_test_done(self, obj):
+        if obj.status == 'pre_test':
+            return True
+        return False
+    pre_test_done.boolean = True
+
+    def post_test_done(self, obj):
+        if obj.status == 'post_test':
+            return True
+        return False
+    post_test_done.boolean = True
 
 admin.site.register(YouthLedInitiative, InitAdmin)
 admin.site.register(AssessmentSubmission, AssessmentSubmissionAdmin)
