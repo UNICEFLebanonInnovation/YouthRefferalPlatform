@@ -2,6 +2,7 @@
 {% load staticfiles i18n %}
 {% load crispy_forms_tags %}
 
+
 {% block head_title %}Initiative{% endblock %}
 
 {% block extra_head %}
@@ -12,15 +13,29 @@
 
 {% block content-full-page %}
 <section>
+
+  <style>
+.selector {
+    width: 800px;
+    float: none !important;
+}
+
+.selector-chosen h2 {
+    background: #79aec8;
+    color: #fff;
+    font-size: 25px;
+}
+.selector .selector-available h2 {
+    background: #f8f8f8;
+    color: #666;
+    font-size: 25px;
+
+}
+
+</style>
     <div id="resume" class="inner-content">
 
-      <!--<script>-->
-      <!--function myFunction(id) {-->
-      <!--var x = document.getElementById(id);-->
-      <!--x.style.display = "none";-->
-      <!--}-->
-<!--}-->
-<!--</script>-->
+
 
         <section id="page-title" class="inline-form inner-section ui-menu-color02">
             <div class="container-fluid nopadding">
@@ -35,8 +50,15 @@
 
         <section class="inline-form inner-section light bg-color01">
             <div class="container-fluid nopadding">
-                 {{ form.errors }}
-                {% crispy form 'bootstrap4' %}
+
+                  <form method="post" class="uniForm">
+
+                    {{ form.media }}
+                    {{ form.errors }}
+                    {% crispy form 'bootstrap4' %}
+
+                  </form>
+
             </div>
         </section>
 
@@ -50,7 +72,9 @@
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/validators.js' %}"></script>
-    <!--<script type="text/javascript" language="javascript" src="{% static 'js/registrations.js' %}"></script>-->
+    <!--<link rel="stylesheet" type="text/css" href="/static/suit/css/suit.css" >-->
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
 
 
 {% endblock %}
