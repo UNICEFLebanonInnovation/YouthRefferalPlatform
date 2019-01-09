@@ -368,7 +368,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'start',
             'end',
             '_submission_time',
-            '_userform_id',
+
         )
 
         filename = 'Initiative-Export'
