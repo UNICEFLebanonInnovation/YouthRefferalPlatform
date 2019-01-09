@@ -402,7 +402,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            queryset = self.queryset
+            queryset = self.queryset.filter(registration__governorate__parent__name_en=self.request.user.country.name_en)
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
@@ -584,7 +584,8 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            queryset = self.queryset
+            queryset = self.queryset.filter(
+                registration__governorate__parent__name_en=self.request.user.country.name_en)
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
         return queryset
@@ -833,7 +834,8 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            queryset = self.queryset
+            queryset = self.queryset.filter(
+                registration__governorate__parent__name_en=self.request.user.country.name_en)
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
@@ -990,7 +992,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            queryset = self.queryset
+            queryset = self.queryset.filter(
+                registration__governorate__parent__name_en=self.request.user.country.name_en)
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
