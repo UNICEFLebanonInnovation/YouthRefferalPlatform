@@ -73,7 +73,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     needs_resources = forms.ChoiceField(
         label=_("Needs Resources?"),
         widget=forms.Select, required=False,
-        choices=(('yes', _("Yes")), ('no', _("No"))),
+        choices=(('True', _("Yes")), ('False', _("No"))),
         initial='no'
     )
 
