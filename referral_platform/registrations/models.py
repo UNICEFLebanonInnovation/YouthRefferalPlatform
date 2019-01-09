@@ -16,6 +16,8 @@ from model_utils.models import TimeStampedModel
 from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.youth.models import YoungPerson, Disability
 from referral_platform.locations.models import Location
+
+
 from .utils import generate_hash
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -208,15 +210,14 @@ class Registration(TimeStampedModel):
 
 
 class AssessmentSubmission(models.Model):
-
     STATUS = Choices(
         'enrolled',
         'pre_test',
         'post_test'
     )
 
-    registration = models.ForeignKey(Registration)
-    youth = models.ForeignKey(YoungPerson)
+    registration = models.ForeignKey(Registration, null=True)
+    youth = models.ForeignKey(YoungPerson, null=True)
     assessment = models.ForeignKey(Assessment)
     status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)

@@ -21,5 +21,16 @@ urlpatterns = [
         view=views.EditView.as_view(),
         name='edit'
     ),
+    url(
+        regex=r'^assessment/(?P<slug>[\w.@+-]+)/$',
+        view=views.YouthAssessment.as_view(),
+        name='assessment'
+    ),
+    # url(
+    #     regex=r'^assessment/submission/$',
+    #     view=views.YouthAssessmentSubmission.as_view(),
+    #     name='submission'
+    # ),
+    # (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
 ]
