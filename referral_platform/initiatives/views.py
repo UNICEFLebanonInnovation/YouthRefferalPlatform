@@ -203,8 +203,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            queryset = self.queryset.filter(
-                initiative__location__parent__name_en=self.request.user.country.name_en)
+            queryset = self.queryset
         else:
             queryset = self.queryset.filter(initiative__partner_organization=self.request.user.partner)
 
