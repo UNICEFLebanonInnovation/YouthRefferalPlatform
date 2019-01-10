@@ -235,10 +235,10 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
         }).values(
-            'initiative__title',
-            'initiative__location',
-            'initiative__type'
-            'initiative__duration'
+            'title',
+            'location',
+            'type'
+            'duration'
             'assertiveness',
             'mentorship_helpful',
             'problem_addressed',
