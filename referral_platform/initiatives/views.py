@@ -214,10 +214,10 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
         headers = {
 
-            'title': 'Initiative Title',
-            'location': 'Initiative Location',
-            'type': 'Type of Initiative',
-            'duration': 'Duration of the initiative',
+            'initiative__title': 'Initiative Title',
+            'initiative__location': 'Initiative Location',
+            'initiative__type': 'Type of Initiative',
+            'initiative__duration': 'Duration of the initiative',
             'assertiveness': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
             'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
             'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
@@ -235,10 +235,10 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
         }).values(
-            'title',
-            'location',
-            'type'
-            'duration'
+            'initiative__title',
+            'initiative__location',
+            'initiative__type'
+            'initiative__duration'
             'assertiveness',
             'mentorship_helpful',
             'problem_addressed',
