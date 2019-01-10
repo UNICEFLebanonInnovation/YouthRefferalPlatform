@@ -215,8 +215,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
             'initiative__title': 'Initiative Title',
             'initiative__location': 'Initiative Location',
-            'initiative__member__first_name': 'First Name',
-            'initiative__member__last_name': 'Last Name',
+            'initiative__member__youth__first_name': 'First Name',
+            'initiative__member__youth__last_name': 'Last Name',
             'initiative__type': 'Type of Initiative',
             'initiative__duration': 'Duration of the initiative',
             'assertiveness': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
@@ -237,8 +237,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
         }).values(
             'initiative__title',
-            'initiative__member__first_name',
-            'initiative__member__last_name',
+            'initiative__member__youth__last_name',
+            'initiative__member__youth__first_name',
             'initiative__location',
             'initiative__type',
             'initiative__duration',
