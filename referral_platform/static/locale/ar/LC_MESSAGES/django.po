@@ -705,9 +705,7 @@ msgid "Initiative Title"
 msgstr "عنوان المبادرة"
 
 #: referral_platform/initiatives/forms.py:117
-#, fuzzy
-#| msgid "November"
-msgid "Member"
+msgid "November"
 msgstr "تشرين ثاني"
 
 #: referral_platform/initiatives/forms.py:119
@@ -720,15 +718,11 @@ msgid "Location"
 msgstr "الموقع الجغرافي"
 
 #: referral_platform/initiatives/forms.py:122
-#, fuzzy
-#| msgid "Initiative Title"
-msgid "Initiative Type"
+msgid "Initiative Title"
 msgstr "عنوان المبادرة"
 
 #: referral_platform/initiatives/forms.py:124
-#, fuzzy
-#| msgid "Location"
-msgid "Duration"
+msgid "Location"
 msgstr "الموقع الجغرافي"
 
 #: referral_platform/initiatives/forms.py:127
@@ -736,9 +730,7 @@ msgid "Knowledge Areas"
 msgstr ""
 
 #: referral_platform/initiatives/forms.py:130
-#, fuzzy
-#| msgid "Duration of the initiative"
-msgid "Why this initiative"
+msgid "Duration of the initiative"
 msgstr " مدة المبادرة "
 
 #: referral_platform/initiatives/forms.py:136
@@ -748,9 +740,7 @@ msgid "Number of beneficiaries"
 msgstr " جنس المستفيدين"
 
 #: referral_platform/initiatives/forms.py:139
-#, fuzzy
-#| msgid "Sex of beneficiaries"
-msgid "Age of beneficiaries"
+msgid "Sex of beneficiaries"
 msgstr " جنس المستفيدين"
 
 #: referral_platform/initiatives/forms.py:142
@@ -1906,8 +1896,6 @@ msgstr "التسجيل"
 #: referral_platform/templates/base2.html:98
 #: referral_platform/templates/initiatives/form.html:46
 #: referral_platform/templates/initiatives/list.html:22
-#, fuzzy
-#| msgid "Initiative Title"
 msgid "Initiatives"
 msgstr "عنوان المبادرة"
 
@@ -2007,8 +1995,6 @@ msgstr "إضافة مستفيد جديد"
 
 #: referral_platform/templates/initiatives/list.html:43
 #: referral_platform/templates/registrations/list.html:54
-#, fuzzy
-#| msgid "Initiative Title"
 msgid "Add Initiatives"
 msgstr "عنوان المبادرة"
 
@@ -2030,14 +2016,10 @@ msgid "reset"
 msgstr "الغاء "
 
 #: referral_platform/templates/users/profile.html:28
-#, fuzzy
-#| msgid "Profile"
 msgid "User Profile"
 msgstr "الملف الشخصي"
 
 #: referral_platform/templates/users/profile.html:35
-#, fuzzy
-#| msgid "Father Name"
 msgid "Partner Name: "
 msgstr " اسم الأب"
 
@@ -2047,8 +2029,6 @@ msgstr ""
 
 #: referral_platform/templates/users/profile.html:37
 #: referral_platform/templates/users/profile.html:61
-#, fuzzy
-#| msgid "Country"
 msgid "Country: "
 msgstr "البلد"
 
@@ -2057,28 +2037,22 @@ msgid "Is the User Staff: "
 msgstr ""
 
 #: referral_platform/templates/users/profile.html:40
-#, fuzzy
-#| msgid "Change password"
 msgid "Change password "
 msgstr "تغيير كلمة السر"
 
 #: referral_platform/templates/users/profile.html:60
-#, fuzzy
-#| msgid "Partner"
 msgid "Partner: "
 msgstr "الجمعية"
 
 #: referral_platform/templates/users/profile.html:62
 msgid "Email: "
-msgstr ""
+msgstr "البريد الالكتروني"
 
 #: referral_platform/templates/users/profile.html:63
 msgid "Name: "
-msgstr ""
+msgstr "الاسم"
 
 #: referral_platform/templates/users/profile.html:64
-#, fuzzy
-#| msgid "date joined"
 msgid "Date Joined: "
 msgstr "تاريخ الانضمام"
 
@@ -2181,9 +2155,7 @@ msgid "users"
 msgstr "المستخدمين"
 
 #: referral_platform/youth/models.py:25
-#, fuzzy
-#| msgid "Nationality"
-msgid "Nationality En"
+msgid "Nationality"
 msgstr "الجنسية"
 
 #: referral_platform/youth/models.py:30
