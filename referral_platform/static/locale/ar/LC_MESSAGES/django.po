@@ -741,34 +741,26 @@ msgstr " جنس المستفيدين"
 msgid "Sex of beneficiaries"
 msgstr " جنس المستفيدين"
 
-#: referral_platform/initiatives/forms.py:145
-msgid "Sex of beneficiaries"
-msgstr " جنس المستفيدين"
-
 #: referral_platform/initiatives/forms.py:148
 msgid "Needing Resources"
-msgstr ""
+msgstr "بحاجة الى موارد"
 
 #: referral_platform/initiatives/forms.py:151
 msgid "Resources From"
-msgstr ""
+msgstr "موارد من"
 
 #: referral_platform/initiatives/forms.py:154
 msgid "Resources Type"
-msgstr ""
+msgstr "نوع الموارد"
 
 #: referral_platform/initiatives/forms.py:157
-#, fuzzy
-#| msgid "Registration"
-msgid "Description"
+msgid "Registration"
 msgstr "التسجيل"
 
 #: referral_platform/initiatives/forms.py:253
 #: referral_platform/registrations/forms.py:349
 #: referral_platform/registrations/forms.py:640
-#, fuzzy
-#| msgid "Save and add another"
-msgid "Save and continue"
+msgid "Save and add another"
 msgstr "احفظ وأضف آخر"
 
 #: referral_platform/initiatives/forms.py:265
