@@ -713,13 +713,7 @@ msgstr "تشرين ثاني"
 #: referral_platform/registrations/exports.py:96
 #: referral_platform/registrations/forms.py:49
 #: referral_platform/registrations/models.py:87
-#: referral_platform/youth/models.py:263
-msgid "Location"
-msgstr "الموقع الجغرافي"
 
-#: referral_platform/initiatives/forms.py:122
-msgid "Initiative Title"
-msgstr "عنوان المبادرة"
 
 #: referral_platform/initiatives/forms.py:124
 msgid "Location"
@@ -748,9 +742,7 @@ msgid "Sex of beneficiaries"
 msgstr " جنس المستفيدين"
 
 #: referral_platform/initiatives/forms.py:145
-#, fuzzy
-#| msgid "Sex of beneficiaries"
-msgid "Indirect beneficiaries"
+msgid "Sex of beneficiaries"
 msgstr " جنس المستفيدين"
 
 #: referral_platform/initiatives/forms.py:148
