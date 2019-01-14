@@ -775,10 +775,8 @@ msgstr "احفظ وأضف آخر"
 #: referral_platform/initiatives/forms.py:338
 #: referral_platform/registrations/forms.py:349
 #: referral_platform/registrations/forms.py:640
-#, fuzzy
-#| msgid "Save and add another"
 msgid "Save and continue"
-msgstr "احفظ وأضف آخر"
+msgstr "احفظ وتابع"
 
 #: referral_platform/initiatives/forms.py:351
 #: referral_platform/registrations/forms.py:414
@@ -924,10 +922,8 @@ msgid "More than 6 weeks"
 msgstr "أكثر من 6 أسابيع "
 
 #: referral_platform/initiatives/models.py:94
-#, fuzzy
-#| msgid "Initiative Title"
 msgid "Initiative Types"
-msgstr "عنوان المبادرة"
+msgstr "نوع المبادرة"
 
 #: referral_platform/initiatives/models.py:127
 msgid "Other NGOs"
