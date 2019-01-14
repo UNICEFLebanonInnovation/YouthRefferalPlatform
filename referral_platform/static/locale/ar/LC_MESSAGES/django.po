@@ -705,8 +705,8 @@ msgid "Initiative Title"
 msgstr "عنوان المبادرة"
 
 #: referral_platform/initiatives/forms.py:117
-msgid "November"
-msgstr "تشرين ثاني"
+msgid "Member"
+msgstr "الاعضاء"
 
 #: referral_platform/initiatives/forms.py:119
 #: referral_platform/registrations/exports.py:23
@@ -733,10 +733,6 @@ msgstr " مدة المبادرة "
 msgid "Number of beneficiaries"
 msgstr " جنس المستفيدين"
 
-#: referral_platform/initiatives/forms.py:139
-msgid "Sex of beneficiaries"
-msgstr " جنس المستفيدين"
-
 #: referral_platform/initiatives/forms.py:142
 msgid "Sex of beneficiaries"
 msgstr " جنس المستفيدين"
@@ -754,12 +750,12 @@ msgid "Resources Type"
 msgstr "نوع الموارد"
 
 #: referral_platform/initiatives/forms.py:157
-msgid "Registration"
-msgstr "التسجيل"
+msgid "Description"
+msgstr "تفصيل"
 
-#: referral_platform/initiatives/forms.py:253
+#: referral_platform/initiatives/forms.py:337
 #: referral_platform/registrations/forms.py:349
-#: referral_platform/registrations/forms.py:640
+#: referral_platform/youth/forms.py:244
 msgid "Save and add another"
 msgstr "احفظ وأضف آخر"
 
@@ -1130,6 +1126,7 @@ msgstr "تاريخ الميلاد"
 #: referral_platform/youth/filters.py:13 referral_platform/youth/filters.py:39
 #: referral_platform/youth/filters.py:60 referral_platform/youth/models.py:24
 #: referral_platform/youth/models.py:168
+#: referral_platform/youth/models.py:25
 msgid "Nationality"
 msgstr "الجنسية"
 
@@ -1426,11 +1423,6 @@ msgstr "معلومات عن الموقع"
 #: referral_platform/registrations/forms.py:504
 msgid "Personal Details"
 msgstr "تفاصيل شخصية"
-
-#: referral_platform/registrations/forms.py:348
-#: referral_platform/youth/forms.py:244
-msgid "Save and add another"
-msgstr "احفظ وأضف آخر"
 
 #: referral_platform/registrations/models.py:63
 msgid "Assessment Type"
@@ -2137,10 +2129,6 @@ msgstr "المستخدم"
 #: referral_platform/users/models.py:58
 msgid "users"
 msgstr "المستخدمين"
-
-#: referral_platform/youth/models.py:25
-msgid "Nationality"
-msgstr "الجنسية"
 
 #: referral_platform/youth/models.py:30
 msgid "Nationalities"
