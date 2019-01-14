@@ -27,7 +27,7 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from referral_platform.initiatives.models import AssessmentSubmission
 from django_filters.views import FilterView
-from .filters import YouthFilter
+from .filters import YouthFilter, CommonFilter
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
