@@ -28,9 +28,13 @@ from django.template.loader import render_to_string
 from referral_platform.initiatives.models import AssessmentSubmission
 from django_filters.views import FilterView
 <<<<<<< HEAD
+<<<<<<< HEAD
 from .filters import YouthFilter, CommonFilter
 =======
 >>>>>>> parent of 55e4fd2... test
+=======
+from .filters import YouthFilter
+>>>>>>> parent of 56a06e0... test
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
