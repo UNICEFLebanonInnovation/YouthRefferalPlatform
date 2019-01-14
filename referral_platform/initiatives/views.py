@@ -27,7 +27,10 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from referral_platform.initiatives.models import AssessmentSubmission
 from django_filters.views import FilterView
+<<<<<<< HEAD
 from .filters import YouthFilter, CommonFilter
+=======
+>>>>>>> parent of 55e4fd2... test
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -46,7 +49,6 @@ class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
     model = YouthLedInitiative
     template_name = 'initiatives/list.html'
     table = BootstrapTable(YouthLedInitiative.objects.all(), order_by='id')
-    filterset_class = YouthFilter
 
     def get_queryset(self):
         return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner)
