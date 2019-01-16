@@ -108,13 +108,13 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # self.helper.layout = Layout()
         self.helper.layout = Layout(
             Div(
-                Div('partner_organization', css_class='col-md-6', ),
-                Div(PrependedText('title', _('Initiative Title')), css_class='col-md-6', ),
-                css_class='row',
+
+                Div(PrependedText('title', _('Initiative Title')),),
+
             ),
             # HTML(_('Please choose the members of this Initiative')),
             # 'members',
-            HTML(_('Member')),
+            HTML(_),
             'member',
             HTML(_('Location')),
             'location',
@@ -124,38 +124,38 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             HTML(_('Duration')),
             'duration',
 
-            HTML(_('Knowledge Areas')),
-            'knowledge_areas',
+            # HTML(_('Knowledge Areas')),
+            # 'knowledge_areas',
 
-            HTML(_('Why this initiative')),
-            'why_this_initiative',
+            # HTML(_('Why this initiative')),
+            # 'why_this_initiative',
 
             # HTML(_('Other Groups')),
             # 'other_groups',
 
-            HTML(_('Number of beneficiaries')),
-            'number_of_beneficiaries',
+            # HTML(_('Number of beneficiaries')),
+            # 'number_of_beneficiaries',
+            #
+            # HTML(_('Age of beneficiaries')),
+            # 'age_of_beneficiaries',
 
-            HTML(_('Age of beneficiaries')),
-            'age_of_beneficiaries',
-
-            HTML(_('Sex of beneficiaries')),
-            'sex_of_beneficiaries',
-
-            HTML(_('Indirect beneficiaries')),
-            'indirect_beneficiaries',
-
-            HTML(_('Needing Resources')),
-            'needs_resources',
-
-            HTML(_('Resources From')),
-            'resources_from',
-
-            HTML(_('Resources Type')),
-            'resources_type',
-
-            HTML(_('Description')),
-            'description',
+            # HTML(_('Sex of beneficiaries')),
+            # 'sex_of_beneficiaries',
+            #
+            # HTML(_('Indirect beneficiaries')),
+            # 'indirect_beneficiaries',
+            #
+            # HTML(_('Needing Resources')),
+            # 'needs_resources',
+            #
+            # HTML(_('Resources From')),
+            # 'resources_from',
+            #
+            # HTML(_('Resources Type')),
+            # 'resources_type',
+            #
+            # HTML(_('Description')),
+            # 'description',
 
         )
 
