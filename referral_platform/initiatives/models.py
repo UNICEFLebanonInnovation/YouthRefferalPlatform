@@ -94,7 +94,7 @@ class YouthLedInitiative(models.Model):
         verbose_name=_('Initiative Types'),
         null=True,
         choices=Choices(
-                ('basic services', _('Basic Services)')),
+                ('basic services', _('Basic Services')),
                 ('social Cohesion', _('Social cohesion')),
                 ('environmental', _('Environmental')),
                 ('health services', _('Health Services')),
@@ -104,7 +104,7 @@ class YouthLedInitiative(models.Model):
                 ('religious and spiritual', _('Spiritual/Religious')),
                 ('sports', _('Sports')),
                 ('economic art cultural', _('Economic art cultural')),
-                ('educational', _('educational)')),
+                ('educational', _('educational')),
                 ('other', _('Other'))
         )
 
