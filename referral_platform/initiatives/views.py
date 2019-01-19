@@ -142,16 +142,16 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             user=self.request.user.id,
             timestamp=time.time(),
             title=registry.title,
-            location=registry.location,
+            # location=registry.location,
             type=registry.type,
         )
 
-        url = '{form}?d[registry]={registry}&d[partner]={partner}&d[title]={title}&d[location]={location}&d[type]={type}' \
+        url = '{form}?d[registry]={registry}&d[partner]={partner}&d[title]={title}&d[type]={type}' \
               '&returnURL={callback}'.format(
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 title=registry.title,
-                location=registry.location,
+                # location=registry.location,
                 type=registry.type,
                 partner=registry.partner_organization.name,
                 # country=registry.governorate.parent.name,
