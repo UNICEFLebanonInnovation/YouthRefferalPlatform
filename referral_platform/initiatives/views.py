@@ -25,12 +25,12 @@ from rest_framework import status
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from referral_platform.initiatives.models import AssessmentSubmission
+from referral_platform.initiatives.models import AssessmentSubmission, AssessmentHash
 from django_filters.views import FilterView
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from referral_platform.registrations.models import Registration, Assessment, AssessmentHash
+from referral_platform.registrations.models import Registration, Assessment
 
 
 from referral_platform.users.views import UserRegisteredMixin
