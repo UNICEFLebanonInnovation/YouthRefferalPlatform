@@ -141,9 +141,9 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             partner=self.request.user.partner_id,
             user=self.request.user.id,
             timestamp=time.time(),
-            # title=registry.title,
+            title=registry.title,
             # location=registry.location,
-            # type=registry.type,
+            type=registry.type,
         )
 
         url = '{form}?d[registry]={registry}&d[partner]={partner}&d[title]={title}&d[type]={type}' \
