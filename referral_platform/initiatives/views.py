@@ -146,13 +146,13 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             type=registry.type,
         )
 
-        url = '{form}?d[registry]={registry}&d[partner]={partner}&d[respid_initiativeID_title]={respid_initiativeID_title}&d[type]={type_of_initiativee}&d[initiative_loc]={initiative_loc}' \
+        url = '{form}?d[registry]={registry}&d[partner]={partner}&d[respid_initiativeID_title]={respid_initiativeID_title}&d[type_of_initiative]={type_of_initiative}&d[initiative_loc]={initiative_loc}' \
               '&returnURL={callback}'.format(
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 respid_initiativeID_title=registry.title,
                 initiative_loc=registry.location,
-                type_of_initiativee=registry.type,
+                type_of_initiative=registry.type,
                 partner=registry.partner_organization.name,
                 # country=registry.governorate.parent.name,
                 # nationality=youth.nationality.code,
