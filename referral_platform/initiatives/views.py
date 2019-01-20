@@ -142,7 +142,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             user=self.request.user.id,
             timestamp=time.time(),
             title=registry.title,
-            # location=registry.location,
+            location=registry.location,
             type=registry.type,
         )
 

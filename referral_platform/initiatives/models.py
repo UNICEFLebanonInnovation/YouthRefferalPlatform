@@ -16,6 +16,9 @@ from referral_platform.youth.models import YoungPerson
 from referral_platform.partners.models import PartnerOrganization
 from referral_platform.locations.models import Location
 from referral_platform.registrations.models import Registration, NewMapping, JSONField, Assessment
+from .utils import generate_hash
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class YouthLedInitiative(models.Model):
 
@@ -312,3 +315,56 @@ class AssessmentSubmission(models.Model):
     #         self.update_field()
     #
     #     super(AssessmentSubmission, self).save(**kwargs)
+
+
+class AssessmentHash(models.Model):
+
+    hashed = models.CharField(max_length=254, unique=True)
+    registration = models.CharField(max_length=20)
+    assessment_slug = models.CharField(max_length=50)
+    partner = models.CharField(max_length=5)
+    user = models.CharField(max_length=20)
+    timestamp = models.CharField(max_length=100)
+    title = models.CharField(max_length=20)
+    type = models.CharField(max_length=50)
+    location = models.CharField(max_length=50)
+
+    class Meta:
+        ordering = ['id']
+
+    @property
+    def name(self):
+        return '{}{}{}{}{}'.format(
+            self.registration,
+            self.assessment_slug,
+            self.partner,
+            self.user,
+            self.timestamp,
+            self.title,
+            self.type,
+            self.location,
+        )
+
+    def __unicode__(self):
+        return '{}-{}-{}-{}-{}-{}'.format(
+            self.hashed,
+            self.registration,
+            self.assessment_slug,
+            self.partner,
+            self.user,
+            self.timestamp,
+            self.title,
+            self.type,
+            self.location,
+        )
+
+    def save(self, **kwargs):
+        """
+        Generate unique Hash for every assessment
+        :param kwargs:
+        :return:
+        """
+        if self.pk is None:
+            self.hashed = generate_hash(self.name)
+
+        super(AssessmentHash, self).save(**kwargs)
