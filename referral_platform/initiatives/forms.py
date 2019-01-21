@@ -108,7 +108,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # self.helper.layout = Layout()
         self.helper.layout = Layout(
             Div(
-                Div('partner_organization'),
+                # Div('partner_organization', readonly=True),
 
                 Div(PrependedText('title', _('Initiative Title')),),
 
