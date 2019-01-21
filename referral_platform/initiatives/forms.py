@@ -350,7 +350,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             return instance.YouthLedInitiativePlanningForm
         else:
             return self.cleaned_data['partner_organization']
-        
+
     def save(self, request=None, instance=None):
         instance = super(YouthLedInitiativePlanningForm, self).save()
         # instance = super(GradingTermForm, self).save()
