@@ -50,6 +50,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     class Meta:
         model = YouthLedInitiative
         fields = '__all__'
+        Field('partner_organization', readonly=True)
 
     class Media:
         css = {'all': ('/static/admin/css/widgets.css',), }
@@ -108,7 +109,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # self.helper.layout = Layout()
         self.helper.layout = Layout(
             Div(
-                # Div('partner_organization', readonly=True),
+                Div('partner_organization', readonly=True),
 
                 Div(PrependedText('title', _('Initiative Title')),),
 
