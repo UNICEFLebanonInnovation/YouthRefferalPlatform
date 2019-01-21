@@ -220,7 +220,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         headers = {
 
             'initiative__title': 'Initiative Title',
-            'initiative__location': 'Initiative Location',
+            'initiative__location__name': 'Initiative Location',
             'initiative__member__youth__first_name': 'First Name',
             'initiative__member__youth__last_name': 'Last Name',
             'initiative__type': 'Type of Initiative',
@@ -275,7 +275,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'initiative__title',
             'initiative__member__youth__last_name',
             'initiative__member__youth__first_name',
-            'initiative__location',
+            'initiative__location__name',
             'initiative__type',
             'initiative__duration',
             'assertiveness',
