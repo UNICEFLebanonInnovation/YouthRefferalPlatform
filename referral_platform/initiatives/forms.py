@@ -352,8 +352,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # print('key is ' + instance.id)
         messages.success(request, _('Your data has been sent successfully to the server'))
 
-
-
+    def clean_foo_field(self):
+        instance = getattr(self, 'instance', None)
+        if instance and instance.id:
+            return instance.YouthLedInitiativePlanningForm
+        else:
+            return self.cleaned_data['partner_organization']
 
 
 
