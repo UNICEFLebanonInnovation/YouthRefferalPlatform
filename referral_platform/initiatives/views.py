@@ -230,7 +230,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
             'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
             'planned_results': 'Can you please tell us your planned results/what will the initiative achieve? ',
-            'duration_of_initiative': 'Duration of the initiative',
             'number_of_direct_beneficiaries':'How many people are estimated to benefit/will be reached by implementing the initiative?',
             'age_group_range': 'The estimated Age groups of the beneficiaries? ',
             'gender_of_beneficiaries': 'Gender of targeted beneficiaries',
@@ -294,7 +293,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'analytical_skills',
             'sense_of_belonging',
             'problem_solving',
-
             'planning_to_mobilize_resources',
             'if_so_who',
             'type_of_support_required',
