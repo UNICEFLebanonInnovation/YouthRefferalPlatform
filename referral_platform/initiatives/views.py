@@ -30,7 +30,7 @@ from django_filters.views import FilterView
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from referral_platform.registrations.models import Registration, Assessment, AssessmentHash
+from referral_platform.registrations.models import Registration, Assessment, AssessmentHash, InitAssessmentHash
 
 
 from referral_platform.users.views import UserRegisteredMixin
@@ -135,7 +135,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         registry = YouthLedInitiative.objects.get(id=self.request.GET.get('registry'),
                                             partner_organization=self.request.user.partner_id)
         # youth = registry.youth
-        hashing = AssessmentHash.objects.create(
+        hashing = InitAssessmentHash.objects.create(
             registration=registry.id,
             assessment_slug=assessment.slug,
             partner=self.request.user.partner_id,
@@ -143,7 +143,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             timestamp=time.time(),
             title=registry.title,
             location=registry.location,
-            type_of_initiative=registry.type,
+            type=registry.type,
         )
 
         url = '{form}?d[registry]={registry}&d[partner]={partner}&d[respid_initiativeID_title]={respid_initiativeID_title}&d[type_of_initiative]={type_of_initiative}&d[initiative_loc]={initiative_loc}' \
