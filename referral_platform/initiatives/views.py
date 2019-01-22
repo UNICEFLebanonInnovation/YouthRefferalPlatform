@@ -141,18 +141,18 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             partner=self.request.user.partner_id,
             user=self.request.user.id,
             timestamp=time.time(),
-            # title=registry.title,
-            # location=registry.location,
-            # type=registry.type,
+            title=registry.title,
+            location=registry.location,
+            type=registry.type,
         )
 
-        url = '{form}?d[registry]={registry}&d[partner]={partner}' \
+        url = '{form}?d[registry]={registry}&d[partner]={partner}&d[respid_initiativeID_title]={respid_initiativeID_title}&d[type_of_initiative]={type_of_initiative}&d[initiative_loc]={initiative_loc}' \
               '&returnURL={callback}'.format(
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
-                # respid_initiativeID_title=registry.title,
-                # initiative_loc=registry.location,
-                # type_of_initiative=registry.type,
+                respid_initiativeID_title=registry.title,
+                initiative_loc=registry.location,
+                type_of_initiative=registry.type,
                 partner=registry.partner_organization.name,
                 # country=registry.governorate.parent.name,
                 # nationality=youth.nationality.code,
@@ -160,7 +160,6 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         )
         return url
 
-# &d[respid_initiativeID_title]={respid_initiativeID_title}&d[type_of_initiative]={type_of_initiative}&d[initiative_loc]={initiative_loc}
 # # @method_decorator(csrf_exempt, name='dispatch')
 # class YouthAssessmentSubmission(SingleObjectMixin, View):
 #     def post(self, request, *args, **kwargs):
