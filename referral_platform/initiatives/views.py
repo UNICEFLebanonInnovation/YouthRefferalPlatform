@@ -221,8 +221,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
             'initiative__title': 'Initiative Title',
             'initiative__location__name': 'Initiative Location',
-            'initiative__member__youth__first_name': 'First Name',
-            'initiative__member__youth__last_name': 'Last Name',
+            'initiative__Participants__youth__first_name': 'First Name',
+            'initiative__Participants__youth__last_name': 'Last Name',
             'initiative__type': 'Type of Initiative',
             'initiative__duration': 'Duration of the initiative',
             # 'initiative__knowledge_areas': 'Knowledge Areas',
@@ -273,8 +273,8 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
         }).values(
             'initiative__title',
-            'initiative__member__youth__last_name',
-            'initiative__member__youth__first_name',
+            'initiative__Participants__youth__last_name',
+            'initiative__Participants__youth__first_name',
             'initiative__location__name',
             'initiative__type',
             'initiative__duration',

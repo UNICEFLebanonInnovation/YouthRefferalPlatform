@@ -23,7 +23,7 @@ from django.dispatch import receiver
 class YouthLedInitiative(models.Model):
 
     def __unicode__(self):
-        return '{} - {}'.format(self.title, self.member)
+        return '{} - {}'.format(self.title, self.Participants)
 
     # def __iter__(self):
     #     return iter([self.name,
@@ -76,7 +76,7 @@ class YouthLedInitiative(models.Model):
     location = models.ForeignKey(Location, blank=True, null=True, verbose_name="location")
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="partner_organization")
     # members = models.ManyToManyField(YoungPerson, blank=True, )
-    member = models.ManyToManyField(Registration, related_name='+')
+    Participants = models.ManyToManyField(Registration, related_name='+')
 
     # start_date = models.DateField(blank=True, null=True)
     duration = models.CharField(

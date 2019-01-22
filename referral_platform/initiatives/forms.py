@@ -44,7 +44,7 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
-    member = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("member", is_stacked=False))
+    Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
     # id = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
@@ -96,7 +96,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
-        self.fields['member'].queryset = Registration.objects.filter(partner_organization=partner_organization)
+        self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
 
@@ -117,7 +117,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # HTML(_('Please choose the members of this Initiative')),
             # 'members',
             HTML(_),
-            'member',
+            'Participants',
             HTML(_('Location')),
             'location',
 
