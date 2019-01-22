@@ -14,7 +14,7 @@ from referral_platform.registrations.models import Assessment, Registration
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, InlineField, Alert
 from .models import YouthLedInitiative, YoungPerson, Location
-from referral_platform.initiatives.models import AssessmentSubmission
+from referral_platform.initiatives.models import AssessmentSubmission, AssessmentHash
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 

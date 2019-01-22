@@ -325,9 +325,9 @@ class AssessmentHash(models.Model):
     partner = models.CharField(max_length=5)
     user = models.CharField(max_length=20)
     timestamp = models.CharField(max_length=100)
-    title = models.CharField(max_length=20)
-    type = models.CharField(max_length=50)
-    location = models.CharField(max_length=50)
+    title = models.CharField(max_length=254)
+    type = models.CharField(max_length=254)
+    location = models.CharField(max_length=254)
 
     class Meta:
         ordering = ['id']
