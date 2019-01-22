@@ -10,11 +10,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from collections import OrderedDict
 from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
-from referral_platform.registrations.models import Assessment, Registration
+from referral_platform.registrations.models import Assessment, Registration, AssessmentHash
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, InlineField, Alert
 from .models import YouthLedInitiative, YoungPerson, Location
-from referral_platform.initiatives.models import AssessmentSubmission, AssessmentHash
+from referral_platform.initiatives.models import AssessmentSubmission
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
