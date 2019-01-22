@@ -143,7 +143,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
             timestamp=time.time(),
             title=registry.title,
             location=registry.location,
-            type=registry.type,
+            type_of_initiative=registry.type,
         )
 
         url = '{form}?d[registry]={registry}&d[partner]={partner}&d[respid_initiativeID_title]={respid_initiativeID_title}&d[type_of_initiative]={type_of_initiative}&d[initiative_loc]={initiative_loc}' \
