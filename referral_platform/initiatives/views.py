@@ -164,9 +164,9 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 # # @method_decorator(csrf_exempt, name='dispatch')
 # class YouthAssessmentSubmission(SingleObjectMixin, View):
 #     def post(self, request, *args, **kwargs):
-#         print('***********************fetet 3al submission**********************')
+#
 #         if 'registry' not in request.body:
-#             print('***********************fetet 3al if **********************')
+#
 #             return HttpResponseBadRequest()
 #
 #         payload = json.loads(request.body.decode('utf-8'))
@@ -201,6 +201,42 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
 #         submission.save()
 #
 #         return HttpResponse()
+
+@method_decorator(csrf_exempt, name='dispatch')
+class YouthAssessmentSubmission(SingleObjectMixin, View):
+    def post(self, request, *args, **kwargs):
+        if 'registry' not in request.body:
+            return HttpResponseBadRequest()
+
+        payload = json.loads(request.body.decode('utf-8'))
+
+        hashing = AssessmentHash.objects.get(hashed=payload['registry'])
+        assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+
+        if assessment.slug in ['init_registration', 'init_exec' ]:
+            from referral_platform.initiatives.models import YouthLedInitiative
+            registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
+
+            submission, new = AssessmentSubmission.objects.get_or_create(
+                initiative=registration,
+                assessment=assessment,
+                status='enrolled'
+            )
+        else:
+            registration = Registration.objects.get(id=int(hashing.registration))
+
+            submission, new = AssessmentSubmission.objects.get_or_create(
+                registration=registration,
+                youth=registration.youth,
+                assessment=assessment,
+                status='enrolled'
+            )
+        submission.data = payload
+        submission.update_field()
+        submission.save()
+
+        return HttpResponse()
+
 
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
