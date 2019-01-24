@@ -208,14 +208,14 @@ RAVEN_CONFIG = {
 # WEBPACK
 # ------------------------------------------------------------------------------
 # Webpack Production Stats file
-STATS_FILE = ROOT_DIR('webpack-stats-production.json')
+# STATS_FILE = ROOT_DIR('webpack-stats-production.json')
 # Webpack config
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'referral_platform/static/referral_platform/dist/',
-        'STATS_FILE': STATS_FILE
-    }
-}
+# WEBPACK_LOADER = {
+#     'DEFAULT': {
+#         'BUNDLE_DIR_NAME': 'referral_platform/static/referral_platform/dist/',
+#         'STATS_FILE': STATS_FILE
+#     }
+# }
 
 # DEBUG_MODE:
 DEBUG = env.bool('DJANGO_DEBUG', False)
