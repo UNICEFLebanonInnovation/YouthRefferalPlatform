@@ -55,11 +55,11 @@ urlpatterns = [
         name='export_entrepreneurship_assessments'
     ),
 
-    url(
-        regex=r'^export-initiative-assessments/$',
-        view=views.ExportInitiativeAssessmentsView.as_view(),
-        name='export_initiative_assessments'
-    ),
+    # url(
+    #     regex=r'^export-initiative-assessments/$',
+    #     view=views.ExportInitiativeAssessmentsView.as_view(),
+    #     name='export_initiative_assessments'
+    # ),
     # url(
     #     regex=r'^exportPBI/$',
     #     view=views.exportPBI,
