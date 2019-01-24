@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
 from . import views
-from .views import YouthInitiativeView
+from .views import YouthInitiativeView, AddView, YouthAssessment, ExportInitiativeAssessmentsView
 
 urlpatterns = [
 
@@ -25,6 +25,11 @@ urlpatterns = [
         regex=r'^assessment/(?P<slug>[\w.@+-]+)/$',
         view=views.YouthAssessment.as_view(),
         name='assessment'
+    ),
+    url(
+        regex=r'^export-initiative-assessments/$',
+        view=views.ExportInitiativeAssessmentsView.as_view(),
+        name='export_initiative_assessments'
     ),
     # url(
     #     regex=r'^assessment/submission/$',
