@@ -99,6 +99,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+
 # SECURITY CONFIGURATION
 X_FRAME_OPTIONS = 'DENY'
 
