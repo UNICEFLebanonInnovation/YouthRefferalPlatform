@@ -25,7 +25,8 @@ from .common import *  # noqa
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+# SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = 'l^y44io8f!zr^#n(ui099rz+w2(p^ufz3j726-^6)7g2ijcp!k'
 
 
 # This ensures that Django will be able to detect a secure connection
@@ -66,7 +67,8 @@ SECURE_FRAME_DENY = True
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['leb-ems.azurewebsites.net'])
+# ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['leb-ems.azurewebsites.net', ])
+ALLOWED_HOSTS = ['leb-ems.azurewebsites.net', ]
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', ]
@@ -123,7 +125,8 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-DATABASES['default'] = env.db('DATABASE_URL')
+# DATABASES['default'] = env.db('DATABASE_URL')
+DATABASES['default'] = 'postgres://dbbsanytmxkyzd:b10e9d200d7acb25a26ff7d84d0aa338944cd47e0503a29ad9e63c0e1eab8df5@ec2-50-16-196-238.compute-1.amazonaws.com:5432/d3pr7hqep9t1bk',
 
 if env.bool('DATABASE_SSL_ENABLED', default=False):
     DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
