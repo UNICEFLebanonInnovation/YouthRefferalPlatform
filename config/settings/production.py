@@ -49,7 +49,7 @@ MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 # and https://docs.djangoproject.com/ja/1.9/howto/deployment/checklist/#run-manage-py-check-deploy
 
 # set this to 60 seconds and then to 518400 when you can prove it works
-SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_SECONDS = 300
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
@@ -60,6 +60,7 @@ CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SECURE_FRAME_DENY = True
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
