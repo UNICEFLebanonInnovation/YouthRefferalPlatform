@@ -125,8 +125,8 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-# DATABASES['default'] = env.db('DATABASE_URL')
-DATABASES['default'] = 'postgres://dbbsanytmxkyzd:b10e9d200d7acb25a26ff7d84d0aa338944cd47e0503a29ad9e63c0e1eab8df5@ec2-50-16-196-238.compute-1.amazonaws.com:5432/d3pr7hqep9t1bk',
+DATABASES['default'] = env.db('DATABASE_URL')
+# DATABASES['default'] = 'postgres://dbbsanytmxkyzd:b10e9d200d7acb25a26ff7d84d0aa338944cd47e0503a29ad9e63c0e1eab8df5@ec2-50-16-196-238.compute-1.amazonaws.com:5432/d3pr7hqep9t1bk',
 
 # if env.bool('DATABASE_SSL_ENABLED', default=False):
     # DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
