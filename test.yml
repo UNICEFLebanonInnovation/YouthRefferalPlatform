@@ -16,7 +16,7 @@ services:
       dockerfile: ./compose/django/Dockerfile
     command: chmod +x ./runtests.sh
     volumes:
-      - .:/code
+      - .:/app
     depends_on:
       - postgres
     environment:

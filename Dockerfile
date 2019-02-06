@@ -10,12 +10,12 @@ COPY sshd_config /etc/ssh/
 
 ARG REQUIREMENTS_FILE=production.txt
 
-RUN mkdir /code/
-WORKDIR /code/
-COPY requirements /code/requirements
-RUN pip install -r /code/requirements/$REQUIREMENTS_FILE
+RUN mkdir /app/
+WORKDIR /app/
+COPY requirements /app/requirements
+RUN pip install -r /app/requirements/$REQUIREMENTS_FILE
 
-ADD . /code/
+ADD . /app/
 
 # Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
 RUN python manage.py collectstatic --noinput --settings=config.settings.test
@@ -26,13 +26,13 @@ EXPOSE 2222 80
 RUN service ssh start
 
 # Start
-COPY entrypoint.sh /code/compose/django/entrypoint.sh
-RUN chmod +x /code/compose/django/entrypoint.sh
-#RUN ["chmod", "+x", "/code/compose/django/entrypoint.sh"]
+COPY entrypoint.sh /app/compose/django/entrypoint.sh
+RUN chmod +x /app/compose/django/entrypoint.sh
+#RUN ["chmod", "+x", "/app/compose/django/entrypoint.sh"]
 
-ENTRYPOINT ["sh", "/code/compose/django/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/compose/django/entrypoint.sh"]
 
-COPY gunicorn.sh /code/compose/django/gunicorn.s
-RUN chmod +x /code/compose/django/gunicorn.sh
-#RUN ["chmod", "+x", "/code/compose/django/gunicorn.sh"]
-CMD ["sh", "/code/compose/django/gunicorn.sh"]
+COPY gunicorn.sh /app/compose/django/gunicorn.s
+RUN chmod +x /app/compose/django/gunicorn.sh
+#RUN ["chmod", "+x", "/app/compose/django/gunicorn.sh"]
+CMD ["sh", "/app/compose/django/gunicorn.sh"]
