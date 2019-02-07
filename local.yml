@@ -27,7 +27,7 @@ services:
       - DATABASE_URL=postgres://referral_platform:postgres@postgres:5432/referral_platform
       - USE_DOCKER=yes
     volumes:
-      - .:/app
+      - .:/code
       - .:/home/LogFiles
     ports:
       - "8000:8000"
@@ -46,7 +46,7 @@ services:
       - POSTGRES_USER=referral_platform
       - DATABASE_URL=postgres://referral_platform:postgres@postgres:5432/referral_platform
     volumes:
-      - .:/app
+      - .:/code
       - .:/home/LogFiles
 
 
