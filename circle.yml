@@ -25,7 +25,7 @@ test:
      - export HOSTIP=`ip -4 addr show scope global dev eth0 | grep inet | awk '{print \$2}' | cut -d / -f 1`;
        docker run -it -e "DATABASE_URL=postgres://ubuntu@docker:5432/circle_test" -v $CIRCLE_ARTIFACTS:/reports -v $CIRCLE_ARTIFACTS:/home/LogFiles
         --add-host=docker:${HOSTIP} achamseddine/ems:develop
-       /app/runtests.sh
+       /code/runtests.sh
 
 deployment:
    hub:

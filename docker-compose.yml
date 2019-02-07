@@ -43,7 +43,7 @@ services:
     environment:
       - POSTGRES_USER=referral_platform
     volumes:
-      - .:/app
+      - .:/code
     links:
       - postgres
 
