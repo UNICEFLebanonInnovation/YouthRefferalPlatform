@@ -1,4 +1,5 @@
 FROM python:2.7
+ENV PYTHONUNBUFFERED 1
 
 # SSH support on Azure
 ENV SSH_PASSWD "root:Docker!"
@@ -25,6 +26,13 @@ EXPOSE 2222 80
 RUN service ssh start
 
 # Start
-ENTRYPOINT ["/code/entrypoint.sh"]
+COPY entrypoint.sh /code/entrypoint.sh
+RUN chmod +x /code/entrypoint.sh
+ENTRYPOINT ["sh", "/code/entrypoint.sh"]
 
-CMD ["/code/gunicorn.sh"]
+#COPY ./runtests.sh /code/compose/django/runtests.sh
+#RUN chmod +x /code/compose/django/runtests.sh
+
+COPY gunicorn.sh /code/gunicorn.sh
+RUN chmod +x /code/gunicorn.sh
+CMD ["sh", "/code/gunicorn.sh"]

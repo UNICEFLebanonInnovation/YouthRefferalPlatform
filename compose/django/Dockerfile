@@ -33,6 +33,6 @@ ENTRYPOINT ["sh", "/code/compose/django/entrypoint.sh"]
 #COPY ./runtests.sh /code/compose/django/runtests.sh
 #RUN chmod +x /code/compose/django/runtests.sh
 
-COPY gunicorn.sh /code/compose/django/gunicorn.s
+COPY gunicorn.sh /code/compose/django/gunicorn.sh
 RUN chmod +x /code/compose/django/gunicorn.sh
 CMD ["sh", "/code/compose/django/gunicorn.sh"]
