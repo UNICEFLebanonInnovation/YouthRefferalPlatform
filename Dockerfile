@@ -1,5 +1,4 @@
 FROM python:2.7
-ENV PYTHONUNBUFFERED 1
 
 # SSH support on Azure
 ENV SSH_PASSWD "root:Docker!"
@@ -7,6 +6,7 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends openssh-server \
 	&& echo "$SSH_PASSWD" | chpasswd
 COPY ./compose/django/sshd_config /etc/ssh/
+
 ARG REQUIREMENTS_FILE=production.txt
 
 RUN mkdir /code/
@@ -25,13 +25,6 @@ EXPOSE 2222 80
 RUN service ssh start
 
 # Start
-COPY entrypoint.sh /code/entrypoint.sh
-RUN chmod +x /code/entrypoint.sh
-ENTRYPOINT ["sh", "/code/entrypoint.sh"]
+ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
 
-#COPY ./runtests.sh /code/compose/django/runtests.sh
-#RUN chmod +x /code/compose/django/runtests.sh
-
-COPY gunicorn.sh /code/gunicorn.sh
-RUN chmod +x /code/gunicorn.sh
-CMD ["sh", "/code/gunicorn.sh"]
+CMD ["/code/compose/django/gunicorn.sh"]
