@@ -26,17 +26,17 @@ EXPOSE 2222 80
 RUN service ssh start
 
 # Start
-ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
+#ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
 
-CMD ["/code/compose/django/gunicorn.sh"]
+#CMD ["/code/compose/django/gunicorn.sh"]
 
-#COPY entrypoint.sh /code/compose/django/entrypoint.sh
-#RUN chmod +x /code/compose/django/entrypoint.sh
-#ENTRYPOINT ["sh", "/code/compose/django/entrypoint.sh"]
+COPY entrypoint.sh /code/compose/django/entrypoint.sh
+RUN chmod +x /code/compose/django/entrypoint.sh
+ENTRYPOINT ["sh", "/code/compose/django/entrypoint.sh"]
 
 #COPY ./runtests.sh /code/compose/django/runtests.sh
 #RUN chmod +x /code/compose/django/runtests.sh
 
-#COPY gunicorn.sh /code/compose/django/gunicorn.sh
-#RUN chmod +x /code/compose/django/gunicorn.sh
-#CMD ["sh", "/code/compose/django/gunicorn.sh"]
+COPY gunicorn.sh /code/compose/django/gunicorn.sh
+RUN chmod +x /code/compose/django/gunicorn.sh
+CMD ["sh", "/code/compose/django/gunicorn.sh"]
