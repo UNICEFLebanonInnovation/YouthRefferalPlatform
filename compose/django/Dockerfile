@@ -29,7 +29,7 @@ RUN chown django /start
 
 COPY . /app
 
-RUN chown -R django /app
+#RUN chown -R django /app
 
 #USER django
 
