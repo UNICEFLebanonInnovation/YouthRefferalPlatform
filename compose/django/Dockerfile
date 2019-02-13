@@ -8,8 +8,8 @@ RUN apt-get update \
 	&& echo "$SSH_PASSWD" | chpasswd
 COPY sshd_config /etc/ssh/
 
-RUN addgroup -S django \
-    && adduser -S -G django django
+#RUN addgroup -S django \
+#    && adduser -S -G django django
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
@@ -30,7 +30,7 @@ COPY . /app
 
 RUN chown -R django /app
 
-USER django
+#USER django
 
 WORKDIR /app
 
