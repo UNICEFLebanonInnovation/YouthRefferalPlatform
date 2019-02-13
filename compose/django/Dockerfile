@@ -20,16 +20,19 @@ RUN pip install --no-cache-dir -r /requirements/production.txt \
 COPY entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-RUN chown django /entrypoint.sh
+#RUN chown django /entrypoint.sh
+RUN chown /entrypoint.sh
 
 COPY ./compose/django/start /start
 RUN sed -i 's/\r//' /start
 RUN chmod +x /start
-RUN chown django /start
+#RUN chown django /start
+RUN chown /start
 
 COPY . /app
 
 #RUN chown -R django /app
+RUN chown -R /app
 
 #USER django
 
