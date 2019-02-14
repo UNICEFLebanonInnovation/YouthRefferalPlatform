@@ -31,7 +31,7 @@ RUN chmod +x /start
 COPY . /app
 
 #RUN chown -R django /app
-RUN chown -R /app
+#RUN chown -R /app
 
 #USER django
 
