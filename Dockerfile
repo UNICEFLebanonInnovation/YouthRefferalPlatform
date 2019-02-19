@@ -22,6 +22,6 @@ COPY sshd_config /etc/ssh/
 COPY init.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/init.sh
-EXPOSE 8000 2222
-#CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8000"]
+EXPOSE 8080 2222
+#CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8080"]
 ENTRYPOINT ["init.sh"]
