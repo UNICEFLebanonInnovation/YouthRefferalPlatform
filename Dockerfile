@@ -1,4 +1,5 @@
-FROM python:3.4
+#FROM python:3.4
+FROM python:2.7
 
 ARG REQUIREMENTS_FILE=production.txt
 
@@ -19,9 +20,17 @@ RUN apt-get update \
 	&& echo "$SSH_PASSWD" | chpasswd
 
 COPY sshd_config /etc/ssh/
-COPY init.sh /usr/local/bin/
+#COPY init.sh /usr/local/bin/
+COPY gunicorn.sh /usr/local/bin/
 
-RUN chmod u+x /usr/local/bin/init.sh
+#RUN chmod u+x /usr/local/bin/init.sh
+RUN chmod u+x /usr/local/bin/gunicorn.sh
 EXPOSE 8080 2222
 #CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8080"]
-ENTRYPOINT ["init.sh"]
+#ENTRYPOINT ["init.sh"]
+
+COPY entrypoint.sh /code/entrypoint.sh
+RUN chmod +x /code/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD ["/code/gunicorn.sh"]
