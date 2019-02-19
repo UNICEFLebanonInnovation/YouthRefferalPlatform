@@ -1,30 +1,23 @@
-FROM python:2.7
+FROM python:3.4
 
-# SSH support on Azure
-ENV SSH_PASSWD "root:Docker!"
-RUN apt-get update \
-	&& apt-get install -y --no-install-recommends openssh-server \
-	&& echo "$SSH_PASSWD" | chpasswd
-COPY ./compose/django/sshd_config /etc/ssh/
-
-ARG REQUIREMENTS_FILE=production.txt
-
-RUN mkdir /code/
-WORKDIR /code/
-COPY requirements /code/requirements
-RUN pip install -r /code/requirements/$REQUIREMENTS_FILE
-
+RUN mkdir /code
+WORKDIR /code
+ADD requirements.txt /code/
+RUN pip install -r requirements.txt
 ADD . /code/
 
-# Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
-RUN python manage.py collectstatic --noinput --settings=config.settings.test
+# ssh
+ENV SSH_PASSWD "root:Docker!"
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends dialog \
+        && apt-get update \
+	&& apt-get install -y --no-install-recommends openssh-server \
+	&& echo "$SSH_PASSWD" | chpasswd
 
-# uWSGI will listen on this port
-EXPOSE 2222 80
+COPY sshd_config /etc/ssh/
+COPY init.sh /usr/local/bin/
 
-RUN service ssh start
-
-# Start
-ENTRYPOINT ["/code/compose/django/entrypoint.sh"]
-
-CMD ["/code/compose/django/gunicorn.sh"]
+RUN chmod u+x /usr/local/bin/init.sh
+EXPOSE 8000 2222
+#CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["init.sh"]
