@@ -1,9 +1,13 @@
 FROM python:3.4
 
+ARG REQUIREMENTS_FILE=production.txt
+
 RUN mkdir /code
 WORKDIR /code
-ADD requirements.txt /code/
-RUN pip install -r requirements.txt
+
+COPY requirements /code/requirements
+RUN pip install -r /code/requirements/$REQUIREMENTS_FILE
+
 ADD . /code/
 
 # ssh
