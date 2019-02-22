@@ -31,6 +31,6 @@ EXPOSE 8080 2222
 
 COPY entrypoint.sh /code/entrypoint.sh
 RUN chmod +x /code/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/code/entrypoint.sh"]
 
 CMD ["/code/gunicorn.sh"]
