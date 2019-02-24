@@ -4,4 +4,6 @@ set -e
 echo "Starting SSH ..."
 service ssh start
 
-python /code/manage.py runserver 0.0.0.0:8080
+honcho start
+#python /code/manage.py runserver 0.0.0.0:8080
+#/code/gunicorn config.wsgi -w 4 -b 0.0.0.0:8080 --chdir=/code
