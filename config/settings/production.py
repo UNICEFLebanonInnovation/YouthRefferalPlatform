@@ -71,7 +71,7 @@ SECURE_FRAME_DENY = True
 ALLOWED_HOSTS = ['leb-ems.azurewebsites.net', '127.0.0.1', 'ems-new-skin.herokuapp.com']
 # END SITE CONFIGURATION
 
-INSTALLED_APPS += ['gunicorn', ]
+# INSTALLED_APPS += ['gunicorn', ]
 
 
 # STORAGE CONFIGURATION
