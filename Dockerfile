@@ -21,10 +21,10 @@ RUN apt-get update \
 
 COPY sshd_config /etc/ssh/
 COPY init.sh /usr/local/bin/
-COPY gunicorn.sh /code/
+#COPY gunicorn.sh /code/
 
 RUN chmod u+x /usr/local/bin/init.sh
-RUN chmod u+x /code/gunicorn.sh
+#RUN chmod u+x /code/gunicorn.sh
 #EXPOSE 8080 2222
 #CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8080"]
 ENTRYPOINT ["init.sh"]
