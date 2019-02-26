@@ -1,36 +1,12 @@
-#FROM python:3.4
 FROM python:2.7
 
-ARG REQUIREMENTS_FILE=production.txt
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-RUN mkdir /code
-WORKDIR /code
+ONBUILD COPY requirements.txt /usr/src/app/
+ONBUILD RUN pip install --no-cache-dir -r requirements.txt
 
-COPY requirements /code/requirements
-RUN pip install -r /code/requirements/$REQUIREMENTS_FILE
+ONBUILD COPY . /usr/src/app
 
-ADD . /code/
-
-# ssh
-ENV SSH_PASSWD "root:Docker!"
-RUN apt-get update \
-        && apt-get install -y --no-install-recommends dialog \
-        && apt-get update \
-	&& apt-get install -y --no-install-recommends openssh-server \
-	&& echo "$SSH_PASSWD" | chpasswd
-
-COPY sshd_config /etc/ssh/
-COPY init.sh /usr/local/bin/
-#COPY gunicorn.sh /code/
-
-RUN chmod u+x /usr/local/bin/init.sh
-#RUN chmod u+x /code/gunicorn.sh
-EXPOSE 2222 80
-#CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8080"]
-ENTRYPOINT ["init.sh"]
-
-#COPY entrypoint.sh /code/entrypoint.sh
-#RUN chmod +x /code/entrypoint.sh
-#ENTRYPOINT ["/code/entrypoint.sh"]
-
-#CMD ["/code/gunicorn.sh"]
+EXPOSE 8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
