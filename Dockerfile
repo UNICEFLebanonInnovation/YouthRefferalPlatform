@@ -25,7 +25,7 @@ COPY init.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/init.sh
 #RUN chmod u+x /usr/local/bin/gunicorn.sh
-EXPOSE 8080 2222
+#EXPOSE 8080 2222
 #CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8080"]
 ENTRYPOINT ["init.sh"]
 
