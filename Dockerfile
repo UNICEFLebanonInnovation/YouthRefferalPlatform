@@ -1,12 +1,23 @@
 FROM python:2.7
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir /code
+WORKDIR /code
+COPY requirements /code/requirements
+RUN pip install -r /code/requirements/production.txt
+ADD . /code/
 
-ONBUILD COPY requirements.txt /usr/src/app/
-ONBUILD RUN pip install --no-cache-dir -r requirements.txt
+# ssh
+ENV SSH_PASSWD "root:Docker!"
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends dialog \
+        && apt-get update \
+	&& apt-get install -y --no-install-recommends openssh-server \
+	&& echo "$SSH_PASSWD" | chpasswd
 
-ONBUILD COPY . /usr/src/app
+COPY sshd_config /etc/ssh/
+COPY init.sh /usr/local/bin/
 
-EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN chmod u+x /usr/local/bin/init.sh
+EXPOSE 8000 2222
+#CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["init.sh"]
