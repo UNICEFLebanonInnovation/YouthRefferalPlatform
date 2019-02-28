@@ -15,11 +15,11 @@ services:
   django:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./compose/django/Dockerfile
     depends_on:
       - postgres
       - redis
-    command: /gunicorn.sh
+    #command: ./compose/django/gunicorn.sh
     env_file: .env
 
   nginx:
@@ -27,7 +27,7 @@ services:
     depends_on:
       - django
 
-      - certbot
+     # - certbot
     environment:
       - MY_DOMAIN_NAME=leb-ems.azurewebsites.net
 
