@@ -33,14 +33,14 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # raven sentry client
 # See https://docs.getsentry.com/hosted/clients/python/integrations/django/
-INSTALLED_APPS += ('raven.contrib.django.raven_compat', )
+INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
 
 # Use Whitenoise to serve static files
 # See: https://whitenoise.readthedocs.io/
-WHITENOISE_MIDDLEWARE = ('whitenoise.middleware.WhiteNoiseMiddleware', )
-MIDDLEWARE_CLASSES = WHITENOISE_MIDDLEWARE + MIDDLEWARE_CLASSES
-RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware', )
-MIDDLEWARE_CLASSES = RAVEN_MIDDLEWARE + MIDDLEWARE_CLASSES
+WHITENOISE_MIDDLEWARE = ['whitenoise.middleware.WhiteNoiseMiddleware', ]
+MIDDLEWARE = WHITENOISE_MIDDLEWARE + MIDDLEWARE
+RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware', ]
+MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 
 
 # SECURITY CONFIGURATION
@@ -50,14 +50,13 @@ MIDDLEWARE_CLASSES = RAVEN_MIDDLEWARE + MIDDLEWARE_CLASSES
 
 # set this to 60 seconds and then to 518400 when you can prove it works
 SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
     'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
 SECURE_BROWSER_XSS_FILTER = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = 'DENY'
@@ -69,7 +68,7 @@ X_FRAME_OPTIONS = 'DENY'
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['leb-ems.azurewebsites.net'])
 # END SITE CONFIGURATION
 
-INSTALLED_APPS += ('gunicorn', )
+INSTALLED_APPS += ['gunicorn', ]
 
 
 # STORAGE CONFIGURATION
@@ -77,7 +76,7 @@ INSTALLED_APPS += ('gunicorn', )
 # Uploaded Media Files
 # ------------------------
 # See: http://django-storages.readthedocs.io/en/latest/index.html
-INSTALLED_APPS += ('storages',)
+INSTALLED_APPS += ['storages', ]
 
 AZURE_ACCOUNT_NAME = env('AZURE_ACCOUNT_NAME', default='NO_AZURE_ACCOUNT_NAME')
 AZURE_ACCOUNT_KEY = env('AZURE_ACCOUNT_KEY', default='NO_AZURE_ACCOUNT_KEY')
@@ -105,7 +104,7 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[referral_pla
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Anymail with Mailgun
-INSTALLED_APPS += ("anymail", )
+INSTALLED_APPS += ["anymail", ]
 ANYMAIL = {
     "MAILGUN_API_KEY": env('DJANGO_MAILGUN_API_KEY', default='NO_MAILGUN_API_KEY'),
 }
@@ -145,7 +144,8 @@ CACHES = {
 
 
 # Sentry Configuration
-SENTRY_DSN = env('DJANGO_SENTRY_DSN')
+# SENTRY_DSN = env('DJANGO_SENTRY_DSN')
+SENTRY_DSN = 'https://8de7f8a6d22e45989f48d078de430dff:65abf371e2614f65b72d3f154cf5a071@sentry.io/1201926'
 SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
 LOGGING = {
     'version': 1,
@@ -207,14 +207,14 @@ RAVEN_CONFIG = {
 # WEBPACK
 # ------------------------------------------------------------------------------
 # Webpack Production Stats file
-STATS_FILE = ROOT_DIR('webpack-stats-production.json')
+# STATS_FILE = ROOT_DIR('webpack-stats-production.json')
 # Webpack config
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'referral_platform/static/referral_platform/dist/',
-        'STATS_FILE': STATS_FILE
-    }
-}
+# WEBPACK_LOADER = {
+#     'DEFAULT': {
+#         'BUNDLE_DIR_NAME': 'referral_platform/static/referral_platform/dist/',
+#         'STATS_FILE': STATS_FILE
+#     }
+# }
 
 # DEBUG_MODE:
 DEBUG = env.bool('DJANGO_DEBUG', False)
