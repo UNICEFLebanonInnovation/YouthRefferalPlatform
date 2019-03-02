@@ -26,13 +26,13 @@ EXPOSE 2222 80
 RUN service ssh start
 
 # Start
-COPY entrypoint.sh /app/compose/django/entrypoint.sh
+COPY ./compose/django/entrypoint.sh /app/compose/django/entrypoint.sh
 RUN chmod +x /app/compose/django/entrypoint.sh
 ENTRYPOINT ["sh", "/app/compose/django/entrypoint.sh"]
 
 #COPY ./runtests.sh /app/compose/django/runtests.sh
 #RUN chmod +x /app/compose/django/runtests.sh
 
-COPY gunicorn.sh /app/compose/django/gunicorn.s
+COPY ./compose/django/gunicorn.sh /app/compose/django/gunicorn.s
 RUN chmod +x /app/compose/django/gunicorn.sh
 CMD ["sh", "/app/compose/django/gunicorn.sh"]
