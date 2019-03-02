@@ -1,0 +1,35 @@
+machine:
+   services:
+     - docker
+     - postgresql
+     - redis
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+
+  override:
+    - docker info
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+    - docker build --rm=false -f ./compose/django/Dockerfile -t achamseddine/ems:develop .
+    - mkdir -p ~/docker; docker save achamseddine/ems > ~/docker/image.tar
+
+test:
+   pre: # bootstrap postgres to accept connections from our container
+     - sudo bash -c "echo \"listen_addresses = '*'\" >>
+       /etc/postgresql/9.5/main/postgresql.conf"
+     - sudo bash -c "echo \"host all all 0.0.0.0/0 trust\" >>
+       /etc/postgresql/9.5/main/pg_hba.conf"
+     - sudo /etc/init.d/postgresql restart
+   override:
+     - export HOSTIP=`ip -4 addr show scope global dev eth0 | grep inet | awk '{print \$2}' | cut -d / -f 1`;
+       docker run -it -e "DATABASE_URL=postgres://ubuntu@docker:5432/circle_test" -v $CIRCLE_ARTIFACTS:/reports -v $CIRCLE_ARTIFACTS:/home/LogFiles
+        --add-host=docker:${HOSTIP} achamseddine/ems:develop
+       /code/runtests.sh
+
+deployment:
+   hub:
+     branch: develop
+     commands:
+       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+       - docker push achamseddine/ems:develop
