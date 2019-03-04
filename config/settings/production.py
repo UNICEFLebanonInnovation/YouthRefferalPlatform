@@ -68,8 +68,8 @@ SECURE_FRAME_DENY = True
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-# ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['leb-ems.azurewebsites.net', ])
-ALLOWED_HOSTS = [os.environ['leb-ems'] + '.azurewebsites.net', '127.0.0.1'] if 'leb_ems' in os.environ else []
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['leb-ems.azurewebsites.net', '127.0.0.1', '172.16.1.19', '0.0.0.0', '*'])
+# ALLOWED_HOSTS = [os.environ['leb-ems'] + '.azurewebsites.net', '127.0.0.1', '172.16.1.19', '0.0.0.0', '*'] if 'leb_ems' in os.environ else []
 # END SITE CONFIGURATION
 
 # INSTALLED_APPS += ['gunicorn', ]
@@ -223,7 +223,16 @@ RAVEN_CONFIG = {
 # }
 
 # DEBUG_MODE:
-DEBUG = env.bool('DJANGO_DEBUG', False)
-
+DEBUG = env.bool('DJANGO_DEBUG', True)
+MIDDLEWARE += [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+INSTALLED_APPS += [
+    'debug_toolbar',
+]
+INTERNAL_IPS = ['127.0.0.1', ]
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
 
 # Your production stuff: Below this line define 3rd party library settings

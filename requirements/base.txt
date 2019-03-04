@@ -84,3 +84,4 @@ fuzzywuzzy==0.15.1
 python-Levenshtein==0.12.0
 requests==2.18.4
 django-secure==1.0.1
+boto==2.49.0

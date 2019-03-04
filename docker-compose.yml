@@ -12,11 +12,10 @@ services:
       - postgres_backup_dev:/backups
     environment:
       - POSTGRES_USER=referral_platform
-
   django:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile-dev
+      dockerfile: ./compose/django/Dockerfile
     command: python /code/manage.py runserver_plus 0.0.0.0:8000
     depends_on:
       - postgres
@@ -37,7 +36,7 @@ services:
   pycharm:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile-dev
+      dockerfile: ./compose/django/Dockerfile
     depends_on:
       - postgres
     environment:
@@ -54,3 +53,50 @@ services:
     ports:
       - "8025:8025"
 
+#
+#version: '2'
+#services:web:
+#  build: ./web
+#
+#  volumes:
+#- ./web:/usr/src/app
+#depends_on:
+#- redis
+#- postgres
+#expose:
+#- "8000"
+#command: gunicorn webproject.wsgi -b 0.0.0.0:8000</div>
+#<div>
+#
+#postgres:
+#  build: ./postgres
+#  restart: unless-stopped
+#  expose:
+#- "5432"
+#environment:  # not needed if you have it set in your project/settings.py
+#LC_ALL: C.UTF-8
+#POSTGRES_USER: devopspy
+#POSTGRES_PASSWORD: devopspy
+#POSTGRES_DB: devopspy
+#  volumes:
+#- pgdata:/var/lib/postgresql/data/  # persist container's db data to local pgdata/ (mounted)
+#
+#redis:
+#image: sickp/alpine-redis:3.2.2
+#  restart: unless-stopped
+#  expose:
+#- "6379"
+#  volumes:
+#- redisdata:/data
+#
+#nginx:
+#restart: always
+#build: ./nginx/
+#ports:
+#- "8000:80"
+#links:
+#- web
+#
+#volumes:
+#pgdata:
+#redisdata:
