@@ -2,52 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93776f69-8f09-49b7-ad72-485328367a0a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.coveragerc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.floo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flooignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.pylintrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile-old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/circle.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/django/Dockerfile-dev" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/django/entrypoint.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/django/gunicorn.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/django/sshd_config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/django/start" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/django/start.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/nginx/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/nginx/default.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/nginx/dhparams.example.pem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/nginx/dhparams.pem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/nginx/nginx-secure.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/nginx/nginx.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose/nginx/start.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entrypoint.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.example" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gunicorn.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/init.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtests.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/start-dev.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webproject/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webproject/webproject/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webproject/webproject/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webproject/webproject/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webproject/webproject/wsgi.py" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/production.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,7 +32,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="COPYING" value="1" />
-          <entry key="Dockerfile" value="18" />
+          <entry key="Dockerfile" value="19" />
           <entry key="Dockerfile-dev" value="5" />
           <entry key="Dockerfile-old" value="4" />
           <entry key="Makefile" value="1" />
@@ -85,6 +42,7 @@
           <entry key="conf" value="6" />
           <entry key="coveragerc" value="1" />
           <entry key="css" value="1" />
+          <entry key="django_project" value="1" />
           <entry key="dockerignore" value="1" />
           <entry key="editorconfig" value="1" />
           <entry key="env" value="1" />
@@ -113,7 +71,7 @@
           <entry key="sshd_config" value="2" />
           <entry key="start" value="2" />
           <entry key="txt" value="30" />
-          <entry key="yml" value="12" />
+          <entry key="yml" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -123,11 +81,11 @@
           <entry key="JSON" value="3" />
           <entry key="JavaScript" value="15" />
           <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="126" />
+          <entry key="PLAIN_TEXT" value="128" />
           <entry key="Python" value="619" />
           <entry key="PythonStub" value="1" />
           <entry key="ReST" value="10" />
-          <entry key="YAML" value="12" />
+          <entry key="YAML" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -173,13 +131,45 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
               <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret lean-forward="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/production.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nginx/Dockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nginx/sites-enabled/django_project">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -291,17 +281,17 @@
         <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/requirements/production.txt" />
         <option value="$PROJECT_DIR$/config/settings/local.py" />
-        <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/config/settings/common.py" />
         <option value="$PROJECT_DIR$/config/settings/production.py" />
+        <option value="$PROJECT_DIR$/docker-compose.yml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="524" />
-    <option name="y" value="27" />
-    <option name="width" value="1187" />
-    <option name="height" value="972" />
+    <option name="x" value="840" />
+    <option name="y" value="23" />
+    <option name="width" value="840" />
+    <option name="height" value="980" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -319,24 +309,13 @@
             <path>
               <item name="YouthRefferalPlatform" type="b2602c69:ProjectViewProjectNode" />
               <item name="YouthRefferalPlatform" type="462c0819:PsiDirectoryNode" />
-              <item name="compose" type="462c0819:PsiDirectoryNode" />
+              <item name="nginx" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="YouthRefferalPlatform" type="b2602c69:ProjectViewProjectNode" />
               <item name="YouthRefferalPlatform" type="462c0819:PsiDirectoryNode" />
-              <item name="compose" type="462c0819:PsiDirectoryNode" />
-              <item name="django" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YouthRefferalPlatform" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YouthRefferalPlatform" type="462c0819:PsiDirectoryNode" />
-              <item name="compose" type="462c0819:PsiDirectoryNode" />
-              <item name="postgres" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YouthRefferalPlatform" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YouthRefferalPlatform" type="462c0819:PsiDirectoryNode" />
-              <item name="requirements" type="462c0819:PsiDirectoryNode" />
+              <item name="nginx" type="462c0819:PsiDirectoryNode" />
+              <item name="sites-enabled" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -360,8 +339,8 @@
       <recent name="$PROJECT_DIR$/referral_platform/init" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/compose" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/compose" />
       <recent name="$PROJECT_DIR$/referral_platform/initiatives" />
       <recent name="$PROJECT_DIR$/referral_platform" />
       <recent name="$PROJECT_DIR$/referral_platform/initiatives/migrations" />
@@ -447,10 +426,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="524" y="27" width="1187" height="972" extended-state="0" />
+    <frame x="840" y="23" width="840" height="980" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22727273" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.41269842" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -501,23 +480,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/referral_platform/dashboard/views.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/referral_platform/templates/dashboard/co.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="54" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -705,20 +667,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="45" lean-forward="true" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/production.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/settings/common.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
@@ -796,10 +744,37 @@
     <entry file="file://$PROJECT_DIR$/webpack.config.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$USER_HOME$/Downloads/dockerizing-django-master/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/production.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nginx/sites-enabled/django_project">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nginx/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
         </state>
       </provider>
     </entry>
