@@ -352,7 +352,7 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'assessment__overview',
         'assessment__slug',
         'registration__partner_organization',
-        'registration__location',
+        'registration__governorate__parent__name_en',
     )
     search_fields = (
         'youth__first_name',
