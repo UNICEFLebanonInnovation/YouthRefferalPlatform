@@ -30,7 +30,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
 
     # start_date = models.DateField(blank=True, null=True)
-    duration = forms.CharField(
+    duration = forms.ModelChoiceField(
         label = 'Duration',
         max_length=254,
         blank=True, null=True,
@@ -44,7 +44,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 )
     )
 
-    type = forms.CharField(
+    type = forms.ModelChoiceField(
         max_length=254,
         blank=True,
         label= 'Initiative Types',
