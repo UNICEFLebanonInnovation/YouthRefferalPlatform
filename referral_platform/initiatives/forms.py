@@ -21,6 +21,47 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
+
+    location = forms.ForeignKey(Location, blank=True, null=True, verbose_name="location")
+
+
+
+    # start_date = models.DateField(blank=True, null=True)
+    duration = forms.CharField(
+        max_length=254,
+        blank=True, null=True,
+        choices=(
+            ('1_2', _('1-2 weeks')),
+            ('3_4', _('3-4 weeks')),
+            ('4_6', _('4-6 weeks')),
+            ('6_plus', _('More than 6 weeks')),
+
+
+                )
+    )
+
+    type = forms.CharField(
+        max_length=254,
+        blank=True,
+        verbose_name=_('Initiative Types'),
+        null=True,
+        choices=(
+            ('basic services', _('Basic Services')),
+            ('social Cohesion', _('Social cohesion')),
+            ('environmental', _('Environmental')),
+            ('health services', _('Health Services')),
+            ('protection', _('Protection')),
+            ('advocacy', _('Advocacy or Raising awareness')),
+            ('political', _('Political')),
+            ('religious and spiritual', _('Spiritual/Religious')),
+            ('sports', _('Sports')),
+            ('economic art cultural', _('Economic art cultural')),
+            ('educational', _('educational')),
+            ('other', _('Other'))
+        )
+
+    )
+
     # id = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
@@ -83,26 +124,48 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.helper.form_show_labels = False
         # form_action = reverse('initiatives:add')
         # self.helper.layout = Layout()
-        self.helper.layout = Layout(
+        # self.helper.layout = Layout(
+        #     Div(
+        #         Div('partner_organization', readonly=True),
+        #
+        #         Div(PrependedText('title', _('Initiative Title')),),
+        #
+        #     ),
+        #     # HTML(_('Please choose the members of this Initiative')),
+        #     # 'members',
+        #     HTML(_),
+        #     'Participants',
+        #     HTML(_('Location')),
+        #     'location',
+        #
+        #     HTML(_('Initiative Type')),
+        #     'type',
+        #     HTML(_('Duration')),
+        #     'duration',
+        #
+        # )
+        main_fieldset = Fieldset(None)
+        main_div = Div(css_class='row')
+
+        # Title Div
+        main_fieldset.fields.append(
             Div(
-                Div('partner_organization', readonly=True),
-
-                Div(PrependedText('title', _('Initiative Title')),),
-
-            ),
-            # HTML(_('Please choose the members of this Initiative')),
-            # 'members',
-            HTML(_),
-            'Participants',
-            HTML(_('Location')),
-            'location',
-
-            HTML(_('Initiative Type')),
-            'type',
-            HTML(_('Duration')),
-            'duration',
-
+                HTML('<h4 id="alternatives-to-hidden-labels">' + '</h4>')
+            )
         )
+        my_fields = ['partner_organization', 'participants', 'location', 'type', 'duration']
+        for myField in my_fields:
+            index = my_fields.index(myField) + 1
+            main_div.append(
+                HTML('<span class="badge badge-default">' + str(index) + '</span>'),
+            )
+            main_div.append(
+                Div(myField, css_class='col-md-3'),
+            )
+            # to keep every 3 on a row, or the last field in the list
+            if index % 3 == 0 or len(my_fields) == index:
+                main_fieldset.fields.append(main_div)
+                main_div = Div(css_class='row')
 
         # Rendering the assessments
         if instance:
