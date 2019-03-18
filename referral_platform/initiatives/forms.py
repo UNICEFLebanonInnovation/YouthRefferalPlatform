@@ -86,19 +86,19 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # self.helper.layout = Layout()
         self.helper.layout = Layout(
             Div(
-                Div('partner_organization', readonly=True),
+                Div('partner_organization', readonly=True, css_class='col-md-3'),
 
-                Div(PrependedText('title', _('Initiative Title')),),
+                Div(PrependedText('title', _('Initiative Title')), css_class='col-md-3'),
 
             ),
             # HTML(_('Please choose the members of this Initiative')),
             # 'members',
             HTML(_),
             'Participants',
-            Div(HTML(_('Location')), css_class='col-md-3'),
+            Div(HTML(_('Location')), 'location', css_class='col-md-3'),
 
             Div(HTML(_('Initiative Type')), 'type', css_class='col-md-3'),
-            Div(HTML(_('Duration')), 'duration',css_class='col-md-3'),
+            Div(HTML(_('Duration')), 'duration', css_class='col-md-3'),
 
         )
 
