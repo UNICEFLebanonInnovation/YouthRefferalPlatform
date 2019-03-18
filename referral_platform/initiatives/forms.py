@@ -84,63 +84,26 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.helper.form_show_labels = False
         # form_action = reverse('initiatives:add')
         # self.helper.layout = Layout()
-        # self.helper.layout = Layout(
-        #     Div(
-        #         Div('partner_organization', readonly=True),
-        #
-        #         Div(PrependedText('title', _('Initiative Title')),),
-        #
-        #     ),
-        #     # HTML(_('Please choose the members of this Initiative')),
-        #     # 'members',
-        #     HTML(_),
-        #     'Participants',
-        #     HTML(_('Location')),
-        #     'location',
-        #
-        #     HTML(_('Initiative Type')),
-        #     'type',
-        #     HTML(_('Duration')),
-        #     'duration',
-        #
-        # )
-        main_fieldset = Fieldset(None)
-        main_div = Div(css_class='row')
-
-        # Title Div
-        main_fieldset.fields.append(
+        self.helper.layout = Layout(
             Div(
-                HTML('<h4 id="alternatives-to-hidden-labels">' + '</h4>')
-            )
+                Div('partner_organization', readonly=True),
+
+                Div(PrependedText('title', _('Initiative Title')),),
+
+            ),
+            # HTML(_('Please choose the members of this Initiative')),
+            # 'members',
+            HTML(_),
+            'Participants',
+            HTML(_('Location'), css_class='col-md-3'),
+            'location',
+
+            HTML(_('Initiative Type'), css_class='col-md-3'),
+            'type',
+            HTML(_('Duration'), css_class='col-md-3'),
+            'duration',
+
         )
-        my_fields[_('Initiative')] = ['partner_organization', 'participants', 'location', 'type', 'duration']
-        # remaining fields, every 3 on a row
-        for title in my_fields:
-            main_fieldset = Fieldset(None)
-            main_div = Div(css_class='row')
-
-            # Title Div
-            main_fieldset.fields.append(
-                Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
-                )
-            )
-            # remaining fields, every 3 on a row
-            for myField in my_fields[title]:
-                index = my_fields[title].index(myField) + 1
-                main_div.append(
-                    HTML('<span class="badge badge-default">' + str(index) + '</span>'),
-                )
-                main_div.append(
-                    Div(myField, css_class='col-md-3'),
-                )
-                # to keep every 3 on a row, or the last field in the list
-                if index % 3 == 0 or len(my_fields[title]) == index:
-                    main_fieldset.fields.append(main_div)
-                    main_div = Div(css_class='row')
-
-            main_fieldset.css_class = 'bd-callout bd-callout-warning'
-           
 
         # Rendering the assessments
         if instance:
