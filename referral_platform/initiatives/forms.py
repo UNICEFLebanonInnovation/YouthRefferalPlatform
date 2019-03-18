@@ -22,7 +22,10 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
 
-    location = forms.ForeignKey(Location, blank=True, null=True, verbose_name="location")
+    location = forms.ModelChoiceField(
+        label=_('Governorate'),
+        queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
+        required=True, to_field_name='id',)
 
 
 
