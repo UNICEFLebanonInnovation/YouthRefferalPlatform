@@ -22,47 +22,6 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
 
-    location = forms.ModelChoiceField(
-        label=_('Governorate'),
-        queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-        required=True, to_field_name='id',)
-
-
-
-    # start_date = models.DateField(blank=True, null=True)
-    duration = forms.ModelChoiceField(
-        label=_('Duration'),
-        widget=forms.Select, required=True,
-        choices=(
-            ('1_2', _('1-2 weeks')),
-            ('3_4', _('3-4 weeks')),
-            ('4_6', _('4-6 weeks')),
-            ('6_plus', _('More than 6 weeks')),
-
-
-                )
-    )
-
-    type = forms.ModelChoiceField(
-        label=_('Initiative Types'),
-        widget=forms.Select, required=True,
-        choices=(
-            ('basic services', _('Basic Services')),
-            ('social Cohesion', _('Social cohesion')),
-            ('environmental', _('Environmental')),
-            ('health services', _('Health Services')),
-            ('protection', _('Protection')),
-            ('advocacy', _('Advocacy or Raising awareness')),
-            ('political', _('Political')),
-            ('religious and spiritual', _('Spiritual/Religious')),
-            ('sports', _('Sports')),
-            ('economic art cultural', _('Economic art cultural')),
-            ('educational', _('educational')),
-            ('other', _('Other'))
-        )
-
-    )
-
     # id = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
