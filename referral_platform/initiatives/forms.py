@@ -95,13 +95,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # 'members',
             HTML(_),
             'Participants',
-            HTML(_('Location'), css_class='col-md-3'),
-            'location',
+            Div(HTML(_('Location')), css_class='col-md-3'),
 
-            HTML(_('Initiative Type'), css_class='col-md-3'),
-            'type',
-            HTML(_('Duration'), css_class='col-md-3'),
-            'duration',
+            Div(HTML(_('Initiative Type')), 'type', css_class='col-md-3'),
+            Div(HTML(_('Duration')), 'duration',css_class='col-md-3'),
 
         )
 
