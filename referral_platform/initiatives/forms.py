@@ -31,9 +31,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
     # start_date = models.DateField(blank=True, null=True)
     duration = forms.ModelChoiceField(
-        label = 'Duration',
-        max_length=254,
-        blank=True, null=True,
+        label=_('Duration'),
+        widget=forms.Select, required=True,
         choices=(
             ('1_2', _('1-2 weeks')),
             ('3_4', _('3-4 weeks')),
@@ -45,10 +44,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     )
 
     type = forms.ModelChoiceField(
-        max_length=254,
-        blank=True,
-        label= 'Initiative Types',
-        null=True,
+        label=_('Initiative Types'),
+        widget=forms.Select, required=True,
         choices=(
             ('basic services', _('Basic Services')),
             ('social Cohesion', _('Social cohesion')),
