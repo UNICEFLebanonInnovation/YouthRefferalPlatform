@@ -140,7 +140,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     main_div = Div(css_class='row')
 
             main_fieldset.css_class = 'bd-callout bd-callout-warning'
-            self.helper.layout.append(main_fieldset)
+           
 
         # Rendering the assessments
         if instance:
