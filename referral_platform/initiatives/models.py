@@ -72,15 +72,16 @@ class YouthLedInitiative(models.Model):
         ('in-kind', _('In-Kind (posters, booklet,etc)')),
     )
 
-    title = models.CharField(max_length=255)
-    location = models.ForeignKey(Location, blank=True, null=True, verbose_name="location")
-    partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="partner_organization")
+    title = models.CharField(max_length=255, verbose_name=_('Title'))
+    location = models.ForeignKey(Location, blank=True, null=True, verbose_name="Location")
+    partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="Partner_Organization")
     # members = models.ManyToManyField(YoungPerson, blank=True, )
-    Participants = models.ManyToManyField(Registration, related_name='+')
+    Participants = models.ManyToManyField(Registration, related_name='+', verbose_name=_('Participants'))
 
     # start_date = models.DateField(blank=True, null=True)
     duration = models.CharField(
         max_length=254,
+        verbose_name=_('Duration'),
         blank=True, null=True,
         choices=Choices(
             ('1_2', _('1-2 weeks')),
