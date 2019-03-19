@@ -116,13 +116,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         #     Div(HTML(_('Duration')), 'duration', css_class='col-md-3'),
         #
         # )
-        my_fields[_('Initiative')] = ['partner_organization',
-                                                        'title',
-                                                        'participants',
-                                                        'location',
-                                                        'dutation',
-                                                        'type',
-                                                        ]
+
+        my_fields[_('')] = ['partner_organization']
+        my_fields[_('')] = ['title']
+        my_fields[_('Partcipants')] = ['participants']
+        my_fields[_('Initiative Information')] = ['location', 'dutation', 'type']
         for title in my_fields:
             main_fieldset = Fieldset(None)
             main_div = Div(css_class='row')
