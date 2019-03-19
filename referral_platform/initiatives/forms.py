@@ -26,6 +26,16 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         widget=forms.TextInput,
         required=False
     )
+    location = forms.CharField(
+        label=_("Location"),
+        widget=forms.TextInput,
+        required=False
+    )
+    duration = forms.CharField(
+        label=_("Duration"),
+        widget=forms.TextInput,
+        required=False
+    )
     # id = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
@@ -106,7 +116,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         #     Div(HTML(_('Duration')), 'duration', css_class='col-md-3'),
         #
         # )
-        my_fields[_('Initiatives')] = ['partner_organization',
+        my_fields[_('Initiative')] = ['partner_organization',
                                                         'title',
                                                         'participants',
                                                         'location',
