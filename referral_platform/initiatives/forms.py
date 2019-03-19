@@ -94,11 +94,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         if not instance:
             my_fields['Search Youth'] = ['search_youth']
 
-        self.helper = FormHelper()
-        self.helper.form_show_labels = False
-        # form_action = reverse('initiatives:add')
-        # self.helper.layout = Layout()
-        self.helper.layout = Layout()
+
 
         #     Div(
         #         Div('partner_organization', readonly=True, css_class='col-md-4'),
@@ -117,10 +113,17 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         #
         # )
 
-        my_fields[_('')] = ['partner_organization']
-        my_fields[_('')] = ['title']
+        my_fields[_('Partner Organization')] = ['partner_organization']
+        my_fields[_('Initiative Title')] = ['title']
         my_fields[_('Partcipants')] = ['participants']
         my_fields[_('Initiative Information')] = ['location', 'dutation', 'type']
+
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        form_action = reverse('initiatives:add')
+        # self.helper.layout = Layout()
+        self.helper.layout = Layout()
+
         for title in my_fields:
             main_fieldset = Fieldset(None)
             main_div = Div(css_class='row')
