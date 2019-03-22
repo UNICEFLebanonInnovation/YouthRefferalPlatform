@@ -34,7 +34,7 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 {#    <u class="text-uppercase"><a href="{{ signup_url }}" style="color: #3498db;">sign up</a></u> first.{% endblocktrans %}</p>#}
 {% endif %}
 
-<form class="login" method="POST" action="{% url 'account_login' %}">
+<form class="login" method="POST" autocomplete="off" action="{% url 'account_login'  %}">
   {% csrf_token %}
   {{ form|crispy }}
   {% if redirect_field_value %}

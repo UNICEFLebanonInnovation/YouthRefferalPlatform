@@ -7,9 +7,8 @@ from . import views
 from .autocompletes import LocationAutocomplete
 
 urlpatterns = [
-    url(
-        r'^location-autocomplete/$',
+    url(r'^location-autocomplete/$',
         LocationAutocomplete.as_view(),
         name='location-autocomplete',
-    ),
+        ),
 ]

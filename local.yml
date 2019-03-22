@@ -16,10 +16,10 @@ services:
   django:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile
+      dockerfile: Dockerfile
       args:
         - REQUIREMENTS_FILE=local.txt
-    command: ./compose/django/start-dev.sh
+    command: start-dev.sh
     depends_on:
       - postgres
     environment:
@@ -36,10 +36,10 @@ services:
   pycharm:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile
+      dockerfile: Dockerfile
       args:
         - REQUIREMENTS_FILE=local.txt
-    command: ./compose/django/start-dev.sh
+    command: start-dev.sh
     depends_on:
       - postgres
     environment:
@@ -48,5 +48,6 @@ services:
     volumes:
       - .:/code
       - .:/home/LogFiles
+
 
 

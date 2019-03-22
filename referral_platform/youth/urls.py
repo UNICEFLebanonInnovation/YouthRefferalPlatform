@@ -26,11 +26,10 @@ urlpatterns = [
     #     view=views.YouthAssessment.as_view(),
     #     name='assessment'
     # ),
-    url(
-        regex=r'^assessment/submission/$',
+    url(regex=r'^assessment/submission/$',
         view=views.YouthAssessmentSubmission.as_view(),
         name='submission'
-    ),
+        ),
     # url(
     #     regex=r'^$',
     #     view=views.ListingView.as_view(),
