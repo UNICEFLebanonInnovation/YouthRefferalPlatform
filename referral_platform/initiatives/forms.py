@@ -116,7 +116,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         my_fields[_('Partner Organization')] = ['partner_organization']
         my_fields[_('Initiative Title')] = ['title']
         my_fields[_('Partcipants')] = ['participants']
-        my_fields[_('Initiative Information')] = ['partner_organization', 'title', 'participants', 'location', 'dutation', 'type']
+        my_fields[_('Initiative Information')] = ['location', 'dutation', 'type']
 
         self.helper = FormHelper()
         self.helper.form_show_labels = False
