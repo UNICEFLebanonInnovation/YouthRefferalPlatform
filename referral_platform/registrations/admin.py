@@ -224,6 +224,8 @@ class RegistrationAdmin(ImportExportModelAdmin):
                     )
 
     list_display = (
+        'youth',
+        'id',
         'partner_organization',
         'governorate',
         'trainer',
