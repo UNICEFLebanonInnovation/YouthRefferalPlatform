@@ -53,7 +53,6 @@ class AssessmentSubmissionResource(ImportExportModelAdmin):
             'id'
             # 'member',
             'initiative',
-            'initiative__id',
             'data',
             'new_data',
 
@@ -65,7 +64,6 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
     list_display = (
         'assessment',
         'id'
-        'initiative__id',
         'initiative',
         'data',
         'new_data',
