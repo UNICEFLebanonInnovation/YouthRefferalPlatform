@@ -92,9 +92,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
             # HTML(_('Please choose the members of this Initiative')),
             # 'members',
-                Div(PrependedText('participants', _('Participants')), ),
-                Div(PrependedText('location', _('Location')), ),
-                Div(PrependedText('duration', _('Duration')), ),
             HTML(_),
             'Participants',
             HTML(_('Location')),
