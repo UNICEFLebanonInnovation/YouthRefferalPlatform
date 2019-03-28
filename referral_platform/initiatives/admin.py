@@ -45,25 +45,27 @@ class InitAdmin(ImportExportModelAdmin):
     filter_horizontal = ('Participants',)
 
 
-class AssessmentSubmissionResource(ImportExportModelAdmin):
+class AssessmentSubmissionResource(admin.ModelAdmin):
     class Meta:
         model = AssessmentSubmission
         fields = (
             'assessment',
             # 'member',
             'initiative',
+            'YouthLedInitiative__id',
             'data',
             'new_data',
 
         )
         export_order = fields
 
-class AssessmentSubmissionAdmin(admin.ModelAdmin):
+class AssessmentSubmissionAdmin(ImportExportModelAdmin):
     resource_class = AssessmentSubmissionResource
     list_display = (
         'assessment',
         # 'member',
         'initiative',
+        'YouthLedInitiative__id',
         'data',
         'new_data',
     )
