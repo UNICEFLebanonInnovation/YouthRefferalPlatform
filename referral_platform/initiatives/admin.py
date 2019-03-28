@@ -45,7 +45,7 @@ class InitAdmin(ImportExportModelAdmin):
     filter_horizontal = ('Participants',)
 
 
-class AssessmentSubmissionResource(resources.ModelResource):
+class AssessmentSubmissionResource(ImportExportModelAdmin):
     class Meta:
         model = AssessmentSubmission
         fields = (
