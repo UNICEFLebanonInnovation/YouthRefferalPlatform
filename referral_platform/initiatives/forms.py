@@ -89,7 +89,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                 Div(PrependedText('title', _('Initiative Title')),),
 
-
+            ),
             # HTML(_('Please choose the members of this Initiative')),
             # 'members',
             HTML(_),
@@ -102,7 +102,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             HTML(_('Duration')),
             'duration',
 
-        ) ),
+        )
 
         # Rendering the assessments
         if instance:
