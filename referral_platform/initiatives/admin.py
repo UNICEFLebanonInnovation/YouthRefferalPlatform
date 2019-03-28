@@ -50,7 +50,6 @@ class AssessmentSubmissionResource(ImportExportModelAdmin):
         model = AssessmentSubmission
         fields = (
             'assessment',
-            'id'
             # 'member',
             'initiative',
             'data',
@@ -63,7 +62,7 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
     resource_class = AssessmentSubmissionResource
     list_display = (
         'assessment',
-        'id'
+        # 'member',
         'initiative',
         'data',
         'new_data',
