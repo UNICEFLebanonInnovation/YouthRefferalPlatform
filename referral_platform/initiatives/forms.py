@@ -84,18 +84,18 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # form_action = reverse('initiatives:add')
         # self.helper.layout = Layout()
         self.helper.layout = Layout(
-            Div(
+            Div.append(
                 Div('partner_organization', readonly=True),
 
                 Div(PrependedText('title', _('Initiative Title')),),
 
             ),
-            Div(
+            Div.append(
             # HTML(_('Please choose the members of this Initiative')),
             # 'members',
             HTML(_),
             'Participants',),
-            Div(
+            Div.append(
             HTML(_('Location')),
             'location',
 
@@ -105,6 +105,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             'duration',
 
         )),
+
 
         # Rendering the assessments
         if instance:
