@@ -52,7 +52,7 @@ class AssessmentSubmissionResource(admin.ModelAdmin):
             'assessment',
             # 'member',
             'initiative',
-            'YouthLedInitiative__id',
+            'assessment__id',
             'data',
             'new_data',
 
@@ -65,7 +65,7 @@ class AssessmentSubmissionAdmin(ImportExportModelAdmin):
         'assessment',
         # 'member',
         'initiative',
-        'YouthLedInitiative__id',
+        'assessment__id',
         'data',
         'new_data',
     )
