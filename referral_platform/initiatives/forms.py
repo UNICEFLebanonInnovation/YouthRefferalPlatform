@@ -85,10 +85,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         my_fields[_('Initiative Details')] = [
                                             'title',
-                                            'Participants',
+
                                             'duration',
                                             'location',
                                             'type',
+                                            'Participants',
                                              ]
 
         self.helper = FormHelper()
