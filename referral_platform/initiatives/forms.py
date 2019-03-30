@@ -23,7 +23,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
     # id = forms.CharField(widget=forms.HiddenInput())
     search_youth = forms.CharField(
-        label=_("Search for youth by name or id"),
+        label=_("Search Initiative"),
         widget=forms.TextInput,
         required=False
     )
@@ -78,10 +78,13 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
+        self.fields['partner_organization'] = forms.CharField(
+            widget=forms.TextInput(attrs={'readonly': 'readonly'})
+        )
         my_fields = OrderedDict()
 
         if not instance:
-            my_fields['Search Youth'] = ['search_youth','partner_organization' ]
+            my_fields['Partner Info'] = ['partner_organization' ]
 
         my_fields[_('Initiative Details')] = [
                                             'title',
