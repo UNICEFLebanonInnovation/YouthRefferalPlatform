@@ -83,9 +83,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         if not instance:
             my_fields['Search Youth'] = ['search_youth','partner_organization' ]
 
-        my_fields[_('Personal Details')] = [
+        my_fields[_('Initiative Details')] = [
                                             'title',
-                                            'participants',
+                                            'Participants',
                                             'duration',
                                             'location',
                                             'type',
