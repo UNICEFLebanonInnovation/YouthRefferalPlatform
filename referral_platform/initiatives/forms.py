@@ -22,7 +22,11 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
     # id = forms.CharField(widget=forms.HiddenInput())
-
+    search_youth = forms.CharField(
+        label=_("Search for youth by name or id"),
+        widget=forms.TextInput,
+        required=False
+    )
     class Meta:
         model = YouthLedInitiative
         fields = '__all__'
@@ -77,32 +81,72 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         my_fields = OrderedDict()
 
         if not instance:
-            my_fields['Search Youth'] = ['search_youth']
+            my_fields['Search Youth'] = ['search_youth','partner_organization' ]
+
+        my_fields[_('Personal Details')] = [
+                                            'title',
+                                            'participants',
+                                            'duration',
+                                            'location',
+                                            'type',
+                                             ]
 
         self.helper = FormHelper()
-        self.helper.form_show_labels = False
+        self.helper.form_show_labels = True
         # form_action = reverse('initiatives:add')
-        # self.helper.layout = Layout()
-        self.helper.layout = Layout(
-            Div(
-                Div('partner_organization', readonly=True),
+        self.helper.layout = Layout()
 
-                Div(PrependedText('title', _('Initiative Title')),),
+        for title in my_fields:
+            main_fieldset = Fieldset(None)
+            main_div = Div(css_class='row')
 
-            ),
-            # HTML(_('Please choose the members of this Initiative')),
-            # 'members',
-            HTML(_),
-            'Participants',
-            HTML(_('Location')),
-            'location',
+            # Title Div
+            main_fieldset.fields.append(
+                Div(
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
+                )
+            )
+            # remaining fields, every 3 on a row
+            for myField in my_fields[title]:
+                index = my_fields[title].index(myField) + 1
+                main_div.append(
+                    HTML('<span class="badge badge-default">' + str(index) + '</span>'),
+                )
+                main_div.append(
+                    Div(myField, css_class='col-md-3'),
+                )
+                # to keep every 3 on a row, or the last field in the list
+                if index % 2 == 0 or len(my_fields[title]) == index:
+                    main_fieldset.fields.append(main_div)
+                    main_div = Div(css_class='row')
 
-            HTML(_('Initiative Type')),
-            'type',
-            HTML(_('Duration')),
-            'duration',
-
-        )
+            main_fieldset.css_class = 'bd-callout bd-callout-warning'
+            self.helper.layout.append(main_fieldset)
+        #
+        # self.helper = FormHelper()
+        # self.helper.form_show_labels = False
+        # # form_action = reverse('initiatives:add')
+        # # self.helper.layout = Layout()
+        # self.helper.layout = Layout(
+        #     Div(
+        #         Div('partner_organization', readonly=True),
+        #
+        #         Div(PrependedText('title', _('Initiative Title')),),
+        #
+        #     ),
+        #     # HTML(_('Please choose the members of this Initiative')),
+        #     # 'members',
+        #     Div( HTML(_),
+        #     'Participants',
+        #     HTML(_('Location')),
+        #     'location',
+        #
+        #     HTML(_('Initiative Type')),
+        #     'type',
+        #     HTML(_('Duration')),
+        #     'duration',
+        #
+        # ))
 
         # Rendering the assessments
         if instance:
