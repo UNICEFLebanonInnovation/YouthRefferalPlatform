@@ -65,7 +65,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
-            initials['partner_organization'] = instance.partner_organization
+            initials['partner_organization'] = instance.partner_organization.widget.attrs['readonly'] = True
             # self.fields['member'].queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
 
 
@@ -85,7 +85,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         my_fields = OrderedDict()
 
         if not instance:
-            my_fields['Partner Information'] = ['partner_organization']
+            my_fields['Partner Information - please do not change'] = ['partner_organization']
 
         my_fields[_('Initiative Details')] = [
                                             'title',
