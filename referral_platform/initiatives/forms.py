@@ -50,12 +50,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     widget=forms.RadioSelect
     # )
 
-    needs_resources = forms.ChoiceField(
-        label=_("Needs Resources?"),
-        widget=forms.Select, required=False,
-        choices=(('True', _("Yes")), ('False', _("No"))),
-        initial='no'
-    )
+    # needs_resources = forms.ChoiceField(
+    #     label=_("Needs Resources?"),
+    #     widget=forms.Select, required=False,
+    #     choices=(('True', _("Yes")), ('False', _("No"))),
+    #     initial='no'
+    # )
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
@@ -76,15 +76,17 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
+        self.fields['type']=forms.CharField(widget=FilteredSelectMultiple("type", is_stacked=False))
         self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
-        self.fields['partner_organization'].widget.attrs['readonly'] = True
-        self.fields['partner_organization'] = forms.CharField(
-            widget=forms.TextInput(attrs={'readonly': 'readonly'})
-        )
+        # self.fields['partner_organization'].widget.attrs['readonly'] = True
+        self.fields['partner_organization'] = forms.CharField(disabled=True)
+        # self.fields['partner_organization'] = forms.CharField(
+        #     widget=forms.TextInput(attrs={'readonly': 'readonly'})
+        # )
         my_fields = OrderedDict()
 
         if not instance:
-            my_fields['Partner Info'] = ['partner_organization' ]
+            my_fields['Partner Information'] = ['partner_organization' ]
 
         my_fields[_('Initiative Details')] = [
                                             'title',

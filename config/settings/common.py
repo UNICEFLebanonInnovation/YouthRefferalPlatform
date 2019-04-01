@@ -57,7 +57,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',
-
+    'multiselectfield',
     'bootstrap3',
     'bootstrap3_datetime',
     'import_export',

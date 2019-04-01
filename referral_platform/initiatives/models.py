@@ -9,6 +9,7 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext as _
 from model_utils import Choices
+from multiselectfield import MultiSelectField
 from model_utils.models import TimeStampedModel
 from django.core.urlresolvers import reverse
 from referral_platform.users.models import User
@@ -92,27 +93,28 @@ class YouthLedInitiative(models.Model):
         )
     )
 
-    type = models.CharField(
-        max_length=254,
-        blank=True,
-        verbose_name=_('Initiative Types'),
-        null=True,
-        choices=Choices(
-                ('basic services', _('Basic Services')),
-                ('social Cohesion', _('Social cohesion')),
-                ('environmental', _('Environmental')),
-                ('health services', _('Health Services')),
-                ('protection', _('Protection')),
-                ('advocacy', _('Advocacy or Raising awareness')),
-                ('political', _('Political')),
-                ('religious and spiritual', _('Spiritual/Religious')),
-                ('sports', _('Sports')),
-                ('economic art cultural', _('Economic art cultural')),
-                ('educational', _('educational')),
-                ('other', _('Other'))
-        )
-
-    )
+    # type = models.CharField(
+    #     max_length=254,
+    #     blank=True,
+    #     verbose_name=_('Initiative Types'),
+    #     null=True,
+    #     choices=Choices(
+    #             ('basic services', _('Basic Services')),
+    #             ('social Cohesion', _('Social cohesion')),
+    #             ('environmental', _('Environmental')),
+    #             ('health services', _('Health Services')),
+    #             ('protection', _('Protection')),
+    #             ('advocacy', _('Advocacy or Raising awareness')),
+    #             ('political', _('Political')),
+    #             ('religious and spiritual', _('Spiritual/Religious')),
+    #             ('sports', _('Sports')),
+    #             ('economic art cultural', _('Economic art cultural')),
+    #             ('educational', _('educational')),
+    #             ('other', _('Other'))
+    #     )
+    #
+    # )
+    type = MultiSelectField(choices=INITIATIVE_TYPES)
 
 
     # knowledge_areas = models.CharField(
