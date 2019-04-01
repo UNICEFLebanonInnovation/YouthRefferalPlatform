@@ -20,7 +20,23 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
+    OPTIONS = (
+                ('basic services', _('Basic Services')),
+                ('social Cohesion', _('Social cohesion')),
+                ('environmental', _('Environmental')),
+                ('health services', _('Health Services')),
+                ('protection', _('Protection')),
+                ('advocacy', _('Advocacy or Raising awareness')),
+                ('political', _('Political')),
+                ('religious and spiritual', _('Spiritual/Religious')),
+                ('sports', _('Sports')),
+                ('economic art cultural', _('Economic art cultural')),
+                ('educational', _('educational')),
+                ('other', _('Other'))
+        )
+
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
+    type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
     # id = forms.CharField(widget=forms.HiddenInput())
     search_youth = forms.CharField(
         label=_("Search Initiative"),
@@ -121,7 +137,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     Div(myField, css_class='col-md-3'),
                 )
                 # to keep every 3 on a row, or the last field in the list
-                if index % 2 == 0 or len(my_fields[title]) == index:
+                if index % 3 == 0 or len(my_fields[title]) == index:
                     main_fieldset.fields.append(main_div)
                     main_div = Div(css_class='row')
 
