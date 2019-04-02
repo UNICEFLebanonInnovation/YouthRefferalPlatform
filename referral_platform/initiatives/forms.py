@@ -11,14 +11,17 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from collections import OrderedDict
 from crispy_forms.layout import Fieldset, Submit, Div, HTML, Layout
 from referral_platform.registrations.models import Assessment, Registration, AssessmentHash
+from django.forms import SelectMultiple
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, InlineField, Alert
 from .models import YouthLedInitiative, YoungPerson, Location
 from referral_platform.initiatives.models import AssessmentSubmission
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
-
+allow_multiple_selected = True
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     OPTIONS = (
                 ('basic services', _('Basic Services')),
@@ -35,8 +38,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 ('other', _('Other'))
         )
 
-    Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
-    type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
+    # Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
+    Participants = forms.ModelMultipleChoiceField(Registration.objects.all(),
+                                                widget=FilteredSelectMultiple("Participants", False, attrs={'rows': '2'}))
+    # type = forms.ModelMultipleChoiceField(choices=OPTIONS, widget=SelectMultiple(attrs={}))
     # id = forms.CharField(widget=forms.HiddenInput())
     search_youth = forms.CharField(
         label=_("Search Initiative"),
@@ -94,6 +99,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
+
         # self.fields['partner_organization'] = forms.CharField(disabled=True)
         # self.fields['partner_organization'] = forms.CharField(
         #     widget=forms.TextInput(attrs={'readonly': 'readonly'})
@@ -143,6 +149,25 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
             main_fieldset.css_class = 'bd-callout bd-callout-warning'
             self.helper.layout.append(main_fieldset)
+
+        # self.helper = FormHelper()
+        # self.helper.layout = Layout(
+        #     Row(
+        #         Column('title', css_class='form-group col-md-6 mb-0'),
+        #         Column('password', css_class='form-group col-md-6 mb-0'),
+        #         css_class='form-row'
+        #     ),
+        #     'address_1',
+        #     'address_2',
+        #     Row(
+        #         Column('duration', css_class='form-group col-md-6 mb-0'),
+        #         Column('location', css_class='form-group col-md-4 mb-0'),
+        #         Column('type', css_class='form-group col-md-2 mb-0'),
+        #         css_class='form-row'
+        #     ),
+        #
+        #
+        # )
         #
         # self.helper = FormHelper()
         # self.helper.form_show_labels = False
