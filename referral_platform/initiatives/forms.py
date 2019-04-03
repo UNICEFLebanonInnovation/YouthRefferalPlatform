@@ -39,9 +39,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         )
 
     # Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Participants", is_stacked=False))
-    Participants = forms.ModelMultipleChoiceField(Registration.objects.all(),
-                                                widget=FilteredSelectMultiple("Participants", False, attrs={'rows': '2'}))
-    # type = forms.ModelMultipleChoiceField(choices=OPTIONS, widget=SelectMultiple(attrs={}))
+    Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Partcipants", is_stacked=False))
+
+    type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
     # id = forms.CharField(widget=forms.HiddenInput())
     search_youth = forms.CharField(
         label=_("Search Initiative"),
@@ -53,9 +53,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         fields = '__all__'
 
     class Media:
-        css = {'all': ('/static/admin/css/widgets.css',), }
-        js = ('/admin/jsi18n/',)
+        css = {'all': ('/admin/css/widgets.css', 'admin/css/overrides.css'), }
+        js = ('/admin/jquery.js', '/admin/jsi18n/')
 
+        
     # start_date = forms.DateField(
     #     widget=DateTimePicker(
     #         options={
