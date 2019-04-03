@@ -97,20 +97,7 @@ class YouthLedInitiative(models.Model):
         blank=True,
         verbose_name=_('Initiative Types'),
         null=True,
-        choices=Choices(
-                ('basic services', _('Basic Services')),
-                ('social Cohesion', _('Social cohesion')),
-                ('environmental', _('Environmental')),
-                ('health services', _('Health Services')),
-                ('protection', _('Protection')),
-                ('advocacy', _('Advocacy or Raising awareness')),
-                ('political', _('Political')),
-                ('religious and spiritual', _('Spiritual/Religious')),
-                ('sports', _('Sports')),
-                ('economic art cultural', _('Economic art cultural')),
-                ('educational', _('educational')),
-                ('other', _('Other'))
-        )
+
 
     )
     # type = MultiSelectField(choices=INITIATIVE_TYPES)
