@@ -190,7 +190,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         #     HTML(_('Location')),
         #     'location',
         #
-        #     HTML(_('Initiative Type')),
+        #     HTML(_('Initiative Type')), 
         #     'type',
         #     HTML(_('Duration')),
         #     'duration',
