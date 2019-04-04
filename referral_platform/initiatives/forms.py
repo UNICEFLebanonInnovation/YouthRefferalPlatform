@@ -100,7 +100,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['location'].queryset = Location.objects.filter(parent__in=partner_locations)
         # self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
-        self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=instance.partner_organization)
+        self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=initials.partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
 
         # self.fields['partner_organization'] = forms.CharField(disabled=True)
