@@ -88,7 +88,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             self.fields['partner_organization'].widget.attrs['readonly'] = True
-            self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+            # self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
 
 
 
