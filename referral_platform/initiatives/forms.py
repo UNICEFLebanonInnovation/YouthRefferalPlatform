@@ -244,17 +244,17 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     if specific_form.slug != "init_registration":
                         disabled = "disabled"
 
-                if specific_form.name not in new_forms:
-                    new_forms[specific_form.name] = OrderedDict()
-                new_forms[specific_form.name][specific_form.order] = {
-                    'title': specific_form.overview,
-                    'form': formtxt,
-                    'overview': specific_form.name,
-                    'disabled': disabled
-
-                }
-                previous_status = disabled
-            assessment_fieldset = []
+            #     if specific_form.name not in new_forms:
+            #         new_forms[specific_form.name] = OrderedDict()
+            #     new_forms[specific_form.name][specific_form.order] = {
+            #         'title': specific_form.overview,
+            #         'form': formtxt,
+            #         'overview': specific_form.name,
+            #         'disabled': disabled
+            #
+            #     }
+            #     previous_status = disabled
+            # assessment_fieldset = []
 
             for name in new_forms:
                 test_html = ""
