@@ -34,6 +34,7 @@ class InitAdmin(ImportExportModelAdmin):
         'partner_organization',
         'title',
         'location',
+        'id',
 
     )
     list_filter = (
