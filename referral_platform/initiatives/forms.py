@@ -267,22 +267,22 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     HTML(test_html),
                     css_class='row'
                 )
-                test_fieldset = Fieldset(
-                    None,
-                    Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
-                            'overview'] + '</h4>')
-                    ),
-                    assessment_div,
-                    Div(
-                        HTML('<div class="p-3"></div>'),
-                        css_class='row'
-                    ),
-                    css_class='bd-callout bd-callout-warning'
-                )
-                assessment_fieldset.append(test_fieldset)
-                for myflds in assessment_fieldset:
-                    self.helper.layout.append(myflds)
+                # test_fieldset = Fieldset(
+                #     None,
+                #     Div(
+                #         HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
+                #             'overview'] + '</h4>')
+                #     ),
+                #     assessment_div,
+                #     Div(
+                #         HTML('<div class="p-3"></div>'),
+                #         css_class='row'
+                #     ),
+                #     css_class='bd-callout bd-callout-warning'
+                # )
+                # assessment_fieldset.append(test_fieldset)
+                # for myflds in assessment_fieldset:
+                #     self.helper.layout.append(myflds)
 
         # self.helper.form_action = form_action
         self.helper.layout.append(
