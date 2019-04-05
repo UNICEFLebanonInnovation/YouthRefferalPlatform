@@ -258,7 +258,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 test_html = ""
 
                 for test_order in new_forms[name]:
-                    test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
+                    test_html = test_html + '<div class="col-md-4"><a class="btn btn-success ' \
                                 + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
                                     'form'] \
                                 + '">' + new_forms[name][test_order][
