@@ -224,8 +224,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
-                        order = 1  # int(specific_form.order.split(".")[1])
-                        if order == 1:
+                        order = 3  # int(specific_form.order.split(".")[1])
+                        if order == 3:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
                                 assessment_id=specific_form.id, initiative_id=instance.id).exists()
@@ -246,11 +246,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
-                    new_forms[specific_form.name][specific_form.order] = {
-                        'title': specific_form.overview,
-                        'form': formtxt,
-                        'overview': specific_form.name,
-                        'disabled': disabled
+                new_forms[specific_form.name][specific_form.order] = {
+                    'title': specific_form.overview,
+                    'form': formtxt,
+                    'overview': specific_form.name,
+                    'disabled': disabled
+
                 }
                 previous_status = disabled
             assessment_fieldset = []
