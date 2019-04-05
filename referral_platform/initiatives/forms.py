@@ -200,8 +200,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('initiatives:edit', kwargs={'pk': instance.id})
-            # all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec") | Q(slug='init_post_civic'))
-            all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner_organization))
+            all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec") | Q(slug='init_post_civic'))
+            # all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner_organization))
             new_forms = OrderedDict()
 
             registration_form = Assessment.objects.get(slug="init_registration")
