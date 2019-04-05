@@ -223,8 +223,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
-                        order = 3  # int(specific_form.order.split(".")[1])
-                        if order == 3:
+                        order = 1  # int(specific_form.order.split(".")[1])
+                        if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
                                 assessment_id=specific_form.id, initiative_id=instance.id).exists()
@@ -258,7 +258,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 test_html = ""
 
                 for test_order in new_forms[name]:
-                    test_html = test_html + '<div class="col-md-4"><a class="btn btn-success ' \
+                    test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
                                 + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
                                     'form'] \
                                 + '">' + new_forms[name][test_order][
@@ -283,6 +283,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 assessment_fieldset.append(test_fieldset)
                 for myflds in assessment_fieldset:
                     self.helper.layout.append(myflds)
+
+        self.helper.form_action = form_action
         self.helper.layout.append(
             FormActions(
                 HTML('<a class="btn btn-info col-md-2" href="/initiatives/list/">' + _t('Cancel') + '</a>'),
