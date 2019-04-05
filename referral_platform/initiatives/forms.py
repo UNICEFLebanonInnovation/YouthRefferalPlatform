@@ -283,8 +283,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     css_class='bd-callout bd-callout-warning'
                 )
                 assessment_fieldset.append(test_fieldset)
-                # for myflds in assessment_fieldset:
-                #     self.helper.layout.append(myflds)
+                for myflds in assessment_fieldset:
+                    self.helper.layout.append(myflds)
 
         # self.helper.form_action = form_action
         self.helper.layout.append(
