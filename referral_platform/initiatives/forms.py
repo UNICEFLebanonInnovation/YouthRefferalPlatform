@@ -200,8 +200,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('initiatives:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec") | Q(slug='init_post_civic'))
+            # all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec") | Q(slug='init_post_civic'))
             # all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner_organization))
+            all_forms = Assessment.objects.filter(slug__in=["init_registration", "init_exec", "init_post_civic"])
             new_forms = OrderedDict()
 
             registration_form = Assessment.objects.get(slug="init_registration")
@@ -283,7 +284,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 assessment_fieldset.append(test_fieldset)
                 for myflds in assessment_fieldset:
                     self.helper.layout.append(myflds)
-                    print(myflds)
 
         # self.helper.form_action = form_action
         self.helper.layout.append(
