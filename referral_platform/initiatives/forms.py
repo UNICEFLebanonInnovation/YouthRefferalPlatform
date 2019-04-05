@@ -284,7 +284,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 for myflds in assessment_fieldset:
                     self.helper.layout.append(myflds)
 
-        self.helper.form_action = form_action
+        # self.helper.form_action = form_action
         self.helper.layout.append(
             FormActions(
                 HTML('<a class="btn btn-info col-md-2" href="/initiatives/list/">' + _t('Cancel') + '</a>'),
