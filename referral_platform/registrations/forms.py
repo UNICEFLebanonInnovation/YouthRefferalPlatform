@@ -294,7 +294,7 @@ class CommonForm(forms.ModelForm):
                                 # order += 1
                                 if previous_submitted:
                                     disabled = "disabled"
-                                    
+
                             else:
                                 disabled = "disabled"
                                 order += 1

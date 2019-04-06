@@ -218,6 +218,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     registry=instance.id,
                 )
                 disabled = ""
+                previous_status = "disabled"
 
                 if youth_registered:
                     if specific_form.slug == "init_registration":
