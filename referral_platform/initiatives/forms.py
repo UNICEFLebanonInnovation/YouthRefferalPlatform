@@ -224,8 +224,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
-                        order = 3  # int(specific_form.order.split(".")[1])
-                        if order == 3:
+                        order = 1  # int(specific_form.order.split(".")[1])
+                        if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
                                 assessment_id=specific_form.id, initiative_id=instance.id).exists()
