@@ -117,7 +117,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                                             'duration',
                                             'location',
-                                            'type',
+                                            # 'type',
                                             'Participants',
                                              ]
 
