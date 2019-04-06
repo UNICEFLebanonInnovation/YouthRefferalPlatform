@@ -294,11 +294,13 @@ class CommonForm(forms.ModelForm):
                                 order += 1
                                 if previous_submitted:
                                     disabled = "disabled"
+                                    order += 1
                             else:
                                 disabled = "disabled"
                 else:
                     if specific_form.slug != "registration":
                         disabled = "disabled"
+                        
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
