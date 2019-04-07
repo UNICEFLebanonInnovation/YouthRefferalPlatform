@@ -249,6 +249,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                         disabled = "disabled"
                     else:
                         if specific_form.slug == "init_exec":
+                            specific_form.slug('init_post_civic').status = 'disabled'
                             disabled = "disabled"
                             previous_status = "disabled"
 
