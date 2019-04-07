@@ -225,16 +225,13 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
-                        if specific_form.slug == "init_exec":
-                            disabled = "disabled"
-                        else:
-                                order = 1  # int(specific_form.order.split(".")[1])
-                                if order == 1:
-                                    # If the user filled the form disable it
-                                    form_submitted = AssessmentSubmission.objects.filter(
-                                        assessment_id=specific_form.id, initiative_id=instance.id).exists()
-                                    if form_submitted:
-                                        disabled = "disabled"
+                        order = 1  # int(specific_form.order.split(".")[1])
+                        if order == 1:
+                            # If the user filled the form disable it
+                            form_submitted = AssessmentSubmission.objects.filter(
+                                assessment_id=specific_form.id, initiative_id=instance.id).exists()
+                            if form_submitted:
+                                disabled = "disabled"
 
                         # else:
                         #
@@ -253,17 +250,14 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
-
                 new_forms[specific_form.name][specific_form.order] = {
-                        'title': specific_form.overview,
-                        'form': formtxt,
-                        'overview': specific_form.name,
-                        'disabled': disabled
+                    'title': specific_form.overview,
+                    'form': formtxt,
+                    'overview': specific_form.name,
+                    'disabled': disabled
 
-
-
-                    }
-            previous_status = disabled
+                }
+                previous_status = disabled
             assessment_fieldset = []
 
             for name in new_forms:
