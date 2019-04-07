@@ -248,8 +248,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     if specific_form.slug != "init_registration":
                         disabled = "disabled"
                     else:
-                        if specific_form.slug != "init_exec":
+                        if specific_form.slug == "init_exec":
                             disabled = "disabled"
+                            previous_status = "disabled"
 
 
                 if specific_form.name not in new_forms:
