@@ -302,6 +302,7 @@ class AssessmentAdmin(admin.ModelAdmin):
         'slug',
         'overview',
         'order',
+        'id',
     )
     list_filter = (
     )
@@ -356,6 +357,7 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'registration',
         'data',
         'new_data',
+        'id',
     )
     list_filter = (
         'assessment__name',
