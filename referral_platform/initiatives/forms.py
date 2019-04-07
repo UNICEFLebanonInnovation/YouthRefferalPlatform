@@ -247,6 +247,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 else:
                     if specific_form.slug != "init_registration":
                         disabled = "disabled"
+                    else:
+                        if specific_form.slug != "init_exec":
+                            disabled = "disabled"
+
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
