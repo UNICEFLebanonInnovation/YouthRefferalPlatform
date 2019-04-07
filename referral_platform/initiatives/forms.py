@@ -228,9 +228,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                         if specific_form.slug == "init_exec":
                             disabled = "disabled"
                         else:
-                            if specific_form.slug == "init_post_civic":
-                                disabled = "disabled"
-                            else:
                                 order = 1  # int(specific_form.order.split(".")[1])
                                 if order == 1:
                                     # If the user filled the form disable it
