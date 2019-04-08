@@ -218,7 +218,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     registry=instance.id,
                 )
                 disabled = ""
-
+                previous_status = "disabled"
 
                 if youth_registered:
                     if specific_form.slug == "init_registration":
@@ -235,9 +235,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                         else:
                             # make sure the user filled the form behind this one in order to enable it
-                            if previous_status != "disabled":
+                            if previous_status == "disabled":
                                 previous_submitted = AssessmentSubmission.objects.filter(
                                     assessment_id=specific_form.id, initiative_id=instance.id).exists()
+                                disabled = "disabled"
                                 if previous_submitted:
                                     disabled = ""
                             else:
