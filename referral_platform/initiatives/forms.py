@@ -238,7 +238,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                             # if previous_status == "disabled":
                             previous_submitted = AssessmentSubmission.objects.filter(
                                     assessment_id=specific_form.id, initiative_id=instance.id).exists()
-                            disabled = "disabled"
+
                             if previous_submitted:
                                     disabled = ""
                             else:
