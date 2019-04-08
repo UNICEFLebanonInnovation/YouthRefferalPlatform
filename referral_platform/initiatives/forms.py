@@ -240,9 +240,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                                     assessment_id=specific_form.id, initiative_id=instance.id).exists()
 
                             if previous_submitted:
-                                    disabled = ""
+                                previous_status == "disabled"
+                                disabled = ""
                             else:
                                 disabled = "disabled"
+                                previous_status == "disabled"
 
                 else:
                     if specific_form.slug != "init_registration":
