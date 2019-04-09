@@ -8,6 +8,7 @@ from time import mktime
 from django.core.serializers.json import DjangoJSONEncoder
 from openpyxl import load_workbook
 from referral_platform.youth.utils import generate_id
+from .models import AssessmentSubmission, Assessment, Registration
 
 
 @app.task
@@ -79,8 +80,42 @@ def import_registrations(filename, base_url, token, protocol='HTTPS'):
             print(json.dumps(data, cls=DjangoJSONEncoder))
             print("---------------")
             pass
+##############################################################################
+@app.task
+def import_assessment_submission(filename, base_url, token, protocol='HTTPS'):
+
+    wb = load_workbook(filename=filename, read_only=True)
+    ws = wb['Sheet1']
+    new_data = {}
+    header = []
+    index = 0
+    for row in ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            header.append((index, cell.value))
+            index += 1
+
+    for row in ws.rows:
+        try:
+            # if row[0].value == 'start':
+            #     continue
+            new_data = {}
+            # Rendering the assessment from excel
+
+            for key, value in header:
+                new_data[value] = row[key].value
+                instance = AssessmentSubmission.object.filter(AssessmentSubmission__id=row[0].value)
+                instance.new_data = new_data
+                instance.save()
+
+        except Exception as ex:
+            print("---------------")
+            print("error: ", ex.message)
+            print(json.dumps(new_data, cls=DjangoJSONEncoder))
+            print("---------------")
+            pass
 
 
+#################################################################################
 @app.task
 def update_registrations(filename, base_url, token, protocol='HTTPS'):
     from referral_platform.registrations.models import Registration
