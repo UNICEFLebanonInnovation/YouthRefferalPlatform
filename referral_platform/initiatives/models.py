@@ -76,7 +76,7 @@ class YouthLedInitiative(models.Model):
     location = models.ForeignKey(Location, blank=True, null=True, verbose_name="Initiative Location")
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="Partner Organization")
     # members = models.ManyToManyField(YoungPerson, blank=True, )
-    Participants = models.ManyToManyField(Registration, related_name='+', blank=True, null=True, verbose_name=_('Participants'))
+    Participants = models.ManyToManyField(Registration, related_name='+', verbose_name=_('Participants'))
 
     # start_date = models.DateField(blank=True, null=True)
     duration = models.CharField(
@@ -144,15 +144,15 @@ class YouthLedInitiative(models.Model):
     #         ('50-plus', _('50 years and above')),
     #     )
     # )
-    sex_of_beneficiaries = models.CharField(
-        max_length=254,
-        blank=True, null=True,
-        choices=Choices(
-            ('both', _('Both male and females')),
-            ('male', _('Only males')),
-            ('female', _('only female')),
-        )
-    )
+    # sex_of_beneficiaries = models.CharField(
+    #     max_length=254,
+    #     blank=True, null=True,
+    #     choices=Choices(
+    #         ('both', _('Both male and females')),
+    #         ('male', _('Only males')),
+    #         ('female', _('only female')),
+    #     )
+    # )
     # indirect_beneficiaries = models.CharField(
     #     max_length=254,
     #     blank=True, null=True,
@@ -253,6 +253,10 @@ class YouthLedInitiative(models.Model):
     @property
     def initiative_implementation(self):
         return self.get_assessment('init_exec')
+
+    @property
+    def initiative_post_civic(self):
+        return self.get_assessment('init_post_civic')
 
     def get_absolute_url(self):
         return reverse('initiatives:edit', kwargs={'pk': self.id})

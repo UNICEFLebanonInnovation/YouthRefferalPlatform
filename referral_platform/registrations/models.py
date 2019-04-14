@@ -222,6 +222,7 @@ class AssessmentSubmission(models.Model):
     status = models.CharField(max_length=254, choices=STATUS, default=STATUS.enrolled)
     data = JSONField(blank=True, null=True, default=dict)
     new_data = JSONField(blank=True, null=True, default=dict)
+    updated = models.CharField(max_length=254,  default='0')
 
     def get_data_option(self, column, option):
         column_value = self.data.get(column, '')

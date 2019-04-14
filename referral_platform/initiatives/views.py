@@ -93,6 +93,7 @@ class AddView(LoginRequiredMixin, FormView):
         return super(AddView, self).form_valid(form)
 
 
+
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'initiatives/form.html'
     form_class = YouthLedInitiativePlanningForm

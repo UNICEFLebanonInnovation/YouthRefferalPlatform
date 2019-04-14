@@ -20,9 +20,11 @@ class Command(BaseCommand):
                 obj.update_field()
         elif par == 'all':
             from referral_platform.registrations.models import AssessmentSubmission
-            newmaping = AssessmentSubmission.objects.all()
+            newmaping = AssessmentSubmission.objects.filter(updated='0', assessment__slug__in=["pre_asseessment", "post_asseessment",
+                                                                                               "pre_entrepreneurship", "post_entrepreneurship"])
             for obj in newmaping:
                 obj.update_field()
+                print(obj)
         elif par == 'OE':
             from referral_platform.registrations.models import AssessmentSubmission
             newmaping = AssessmentSubmission.objects.filter(new_data__isnull=True)

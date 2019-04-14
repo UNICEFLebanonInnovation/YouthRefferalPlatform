@@ -144,11 +144,11 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db('DATABASE_URL', default='postgres:///referral_platform'),
+    'default': env.db('DATABASE_URL', default='postgres:///updated'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
-
+#
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
 # Local time zone for this installation. Choices can be found here:
