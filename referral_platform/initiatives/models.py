@@ -73,7 +73,7 @@ class YouthLedInitiative(models.Model):
     )
 
     title = models.CharField(max_length=255, verbose_name=_('Initiative Title'))
-    location = models.ForeignKey(Location, blank=True, null=True, verbose_name="Initiative Location")
+    governorate = models.ForeignKey(Location, blank=True, null=True, verbose_name="Governorate")
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="Partner Organization")
     # members = models.ManyToManyField(YoungPerson, blank=True, )
     Participants = models.ManyToManyField(Registration, related_name='+', verbose_name=_('Participants'))
@@ -100,6 +100,11 @@ class YouthLedInitiative(models.Model):
 
 
     )
+
+    @property
+    def get_participants(self):
+        return "\n".join([str(p.id) for p in self.Participants.all()])
+
     # type = MultiSelectField(choices=INITIATIVE_TYPES)
 
 

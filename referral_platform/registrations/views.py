@@ -464,6 +464,16 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'Reason_stop_study': 'Reasons for leaving school',
             'other_five': 'Other reasons',
 
+            ###############################
+            'income_father': 'Family Income - Father',
+            'income_mother': 'Family Income - Mother',
+            'income_brothers ': 'Family Income - Brothers',
+            'income_sisters': 'Family Income - Sisters',
+            'income_none': 'Family Income - None',
+            'Incone_not_available': 'Family Income - Not available',
+
+
+
 
             'Accommodation_type': 'Accommodation Type',
             'what_electronics_do_you_own': 'What electronics do you own?',
@@ -487,7 +497,38 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_d45750c6': 'Email Address',
             'text_4c6fe6c9': 'Mobile phone number',
 
-         }
+            ###############################
+            'family_request': "Reason for stop studying - Family Request",
+            'underachievemet': "Reason for stop studying - Family Request",
+            'illness': "Reason for stop studying - illness",
+            'inability_pay_school_expenses': "Reason for stop studying - Inability to pay expenses",
+            'harassment_way_school': "Reason for stop studying - Harassment",
+            'school_far': "Reason for stop studying - School is far",
+            'education_not_useful': "Reason for stop studying - Education is not useful",
+            'not_seats_at_ school': "Reason for stop studying - No seats at school",
+            'engaged_in_labour': "Reason for stop studying - Engaged in labour",
+            'education_ low_standards': "Reason for stop studying - Low standard of education",
+            'bullying_school': "Reason for stop studying - Bullying at school",
+
+            ############################
+            'Conflict_related': "Reason for not feeling safe - Conflict related",
+            'violence_at_home': "Reason for not feeling safe - Violence",
+            'violence_harassment_community': "Reason for not feeling safe - Harassment in the community",
+            'Unplanned_future': "Reason for not feeling safe - Unplanned future",
+            'Violence_harassment_school': "Reason for not feeling safe - Harassement at School",
+            'other': "Reason for not feeling safe - Other",
+
+            ############################
+            'electonics_laptop': "Owns Laptop",
+            # 'electonics1': "Laptop",
+            # 'electonics3': "Tablet",
+            'electronic_tablet': "Owns Tablet",
+            # 'electronics2': "Conputer",
+            'electronic_internet': "Owns Internet",
+            'electonic_Smart_phone': "Owns Smart Phone",
+            'electronic_not_available': "Electonics Not available",
+
+        }
 
         qs = self.get_queryset().extra(select={
             # 'partner': "new_data->>'partner'",
@@ -529,8 +570,48 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_d45750c6': "new_data->>'text_d45750c6'",
             'text_4c6fe6c9': "new_data->>'text_4c6fe6c9'",
 
+            'income_father': "new_data->>'income_father'",
+            'income_mother': "new_data->>'income_mother'",
+            'income_brothers ': "new_data->>'income_brothers'",
+            'income_sisters': "new_data->>'income_sisters'",
+            'income_none': "new_data->>'income_none'",
+            'Incone_not_available': "new_data->>'Incone_not_available'",
+
             # 'youth_fname':"registration->>youth__last_name",
             # 'youth_lname':"registration->>youth__first_name",
+
+            ##########################
+            'family_request': "new_data->>'family_request'",
+            'underachievemet': "new_data->>'underachievemet'",
+            'illness': "new_data->>'illness'",
+            'inability_pay_school_expenses': "new_data->>'inability_pay_school_expenses'",
+            'harassment_way_school': "new_data->>'harassment_way_school'",
+            'school_far': "new_data->>'school_far'",
+            'education_not_useful': "new_data->>'education_not_useful'",
+            'not_seats_at_ school': "new_data->>'not_seats_at_ school'",
+            'engaged_in_labour': "new_data->>'engaged_in_labour'",
+            'education_ low_standards': "new_data->>'education_ low_standards'",
+            'bullying_school': "new_data->>'bullying_school'",
+
+
+            #######################
+            'Conflict_related': "new_data->>'Conflict_related'",
+            'violence_at_home': "new_data->>'violence_at_home'",
+            'violence_harassment_community': "new_data->>'violence_harassment_community'",
+            'Unplanned_future': "new_data->>'Unplanned_future'",
+            'Violence_harassment_school': "new_data->>'Violence_harassment_school'",
+            'other': "new_data->>'other'",
+
+            ########################
+            'electonics_laptop': "new_data->>'electronics_laptop'",
+            # 'electonics1': "new_data->>'electonic_computer'",
+            # 'electonics3': "new_data->>'electonic_Smart_phone'",
+            'electronic_tablet': "new_data->>'electronic_tablet'",
+            # 'electronics2': "new_data->>'electronic_internet'",
+            'electronic_internet': "new_data->>'electronic_not_available'",
+            'electonic_Smart_phone': "new_data->>'electonic_Smart_phone'",
+            'electronic_not_available': "new_data->>'electronic_tablet'",
+
 
         }).values(
             'registration__youth__first_name',
@@ -587,6 +668,46 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             'text_d45750c6',
             'text_4c6fe6c9',
             'training_type',
+
+            ######################
+            'income_father',
+            'income_mother',
+            'income_brothers ',
+            'income_sisters',
+            'income_none',
+            'Incone_not_available',
+
+
+            ######################
+            'family_request',
+            'underachievemet',
+            'illness',
+            'inability_pay_school_expenses',
+            'harassment_way_school',
+            'school_far',
+            'education_not_useful',
+            'not_seats_at_ school',
+            'engaged_in_labour',
+            'education_ low_standards',
+            'bullying_school',
+            ####################
+            'Conflict_related',
+            'violence_at_home',
+            'violence_harassment_community',
+            'Unplanned_future',
+            'Violence_harassment_school',
+            'other',
+            ####################
+            'electonics_laptop',
+            # 'electonics1',
+            # 'electonics3',
+            'electronic_tablet',
+            # 'electronics2',
+            'electronic_internet',
+            'electonic_Smart_phone',
+            'electronic_not_available',
+
+
         )
         filename = 'registrations'
 
@@ -660,6 +781,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
                 'which_of_the_following_do_you_agree_with': 'which of the following do you agree with',
                 '_submission_time': 'Submission time',
                 '_userform_id': 'User',
+
                 # 'registration__partner_organization__name': 'Partner',
             }
 

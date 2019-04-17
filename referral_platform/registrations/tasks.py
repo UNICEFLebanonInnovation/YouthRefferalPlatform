@@ -6,7 +6,7 @@ import httplib
 import datetime
 from time import mktime
 from django.core.serializers.json import DjangoJSONEncoder
-
+import re
 from openpyxl import load_workbook
 from referral_platform.youth.utils import generate_id
 from .models import AssessmentSubmission, Assessment, Registration
@@ -135,25 +135,28 @@ def import_initiatives(filename):
 
     for row in ws.rows:
         try:
-            if row[0].value == 'ID':
-                continue
-            data = {}
+            # if row[0].value == 'title':
+            #     continue
             # not for use 1, 2, 3, 4
-            obj = YouthLedInitiative(
-                                     title=row[1].value,
-                                     location=row[2].value,
-                                     partner_organization=row[3].value,
-                                     Participants=row[4].value,
-                                     duration=row[5].value,
-                                     type=row[6].value)
-            print(obj)
-            obj.save()
+            data = {}
+            data['title'] = row[0].value
+            data['governorate_id'] = row[1].value
+            data['partner_organization_id'] = row[3].value
+            data['duration'] = row[4].value
+            data['type'] = row[5].value
+
+            instance = YouthLedInitiative.objects.create(**data)
+            id_participants = str(row[2].value)
+            s= map(int, re.findall(r'\d+', id_participants))
+            for number in s:
+                instance.Participants.add(number)
+
+            print('obj')
 
 
         except Exception as ex:
             print("---------------")
             print("error: ", ex.message)
-            print(json.dumps(data, cls=DjangoJSONEncoder))
             print("---------------")
             pass
 ##############################################################################

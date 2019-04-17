@@ -208,6 +208,9 @@ class Registration(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('registrations:edit', kwargs={'pk': self.id})
 
+    def __str__(self):
+        return self.youth.name
+
 
 class AssessmentSubmission(models.Model):
     STATUS = Choices(

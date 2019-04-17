@@ -4,7 +4,7 @@ from import_export import resources, fields
 from import_export import fields
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.postgres.fields import JSONField
-
+from referral_platform.registrations.models import Registration
 from prettyjson import PrettyJSONWidget
 
 from .models import YouthLedInitiative, AssessmentSubmission
@@ -20,9 +20,10 @@ class InitResource(resources.ModelResource):
         model = YouthLedInitiative
         fields = (
             'title',
-            'Participants',
-            'location',
+            'governorate',
             'partner_organization',
+            'Participants',
+
 
         )
         export_order = fields
@@ -33,12 +34,13 @@ class InitAdmin(ImportExportModelAdmin):
     list_display = (
         'partner_organization',
         'title',
-        'location',
+        'governorate',
+        'get_participants',
         'id',
 
     )
     list_filter = (
-        'location',
+        'governorate',
     )
     search_fields = (
         'title',
