@@ -42,7 +42,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.all(), widget=FilteredSelectMultiple("Partcipants", is_stacked=False))
 
-    type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
+    # type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
     # id = forms.CharField(widget=forms.HiddenInput())
     search_youth = forms.CharField(
         label=_("Search Initiative"),
@@ -117,8 +117,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                                             'duration',
                                             'location',
-                                            'type',
-                                            'Participants',
+                                            # 'type',
+                                            # 'Participants',
                                              ]
 
         self.helper = FormHelper()
