@@ -97,7 +97,7 @@ class YouthLedInitiative(models.Model):
         blank=True,
         verbose_name=_('Initiative Types'),
         null=True,
-
+        choices=INITIATIVE_TYPES,
 
     )
 
