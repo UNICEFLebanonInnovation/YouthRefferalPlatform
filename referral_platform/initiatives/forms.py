@@ -117,8 +117,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                                             'duration',
                                             'location',
-                                            # 'type',
-                                            # 'Participants',
+                                            'type',
+                                            'Participants',
                                              ]
 
         self.helper = FormHelper()
