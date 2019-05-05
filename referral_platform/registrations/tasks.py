@@ -135,8 +135,8 @@ def import_initiatives(filename):
 
     for row in ws.rows:
         try:
-            # if row[0].value == 'title':
-            #     continue
+            if row[0].value == 'title':
+                continue
             # not for use 1, 2, 3, 4
             data = {}
             data['title'] = row[0].value
