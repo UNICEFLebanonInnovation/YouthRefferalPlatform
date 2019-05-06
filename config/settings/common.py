@@ -144,12 +144,10 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db('DATABASE_URL', default='postgres:///postgres', ),
-    'USER': 'postgres',
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'default': env.db('DATABASE_URL', default='postgres:///postgres', )
 
 }
-DATABASES['default']['ATOMIC_REQUESTS'] = True
+DATABASES['default']['ATOMIC_REQUESTS'] = False
 
 #
 # GENERAL CONFIGURATION
