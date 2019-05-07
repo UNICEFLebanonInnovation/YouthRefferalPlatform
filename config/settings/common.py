@@ -147,7 +147,7 @@ DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres:///postgres', )
 
 }
-DATABASES['default']['ATOMIC_REQUESTS'] = False
+# DATABASES['default']['ATOMIC_REQUESTS'] = False
 
 #
 # GENERAL CONFIGURATION

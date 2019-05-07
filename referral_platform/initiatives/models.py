@@ -72,7 +72,7 @@ class YouthLedInitiative(models.Model):
         ('in-kind', _('In-Kind (posters, booklet,etc)')),
     )
 
-    title = models.CharField(max_length=255, verbose_name=_('Initiative Title'))
+    title = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Initiative Title'))
     governorate = models.ForeignKey(Location, blank=True, null=True, verbose_name="Governorate")
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="Partner Organization")
     # members = models.ManyToManyField(YoungPerson, blank=True, )
