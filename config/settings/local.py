@@ -3,14 +3,14 @@
 Local settings
 
 - Run in Debug mode
-
 - Use console backend for emails
-
 - Add Django Debug Toolbar
 - Add django-extensions as app
 """
 
 from .common import *  # noqa
+import socket
+import os
 
 # DEBUG
 # ------------------------------------------------------------------------------
@@ -26,11 +26,9 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='j49r%gsnj&t!ys+qz^*-lsupfnk(268+1
 # Mail settings
 # ------------------------------------------------------------------------------
 
-# EMAIL_PORT = 1025
-#
-# EMAIL_HOST = 'localhost'
-# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
-#                     default='django.core.mail.backends.console.EmailBackend')
+EMAIL_PORT = 1025
+
+EMAIL_HOST = env("EMAIL_HOST", default='mailhog')
 
 
 # CACHING
@@ -44,18 +42,14 @@ CACHES = {
 
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-INSTALLED_APPS += ['debug_toolbar', ]
+MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+INSTALLED_APPS += ('debug_toolbar', )
 
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
-
-
-import socket
-import os
 # tricks to have debug toolbar when developing with docker
 if os.environ.get('USE_DOCKER') == 'yes':
     ip = socket.gethostbyname(socket.gethostname())
-    INTERNAL_IPS += [ip[:-1] + '1']
+    INTERNAL_IPS += [ip[:-1]+"1"]
 
 DEBUG_TOOLBAR_CONFIG = {
     'DISABLE_PANELS': [
@@ -66,7 +60,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # django-extensions
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ['django_extensions', ]
+INSTALLED_APPS += ('django_extensions', )
 
 # TESTING
 # ------------------------------------------------------------------------------
@@ -77,23 +71,4 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 CELERY_ALWAYS_EAGER = True
 ########## END CELERY
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': True,
-        },
-    },
-    'root': {
-        'handlers': ['console', ],
-        'level': 'INFO'
-    },
-}
+# Your local stuff: Below this line define 3rd party library settings
