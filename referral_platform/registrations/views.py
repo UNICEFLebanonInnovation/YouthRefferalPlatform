@@ -416,7 +416,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
-        if self.request.user.country.name_en == 'Jordan' | self.request.user.country.name_en == 'Syria':
+        if self.request.user.country.name_en in ('Jordan', 'Syria'):
             headers = {
                 'registration__youth__first_name': 'First Name',
                 'registration__youth__father_name': "Fathers's Name",
