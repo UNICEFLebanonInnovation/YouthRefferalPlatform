@@ -454,6 +454,12 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 'center_type': 'Center Type',
 
                 ###############################
+                'Do_you_have_difficul_n_if_wearing_glasses': 'Do you have difficulty seeing even if wearing glasses?',
+                'Do_you_have_difficul_using_a_hearing_aid': 'Do you have difficulty hearing even if using a hearing aid?',
+                'Do_you_have_difficul_g_or_climbing_stairs': 'Do you have difficulty walking or climbing stairs?',
+                'Do_you_have_difficul_ing_or_concentrating': 'Do you have difficulty walking or climbing stairs?',
+                'Do_you_have_difficul_all_over_or_dressing': 'Do you have difficulty with (self-care such as) washing all over or dressing?',
+                'Using_your_usual_lan_understood_by_others': 'Using your usual language, do you have difficulty communicating (for example understanding or being understood by others)?',
 
 
                 ##############################
@@ -615,6 +621,15 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 'electonic_Smart_phone': "new_data->>'electonic_Smart_phone'",
                 'electronic_not_available': "new_data->>'electronic_tablet'",
 
+                #########################
+                'Do_you_have_difficul_n_if_wearing_glasses': "data->>'Do_you_have_difficul_n_if_wearing_glasses'",
+                'Do_you_have_difficul_using_a_hearing_aid': "data->>'Do_you_have_difficul_using_a_hearing_aid'",
+                'Do_you_have_difficul_g_or_climbing_stairs': "data->>'Do_you_have_difficul_g_or_climbing_stairs'",
+                'Do_you_have_difficul_ing_or_concentrating': "data->>'Do_you_have_difficul_ing_or_concentrating'",
+                'Do_you_have_difficul_all_over_or_dressing': "data->>'Do_you_have_difficul_all_over_or_dressing'",
+                'Using_your_usual_lan_understood_by_others': "data->>'Using_your_usual_lan_understood_by_others'",
+
+
 
             }).values(
                 'registration__youth__first_name',
@@ -709,6 +724,14 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 'electronic_internet',
                 'electonic_Smart_phone',
                 'electronic_not_available',
+                #######################
+                'Do_you_have_difficul_n_if_wearing_glasses',
+                'Do_you_have_difficul_using_a_hearing_aid',
+                'Do_you_have_difficul_g_or_climbing_stairs',
+                'Do_you_have_difficul_ing_or_concentrating',
+                'Do_you_have_difficul_all_over_or_dressing',
+                'Using_your_usual_lan_understood_by_others',
+
 
 
             )
