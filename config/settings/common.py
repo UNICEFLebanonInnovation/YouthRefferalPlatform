@@ -17,21 +17,9 @@ APPS_DIR = ROOT_DIR.path('referral_platform')
 
 env = environ.Env()
 
-# .env file, should load only in development environment
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
-
-if READ_DOT_ENV_FILE:
-    # Operating System Environment variables have precedence over variables defined in the .env file,
-    # that is to say variables from the .env files will only be used if not defined
-    # as environment variables.
-    env_file = str(ROOT_DIR.path('.env'))
-    print('Loading : {}'.format(env_file))
-    env.read_env(env_file)
-    print('The .env file has been loaded. See base.py for more information')
-
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
-DJANGO_APPS = [
+DJANGO_APPS = (
     # Default Django apps:
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,16 +35,18 @@ DJANGO_APPS = [
     # Admin
     'suit',
     'django.contrib.admin',
-    # 'markdown_deux',  # Required for Knowledgebase item formatting
-]
-THIRD_PARTY_APPS = [
+)
+THIRD_PARTY_APPS = (
     'crispy_forms',  # Form layouts
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    #'allauth.socialaccount.providers.facebook',
+
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',
+
     'bootstrap3',
     'bootstrap3_datetime',
     'import_export',
@@ -64,12 +54,13 @@ THIRD_PARTY_APPS = [
     'django_tables2',
     'django_celery_beat',
     'django_celery_results',
-]
+)
 
 # Apps specific for this project go here.
-LOCAL_APPS = [
+LOCAL_APPS = (
     # custom users app
     'referral_platform.users.apps.UsersConfig',
+    # Your stuff: custom apps go here
     'referral_platform.partners',
     'referral_platform.locations',
     'referral_platform.youth',
@@ -80,14 +71,14 @@ LOCAL_APPS = [
     'referral_platform.dashboard',
     'referral_platform.backends',
 
-]
+)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -96,16 +87,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-#     'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
-#
-# SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
-
-
-# SECURITY CONFIGURATION
-X_FRAME_OPTIONS = 'DENY'
+)
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -116,7 +98,7 @@ MIGRATION_MODULES = {
 # DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool('DJANGO_DEBUG', False)
+DEBUG = env.bool('DJANGO_DEBUG', True)
 
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -144,12 +126,11 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db('DATABASE_URL', default='postgres:///postgres', )
-
+    'default': env.db('DATABASE_URL', default='postgres:///referral_platform'),
 }
-# DATABASES['default']['ATOMIC_REQUESTS'] = False
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
-#
+
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
 # Local time zone for this installation. Choices can be found here:
@@ -233,15 +214,15 @@ STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [
+STATICFILES_DIRS = (
     str(APPS_DIR.path('static')),
-]
+)
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
-STATICFILES_FINDERS = [
+STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
+)
 
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -258,42 +239,12 @@ ROOT_URLCONF = 'config.urls'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# PASSWORD STORAGE SETTINGS
-# ------------------------------------------------------------------------------
-# See https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
-PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.BCryptPasswordHasher',
-]
-
-# PASSWORD VALIDATION
-# https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
-# ------------------------------------------------------------------------------
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
-AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-]
+)
 
 # Some really nice defaults
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
@@ -307,30 +258,30 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', False
 ACCOUNT_ADAPTER = 'referral_platform.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'referral_platform.users.adapters.SocialAccountAdapter'
 
-# SOCIALACCOUNT_PROVIDERS = {
-#     'facebook':
-#        {'METHOD': 'oauth2',
-#         'SCOPE': ['email','public_profile', 'user_friends'],
-#         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-#         'FIELDS': [
-#             'id',
-#             'email',
-#             'name',
-#             'first_name',
-#             'last_name',
-#             'verified',
-#             'locale',
-#             'timezone',
-#             'link',
-#             'gender',
-#             'updated_time'],
-#         'EXCHANGE_TOKEN': True,
-#         'VERIFIED_EMAIL': False,
-#         'VERSION': 'v2.4'}}
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook':
+       {'METHOD': 'oauth2',
+        'SCOPE': ['email','public_profile', 'user_friends'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time'],
+        'EXCHANGE_TOKEN': True,
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.4'}}
 
 #facebook
-# SOCIAL_AUTH_FACEBOOK_KEY = '1442347179129203'
-# SOCIAL_AUTH_FACEBOOK_SECRET ='ee205f6f25da8aa856ec90b39d7d61fd'
+SOCIAL_AUTH_FACEBOOK_KEY = '1442347179129203'
+SOCIAL_AUTH_FACEBOOK_SECRET ='ee205f6f25da8aa856ec90b39d7d61fd'
 
 # Custom user app defaults
 # Select the correct user model
@@ -342,15 +293,26 @@ LOGIN_URL = 'account_login'
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-INSTALLED_APPS += ['referral_platform.taskapp.celery.CeleryConfig']
+# INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig',)
+# if you are not using the django database broker (e.g. rabbitmq, redis, memcached), you can remove the next line.
+# INSTALLED_APPS += ('kombu.transport.django',)
+# BROKER_URL = env('CELERY_BROKER_URL', default='django://')
+# if BROKER_URL == 'django://':
+#     CELERY_RESULT_BACKEND = 'redis://'
+# else:
+#     CELERY_RESULT_BACKEND = BROKER_URL
+########## END CELERY
+
+########## CELERY
+INSTALLED_APPS += ('referral_platform.taskapp.celery.CeleryConfig', )
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = 'django-db'
 ########## END CELERY
 
 # django-compressor
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ['compressor']
-STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
+INSTALLED_APPS += ("compressor", )
+STATICFILES_FINDERS += ("compressor.finders.CompressorFinder", )
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
@@ -361,15 +323,15 @@ LOCALE_PATHS = [
 
 # WEBPACK
 # ------------------------------------------------------------------------------
-# INSTALLED_APPS += ('webpack_loader',)
+INSTALLED_APPS += ('webpack_loader',)
 # Webpack Local Stats file
-# STATS_FILE = ROOT_DIR('webpack-stats.json')
+STATS_FILE = ROOT_DIR('webpack-stats.json')
 # Webpack config
-# WEBPACK_LOADER = {
-#     'DEFAULT': {
-#         'STATS_FILE': STATS_FILE
-#     }
-# }
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'STATS_FILE': STATS_FILE
+    }
+}
 
 # Django Suit configuration example
 SUIT_CONFIG = {
@@ -397,10 +359,8 @@ SUIT_CONFIG = {
         {'app': 'users', 'label': 'Users', 'icon': 'icon-user'},
         {'app': 'youth', 'label': 'Youth', 'icon': 'icon-user'},
         {'app': 'partners', 'label': 'Partners', 'icon': 'icon-user'},
-        # {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
+        {'app': 'courses', 'label': 'Courses', 'icon': 'icon-th-list'},
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
-        {'app': 'initiatives', 'label': 'Initiatives', 'icon': 'icon-th-list'},
-        {'app': 'INIT', 'label': 'INITIATIVES', 'icon': 'icon-th-list'},
 
     )
 }
@@ -418,11 +378,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     )
-}
-
-SWAGGER_SETTINGS = {
-    'is_authenticated': True,
-    'is_superuser': True,
 }
 
 POWERBI_JCO = env('POWERBI_JCO', default='NO_URL')
