@@ -53,9 +53,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         model = YouthLedInitiative
         fields = '__all__'
 
-    class Media:
-        css = {'all': ('/admin/css/widgets.css', 'admin/css/overrides.css'), }
-        js = ('/admin/jquery.js', '/admin/jsi18n/')
+    # class Media:
+    #     css = {'all': ('/admin/css/widgets.css', 'admin/css/overrides.css'), }
+    #     js = ('/admin/jquery.js', '/admin/jsi18n/')
 
 
     # start_date = forms.DateField(

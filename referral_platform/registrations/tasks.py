@@ -442,3 +442,42 @@ def update_data(protocol, url, apifunc, token, data):
     conn.close()
 
     return result
+
+##############################################################################
+@app.task
+def import_initiative_submission(filename):
+    from referral_platform.initiatives.models import AssessmentSubmission
+    wb = load_workbook(filename=filename, read_only=True)
+    ws = wb['Sheet1']
+    new_data = {}
+    header = []
+    index = 0
+    for row in ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            header.append((index, cell.value))
+            index += 1
+
+    for row in ws.rows:
+        try:
+            if row[0].value == 'ID':
+                continue
+            new_data = {}
+            # Rendering the assessment from excel
+
+            for key, value in header:
+                new_data[value] = row[key].value
+                instance = AssessmentSubmission.objects.get(youth__number=row[0].value, assessment__slug=row[1].value)
+                instance.new_data = new_data
+                instance.updated = '1'
+                print(instance)
+                instance.save()
+
+        except Exception as ex:
+            print("---------------")
+            print("error: ", ex.message)
+            print(json.dumps(new_data, cls=DjangoJSONEncoder))
+            print("---------------")
+            pass
+
+
+#################################################################################

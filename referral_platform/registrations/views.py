@@ -537,6 +537,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
                 'electonic_Smart_phone': "Owns Smart Phone",
                 'electronic_not_available': "Electonics Not available",
 
+
             }
 
             qs = self.get_queryset().extra(select={

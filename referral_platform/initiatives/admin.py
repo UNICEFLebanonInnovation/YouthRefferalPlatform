@@ -23,6 +23,7 @@ class InitResource(resources.ModelResource):
             'governorate',
             'partner_organization',
             'Participants',
+            'id',
 
 
         )
