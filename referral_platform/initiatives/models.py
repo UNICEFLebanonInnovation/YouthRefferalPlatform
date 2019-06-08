@@ -19,6 +19,7 @@ from referral_platform.registrations.models import Registration, NewMapping, JSO
 from .utils import generate_hash
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from multiselectfield import MultiSelectField
 
 class YouthLedInitiative(models.Model):
 
@@ -92,20 +93,20 @@ class YouthLedInitiative(models.Model):
         )
     )
 
-    type = models.CharField(
-        max_length=254,
-        blank=True,
-        verbose_name=_('Initiative Types'),
-        null=True,
-        choices=INITIATIVE_TYPES,
-
-    )
+    # type = models.CharField(
+    #     max_length=254,
+    #     blank=True,
+    #     verbose_name=_('Initiative Types'),
+    #     null=True,
+    #     choices=INITIATIVE_TYPES,
+    #
+    # )
 
     @property
     def get_participants(self):
         return "\n".join([str(p.id) for p in self.Participants.all()])
 
-    # type = MultiSelectField(choices=INITIATIVE_TYPES)
+    type = MultiSelectField(choices=INITIATIVE_TYPES)
 
 
     # knowledge_areas = models.CharField(

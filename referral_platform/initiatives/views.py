@@ -1,30 +1,16 @@
 from __future__ import absolute_import, unicode_literals
 
-import json
-import datetime
+
 import time
-from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from django.views.generic import ListView, FormView, TemplateView, UpdateView, View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.translation import ugettext as _
-from django.db.models import Q
-from django.views.generic.edit import CreateView
-from rest_framework import status
-from rest_framework import viewsets, mixins, permissions
-from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
-from import_export.formats import base_formats
-from django.shortcuts import render, get_object_or_404
+from .tables import BootstrapTable
+from referral_platform.initiatives.tables import CommonTable
+from django.views.generic import ListView, FormView
+
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import RedirectView
 from django.shortcuts import render
 from referral_platform.backends.djqscsv import render_to_csv_response
-from rest_framework import status
-from django.conf import settings
-from django.http import HttpResponse
-from django.template.loader import render_to_string
+
 from referral_platform.initiatives.models import AssessmentSubmission
 from django_filters.views import FilterView
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
@@ -33,9 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from referral_platform.registrations.models import Registration, Assessment, AssessmentHash
 
 
-from referral_platform.users.views import UserRegisteredMixin
-
-from .forms import YouthLedInitiativePlanningForm
+from .form import YouthLedInitiativePlanningForm
 from .models import YouthLedInitiative, YoungPerson
 
 
@@ -45,6 +29,7 @@ class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
     model = YouthLedInitiative
     template_name = 'initiatives/list.html'
     table = BootstrapTable(YouthLedInitiative.objects.all(), order_by='id')
+
 
 
     def get_queryset(self):

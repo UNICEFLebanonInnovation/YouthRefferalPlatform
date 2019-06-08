@@ -20,9 +20,9 @@ class InitResource(resources.ModelResource):
         model = YouthLedInitiative
         fields = (
             'title',
-            'governorate',
-            'partner_organization',
-            'Participants',
+            # 'governorate',
+            # 'partner_organization',
+            # 'Participants',
             'id',
 
 
@@ -33,20 +33,20 @@ class InitResource(resources.ModelResource):
 class InitAdmin(ImportExportModelAdmin):
     resource_class = InitResource
     list_display = (
-        'partner_organization',
+        # 'partner_organization',
         'title',
-        'governorate',
+        # # 'governorate',
         'get_participants',
-        'id',
+        # 'id',
 
     )
-    list_filter = (
-        'governorate',
-    )
-    search_fields = (
-        'title',
-    )
-    filter_horizontal = ('Participants',)
+    # list_filter = (
+    #     'governorate',
+    # )
+    # search_fields = (
+    #     'title',
+    # )
+    # filter_horizontal = ('Participants',)
 
 
 class AssessmentSubmissionResource(admin.ModelAdmin):
