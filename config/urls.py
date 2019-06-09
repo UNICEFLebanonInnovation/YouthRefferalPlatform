@@ -10,6 +10,7 @@ from django.views import defaults as default_views
 
 from rest_framework_nested import routers
 from rest_framework_swagger.views import get_swagger_view
+from django.views.i18n import JavaScriptCatalog
 
 from referral_platform.youth.views import YoungPersonViewSet
 from referral_platform.backends.views import ExporterViewSet
@@ -51,6 +52,7 @@ urlpatterns = [
     url(r'^backends/', include('referral_platform.backends.urls', namespace='backends')),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^app/admin/jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/docs/', schema_view),

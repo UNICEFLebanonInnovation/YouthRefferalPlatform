@@ -30,8 +30,6 @@ class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
     template_name = 'initiatives/list.html'
     table = BootstrapTable(YouthLedInitiative.objects.all(), order_by='id')
 
-
-
     def get_queryset(self):
         return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner)
 
