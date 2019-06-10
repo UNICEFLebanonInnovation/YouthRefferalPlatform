@@ -8,7 +8,6 @@ from django.views.generic import ListView, FormView
 
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import RedirectView
-from django.shortcuts import render
 from referral_platform.backends.djqscsv import render_to_csv_response
 
 from referral_platform.initiatives.models import AssessmentSubmission
@@ -20,10 +19,12 @@ from referral_platform.registrations.models import Registration, Assessment, Ass
 
 
 from .form import YouthLedInitiativePlanningForm
-from .models import YouthLedInitiative, YoungPerson
+from .models import YouthLedInitiative
 
 
-class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
+class YouthInitiativeView(LoginRequiredMixin,
+                          FilterView,
+                          SingleTableView):
 
     table_class = CommonTable
     model = YouthLedInitiative
@@ -31,7 +32,7 @@ class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
     table = BootstrapTable(YouthLedInitiative.objects.all(), order_by='id')
 
     def get_queryset(self):
-        return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner)
+        return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner_id)
 
 
 class AddView(LoginRequiredMixin, FormView):
