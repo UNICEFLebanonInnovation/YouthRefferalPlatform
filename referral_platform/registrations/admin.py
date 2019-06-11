@@ -247,7 +247,8 @@ class RegistrationAdmin(ImportExportModelAdmin):
     search_fields = (
         'youth__first_name',
         'youth__last_name',
-        'youth__father_name'
+        'youth__father_name',
+        'id',
     )
 
     def get_queryset(self, request):

@@ -35,17 +35,20 @@ class InitAdmin(ImportExportModelAdmin):
     list_display = (
         # 'partner_organization',
         'title',
-        # # 'governorate',
+        'partner_organization',
         'get_participants',
         'id',
 
     )
-    # list_filter = (
-    #     'governorate',
-    # )
-    # search_fields = (
-    #     'title',
-    # )
+    list_filter = (
+        'governorate',
+        'partner_organization',
+    )
+    search_fields = (
+        'title',
+
+    )
+
     # filter_horizontal = ('Participants',)
 
 
@@ -77,6 +80,10 @@ class AssessmentSubmissionAdmin(ImportExportModelAdmin):
         'assessment__overview',
         'assessment__slug',
 
+    )
+    search_fields = (
+        # 'member',
+        'id',
     )
 
     def enrolled(self, obj):
