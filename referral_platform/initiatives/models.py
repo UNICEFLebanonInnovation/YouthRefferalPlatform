@@ -1,40 +1,24 @@
 from __future__ import unicode_literals, absolute_import, division
 
-from datetime import date
-import datetime
-
-# from django.contrib.gis.db import models
-from django.db.models.signals import pre_save
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.utils.translation import ugettext as _
 from model_utils import Choices
-from model_utils.models import TimeStampedModel
 from django.core.urlresolvers import reverse
-from referral_platform.users.models import User
-from referral_platform.youth.models import YoungPerson
 from referral_platform.partners.models import PartnerOrganization
 from referral_platform.locations.models import Location
+<<<<<<< HEAD
 from referral_platform.registrations.models import Registration, NewMapping, JSONField, Assessment
 from .utils import generate_hash
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+=======
+from referral_platform.registrations.models import Registration, NewMapping, Assessment
+from multiselectfield import MultiSelectField
+>>>>>>> 8d1cf1a212537dde009b2b630aaacfc8e49b2c40
+
 
 class YouthLedInitiative(models.Model):
-
-    def __unicode__(self):
-        return '{} - {}'.format(self.title, self.Participants)
-
-    # def __iter__(self):
-    #     return iter([self.name,
-    #                  self.slug,
-    #                  self.overview,
-    #                  self.start_date,
-    #                  self.end_date,
-    #                  self.capacity,
-    #                  self.assessment_form,
-    #                  self.order,
-    #                  self.partner])
 
     INITIATIVE_TYPES = Choices(
         ('basic_services', _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
@@ -75,10 +59,8 @@ class YouthLedInitiative(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Initiative Title'))
     governorate = models.ForeignKey(Location, blank=True, null=True, verbose_name="Governorate")
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="Partner Organization")
-    # members = models.ManyToManyField(YoungPerson, blank=True, )
     Participants = models.ManyToManyField(Registration, related_name='+', verbose_name=_('Participants'))
 
-    # start_date = models.DateField(blank=True, null=True)
     duration = models.CharField(
         max_length=254,
         verbose_name=_('Duration of the initiative'),
@@ -88,10 +70,10 @@ class YouthLedInitiative(models.Model):
             ('3_4', _('3-4 weeks')),
             ('4_6', _('4-6 weeks')),
             ('6_plus', _('More than 6 weeks')),
-
         )
     )
 
+<<<<<<< HEAD
     type = models.CharField(
         max_length=254,
         blank=True,
@@ -100,11 +82,15 @@ class YouthLedInitiative(models.Model):
         choices=INITIATIVE_TYPES,
 
     )
+=======
+    type = MultiSelectField(choices=INITIATIVE_TYPES)
+>>>>>>> 8d1cf1a212537dde009b2b630aaacfc8e49b2c40
 
     @property
     def get_participants(self):
         return "\n".join([str(p.id) for p in self.Participants.all()])
 
+<<<<<<< HEAD
     # type = MultiSelectField(choices=INITIATIVE_TYPES)
 
 
@@ -245,6 +231,8 @@ class YouthLedInitiative(models.Model):
     # challenges_face = models.TextField(blank=True, null=True)
     # lessons_learnt = models.TextField(blank=True, null=True)
 
+=======
+>>>>>>> 8d1cf1a212537dde009b2b630aaacfc8e49b2c40
     def get_assessment(self, slug):
         assessment = self.assessmentsubmission_set.filter(assessment__slug=slug).first()
         if assessment:
@@ -265,6 +253,9 @@ class YouthLedInitiative(models.Model):
 
     def get_absolute_url(self):
         return reverse('initiatives:edit', kwargs={'pk': self.id})
+
+    def __unicode__(self):
+        return '{} - {}'.format(self.title, self.Participants)
 
 
 class AssessmentSubmission(models.Model):
@@ -302,67 +293,3 @@ class AssessmentSubmission(models.Model):
 
         self.new_data = new_data
         self.save()
-
-    # def save(self, **kwargs):
-    #     """
-    #     Generate unique Hash for every assessment
-    #     :param kwargs:
-    #     :return:
-    #     """
-    #     if self.pk:
-    #         self.update_field()
-    #
-    #     super(AssessmentSubmission, self).save(**kwargs)
-
-
-# class AssessmentHash(models.Model):
-#
-#     hashed = models.CharField(max_length=254, unique=True)
-#     registration = models.CharField(max_length=20)
-#     assessment_slug = models.CharField(max_length=50)
-#     partner = models.CharField(max_length=5)
-#     user = models.CharField(max_length=20)
-#     timestamp = models.CharField(max_length=100)
-#     title = models.CharField(max_length=254)
-#     type = models.CharField(max_length=254)
-#     location = models.CharField(max_length=254)
-#
-#     class Meta:
-#         ordering = ['id']
-#
-#     @property
-#     def name(self):
-#         return '{}{}{}{}{}'.format(
-#             self.registration,
-#             self.assessment_slug,
-#             self.partner,
-#             self.user,
-#             self.timestamp,
-#             self.title,
-#             self.type,
-#             self.location,
-#         )
-#
-#     def __unicode__(self):
-#         return '{}-{}-{}-{}-{}-{}'.format(
-#             self.hashed,
-#             self.registration,
-#             self.assessment_slug,
-#             self.partner,
-#             self.user,
-#             self.timestamp,
-#             self.title,
-#             self.type,
-#             self.location,
-#         )
-#
-#     def save(self, **kwargs):
-#         """
-#         Generate unique Hash for every assessment
-#         :param kwargs:
-#         :return:
-#         """
-#         if self.pk is None:
-#             self.hashed = generate_hash(self.name)
-#
-#         super(AssessmentHash, self).save(**kwargs)
