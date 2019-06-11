@@ -48,37 +48,5 @@
     {% get_user_token request.user.id as user_token %}
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
-    <!--<script>-->
-        <!--var export_url = '/api/backend-exporter/';-->
-        <!--var user_token = '{{ user_token }}';-->
-        <!--var csrftoken = $('input[name=csrfmiddlewaretoken]').val();-->
 
-        <!--$(document).ready(function() {-->
-            <!--$('.export-link').click(function(){-->
-                <!--export_file($(this).attr('itemref'));-->
-            <!--});-->
-        <!--});-->
-
-        <!--function export_file(params)-->
-        <!--{-->
-
-            <!--$.ajax({-->
-                <!--type: "GET",-->
-                <!--url: export_url,-->
-                <!--data: params,-->
-                <!--cache: false,-->
-                <!--headers: getHeader(),-->
-                <!--dataType: 'json',-->
-                <!--success: function (response, result, jqXHR) {-->
-                    <!--if(jqXHR.status == 200){-->
-                      <!--alert("Your export request has been sent, you will find in exported file in the Exported file page");-->
-                    <!--}-->
-                <!--},-->
-                <!--error: function (response) {-->
-                    <!--console.log(response);-->
-                <!--}-->
-            <!--});-->
-        <!--}-->
-
-    <!--</script>-->
 {% endblock %}
