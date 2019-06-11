@@ -37,7 +37,7 @@ class InitAdmin(ImportExportModelAdmin):
         'title',
         # # 'governorate',
         'get_participants',
-        # 'id',
+        'id',
 
     )
     # list_filter = (

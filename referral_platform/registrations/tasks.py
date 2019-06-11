@@ -13,6 +13,7 @@ from .models import AssessmentSubmission, Assessment, Registration
 from referral_platform.initiatives.models import YouthLedInitiative
 
 
+
 @app.task
 def import_registrations(filename, base_url, token, protocol='HTTPS'):
 
@@ -144,8 +145,11 @@ def import_initiatives(filename):
             data['partner_organization_id'] = row[3].value
             data['duration'] = row[4].value
             data['type'] = row[5].value
+            # data['ID'] = row[6].value
 
             instance = YouthLedInitiative.objects.create(**data)
+            instance.id = row[6].value
+            instance.save()
             id_participants = str(row[2].value)
             s= map(int, re.findall(r'\d+', id_participants))
             for number in s:
@@ -445,7 +449,7 @@ def update_data(protocol, url, apifunc, token, data):
 
 ##############################################################################
 @app.task
-def import_initiative_submission(filename):
+def import_init_submission(filename):
     from referral_platform.initiatives.models import AssessmentSubmission
     wb = load_workbook(filename=filename, read_only=True)
     ws = wb['Sheet1']
@@ -459,18 +463,19 @@ def import_initiative_submission(filename):
 
     for row in ws.rows:
         try:
-            if row[0].value == 'ID':
-                continue
-            new_data = {}
-            # Rendering the assessment from excel
-
-            for key, value in header:
-                new_data[value] = row[key].value
-                instance = AssessmentSubmission.objects.get(youth__number=row[0].value, assessment__slug=row[1].value)
+                if row[0].value == 'ID':
+                    continue
+                data = {}
+                data['initiative_id'] = row[0].value
+                data['assessment_id'] = row[1].value
+                data['status'] = 'enrolled'
+                for key, value in header:
+                    new_data[value] = row[key].value
+                instance = AssessmentSubmission.objects.create(**data)
                 instance.new_data = new_data
-                instance.updated = '1'
-                print(instance)
                 instance.save()
+
+
 
         except Exception as ex:
             print("---------------")
