@@ -83,3 +83,5 @@ init_test.xlsx
 Registration.xlsx
 ~$civic-assessment.xlsx
 ~$init_test.xlsx
+*.xlsx
+*.xlsx
