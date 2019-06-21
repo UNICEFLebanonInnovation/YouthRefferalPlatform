@@ -23,13 +23,27 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
-
+    Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.none(),
+                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False))
+    search_youth = forms.CharField(
+        label=_("Search for youth by name or id"),
+        widget=forms.TextInput,
+        required=False
+    )
     needs_resources = forms.ChoiceField(
         label=_("Needs Resources?"),
         widget=forms.Select, required=False,
         choices=(('True', _("Yes")), ('False', _("No"))),
         initial='no'
     )
+
+    class Meta:
+        model = YouthLedInitiative
+        fields = '__all__'
+
+    class Media:
+        css = {'all': ('/static/admin/css/widgets.css',), }
+        js = ('/admin/jsi18n/',)
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
@@ -51,12 +65,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         my_fields = OrderedDict()
 
         if not instance:
-            my_fields['Search Youth'] = ['search_youth']
+            my_fields['Search Youth'] = ['search_youth', 'partner_organization']
 
-        my_fields[_('Partner Organization')] = ['partner_organization']
+        # my_fields[_('Partner Organization')] = ['partner_organization']
         my_fields[_('Initiative Title')] = ['title']
-        my_fields[_('Partcipants')] = ['participants']
-        my_fields[_('Initiative Information')] = ['location', 'dutation', 'type']
+        my_fields[_('Participants')] = ['Participants']
+        my_fields[_('Initiative Information')] = ['governorate', 'duration', 'type']
 
         self.helper = FormHelper()
         self.helper.form_show_labels = False
@@ -198,10 +212,4 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         request.session['instance_id'] = instance.id
         messages.success(request, _('Your data has been sent successfully to the server'))
 
-    class Meta:
-        model = YouthLedInitiative
-        fields = '__all__'
 
-    class Media:
-        css = {'all': ('/static/admin/css/widgets.css',), }
-        js = ('/admin/jsi18n/',)

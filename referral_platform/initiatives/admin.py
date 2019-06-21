@@ -27,6 +27,11 @@ class InitResource(resources.ModelResource):
 
 
         )
+        search_fields = (
+            'title',
+            'id',
+
+        )
         export_order = fields
 
 
@@ -46,6 +51,7 @@ class InitAdmin(ImportExportModelAdmin):
     )
     search_fields = (
         'title',
+        'id',
 
     )
 
@@ -84,6 +90,9 @@ class AssessmentSubmissionAdmin(ImportExportModelAdmin):
     search_fields = (
         # 'member',
         'id',
+        'initiative__title',
+        'initiative__id',
+
     )
 
     def enrolled(self, obj):

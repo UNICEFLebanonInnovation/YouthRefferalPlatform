@@ -145,10 +145,10 @@ def import_initiatives(filename):
             data['partner_organization_id'] = row[3].value
             data['duration'] = row[4].value
             data['type'] = row[5].value
-            # data['id'] = row[6].value
+            init_id = row[6].value
 
-            instance = YouthLedInitiative.objects.create(**data)
-            instance.id = row[6].value
+            instance = YouthLedInitiative(**data)
+            instance.id = init_id
             instance.save()
             id_participants = str(row[2].value)
             s= map(int, re.findall(r'\d+', id_participants))
