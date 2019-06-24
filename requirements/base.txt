@@ -30,7 +30,7 @@ argon2-cffi==16.3.0
 django-allauth==0.32.0
 
 # Python-PostgreSQL Database Adapter
-psycopg2==2.7.3
+psycopg2==2.7.7
 
 # Unicode slugification
 awesome-slugify==1.6.5

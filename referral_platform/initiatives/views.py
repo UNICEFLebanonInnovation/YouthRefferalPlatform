@@ -136,7 +136,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 respid_initiativeID_title=registry.title,
-                initiative_loc=registry.location,
+                initiative_loc=registry.governorate_id,
                 type_of_initiative=registry.type,
                 partner=registry.partner_organization.name,
                 # country=registry.governorate.parent.name,
@@ -240,7 +240,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         headers = {
 
             'initiative__title': 'Initiative Title',
-            'initiative__location__name': 'Initiative Location',
             'initiative__Participants__youth__first_name': 'First Name',
             'initiative__Participants__youth__last_name': 'Last Name',
             'initiative__type': 'Type of Initiative',
@@ -296,7 +295,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'initiative__title',
             'initiative__Participants__youth__last_name',
             'initiative__Participants__youth__first_name',
-            'initiative__location__name',
             'initiative__type',
             'initiative__duration',
             'assessment__overview',
@@ -324,5 +322,5 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         )
 
         filename = 'Initiative-Export'
-
+        print (qs.query)
         return render_to_csv_response(qs, filename,  field_header_map=headers)

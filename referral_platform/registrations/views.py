@@ -1170,6 +1170,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
 
         filename = 'updated-Civic-assessment'
 
+
         return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
@@ -1326,7 +1327,6 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 
         )
         filename = 'Entrepreneurship-assessment'
-
         return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
