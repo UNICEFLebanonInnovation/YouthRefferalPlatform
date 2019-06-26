@@ -4,7 +4,7 @@ from __future__ import absolute_import, unicode_literals
 import time
 from .tables import BootstrapTable
 from referral_platform.initiatives.tables import CommonTable
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, TemplateView
 
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import RedirectView
@@ -248,3 +248,22 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         filename = 'Initiative-Export'
         print (qs.query)
         return render_to_csv_response(qs, filename,  field_header_map=headers)
+
+
+class ExecSequenceView(LoginRequiredMixin, TemplateView):
+
+    template_name = 'initiatives/execs.html'
+
+    def get_context_data(self, **kwargs):
+        from django.db import connection
+
+        cursor = connection.cursor()
+        cursor1 = connection.cursor()
+
+        cursor.execute("SELECT setval('initiatives_youthledinitiative_id_seq', (SELECT max(id) FROM initiatives_youthledinitiative))")
+        cursor1.execute("SELECT setval('initiatives_assessmentsubmission_id_seq', (SELECT max(id) FROM initiatives_assessmentsubmission))")
+
+        return {
+            'result1': cursor.fetchall(),
+            'result2': cursor1.fetchall(),
+        }

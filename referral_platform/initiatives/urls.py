@@ -31,6 +31,11 @@ urlpatterns = [
         view=views.ExportInitiativeAssessmentsView.as_view(),
         name='export_initiative_assessments'
     ),
+    url(
+        regex=r'^exec-sequence/$',
+        view=views.ExecSequenceView.as_view(),
+        name='exec_sequence'
+    ),
 
 
 ]
