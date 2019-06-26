@@ -96,7 +96,7 @@ class YouthLedInitiative(models.Model):
 
     @property
     def initiative_post_civic(self):
-        return self.get_assessment('init_post_civic')
+        return self.get_assessment('post_post_init_assessment')
 
     def get_absolute_url(self):
         return reverse('initiatives:edit', kwargs={'pk': self.id})
