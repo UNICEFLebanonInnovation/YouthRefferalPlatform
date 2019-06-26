@@ -198,8 +198,8 @@ class Registration(TimeStampedModel):
         return self.get_assessment('init_exec')
 
     @property
-    def post_post_implementation(self):
-        return self.get_assessment('post_post_assessment')
+    def post_post_civic(self):
+        return self.get_assessment('post_post_civic')
 
     @property
     def pre_entrepreneurship(self):
