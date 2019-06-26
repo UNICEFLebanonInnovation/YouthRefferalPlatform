@@ -30,20 +30,21 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         widget=forms.TextInput,
         required=False
     )
-    needs_resources = forms.ChoiceField(
-        label=_("Needs Resources?"),
-        widget=forms.Select, required=False,
-        choices=(('True', _("Yes")), ('False', _("No"))),
-        initial='no'
+
+    governorate = forms.ModelChoiceField(
+        label=_('Governorate'),
+        queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
+        required=True, to_field_name='id',
     )
+
 
     class Meta:
         model = YouthLedInitiative
         fields = '__all__'
 
-    class Media:
-        css = {'all': ('/static/admin/css/widgets.css',), }
-        js = ('/admin/jsi18n/',)
+    # class Media:
+    #     # css = {'all': ('/static/admin/css/widgets.css',), }
+    #     js = ('/admin/jsi18n/',)
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
@@ -65,15 +66,15 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         my_fields = OrderedDict()
 
         if not instance:
-            my_fields['Search Youth'] = ['search_youth', 'partner_organization']
+            my_fields['Search Youth'] = ['partner_organization', 'title']
 
         # my_fields[_('Partner Organization')] = ['partner_organization']
-        my_fields[_('Initiative Title')] = ['title']
+        # my_fields[_('Initiative Title')] = ['title']
         my_fields[_('Participants')] = ['Participants']
         my_fields[_('Initiative Information')] = ['governorate', 'duration', 'type']
 
         self.helper = FormHelper()
-        self.helper.form_show_labels = False
+        self.helper.form_show_labels = True
         # form_action = reverse('initiatives:add')
         # # self.helper.layout = Layout()
         self.helper.layout = Layout()
