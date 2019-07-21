@@ -10,7 +10,7 @@ from django.views import defaults as default_views
 
 from rest_framework_nested import routers
 from rest_framework_swagger.views import get_swagger_view
-from django.views.generic.simple import redirect_to
+
 from referral_platform.youth.views import YoungPersonViewSet
 from referral_platform.backends.views import ExporterViewSet
 from referral_platform.registrations.views import RegistrationViewSet, AssessmentSubmissionViewSet
@@ -26,7 +26,6 @@ schema_view = get_swagger_view(title='EMS API')
 
 urlpatterns = [
 
-    url(r'^.*$', redirect_to, {'url': 'https://leb-ems.azurewebsites.net'}),
     # url(r'^', include('referral_platform.youth.urls', namespace='youth')),
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^home/$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
