@@ -1888,7 +1888,7 @@ msgstr "التسجيل"
 #: referral_platform/templates/initiatives/form.html:46
 #: referral_platform/templates/initiatives/list.html:22
 msgid "Initiatives"
-msgstr "عنوان المبادرة"
+msgstr "المبادرات"
 
 #: referral_platform/templates/base2.html:103
 #: referral_platform/templates/dashboard/co.html:12
@@ -1987,12 +1987,13 @@ msgstr "إضافة مستفيد جديد"
 #: referral_platform/templates/initiatives/list.html:43
 #: referral_platform/templates/registrations/list.html:54
 msgid "Add Initiatives"
-msgstr "عنوان المبادرة"
+msgstr "أضف مبادرة جديدة"
 
 #: referral_platform/templates/initiatives/list.html:49
 #: referral_platform/templates/registrations/list.html:60
 msgid "Export data"
-msgstr "استخراج المعلومات"
+msgstr "استخراج المعلومات
+"
 
 #: referral_platform/templates/initiatives/list.html:68
 #: referral_platform/templates/registrations/list.html:79

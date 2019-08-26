@@ -272,7 +272,7 @@ class CommonForm(forms.ModelForm):
                 registration_id=instance.id
             ).exists()
 
-            for specific_form in all_form :
+            for specific_form in all_form:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
@@ -288,15 +288,17 @@ class CommonForm(forms.ModelForm):
                         if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
-                                assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                assessment_id=specific_form.id,
+                                registration_id=instance.id).exists()
                             if form_submitted:
                                 disabled = "disabled"
                         else:
                             # make sure the user filled the form behind this one in order to enable it
-                            for specific_form in all_forms:
+                            for specific_form in all_form:
                                 if previous_status == "disabled":
                                     previous_submitted = AssessmentSubmission.objects.filter(
-                                        assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                        assessment_id=specific_form.id,
+                                        registration_id=instance.id).exists()
                                     # order += 1
                                     if previous_submitted:
                                         disabled = "disabled"
@@ -557,10 +559,15 @@ class BeneficiaryCommonForm(CommonForm):
 
             # Rendering the assessments
             if instance:
-                form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
+
                 all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
                 new_forms = OrderedDict()
-
+                m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+                xforms = list(all_forms)
+                removed = list(m1)
+                for x in removed:
+                    xforms.remove(x)
+                all_form = tuple(xforms)
                 registration_form = Assessment.objects.get(slug="registration")
 
                 youth_registered = AssessmentSubmission.objects.filter(
@@ -568,7 +575,7 @@ class BeneficiaryCommonForm(CommonForm):
                     registration_id=instance.id
                 ).exists()
 
-                for specific_form in all_forms:
+                for specific_form in all_form:
                     formtxt = '{assessment}?registry={registry}'.format(
                         assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                         registry=instance.id,
