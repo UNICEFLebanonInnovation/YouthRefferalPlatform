@@ -1535,14 +1535,17 @@ class ExecSequenceView(LoginRequiredMixin, TemplateView):
         cursor = connection.cursor()
         cursor1 = connection.cursor()
         cursor2 = connection.cursor()
+        cursor3 = connection.cursor()
 
         cursor.execute("SELECT setval('registrations_registration_id_seq', (SELECT max(id) FROM registrations_registration))")
         cursor1.execute("SELECT setval('registrations_assessment_id_seq', (SELECT max(id) FROM registrations_assessment))")
         cursor2.execute(
             "SELECT setval('registrations_assessmenthash_id_seq', (SELECT max(id) FROM registrations_assessmenthash))")
-
+        cursor3.execute(
+            "SELECT setval('registrations_assessmentsubmission_id_seq', (SELECT max(id) FROM registrations_assessmentsubmission))")
         return {
             'result1': cursor.fetchall(),
             'result2': cursor1.fetchall(),
             'result3': cursor2.fetchall(),
+            'result4': cursor3.fetchall(),
         }
