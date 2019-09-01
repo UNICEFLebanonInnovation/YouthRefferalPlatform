@@ -1524,3 +1524,25 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 #         filename = 'Initiative-Export'
 #
 #         return render_to_csv_response(qs, filename,  field_header_map=headers)
+
+class ExecSequenceView(LoginRequiredMixin, TemplateView):
+
+    template_name = 'registrations/execs.html'
+
+    def get_context_data(self, **kwargs):
+        from django.db import connection
+
+        cursor = connection.cursor()
+        cursor1 = connection.cursor()
+        cursor2 = connection.cursor()
+
+        cursor.execute("SELECT setval('registrations_registration_id_seq', (SELECT max(id) FROM registrations_registration))")
+        cursor1.execute("SELECT setval('registrations_assessment_id_seq', (SELECT max(id) FROM registrations_assessment))")
+        cursor2.execute(
+            "SELECT setval('registrations_assessmenthash_id_seq', (SELECT max(id) FROM registrations_assessmenthash))")
+
+        return {
+            'result1': cursor.fetchall(),
+            'result2': cursor1.fetchall(),
+            'result3': cursor2.fetchall(),
+        }
