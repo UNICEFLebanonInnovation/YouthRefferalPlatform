@@ -291,10 +291,20 @@ class CommonForm(forms.ModelForm):
                             if previous_status == "disabled":
                                 previous_submitted = AssessmentSubmission.objects.filter(
                                     assessment_id=specific_form.id, registration_id=instance.id).exists()
+<<<<<<< HEAD
                                 if previous_submitted:
                                     disabled = "disabled"
                             else:
                                 disabled = "disabled"
+=======
+                                # order += 1
+                                if previous_submitted:
+                                    disabled = "disabled"
+
+                            else:
+                                disabled = "disabled"
+                                order += 1
+>>>>>>> parent of 0b31136... remove initiative assessment from registration form
                 else:
                     if specific_form.slug != "registration":
                         disabled = "disabled"
