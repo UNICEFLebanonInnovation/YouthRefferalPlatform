@@ -291,20 +291,10 @@ class CommonForm(forms.ModelForm):
                             if previous_status == "disabled":
                                 previous_submitted = AssessmentSubmission.objects.filter(
                                     assessment_id=specific_form.id, registration_id=instance.id).exists()
-
                                 if previous_submitted:
                                     disabled = "disabled"
                             else:
                                 disabled = "disabled"
-
-                                # order += 1
-                                if previous_submitted:
-                                    disabled = "disabled"
-
-                                else:
-                                    disabled = "disabled"
-                                    order += 1
-
                 else:
                     if specific_form.slug != "registration":
                         disabled = "disabled"
@@ -325,7 +315,8 @@ class CommonForm(forms.ModelForm):
 
                 for test_order in new_forms[name]:
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
-                                + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
+                                + new_forms[name][test_order]['disabled'] + '" href="' + \
+                                new_forms[name][test_order][
                                     'form'] \
                                 + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '
