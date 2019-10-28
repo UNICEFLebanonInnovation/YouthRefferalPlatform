@@ -315,7 +315,8 @@ class CommonForm(forms.ModelForm):
 
                 for test_order in new_forms[name]:
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
-                                + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
+                                + new_forms[name][test_order]['disabled'] + '" href="' + \
+                                new_forms[name][test_order][
                                     'form'] \
                                 + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '

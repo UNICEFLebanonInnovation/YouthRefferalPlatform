@@ -16,6 +16,7 @@ from referral_platform.registrations.models import Assessment, Registration
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, PrependedText, InlineRadios, InlineField, Alert
 from .models import YouthLedInitiative
+from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 from referral_platform.initiatives.models import AssessmentSubmission
 
@@ -35,6 +36,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         label=_('Governorate'),
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
         required=True, to_field_name='id',
+    )
+    center = forms.ModelChoiceField(
+        label=_('Center'),
+        queryset=Center.objects.all(), widget=forms.Select,
+        required=False, to_field_name='id',
     )
 
 
@@ -61,6 +67,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+        self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
         self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
@@ -71,8 +78,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # my_fields[_('Partner Organization')] = ['partner_organization']
         # my_fields[_('Initiative Title')] = ['title']
         my_fields[_('Participants')] = ['Participants']
-        my_fields[_('Initiative Information')] = ['governorate', 'duration', 'type']
-
+        my_fields[_('Initiative Location')] = ['governorate', 'center']
+        my_fields[_('Initiative Information')] = ['duration', 'type']
         self.helper = FormHelper()
         self.helper.form_show_labels = True
         # form_action = reverse('initiatives:add')
