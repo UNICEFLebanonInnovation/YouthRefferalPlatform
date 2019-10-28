@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from model_utils import Choices
 from django.core.urlresolvers import reverse
-from referral_platform.partners.models import PartnerOrganization
+from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 
 from referral_platform.registrations.models import JSONField
@@ -52,6 +52,12 @@ class YouthLedInitiative(models.Model):
 
     title = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Initiative Title'))
     governorate = models.ForeignKey(Location, blank=True, null=True, verbose_name="Governorate")
+    center = models.ForeignKey(
+        Center,
+        blank=True, null=True,
+        related_name='+',
+        verbose_name=_('Center')
+    )
     partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="Partner Organization")
     Participants = models.ManyToManyField(Registration, related_name='+', verbose_name=_('Participants'))
 
