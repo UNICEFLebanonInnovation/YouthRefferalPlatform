@@ -261,7 +261,7 @@ class CommonForm(forms.ModelForm):
             new_forms = OrderedDict()
 
             registration_form = Assessment.objects.get(slug="registration")
-
+            previous_status = "disabled"
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
                 registration_id=instance.id
