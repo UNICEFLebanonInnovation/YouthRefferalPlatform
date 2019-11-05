@@ -266,7 +266,7 @@ class CommonForm(forms.ModelForm):
                 assessment_id=registration_form.id,
                 registration_id=instance.id
             ).exists()
-
+            order = 1
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
@@ -279,7 +279,7 @@ class CommonForm(forms.ModelForm):
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
-                        order = 1  # int(specific_form.order.split(".")[1])
+                        # order = 1  # int(specific_form.order.split(".")[1])
                         if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
