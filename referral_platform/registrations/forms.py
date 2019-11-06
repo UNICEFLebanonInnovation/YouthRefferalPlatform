@@ -280,7 +280,7 @@ class CommonForm(forms.ModelForm):
                     registry=instance.id,
                 )
                 disabled = ""
-                order = specific_form.order
+                order = 1
                 if youth_registered:
                     if specific_form.slug == "registration":
                         disabled = "disabled"
