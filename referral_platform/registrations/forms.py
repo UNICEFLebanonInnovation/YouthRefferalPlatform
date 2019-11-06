@@ -18,7 +18,7 @@ from referral_platform.partners.models import Center
 from referral_platform.registrations.models import Assessment, AssessmentSubmission
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-from referral_platform.initiatives.models import YouthLedInitiative, AssessmentSubmission
+
 from referral_platform.youth.models import YoungPerson, Nationality, Center
 from .serializers import RegistrationSerializer
 from .models import Registration
