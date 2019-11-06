@@ -296,14 +296,14 @@ class CommonForm(forms.ModelForm):
 
                         else:
                             # # make sure the user filled the form behind this one in order to enable it
-                            #
-                            #     if previous_status == "disabled":
-                            #         previous_submitted = AssessmentSubmission.objects.filter(
-                            #             assessment_id=specific_form.id, registration_id=instance.id).exists()
-                            #         if previous_submitted:
-                            #             disabled = "disabled"
-                            #     else:
-                            #         disabled = "disabled"
+
+                            if previous_status == "disabled":
+                                previous_submitted = AssessmentSubmission.objects.filter(
+                                        assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                if previous_submitted:
+                                    disabled = "disabled"
+                            else:
+                                    disabled = "disabled"
                             if specific_form.slug == "post_assessment":
                                 if AssessmentSubmission.objects.filter(assessment_id=2.1, registration_id=instance.id).exists():
                                     disabled = ""
