@@ -273,14 +273,14 @@ class CommonForm(forms.ModelForm):
                 assessment_id=registration_form.id,
                 registration_id=instance.id
             ).exists()
-            order = 1
+
             for specific_form in all_form:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
                 )
-                disabled = "disabled"
-
+                disabled = ""
+                order = specific_form.order
                 if youth_registered:
                     if specific_form.slug == "registration":
                         disabled = "disabled"
@@ -293,7 +293,6 @@ class CommonForm(forms.ModelForm):
                                 assessment_id=specific_form.id, registration_id=instance.id).exists()
                             if form_submitted:
                                 disabled = "disabled"
-                                order += 1
                         else:
                             # make sure the user filled the form behind this one in order to enable it
                             if previous_status == "disabled":
