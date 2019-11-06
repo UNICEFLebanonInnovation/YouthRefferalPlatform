@@ -18,7 +18,7 @@ from referral_platform.partners.models import Center
 from referral_platform.registrations.models import Assessment, AssessmentSubmission
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-
+from referral_platform.initiatives.models import YouthLedInitiative, AssessmentSubmission
 from referral_platform.youth.models import YoungPerson, Nationality, Center
 from .serializers import RegistrationSerializer
 from .models import Registration
@@ -312,12 +312,18 @@ class CommonForm(forms.ModelForm):
                                 disabled = "disabled"
 
                         if specific_form.slug == "post_entrepreneurship":
-                            if AssessmentSubmission.objects.filter(assessment_id=3.1,
+                            if AssessmentSubmission.objects.filter(assessment_slug="pre_entrepreneurship",
                                                                    registration_id=instance.id).exists():
                                 disabled = ""
                             else:
                                 disabled = "disabled"
 
+                        # if specific_form.slug == "init_post_civic":
+                        #     if AssessmentSubmission.objects.filter(assessment_slug="pre_entrepreneurship",
+                        #                                            registration_id=instance.id).exists():
+                        #         disabled = ""
+                        #     else:
+                        #         disabled = "disabled"
 
 
                 else:
