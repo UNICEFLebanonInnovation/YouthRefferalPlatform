@@ -293,6 +293,7 @@ class CommonForm(forms.ModelForm):
                                 assessment_id=specific_form.id, registration_id=instance.id).exists()
                             if form_submitted:
                                 disabled = "disabled"
+                                order += 1
 
                             # if specific_form.slug == "init_post_civic":
                             #     if AssessmentSubmission.objects.filter(assessment_id=specific_form.id, registration_id=instance.id).exists():
