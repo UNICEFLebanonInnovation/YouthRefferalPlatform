@@ -305,9 +305,9 @@ class CommonForm(forms.ModelForm):
                             else:
                                     disabled = "disabled"
                         if specific_form.slug == "post_assessment":
-                            if AssessmentSubmission.objects.filter(assessment_id=2,
+                            if AssessmentSubmission.objects.filter(assessment_id=2.1,
                                                                    registration_id=instance.id).exists():
-                                if AssessmentSubmission.objects.filter(assessment_id=3,
+                                if AssessmentSubmission.objects.filter(assessment_id=2.2,
                                                                    registration_id=instance.id).exists():
                                     disabled = "disabled"
                                 else:
@@ -317,9 +317,9 @@ class CommonForm(forms.ModelForm):
                                 disabled = "disabled"
 
                         if specific_form.slug == "post_entrepreneurship":
-                            if AssessmentSubmission.objects.filter(assessment_id=6,
+                            if AssessmentSubmission.objects.filter(assessment_id=4.1,
                                                                    registration_id=instance.id).exists():
-                                if AssessmentSubmission.objects.filter(assessment_id=7,
+                                if AssessmentSubmission.objects.filter(assessment_id=4.2,
                                                                    registration_id=instance.id).exists():
                                     disabled = "disabled"
                                 else:
