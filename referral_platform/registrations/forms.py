@@ -304,28 +304,28 @@ class CommonForm(forms.ModelForm):
                                     disabled = "disabled"
                             else:
                                     disabled = "disabled"
-                        if specific_form.slug == "post_assessment":
-                            if AssessmentSubmission.objects.filter(assessment_id=2.2,
-                                                                   registration_id=instance.id).exists():
-                                if AssessmentSubmission.objects.filter(assessment_id=2.1,
-                                                                   registration_id=instance.id).exists():
-                                    disabled = "disabled"
-                                else:
-                                    disabled = ""
-
-                            else:
-                                disabled = "disabled"
-
-                        if specific_form.slug == "post_entrepreneurship":
-                            if AssessmentSubmission.objects.filter(assessment_id=4.2,
-                                                                   registration_id=instance.id).exists():
-                                if AssessmentSubmission.objects.filter(assessment_id=4.1,
-                                                                   registration_id=instance.id).exists():
-                                    disabled = "disabled"
-                                else:
-                                    disabled = ""
-                            else:
-                                disabled = "disabled"
+                        # if specific_form.slug == "post_assessment":
+                        #     if AssessmentSubmission.objects.filter(assessment_id=2.2,
+                        #                                            registration_id=instance.id).exists():
+                        #         if AssessmentSubmission.objects.filter(assessment_id=2.1,
+                        #                                            registration_id=instance.id).exists():
+                        #             disabled = "disabled"
+                        #         else:
+                        #             disabled = ""
+                        #
+                        #     else:
+                        #         disabled = "disabled"
+                        #
+                        # if specific_form.slug == "post_entrepreneurship":
+                        #     if AssessmentSubmission.objects.filter(assessment_id=4.2,
+                        #                                            registration_id=instance.id).exists():
+                        #         if AssessmentSubmission.objects.filter(assessment_id=4.1,
+                        #                                            registration_id=instance.id).exists():
+                        #             disabled = "disabled"
+                        #         else:
+                        #             disabled = ""
+                        #     else:
+                        #         disabled = "disabled"
 
                         # if specific_form.slug == "init_post_civic":
                         #     if AssessmentSubmission.objects.filter(assessment_slug="pre_entrepreneurship",
