@@ -325,7 +325,7 @@ class CommonForm(forms.ModelForm):
                                 else:
                                     disabled = ""
                             else:
-                                disabled = "disabled"
+                                disabled = ""
 
                         # if specific_form.slug == "init_post_civic":
                         #     if AssessmentSubmission.objects.filter(assessment_slug="pre_entrepreneurship",
