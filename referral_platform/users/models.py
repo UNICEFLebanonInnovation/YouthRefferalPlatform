@@ -26,6 +26,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=False,
     )
     is_beneficiary = models.BooleanField(default=False)
+    is_center = models.BooleanField(default=False)
+    is_partner = models.BooleanField(default=False)
+    is_countryMgr = models.BooleanField(default=False)
     is_active = models.BooleanField(
         _('active'),
         default=True,
