@@ -53,11 +53,20 @@ class ListingView(LoginRequiredMixin,
 
     def get_queryset(self):
         beneficiary_flag = self.request.user.is_beneficiary
+        center_flag = self.request.user.is_center
+        partner_flag = self.request.user.is_partner
+        country_flag = self.request.user.is_countryMgr
 
         if beneficiary_flag:
-            return Registration.objects.none()
-        else:
+            return Registration.objects.self()
+        elif center_flag:
+            return Registration.objects.filter(center=self.request.user.partner.center)
+        elif partner_flag:
             return Registration.objects.filter(partner_organization=self.request.user.partner)
+        elif country_flag:
+            return Registration.objects.filter(country=self.request.user.country)
+        else:
+            return Registration.objects.all()
 
     def get_filterset_class(self):
         locations = [g.p_code for g in self.request.user.partner.locations.all()]
