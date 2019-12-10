@@ -64,7 +64,7 @@ class ListingView(LoginRequiredMixin,
         elif partner_flag:
             return Registration.objects.filter(partner_organization=self.request.user.partner)
         elif country_flag:
-            return Registration.objects.filter(country=self.request.user.country)
+            return Registration.objects.filter(governorate__parent=self.request.user.country)
         else:
             return Registration.objects.all()
 

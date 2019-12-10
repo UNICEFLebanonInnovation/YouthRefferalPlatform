@@ -64,11 +64,18 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         else:
             initials = kwargs.get('initial', '')
 
+        center_flag = self.request.user.is_center
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-        self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-        self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
+
+        if center_flag:
+            self.fields['Participants'].queryset = Registration.objects.filter(
+                center=self.request.user.center)
+            self.fields['center'] = instance.partner_organization
+        else:
+            self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
+            self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
 
