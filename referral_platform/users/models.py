@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django_filters.views import FilterView
-from referral_platform.partners.models import PartnerOrganization
+from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 
 from .managers import UserManager
@@ -41,6 +41,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     partner = models.ForeignKey(
         PartnerOrganization,
+        null=True, blank=True
+    )
+    center = models.ForeignKey(
+        Center,
         null=True, blank=True
     )
     country = models.ForeignKey(
