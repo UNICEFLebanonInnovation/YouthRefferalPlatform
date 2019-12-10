@@ -54,7 +54,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_beneficiary','is_center','is_partner',
                                        'is_countryMgr','groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner', 'country',)})
+        (None, {'fields': ('partner','center','country',)})
     )
 
     add_fieldsets = (
