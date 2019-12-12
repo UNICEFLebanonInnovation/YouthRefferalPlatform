@@ -69,7 +69,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
 
-        if self.user():
+        if self.user(self.request):
             self.fields['Participants'].queryset = Registration.objects.filter(
                 center=self.request.user.center)
             self.fields['center'] = instance.partner_organization
