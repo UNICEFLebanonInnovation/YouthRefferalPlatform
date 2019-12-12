@@ -122,101 +122,101 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             self.helper.layout.append(main_fieldset)
 
         # Rendering the assessments
-        if instance:
-            form_action = reverse('initiatives:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
-            # all_forms = Assessment.objects.get(Assessment.slug in('init_registration','init_exec', 'post_post_assessment'))
-            # all_forms = Assessment.objects.filter(Q(slug__icontains='init'))
-            new_forms = OrderedDict()
+            if instance:
+                form_action = reverse('initiatives:edit', kwargs={'pk': instance.id})
+                all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+                # all_forms = Assessment.objects.get(Assessment.slug in('init_registration','init_exec', 'post_post_assessment'))
+                # all_forms = Assessment.objects.filter(Q(slug__icontains='init'))
+                new_forms = OrderedDict()
 
-            registration_form = Assessment.objects.get(slug="init_registration")
+                registration_form = Assessment.objects.get(slug="init_registration")
 
-            youth_registered = AssessmentSubmission.objects.filter(
-                assessment_id=registration_form.id,
-                initiative_id=instance.id
-            ).exists()
+                youth_registered = AssessmentSubmission.objects.filter(
+                    assessment_id=registration_form.id,
+                    initiative_id=instance.id
+                ).exists()
 
-            for specific_form in all_forms:
-                formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
-                    registry=instance.id,
-                )
-                disabled = ""
+                for specific_form in all_forms:
+                    formtxt = '{assessment}?registry={registry}'.format(
+                        assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
+                        registry=instance.id,
+                    )
+                    disabled = ""
 
-                if youth_registered:
-                    if specific_form.slug == "init_registration":
-                        disabled = "disabled"
-                    # check if the pre is already filled
-                    else:
-                        order = 1  # int(specific_form.order.split(".")[1])
-                        if order == 1:
-                            # If the user filled the form disable it
-                            form_submitted = AssessmentSubmission.objects.filter(
-                                assessment_id=specific_form.id, initiative_id=instance.id).exists()
-                            if form_submitted:
-                                disabled = "disabled"
+                    if youth_registered:
+                        if specific_form.slug == "init_registration":
+                            disabled = "disabled"
+                        # check if the pre is already filled
                         else:
-                            # make sure the user filled the form behind this one in order to enable it
-                            if previous_status == "disabled":
-                                previous_submitted = AssessmentSubmission.objects.filter(
+                            order = 1  # int(specific_form.order.split(".")[1])
+                            if order == 1:
+                                # If the user filled the form disable it
+                                form_submitted = AssessmentSubmission.objects.filter(
                                     assessment_id=specific_form.id, initiative_id=instance.id).exists()
-                                if previous_submitted:
+                                if form_submitted:
                                     disabled = "disabled"
                             else:
-                                disabled = "disabled"
-                else:
-                    if specific_form.slug != "init_registration":
-                        disabled = "disabled"
+                                # make sure the user filled the form behind this one in order to enable it
+                                if previous_status == "disabled":
+                                    previous_submitted = AssessmentSubmission.objects.filter(
+                                        assessment_id=specific_form.id, initiative_id=instance.id).exists()
+                                    if previous_submitted:
+                                        disabled = "disabled"
+                                else:
+                                    disabled = "disabled"
+                    else:
+                        if specific_form.slug != "init_registration":
+                            disabled = "disabled"
 
-                if specific_form.name not in new_forms:
-                    new_forms[specific_form.name] = OrderedDict()
-                new_forms[specific_form.name][specific_form.order] = {
-                    'title': specific_form.overview,
-                    'form': formtxt,
-                    'overview': specific_form.name,
-                    'disabled': disabled
-                }
-                previous_status = disabled
-            assessment_fieldset = []
+                    if specific_form.name not in new_forms:
+                        new_forms[specific_form.name] = OrderedDict()
+                    new_forms[specific_form.name][specific_form.order] = {
+                        'title': specific_form.overview,
+                        'form': formtxt,
+                        'overview': specific_form.name,
+                        'disabled': disabled
+                    }
+                    previous_status = disabled
+                assessment_fieldset = []
 
-            for name in new_forms:
-                test_html = ""
+                for name in new_forms:
+                    test_html = ""
 
-                for test_order in new_forms[name]:
-                    test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
-                                + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
-                                    'form'] \
-                                + '">' + new_forms[name][test_order][
-                                    'title'] + '</a></div> '
-                assessment_div = Div(
-                    HTML(test_html),
-                    css_class='row'
-                )
-                test_fieldset = Fieldset(
-                    None,
-                    Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
-                            'overview'] + '</h4>')
-                    ),
-                    assessment_div,
-                    Div(
-                        HTML('<div class="p-3"></div>'),
+                    for test_order in new_forms[name]:
+                        test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
+                                    + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
+                                        'form'] \
+                                    + '">' + new_forms[name][test_order][
+                                        'title'] + '</a></div> '
+                    assessment_div = Div(
+                        HTML(test_html),
                         css_class='row'
-                    ),
-                    css_class='bd-callout bd-callout-warning'
+                    )
+                    test_fieldset = Fieldset(
+                        None,
+                        Div(
+                            HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
+                                'overview'] + '</h4>')
+                        ),
+                        assessment_div,
+                        Div(
+                            HTML('<div class="p-3"></div>'),
+                            css_class='row'
+                        ),
+                        css_class='bd-callout bd-callout-warning'
+                    )
+                    assessment_fieldset.append(test_fieldset)
+                    for myflds in assessment_fieldset:
+                        self.helper.layout.append(myflds)
+                self.helper.layout.append(
+                    FormActions(
+                        HTML('<a class="btn btn-info col-md-2" href="/initiatives/list/">' + _t('Cancel') + '</a>'),
+                        Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
+                        Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
+                        Submit('save', _('Save'), css_class='col-md-2'),
+                        css_class='btn-actions'
+                    )
                 )
-                assessment_fieldset.append(test_fieldset)
-                for myflds in assessment_fieldset:
-                    self.helper.layout.append(myflds)
-        self.helper.layout.append(
-            FormActions(
-                HTML('<a class="btn btn-info col-md-2" href="/initiatives/list/">' + _t('Cancel') + '</a>'),
-                Submit('save_add_another', _('Save and add another'), css_class='col-md-2'),
-                Submit('save_and_continue', _('Save and continue'), css_class='col-md-2'),
-                Submit('save', _('Save'), css_class='col-md-2'),
-                css_class='btn-actions'
-            )
-        )
 
 
 
