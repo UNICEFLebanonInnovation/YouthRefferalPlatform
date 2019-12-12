@@ -55,72 +55,72 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
+        self.populate()
 
+    def populate(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
-        self.populate()
-        # if instance:
-        #     initials = {}
-        #     initials['partner_locations'] = instance.partner_organization.locations.all()
-        #     initials['partner_organization'] = instance.partner_organization
-        # else:
-        #     initials = kwargs.get('initial', '')
-        #
-        # center_flag = self.request.user.is_center
-        # partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-        # partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
-        # self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-        #
-        # if center_flag:
-        #     self.fields['Participants'].queryset = Registration.objects.filter(
-        #         center=self.request.user.center)
-        #     self.fields['center'] = instance.partner_organization
-        # else:
-        #     self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-        #     self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
-        # self.fields['partner_organization'].widget.attrs['readonly'] = True
-        # my_fields = OrderedDict()
+        if instance:
+            initials = {}
+            initials['partner_locations'] = instance.partner_organization.locations.all()
+            initials['partner_organization'] = instance.partner_organization
+        else:
+            initials = kwargs.get('initial', '')
+        center_flag = self.request.user.is_center
+        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
+        partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
+        self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
 
-        # if not instance:
-        #     my_fields['Search Youth'] = ['partner_organization', 'title']
-        #
-        # # my_fields[_('Partner Organization')] = ['partner_organization']
-        # # my_fields[_('Initiative Title')] = ['title']
-        # my_fields[_('Participants')] = ['Participants']
-        # my_fields[_('Initiative Location')] = ['governorate', 'center']
-        # my_fields[_('Initiative Information')] = ['duration', 'type']
-        # self.helper = FormHelper()
-        # self.helper.form_show_labels = True
-        # # form_action = reverse('initiatives:add')
-        # # # self.helper.layout = Layout()
-        # self.helper.layout = Layout()
-        #
-        # for title in my_fields:
-        #     main_fieldset = Fieldset(None)
-        #     main_div = Div(css_class='row')
-        #
-        #     # Title Div
-        #     main_fieldset.fields.append(
-        #         Div(
-        #             HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
-        #         )
-        #     )
-        #     # remaining fields, every 3 on a row
-        #     for myField in my_fields[title]:
-        #         index = my_fields[title].index(myField) + 1
-        #         main_div.append(
-        #             HTML('<span class="badge badge-default">' + str(index) + '</span>'),
-        #         )
-        #         main_div.append(
-        #             Div(myField, css_class='col-md-3'),
-        #         )
-        #         # to keep every 3 on a row, or the last field in the list
-        #         if index % 3 == 0 or len(my_fields[title]) == index:
-        #             main_fieldset.fields.append(main_div)
-        #             main_div = Div(css_class='row')
-        #
-        #     main_fieldset.css_class = 'bd-callout bd-callout-warning'
-        #     self.helper.layout.append(main_fieldset)
+        if center_flag:
+            self.fields['Participants'].queryset = Registration.objects.filter(
+                center=self.request.user.center)
+            self.fields['center'] = instance.partner_organization
+        else:
+            self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
+            self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
+        self.fields['partner_organization'].widget.attrs['readonly'] = True
+        my_fields = OrderedDict()
+
+        if not instance:
+            my_fields['Search Youth'] = ['partner_organization', 'title']
+
+        # my_fields[_('Partner Organization')] = ['partner_organization']
+        # my_fields[_('Initiative Title')] = ['title']
+        my_fields[_('Participants')] = ['Participants']
+        my_fields[_('Initiative Location')] = ['governorate', 'center']
+        my_fields[_('Initiative Information')] = ['duration', 'type']
+        self.helper = FormHelper()
+        self.helper.form_show_labels = True
+        # form_action = reverse('initiatives:add')
+        # # self.helper.layout = Layout()
+        self.helper.layout = Layout()
+
+        for title in my_fields:
+            main_fieldset = Fieldset(None)
+            main_div = Div(css_class='row')
+
+            # Title Div
+            main_fieldset.fields.append(
+                Div(
+                    HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
+                )
+            )
+            # remaining fields, every 3 on a row
+            for myField in my_fields[title]:
+                index = my_fields[title].index(myField) + 1
+                main_div.append(
+                    HTML('<span class="badge badge-default">' + str(index) + '</span>'),
+                )
+                main_div.append(
+                    Div(myField, css_class='col-md-3'),
+                )
+                # to keep every 3 on a row, or the last field in the list
+                if index % 3 == 0 or len(my_fields[title]) == index:
+                    main_fieldset.fields.append(main_div)
+                    main_div = Div(css_class='row')
+
+            main_fieldset.css_class = 'bd-callout bd-callout-warning'
+            self.helper.layout.append(main_fieldset)
 
         # Rendering the assessments
         if instance:
@@ -219,73 +219,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             )
         )
 
-    def populate(self, *args, **kwargs):
 
-        self.request = kwargs.pop('request', None)
-        instance = kwargs.get('instance', '')
-        self.populate()
-        if instance:
-            initials = {}
-            initials['partner_locations'] = instance.partner_organization.locations.all()
-            initials['partner_organization'] = instance.partner_organization
-        else:
-            initials = kwargs.get('initial', '')
-
-        center_flag = self.request.user.is_center
-        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-        partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
-        self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-
-        if center_flag:
-            self.fields['Participants'].queryset = Registration.objects.filter(
-                center=self.request.user.center)
-            self.fields['center'] = instance.partner_organization
-        else:
-            self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-            self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
-        self.fields['partner_organization'].widget.attrs['readonly'] = True
-        my_fields = OrderedDict()
-
-        if not instance:
-            my_fields['Search Youth'] = ['partner_organization', 'title']
-
-        # my_fields[_('Partner Organization')] = ['partner_organization']
-        # my_fields[_('Initiative Title')] = ['title']
-        my_fields[_('Participants')] = ['Participants']
-        my_fields[_('Initiative Location')] = ['governorate', 'center']
-        my_fields[_('Initiative Information')] = ['duration', 'type']
-        self.helper = FormHelper()
-        self.helper.form_show_labels = True
-        # form_action = reverse('initiatives:add')
-        # # self.helper.layout = Layout()
-        self.helper.layout = Layout()
-
-        for title in my_fields:
-            main_fieldset = Fieldset(None)
-            main_div = Div(css_class='row')
-
-            # Title Div
-            main_fieldset.fields.append(
-                Div(
-                    HTML('<h4 id="alternatives-to-hidden-labels">' + _t(title) + '</h4>')
-                )
-            )
-            # remaining fields, every 3 on a row
-            for myField in my_fields[title]:
-                index = my_fields[title].index(myField) + 1
-                main_div.append(
-                    HTML('<span class="badge badge-default">' + str(index) + '</span>'),
-                )
-                main_div.append(
-                    Div(myField, css_class='col-md-3'),
-                )
-                # to keep every 3 on a row, or the last field in the list
-                if index % 3 == 0 or len(my_fields[title]) == index:
-                    main_fieldset.fields.append(main_div)
-                    main_div = Div(css_class='row')
-
-            main_fieldset.css_class = 'bd-callout bd-callout-warning'
-            self.helper.layout.append(main_fieldset)
 
     def clean_foo_field(self):
         instance = getattr(self, 'instance', None)
