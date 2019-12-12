@@ -55,7 +55,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
-        self.populate()
 
     def populate(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
