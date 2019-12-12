@@ -53,34 +53,40 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     # css = {'all': ('/static/admin/css/widgets.css',), }
     #     js = ('/admin/jsi18n/',)
 
-    def fill(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
 
-    # def fill(self, **kwargs):
+        my_fields = OrderedDict()
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
-        if instance:
-            initials = {}
-            initials['partner_locations'] = instance.partner_organization.locations.all()
-            initials['partner_organization'] = instance.partner_organization
-        else:
-            initials = kwargs.get('initial', '')
 
-        center_flag = self.request.user.is_center
-        partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-        partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
-        self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+        def populate(self,*args, **kwargs):
+            self.request = kwargs.pop('request', None)
+            instance = kwargs.get('instance', '')
+            if instance:
+                initials = {}
+                initials['partner_locations'] = instance.partner_organization.locations.all()
+                initials['partner_organization'] = instance.partner_organization
+            else:
+                initials = kwargs.get('initial', '')
 
-        if center_flag:
-            self.fields['Participants'].queryset = Registration.objects.filter(
-                center=self.request.user.center)
-            self.fields['center'] = instance.partner_organization
-        else:
-            self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-            self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
-        self.fields['partner_organization'].widget.attrs['readonly'] = True
-        my_fields = OrderedDict()
+            center_flag = self.request.user.is_center
+            partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
+            partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
+            self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
 
+            if center_flag:
+                self.fields['Participants'].queryset = Registration.objects.filter(
+                    center=self.request.user.center)
+                self.fields['center'] = instance.partner_organization
+            else:
+                self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
+                self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
+            self.fields['partner_organization'].widget.attrs['readonly'] = True
+            my_fields = OrderedDict()
+            return my_fields
+
+        self.populate()
         if not instance:
             my_fields['Search Youth'] = ['partner_organization', 'title']
 
