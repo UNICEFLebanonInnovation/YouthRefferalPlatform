@@ -217,10 +217,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             )
         )
 
-    def user(self):
-        center_flag = self.request.user.is_center
-        return center_flag
-
+    def user(self, request):
+        if request.user.is_center:
+            center_flag = True
+            return center_flag
 
     def clean_foo_field(self):
         instance = getattr(self, 'instance', None)
