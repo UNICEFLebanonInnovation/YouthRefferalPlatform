@@ -53,7 +53,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     # css = {'all': ('/static/admin/css/widgets.css',), }
     #     js = ('/admin/jsi18n/',)
 
-    def __init__(self, *args, **kwargs):
+    def fill(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
 
     # def fill(self, **kwargs):
