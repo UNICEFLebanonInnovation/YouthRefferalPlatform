@@ -58,11 +58,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
+        user = instance.user
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
-            user = instance.user
+
         else:
             initials = kwargs.get('initial', '')
 
