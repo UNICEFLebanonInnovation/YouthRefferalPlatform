@@ -53,9 +53,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     # css = {'all': ('/static/admin/css/widgets.css',), }
     #     js = ('/admin/jsi18n/',)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user=None, request=None, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
-        user = kwargs.pop('user', None)
+        # user = kwargs.pop('user', None)
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
         if instance:
