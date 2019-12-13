@@ -65,7 +65,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         else:
             initials = kwargs.get('initial', '')
 
-        is_center = user.center
+        is_center = user.is_center
         if is_center:
             self.fields['Participants'].queryset = Registration.objects.filter(
                 center=self.request.user.center)

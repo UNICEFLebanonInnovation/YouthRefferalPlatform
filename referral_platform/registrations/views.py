@@ -216,7 +216,7 @@ class EditView(LoginRequiredMixin, FormView):
             return form(data, instance=instance)
 
     def form_valid(self, form):
-        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner, center=self.request.user.partner)
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
 
@@ -338,10 +338,16 @@ class ExportView(LoginRequiredMixin, ListView):
 
     model = Registration
     queryset = Registration.objects.all()
+    beneficiary_flag = self.request.user.is_beneficiary
+    center_flag = self.request.user.is_center
+    partner_flag = self.request.user.is_partner
+    country_flag = self.request.user.is_countryMgr
 
     def get_queryset(self):
         if self.request.user.is_superuser:
             queryset = self.queryset
+        elif self.request.user.is_center:
+            queryset = self.queryset.filter(center=self.request.user.center)
         else:
             queryset = self.queryset.filter(partner_organization=self.request.user.partner)
 
