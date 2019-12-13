@@ -416,7 +416,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     newmapping = NewMapping
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+        if self.request.user.is_countryMgr:
             queryset = self.queryset.filter(registration__governorate__parent__name_en=self.request.user.country.name_en)
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)

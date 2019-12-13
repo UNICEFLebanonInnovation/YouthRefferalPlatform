@@ -53,36 +53,26 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     #     # css = {'all': ('/static/admin/css/widgets.css',), }
     #     js = ('/admin/jsi18n/',)
 
-    def __init__(self, user=None, request=None, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
-        # user = kwargs.pop('user', None)
-        # self.request = kwargs.pop('request', None)
+
+        self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
+            initials['Participants'] = instance.Partcipants
         else:
             initials = kwargs.get('initial', '')
 
-        is_center = user.is_center
-        if is_center:
-            self.fields['Participants'].queryset = Registration.objects.filter(
-                center=self.request.user.center)
-        else:
-            self.fields['Participants'].queryset = Registration.objects.filter(
-                partner_organization=self.request.user.partner)
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
 
-        if self.user(self.request):
-            self.fields['Participants'].queryset = Registration.objects.filter(
-                center=self.request.user.center)
-            self.fields['center'] = instance.partner_organization
-        else:
-            self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
 
+        self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
+        self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
 
@@ -223,11 +213,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 css_class='btn-actions'
             )
         )
-
-    # def user(self, request):
-    #     if request.user.is_center:
-    #         center_flag = True
-    #         return center_flag
 
     def clean_foo_field(self):
         instance = getattr(self, 'instance', None)
