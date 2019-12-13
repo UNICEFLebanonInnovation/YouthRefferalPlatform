@@ -338,10 +338,10 @@ class ExportView(LoginRequiredMixin, ListView):
 
     model = Registration
     queryset = Registration.objects.all()
-    beneficiary_flag = self.request.user.is_beneficiary
-    center_flag = self.request.user.is_center
-    partner_flag = self.request.user.is_partner
-    country_flag = self.request.user.is_countryMgr
+    # beneficiary_flag = self.request.user.is_beneficiary
+    # center_flag = self.request.user.is_center
+    # partner_flag = self.request.user.is_partner
+    # country_flag = self.request.user.is_countryMgr
 
     def get_queryset(self):
         if self.request.user.is_superuser:
