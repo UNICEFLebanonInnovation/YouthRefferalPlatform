@@ -59,7 +59,12 @@ class AddView(LoginRequiredMixin, FormView):
         return self.success_url
 
     def get_queryset(self):
-        queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+        if self.request.user.is_partner:
+            queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+        elif self.request.user.is_center:
+            queryset = Registration.objects.filter(center=self.request.user.center)
+        else:
+            queryset = Registration.objects.all()
         return queryset
 
     def get_initial(self):
@@ -68,11 +73,11 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.is_partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner_id
-            data['Participants'] = Registration.objects.filter(partner_organization=self.request.user.partner)
+            data['user'] = self.request.user
         elif self.request.user.is_center:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner_id
-            data['Participants'] = Registration.objects.filter(center=self.request.user.center)
+            data['user'] = self.request.user
         initial = data
         return initial
 
