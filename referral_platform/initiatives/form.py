@@ -56,7 +56,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     def __init__(self, user=None, request=None, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
         # user = kwargs.pop('user', None)
-        self.request = kwargs.pop('request', None)
+        # self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
         if instance:
             initials = {}
