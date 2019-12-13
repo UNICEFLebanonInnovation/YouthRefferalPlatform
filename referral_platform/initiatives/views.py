@@ -78,6 +78,7 @@ class AddView(LoginRequiredMixin, FormView):
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner_id
             data['user'] = self.request.user
+            data['center'] = self.request.user.center
         initial = data
         return initial
 
