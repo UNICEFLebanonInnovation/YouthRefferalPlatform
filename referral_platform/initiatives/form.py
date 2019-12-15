@@ -64,8 +64,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
             initials['center_flag'] = instance.center_flag
-            initials['center'] = instance.center
-            print(initials['center'])
+            # initials['center'] = instance.center
 
         else:
             initials = kwargs.get('initial', '')
