@@ -74,6 +74,7 @@ class AddView(LoginRequiredMixin, FormView):
         data['partner_organization'] = self.request.user.partner_id
         data['Participants'] = Registration.objects.filter(partner_organization=self.request.user.partner)
         data['center_flag'] = self.request.user.is_center
+        data['center'] = self.request.user.center
         initial = data
         return initial
 
