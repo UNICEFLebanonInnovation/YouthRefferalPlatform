@@ -16,7 +16,7 @@ from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from referral_platform.registrations.models import Registration, Assessment, AssessmentHash
-
+from referral_platform.partners.models import Center
 
 from .form import YouthLedInitiativePlanningForm
 from .models import YouthLedInitiative
@@ -83,7 +83,7 @@ class AddView(LoginRequiredMixin, FormView):
             data['partner_organization'] = self.request.user.partner_id
             data['Participants'] = Registration.objects.filter(partner_organization=self.request.user.partner)
             data['center_flag'] = self.request.user.is_center
-            # data['center'] = self.request.user.center
+            data['center'] = Center.objects.filter(partner_organization=self.request.user.partner)
             initial = data
         return initial
 
