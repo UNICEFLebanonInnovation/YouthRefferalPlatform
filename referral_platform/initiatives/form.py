@@ -58,11 +58,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
-        user = instance.user
+
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
+            center_flag = initials['center_flag']
 
         else:
             initials = kwargs.get('initial', '')
@@ -72,7 +73,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
 
-        if user.is_center:
+        if center_flag:
             self.fields['Participants'].queryset = Registration.objects.filter(
                 center=instance.user.center)
             self.fields['center'].queryset = initials['center']

@@ -70,17 +70,14 @@ class AddView(LoginRequiredMixin, FormView):
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
         data = dict()
-        if self.request.user.is_partner:
-            data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner_organization'] = self.request.user.partner_id
-            data['user'] = self.request.user
-        elif self.request.user.is_center:
-            data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner_organization'] = self.request.user.partner_id
-            data['user'] = self.request.user
-            data['center'] = self.request.user.center
+        data['partner_locations'] = self.request.user.partner.locations.all()
+        data['partner_organization'] = self.request.user.partner_id
+        data['Participants'] = Registration.objects.filter(partner_organization=self.request.user.partner)
+        data['center_flag'] = self.request.user.is_center
         initial = data
         return initial
+
+
 
     def form_valid(self, form):
         form.save(self.request)
