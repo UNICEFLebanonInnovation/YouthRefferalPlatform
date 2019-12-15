@@ -75,9 +75,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
 
         if initials['center_flag']:
+            self.fields['center'].widget.attrs['readonly'] = True
             # self.fields['Participants'].queryset = Registration.objects.filter(
             #     center=initials['center'])
             # self.fields['center'] = instance.center
+
         else:
             self.fields['Participants'].queryset = Registration.objects.filter(
                 partner_organization=partner_organization)
