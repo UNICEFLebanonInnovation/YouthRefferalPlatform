@@ -65,6 +65,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials['partner_organization'] = instance.partner_organization
             initials['center_flag'] = instance.center_flag
             initials['center'] = instance.center
+            print(initials['center'])
 
         else:
             initials = kwargs.get('initial', '')
@@ -74,16 +75,15 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
 
 
-        # if initials['center_flag']:
-        #     # self.fields['Participants'].queryset = Registration.objects.filter(
-        #     #     center=instance.center)
-        #     self.fields['center'] = instance.center
-        # else:
-        self.fields['Participants'].queryset = Registration.objects.filter(
-            partner_organization=partner_organization)
-        self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-        self.fields['center'] = Center.objects.filter(partner_organization=partner_organization)
-
+        if initials['center_flag']:
+            self.fields['Participants'].queryset = Registration.objects.filter(
+                center=initials['center'])
+            self.fields['center'] = instance.center
+        else:
+            self.fields['Participants'].queryset = Registration.objects.filter(
+                partner_organization=partner_organization)
+            self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
+            self.fields['center'] = Center.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
 
         my_fields = OrderedDict()
