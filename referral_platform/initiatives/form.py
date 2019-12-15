@@ -76,7 +76,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         if initials['center_flag']:
             self.fields['Participants'].queryset = Registration.objects.filter(
-                center=instance.center)
+                center=int(instance.center))
             self.fields['center'].queryset = initials['center']
         else:
             self.fields['Participants'].queryset = Registration.objects.filter(
