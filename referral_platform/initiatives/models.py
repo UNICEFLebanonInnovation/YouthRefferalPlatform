@@ -9,7 +9,7 @@ from referral_platform.locations.models import Location
 
 from referral_platform.registrations.models import JSONField
 from referral_platform.registrations.models import Registration, NewMapping, Assessment
-
+from referral_platform.users.models import User
 
 
 class YouthLedInitiative(models.Model):
@@ -81,6 +81,7 @@ class YouthLedInitiative(models.Model):
 
     )
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='Old')
 
     @property
     def get_participants(self):
