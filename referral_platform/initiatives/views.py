@@ -71,6 +71,7 @@ class AddView(LoginRequiredMixin, FormView):
         # force_default_language(self.request, 'ar-ar')
         data = dict()
 
+
         if self.request.user.is_center:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner
@@ -81,6 +82,7 @@ class AddView(LoginRequiredMixin, FormView):
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner_organization'] = self.request.user.partner_id
             # data['Participants'] = Registration.objects.filter(partner_organization=self.request.user.partner)
+
             data['center'] = Center.objects.filter(partner_organization=self.request.user.partner)
             initial = data
         return initial
@@ -89,7 +91,8 @@ class AddView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         form.save(self.request)
-        return super(AddView, self).form_valid(form(self.request))
+        form.instance.user = self.request.user
+        return super(AddView, self).form_valid(form)
 
 
 
