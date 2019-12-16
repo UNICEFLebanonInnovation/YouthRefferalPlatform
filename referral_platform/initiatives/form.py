@@ -63,12 +63,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
             initials['center'] = instance.center
-            initials['user'] = instance.user
+            user= initials['user']
 
         else:
             initials = kwargs.get('initial', '')
 
-        if initials['user'].is_center:
+        if user.is_center:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
             partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
             self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
