@@ -81,7 +81,7 @@ class YouthLedInitiative(models.Model):
 
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, blank=True, null=True, verbose_name="user")
 
     @property
     def get_participants(self):
