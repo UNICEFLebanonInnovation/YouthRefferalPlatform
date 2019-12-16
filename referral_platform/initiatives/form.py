@@ -55,19 +55,19 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
 
-        instance = kwargs.get('instance', None)
-        user = instance.get('user', None)
+        self.request = kwargs.pop('request', None)
+        instance = kwargs.get('instance', '')
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
             initials['center'] = instance.center
             # initials['partcipants'] = instance.participants
-            # user = instance.get('user', None)
+            owner = self.request.user
         else:
             initials = kwargs.get('initial', '')
 
-        if user.is_center:
+        if owner.is_center:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
             partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
             self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
