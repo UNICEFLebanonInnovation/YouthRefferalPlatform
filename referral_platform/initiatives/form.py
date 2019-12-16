@@ -76,7 +76,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
             self.fields['Participants'].queryset = Registration.objects.filter(center=initials['center'])
             self.fields['partner_organization'].widget.attrs['readonly'] = True
-            self.fields['center'].widget.attrs['readonly'] = True
+            self.fields['center'].widget.attrs['disabled'] = True
 
         else:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
@@ -86,7 +86,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
             self.fields['Participants'].queryset = Registration.objects.filter(
                 partner_organization=partner_organization)
-            self.fields['partner_organization'].widget.attrs['disabled'] = True
+            self.fields['partner_organization'].widget.attrs['readonly'] = True
 
         my_fields = OrderedDict()
 
