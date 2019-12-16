@@ -55,8 +55,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
 
-        self.request = kwargs.pop('request', None)
-        instance = kwargs.get('instance', '')
+        instance = kwargs.get('instance', None)
         user = instance.get('user', None)
         if instance:
             initials = {}
@@ -64,7 +63,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials['partner_organization'] = instance.partner_organization
             initials['center'] = instance.center
             # initials['partcipants'] = instance.participants
-            user = instance.get('user', None)
+            # user = instance.get('user', None)
         else:
             initials = kwargs.get('initial', '')
 
