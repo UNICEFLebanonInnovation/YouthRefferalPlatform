@@ -57,7 +57,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
-        owner = instance.user
+        owner = instance.owner
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
