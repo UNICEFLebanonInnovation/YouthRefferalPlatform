@@ -43,11 +43,6 @@ class AddView(LoginRequiredMixin, FormView):
     form_class = YouthLedInitiativePlanningForm
     form = YouthLedInitiativePlanningForm
 
-    def get_form_kwargs(self):
-        kwargs = super(AddView, self).get_form_kwargs()
-        kwargs['instance'] = self.request.user
-        return kwargs
-
     def get_form_class(self):
         form_class = YouthLedInitiativePlanningForm
         return form_class
