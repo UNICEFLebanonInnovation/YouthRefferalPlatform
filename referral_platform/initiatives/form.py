@@ -60,7 +60,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         instance = kwargs.get('instance', '')
         # owner = kwargs['initial']['user_id']
         print('this is flag')
-        flag = kwargs['initial']['center_flag']
+        flag = kwargs['initials']['center_flag']
         print(flag)
         print('this is kwargs')
         print(kwargs)
@@ -71,7 +71,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials['center'] = instance.center
 
         else:
-            initials = kwargs.get('initial', '')
+            initials = kwargs.get('initials', '')
 
         if flag == True:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
