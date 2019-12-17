@@ -79,7 +79,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
             # self.fields['center'] = initials['center']
             # self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-            self.fields['Participants'].queryset = Registration.objects.filter(center=initials['center'])
+            # self.fields['Participants'].queryset = Registration.objects.filter(center=initials['center'])
             self.fields['partner_organization'].widget.attrs['readonly'] = True
             self.fields['center'].widget.attrs['disabled'] = True
 
