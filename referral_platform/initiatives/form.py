@@ -59,7 +59,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
         owner = kwargs['initial']['user_id']
-
+        flag = kwargs['initial']['center_flag']
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
@@ -69,7 +69,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         else:
             initials = kwargs.get('initial', '')
             user = User.objects.filter(id=owner)
-            flag = user.is_center
+            flag = user
 
         if flag:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
