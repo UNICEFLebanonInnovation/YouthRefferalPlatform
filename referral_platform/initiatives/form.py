@@ -62,6 +62,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         print("this is kwargs")
         print(kwargs)
         print("this is kwargs")
+        owner= int(owner)
         print (owner)
         print("this is kwargs")
         print(type(owner))
