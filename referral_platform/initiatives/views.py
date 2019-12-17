@@ -43,6 +43,11 @@ class AddView(LoginRequiredMixin, FormView):
     form_class = YouthLedInitiativePlanningForm
     form = YouthLedInitiativePlanningForm
 
+    def get_form_kwargs(self):
+        kwargs = super(AddView, self).get_form_kwargs()
+        kwargs['instance'] = self.request.user
+        return kwargs
+
     def get_form_class(self):
         form_class = YouthLedInitiativePlanningForm
         return form_class
@@ -90,8 +95,9 @@ class AddView(LoginRequiredMixin, FormView):
 
 
     def form_valid(self, form):
-        form.save(self.request)
+
         form.instance.user = self.request.user
+        form.save(self.request)
         return super(AddView, self).form_valid(form)
 
 
@@ -116,7 +122,7 @@ class EditView(LoginRequiredMixin, FormView):
     def get_form(self, form_class=None):
         # form_class = self.get_form_class()
         form = YouthLedInitiativePlanningForm
-        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner, center=self.request.user.center)
         if self.request.method == "POST":
             return form(self.request.POST, instance=instance)
         else:
