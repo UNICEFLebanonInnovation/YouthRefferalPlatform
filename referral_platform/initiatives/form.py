@@ -60,6 +60,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         instance = kwargs.get('instance', '')
         owner = kwargs.get('user_id', '')
         print(kwargs)
+        print (owner)
+        print(type(owner))
 
         if instance:
             initials = {}
