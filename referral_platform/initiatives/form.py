@@ -68,7 +68,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         print("this is type")
         print(type(owner))
         print ('USERID')
-        print(kwargs['user_id'])
+        print(kwargs['initials']['user_id'])
 
 
         if instance:
