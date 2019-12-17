@@ -58,7 +58,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
-        owner = kwargs.get('user', '')
+        owner = kwargs.get('user_id', '')
         print(kwargs)
 
         if instance:
@@ -69,7 +69,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         else:
             initials = kwargs.get('initial', '')
-            user = User.objects.filter(name=owner)
+            user = User.objects.filter(id=owner)
             print(user)
             print(type(user))
 
