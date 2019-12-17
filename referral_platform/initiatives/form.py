@@ -68,6 +68,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         print("this is type")
         print(type(owner))
 
+
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
@@ -77,7 +78,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         else:
             initials = kwargs.get('initial', '')
             user = User.objects.filter(id=int(kwargs.get('user_id', '')))
-            print(user)
+            print()
+            print(initials['user_id'])
             print(type(user))
 
         if user.is_center:
