@@ -59,8 +59,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
         owner = kwargs.get('user_id', '')
-        print(kwargs)
-        print (owner)
+
+        print("this is kwargs" + kwargs)
+        print ("this is kwargs" + owner)
         print(type(owner))
 
         if instance:
