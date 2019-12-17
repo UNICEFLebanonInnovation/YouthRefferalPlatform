@@ -69,7 +69,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         else:
             initials = kwargs.get('initial', '')
-            user = User.objects.filter(id=owner)
+            user = User.objects.filter(id=int(owner))
             print(user)
             print(type(user))
 
