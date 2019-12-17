@@ -58,17 +58,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         self.request = kwargs.pop('request', None)
         instance = kwargs.get('instance', '')
-        owner = kwargs.get('user_id', '')
-        print("this is pop")
-        print(kwargs.get('user_id', 0))
-        print("this is kwargs")
-        print (kwargs)
-        print("kwargs initial")
-        print(kwargs.get('initial'))
-        print("this is type")
-        print(type(owner))
-        print ('USERID')
-        print(kwargs['initial']['user_id'])
+        owner = kwargs['initial']['user_id']
 
 
         if instance:
@@ -79,8 +69,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
         else:
             initials = kwargs.get('initial', '')
-            user = User.objects.filter(id=int(kwargs.get('user_id', '')))
-
+            user = User.objects.filter(id=owner)
 
         if user.is_center:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
