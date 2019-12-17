@@ -61,15 +61,15 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         print(kwargs)
         print("type of owner")
         print(type(owner))
-        if instance:
-            initials = {}
-            initials['partner_locations'] = instance.partner_organization.locations.all()
-            initials['partner_organization'] = instance.partner_organization
-            initials['center'] = instance.center
+        # if instance:
+        #     initials = {}
+        #     initials['partner_locations'] = instance.partner_organization.locations.all()
+        #     initials['partner_organization'] = instance.partner_organization
+        #     initials['center'] = instance.center
 
 
-        else:
-            initials = kwargs.get('initial', '')
+        # else:
+        initials = kwargs.get('initial', '')
 
         if owner.is_center:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
