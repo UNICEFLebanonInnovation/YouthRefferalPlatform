@@ -58,13 +58,16 @@ class AddView(LoginRequiredMixin, FormView):
             return '/initiatives/edit/' + str(self.request.session.get('instance_id')) + '/'
         return self.success_url
 
+    # def get_queryset(self):
+    #     if self.request.user.is_partner:
+    #         queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+    #     elif self.request.user.is_center:
+    #         queryset = Registration.objects.filter(center=self.request.user.center)
+    #     else:
+    #         queryset = Registration.objects.all()
+    #     return queryset
     def get_queryset(self):
-        if self.request.user.is_partner:
-            queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
-        elif self.request.user.is_center:
-            queryset = Registration.objects.filter(center=self.request.user.center)
-        else:
-            queryset = Registration.objects.all()
+        queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
         return queryset
 
     def get_initial(self):
