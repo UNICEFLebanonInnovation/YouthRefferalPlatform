@@ -70,6 +70,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         else:
             initials = kwargs.get('initial', '')
             user = User.objects.filter(name=owner)
+            print(user)
+            print(type(user))
 
         if user.is_center:
             partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
