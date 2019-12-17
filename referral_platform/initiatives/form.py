@@ -57,13 +57,13 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
 
         self.request = kwargs.pop('request', None)
-        instance = kwargs.get('initial', '')
+        instance = kwargs.get('instance', '')
         owner = kwargs.get('user_id', '')
         print("this is kwargs")
-        print(instance)
+        print(kwargs)
         print("this is kwargs")
         print (owner)
-        print("this is types")
+        print("this is kwargs")
         print(type(owner))
 
         if instance:
