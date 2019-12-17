@@ -19,6 +19,7 @@ from .models import YouthLedInitiative
 from referral_platform.partners.models import PartnerOrganization, Center
 from referral_platform.locations.models import Location
 from referral_platform.initiatives.models import AssessmentSubmission
+from referral_platform.users.models import User
 
 YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
@@ -59,55 +60,36 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         instance = kwargs.get('instance', '')
         owner = kwargs.get('user', '')
         print(kwargs)
+
         if instance:
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
             initials['center'] = instance.center
-            print ("Initials")
-            print (initials)
-            if owner.is_center:
-                partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-                partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
-                self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-                # self.fields['center'] = initials['center']
-                # self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-                self.fields['Participants'].queryset = Registration.objects.filter(center=initials['center'])
-                self.fields['partner_organization'].widget.attrs['readonly'] = True
-                self.fields['center'].widget.attrs['disabled'] = True
-
-            else:
-                partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-                partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
-                self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-                # self.fields['center'] = initials['center']
-                self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-                self.fields['Participants'].queryset = Registration.objects.filter(
-                    partner_organization=partner_organization)
-                self.fields['partner_organization'].widget.attrs['readonly'] = True
 
         else:
             initials = kwargs.get('initial', '')
+            user = User.objects.filter(name=owner)
 
-        # if owner.is_center:
-        #     partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-        #     partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
-        #     self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-        #     # self.fields['center'] = initials['center']
-        #     # self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-        #     self.fields['Participants'].queryset = Registration.objects.filter(center=initials['center'])
-        #     self.fields['partner_organization'].widget.attrs['readonly'] = True
-        #     self.fields['center'].widget.attrs['disabled'] = True
-        #
-        # else:
-        #     partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
-        #     partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
-        #     self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
-        #     # self.fields['center'] = initials['center']
-        #     self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
-        #     self.fields['Participants'].queryset = Registration.objects.filter(
-        #         partner_organization=partner_organization)
-        #     self.fields['partner_organization'].widget.attrs['readonly'] = True
+        if user.is_center:
+            partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
+            partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
+            self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+            # self.fields['center'] = initials['center']
+            # self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
+            self.fields['Participants'].queryset = Registration.objects.filter(center=initials['center'])
+            self.fields['partner_organization'].widget.attrs['readonly'] = True
+            self.fields['center'].widget.attrs['disabled'] = True
+
+        else:
+            partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
+            partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
+            self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
+            # self.fields['center'] = initials['center']
+            self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
+            self.fields['Participants'].queryset = Registration.objects.filter(
+                partner_organization=partner_organization)
+            self.fields['partner_organization'].widget.attrs['readonly'] = True
 
         my_fields = OrderedDict()
 
