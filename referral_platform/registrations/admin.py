@@ -304,9 +304,9 @@ class AssessmentAdmin(admin.ModelAdmin):
         'overview',
         'order',
         'id',
+        'location',
     )
-    list_filter = (
-    )
+    list_filter = ('slug', 'id', 'location')
     search_fields = (
     )
 
