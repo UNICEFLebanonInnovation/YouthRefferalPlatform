@@ -34,6 +34,7 @@ class Assessment(models.Model):
     assessment_form = models.URLField(blank=True, null=True)
     order = models.TextField(blank=False, null=False, default=1)
     partner = models.ForeignKey(PartnerOrganization, null=True, blank=True,)
+    location = models.ForeignKey(Location, null=True, blank=True)
 
 
 
@@ -52,7 +53,8 @@ class Assessment(models.Model):
                      self.capacity,
                      self.assessment_form,
                      self.order,
-                     self.partner])
+                     self.partner,
+                     self.country])
 
 
 class NewMapping(models.Model):
