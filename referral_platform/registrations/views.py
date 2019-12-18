@@ -28,7 +28,7 @@ from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
-from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
+from .filters import YouthFilter, YouthPLFilter, YouthSYFilter, YouthIRFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
 import zipfile
@@ -68,23 +68,23 @@ class ListingView(LoginRequiredMixin,
         elif "JORDAN" in locations:
             return YouthFilter
         elif "IRAK" in locations:
-            return YouthPLFilter
-        elif "IRAN" in locations:
-            return YouthSYFilter
-        elif "MOROCCO" in locations:
-            return YouthFilter
-        elif "DJIBOUTI" in locations:
-            return YouthPLFilter
-        elif "EGYPT" in locations:
-            return YouthSYFilter
-        elif "ALGERIA" in locations:
-            return YouthFilter
-        elif "TUNIS" in locations:
-            return YouthPLFilter
-        elif "LEBANON" in locations:
-            return YouthSYFilter
-        elif "SUDAN" in locations:
-            return YouthFilter
+            return YouthIRFilter
+        # elif "IRAN" in locations:
+        #     return YouthSYFilter
+        # elif "MOROCCO" in locations:
+        #     return YouthFilter
+        # elif "DJIBOUTI" in locations:
+        #     return YouthPLFilter
+        # elif "EGYPT" in locations:
+        #     return YouthSYFilter
+        # elif "ALGERIA" in locations:
+        #     return YouthFilter
+        # elif "TUNIS" in locations:
+        #     return YouthPLFilter
+        # elif "LEBANON" in locations:
+        #     return YouthSYFilter
+        # elif "SUDAN" in locations:
+        #     return YouthFilter
 
     def get_table_class(self):
             locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -96,22 +96,22 @@ class ListingView(LoginRequiredMixin,
                 return CommonTable
             elif "IRAK" in locations:
                 return CommonTable
-            elif "IRAN" in locations:
-                return CommonTable
-            elif "MOROCCO" in locations:
-                return CommonTable
-            elif "DJIBOUTI" in locations:
-                return CommonTable
-            elif "EGYPT" in locations:
-                return CommonTable
-            elif "ALGERIA" in locations:
-                return CommonTable
-            elif "TUNIS" in locations:
-                return CommonTable
-            elif "LEBANON" in locations:
-                return CommonTable
-            elif "SUDAN" in locations:
-                return CommonTable
+            # elif "IRAN" in locations:
+            #     return CommonTable
+            # elif "MOROCCO" in locations:
+            #     return CommonTable
+            # elif "DJIBOUTI" in locations:
+            #     return CommonTable
+            # elif "EGYPT" in locations:
+            #     return CommonTable
+            # elif "ALGERIA" in locations:
+            #     return CommonTable
+            # elif "TUNIS" in locations:
+            #     return CommonTable
+            # elif "LEBANON" in locations:
+            #     return CommonTable
+            # elif "SUDAN" in locations:
+            #     return CommonTable
 
 
 class AddView(LoginRequiredMixin, FormView):
@@ -146,6 +146,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+            data['location'] = self.request.user.country
 
         if self.request.GET.get('youth_id'):
                 instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
@@ -184,6 +185,7 @@ class EditView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+            data['location'] = self.request.user.country
         initial = data
         return initial
 
@@ -204,6 +206,7 @@ class EditView(LoginRequiredMixin, FormView):
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+            data['location'] = self.request.user.country
             return form(data, instance=instance)
 
     def form_valid(self, form):
