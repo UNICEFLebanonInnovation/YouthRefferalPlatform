@@ -261,20 +261,13 @@ class CommonForm(forms.ModelForm):
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
             all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
             # all_forms = all_forms.filter(location=country)
-            print('forms')
-            print(all_forms)
             new_forms = OrderedDict()
-            m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+            m1 = Assessment.objects.filter((Q(slug="init_registration") | Q(slug="init_exec")), location=country)
             xforms = list(all_forms)
             removed = list(m1)
             for x in removed:
                 xforms.remove(x)
             all_form = tuple(xforms)
-            print('forms')
-            print(all_form)
-            print('type')
-            print(type(all_forms))
-            forms = all_form.filter(**{'country__contains': country})
 
             registration_form = Assessment.objects.get(slug="registration", location=country)
             previous_status = "disabled"
@@ -283,7 +276,7 @@ class CommonForm(forms.ModelForm):
                 registration_id=instance.id
             ).exists()
 
-            for specific_form in forms:
+            for specific_form in all_form:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
