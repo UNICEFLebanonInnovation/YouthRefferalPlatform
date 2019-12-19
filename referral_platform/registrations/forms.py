@@ -260,7 +260,9 @@ class CommonForm(forms.ModelForm):
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
             all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
-            all_forms = all_forms.filter(location=country)
+            # all_forms = all_forms.filter(location=country)
+            print('forms')
+            print(all_forms)
             new_forms = OrderedDict()
             m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
             xforms = list(all_forms)
