@@ -274,6 +274,7 @@ class CommonForm(forms.ModelForm):
             print(all_form)
             print('type')
             print(type(all_forms))
+            forms = all_form.filter(**{'country__contains': country})
 
             registration_form = Assessment.objects.get(slug="registration", location=country)
             previous_status = "disabled"
@@ -282,7 +283,7 @@ class CommonForm(forms.ModelForm):
                 registration_id=instance.id
             ).exists()
 
-            for specific_form in all_form:
+            for specific_form in forms:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
