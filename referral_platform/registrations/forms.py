@@ -189,6 +189,7 @@ class CommonForm(forms.ModelForm):
         country = initials['location']
         print('initials')
         print(initials)
+        print(country)
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
         my_fields = OrderedDict()
