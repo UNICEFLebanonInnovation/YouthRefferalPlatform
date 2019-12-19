@@ -186,10 +186,14 @@ class CommonForm(forms.ModelForm):
 
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner = initials['partner'] if 'partner' in initials else 0
-        country = initials['partner_locations']['Location']
+        country = initials['locations']
         print('initials')
         print(initials)
+        print('coutry')
         print(country)
+        print('type')
+        print(type(country))
+
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
         my_fields = OrderedDict()
