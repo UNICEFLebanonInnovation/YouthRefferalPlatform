@@ -187,6 +187,8 @@ class CommonForm(forms.ModelForm):
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner = initials['partner'] if 'partner' in initials else 0
         country = initials['location']
+        print('initials')
+        print(initials)
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
         my_fields = OrderedDict()
@@ -259,10 +261,10 @@ class CommonForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
+            all_forms = Assessment.objects.filter((Q(partner__isnull=True) | Q(partner=partner)), location=country)
             # all_forms = all_forms.filter(location=country)
             new_forms = OrderedDict()
-            m1 = Assessment.objects.filter((Q(slug="init_registration") | Q(slug="init_exec")), location=country)
+            m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
             xforms = list(all_forms)
             removed = list(m1)
             for x in removed:
