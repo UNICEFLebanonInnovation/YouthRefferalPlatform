@@ -186,7 +186,7 @@ class CommonForm(forms.ModelForm):
 
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner = initials['partner'] if 'partner' in initials else 0
-        country = initials['locations']
+        country = initials['location']
         print('initials')
         print(initials)
         print('coutry')
