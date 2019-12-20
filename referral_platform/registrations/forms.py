@@ -275,6 +275,8 @@ class CommonForm(forms.ModelForm):
             for x in removed:
                 xforms.remove(x)
             all_form = tuple(xforms)
+            print("all forms")
+            print(all_form)
 
             registration_form = Assessment.objects.get(slug="registration", location_id=country)
             previous_status = "disabled"
