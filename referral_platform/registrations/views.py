@@ -146,7 +146,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            data['location'] = self.request.user.country_id
+            data['location'] = self.request.user.country
 
         if self.request.GET.get('youth_id'):
                 instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
