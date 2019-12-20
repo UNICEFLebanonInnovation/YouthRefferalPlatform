@@ -36,6 +36,7 @@ class LocationAdmin(ImportExportMixin, MPTTModelAdmin):
         'name_en',
         'type',
         'parent',
+        'id',
     )
     list_filter = (
         'type',
