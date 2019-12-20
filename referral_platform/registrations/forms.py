@@ -266,7 +266,7 @@ class CommonForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(location_id=country) # .filter(Q(partner__isnull=True) | Q(partner=partner))
+            all_forms = Assessment.objects.filter(location_id=country).filter(Q(partner__isnull=True) | Q(partner=partner))
             # all_forms = all_forms.filter(location=country)
             new_forms = OrderedDict()
             m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
