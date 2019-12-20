@@ -269,6 +269,9 @@ class CommonForm(forms.ModelForm):
             all_forms = Assessment.objects.filter(location_id=country).filter(Q(partner__isnull=True) | Q(partner=partner))
             # all_forms = all_forms.filter(location=country)
             new_forms = OrderedDict()
+
+            print('all forms')
+            print(all_forms)
             m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
             xforms = list(all_forms)
             removed = list(m1)
