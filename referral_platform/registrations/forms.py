@@ -266,7 +266,7 @@ class CommonForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter((Q(partner__isnull=True) | Q(partner=partner)), location=country)
+            all_forms = Assessment.objects.filter(location_id=country) # .filter(Q(partner__isnull=True) | Q(partner=partner))
             # all_forms = all_forms.filter(location=country)
             new_forms = OrderedDict()
             m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
@@ -276,7 +276,7 @@ class CommonForm(forms.ModelForm):
                 xforms.remove(x)
             all_form = tuple(xforms)
 
-            registration_form = Assessment.objects.get(slug="registration", location=country)
+            registration_form = Assessment.objects.get(slug="registration", location_id=country)
             previous_status = "disabled"
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
