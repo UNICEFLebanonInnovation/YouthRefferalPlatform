@@ -11,4 +11,10 @@ urlpatterns = [
         LocationAutocomplete.as_view(),
         name='location-autocomplete',
         ),
+
+    url(
+        regex=r'^exec-sequence/$',
+        view=views.ExecSequenceView.as_view(),
+        name='exec_sequence'
+    ),
 ]
