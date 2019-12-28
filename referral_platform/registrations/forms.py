@@ -272,7 +272,7 @@ class CommonForm(forms.ModelForm):
             print(all_forms)
             print('country forms')
             print('country')
-            print(country)
+            print(country).encode('utf8')
             print(all_forms)
             m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
             xforms = list(all_forms)
