@@ -282,7 +282,7 @@ class CommonForm(forms.ModelForm):
                     xforms.remove(x)
                 all_form = tuple(xforms)
             else:
-                all_form=all_forms
+                all_form = all_forms
             print("all form")
             print(all_form)
             print("m1")
