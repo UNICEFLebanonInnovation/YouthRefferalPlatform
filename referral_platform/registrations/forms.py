@@ -284,7 +284,7 @@ class CommonForm(forms.ModelForm):
             print("all forms")
             print(all_form)
 
-            registration_form = Assessment.objects.filter(slug="registration", location_id=int(country))
+            registration_form = Assessment.objects.filter(slug="registration", location_id=country)
             previous_status = "disabled"
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
