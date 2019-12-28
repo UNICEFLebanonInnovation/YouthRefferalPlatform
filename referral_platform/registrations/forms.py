@@ -260,7 +260,7 @@ class CommonForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            if country ==11:
+            if country == '11':
                 all_forms = Assessment.objects.filter(location_id=int(country))
             else:
                 all_forms = Assessment.objects.filter(location_id=None)
@@ -271,6 +271,8 @@ class CommonForm(forms.ModelForm):
             print('all forms')
             print(all_forms)
             print('country forms')
+            print('country')
+            print(country)
             print(all_forms)
             m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
             xforms = list(all_forms)
@@ -283,6 +285,8 @@ class CommonForm(forms.ModelForm):
                 all_form=all_forms
             print("all form")
             print(all_form)
+            print("m1")
+            print(m1)
 
             registration_form = Assessment.objects.get(slug="registration")
             previous_status = "disabled"
