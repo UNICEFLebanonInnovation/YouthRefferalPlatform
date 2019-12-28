@@ -281,10 +281,10 @@ class CommonForm(forms.ModelForm):
                 all_form = tuple(xforms)
             else:
                 all_form=all_forms
-            print("all forms")
+            print("all form")
             print(all_form)
 
-            registration_form = Assessment.objects.filter(slug="registration", location_id=country)
+            registration_form = Assessment.objects.filter(slug="registration")
             previous_status = "disabled"
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
