@@ -288,16 +288,16 @@ class CommonForm(forms.ModelForm):
             # print("m1")
             # print(m1)
 
+            registration_form = Assessment.objects.get(slug="registration")
+            previous_status = "disabled"
+            youth_registered = AssessmentSubmission.objects.filter(
+                assessment_id=registration_form.id,
+                registration_id=instance.id
+            ).exists()
+
+
+
             for specific_form in all_forms:
-
-                registration_form = Assessment.objects.get(slug="registration")
-                previous_status = "disabled"
-                youth_registered = AssessmentSubmission.objects.filter(
-                    assessment_id=registration_form.id,
-                    registration_id=instance.id
-                ).exists()
-
-
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,

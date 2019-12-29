@@ -47,6 +47,7 @@ class YoungPersonAdmin(ImportExportModelAdmin):
         'first_name',
         'father_name',
         'last_name',
+        'partner_organization'
         'birthday_year',
         'birthday_month',
         'birthday_day',
