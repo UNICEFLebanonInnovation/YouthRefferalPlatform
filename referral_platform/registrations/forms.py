@@ -263,7 +263,7 @@ class CommonForm(forms.ModelForm):
             if country == '11':
                 all_forms = Assessment.objects.filter(location_id=int(country)).filter(Q(partner__isnull=True) | Q(partner=partner))
             else:
-                all_forms = Assessment.objects.filter((Q(partner__isnull=True) | Q(partner=partner)))
+                all_forms = Assessment.objects.filter((Q(partner__isnull=True) | Q(partner=partner))).filter(location_id=None)
             # all_forms = all_forms.filter(location=country)
             # country_form = all_forms.filter(location_id=country)
             new_forms = OrderedDict()
@@ -278,7 +278,7 @@ class CommonForm(forms.ModelForm):
             for x in removed:
                 xforms.remove(x)
             all_form = tuple(xforms)
-    
+
             print("all form")
             print(all_form)
             print("m1")
