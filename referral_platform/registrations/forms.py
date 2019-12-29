@@ -179,7 +179,7 @@ class CommonForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner'] = instance.partner_organization
-            initials['location'] = instance.location
+            # initials['location'] = instance.location
 
         else:
             initials = kwargs.get('initial', '')
@@ -270,19 +270,15 @@ class CommonForm(forms.ModelForm):
 
             print('all forms')
             print(all_forms)
-            print('country forms')
             print('country')
             print(country).encode('utf8')
             print(all_forms)
             m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
             xforms = list(all_forms)
             removed = list(m1)
-            if m1 in all_forms:
-                for x in removed:
-                    xforms.remove(x)
-                all_form = tuple(xforms)
-            else:
-                all_form = all_forms
+            for x in removed:
+                xforms.remove(x)
+            all_form = tuple(xforms)
             print("all form")
             print(all_form)
             print("m1")
