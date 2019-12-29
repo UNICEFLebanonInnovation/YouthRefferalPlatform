@@ -289,11 +289,11 @@ class CommonForm(forms.ModelForm):
             # print(m1)
 
             registration_form = Assessment.objects.filter(slug="registration")
-            previous_status = "disabled"
-            youth_registered = AssessmentSubmission.objects.filter(
-                assessment_id=registration_form.id,
-                registration_id=instance.id
-            ).exists()
+            # previous_status = "disabled"
+            # youth_registered = AssessmentSubmission.objects.filter(
+            #     assessment_id=registration_form.id,
+            #     registration_id=instance.id
+            # ).exists()
             # all_forms.union(registration_form)
             all_form = all_forms | registration_form
             print('all formss')
