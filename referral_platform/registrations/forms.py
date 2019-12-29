@@ -260,10 +260,10 @@ class CommonForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            if country == '11':
-                all_forms = Assessment.objects.filter(location_id=int(country)).filter(Q(partner__isnull=True) | Q(partner=partner)).exclude(slug="init_exec")
+            if country:
+                all_forms = Assessment.objects.filter(location_id=int(country)).exclude(slug="init_exec")
             else:
-                all_forms = Assessment.objects.filter((Q(partner__isnull=True) | Q(partner=partner))).filter(location_id=None).exclude(slug="init_exec").exclude(slug="init_registration")
+                all_forms = Assessment.objects.filter(location_id=None).exclude(slug="init_exec").exclude(slug="init_registration")
             # all_forms = all_forms.filter(location=country)
             # country_form = all_forms.filter(location_id=country)
             new_forms = OrderedDict()
@@ -272,7 +272,7 @@ class CommonForm(forms.ModelForm):
             print(all_forms)
             print('country')
             print(country).encode('utf8')
-            init = {'Initiative assessment - Initiative registration', 'Initiative assessment - Initiative implementation'}
+            # init = {'Initiative assessment - Initiative registration', 'Initiative assessment - Initiative implementation'}
             # all_form = [tuple(ele for ele in sub if ele != init) for sub in all_forms]
             # m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
             # xforms = list(all_forms)
