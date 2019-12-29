@@ -274,15 +274,17 @@ class CommonForm(forms.ModelForm):
             print(country).encode('utf8')
             init = {'Initiative assessment - Initiative registration', 'Initiative assessment - Initiative implementation'}
             # all_form = [tuple(ele for ele in sub if ele != init) for sub in all_forms]
-            m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
-            xforms = list(all_forms)
-            removed = list(m1)
-            for x in removed:
-                xforms.pop(x)
-            all_form = tuple(xforms)
+            # m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+            # xforms = list(all_forms)
+            # removed = list(m1)
+            # for x in removed:
+            #     xforms.pop(x)
+            # all_form = tuple(xforms)
+            all_forms.remove('Initiative assessment - Initiative registration')
+            all_forms.remove('Initiative assessment - Initiative implementation')
 
-            print("all form")
-            print(all_form)
+            print("all formms")
+            print(all_forms)
             # print("m1")
             # print(m1)
 
@@ -293,7 +295,7 @@ class CommonForm(forms.ModelForm):
                 registration_id=instance.id
             ).exists()
 
-            for specific_form in all_form:
+            for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
