@@ -261,9 +261,9 @@ class CommonForm(forms.ModelForm):
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
             if country == '11':
-                all_forms = Assessment.objects.filter(location_id=int(country)).filter(Q(partner__isnull=True) | Q(partner=partner))
+                all_forms = Assessment.objects.filter(location_id=int(country)).filter(Q(partner__isnull=True) | Q(partner=partner)).exclude(slug="init_exec")
             else:
-                all_forms = Assessment.objects.filter((Q(partner__isnull=True) | Q(partner=partner))).filter(location_id=None)
+                all_forms = Assessment.objects.filter((Q(partner__isnull=True) | Q(partner=partner))).filter(location_id=None).exclude(slug="init_exec")
             # all_forms = all_forms.filter(location=country)
             # country_form = all_forms.filter(location_id=country)
             new_forms = OrderedDict()
