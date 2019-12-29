@@ -294,11 +294,12 @@ class CommonForm(forms.ModelForm):
                 assessment_id=registration_form.id,
                 registration_id=instance.id
             ).exists()
-            all_forms.union(registration_form)
+            # all_forms.union(registration_form)
+            all_form = all_forms | registration_form
             print('all formss')
             print(all_forms)
 
-            for specific_form in all_forms:
+            for specific_form in all_form:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
