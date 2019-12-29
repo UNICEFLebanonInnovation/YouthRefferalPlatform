@@ -54,7 +54,7 @@ class Assessment(models.Model):
                      self.assessment_form,
                      self.order,
                      self.partner,
-                     self.country])
+                     self.location])
 
 
 class NewMapping(models.Model):
