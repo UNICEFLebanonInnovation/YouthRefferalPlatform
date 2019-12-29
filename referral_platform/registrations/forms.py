@@ -294,9 +294,9 @@ class CommonForm(forms.ModelForm):
                 assessment_id=registration_form.id,
                 registration_id=instance.id
             ).exists()
-            all_forms.append(registration_form)
-            print('registration form')
-            print(registration_form)
+            all_forms.union(registration_form)
+            print('all formss')
+            print(all_forms)
 
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
