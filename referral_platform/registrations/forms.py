@@ -261,7 +261,7 @@ class CommonForm(forms.ModelForm):
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
             if country:
-                all_forms = Assessment.objects.filter(location_id=int(country)).exclude(slug="init_exec")
+                all_forms = Assessment.objects.filter(location_id=int(country)).exclude(slug="init_exec").exclude(slug="init_registration")
             else:
                 all_forms = Assessment.objects.filter(location_id=None).exclude(slug="init_exec").exclude(slug="init_registration")
             # all_forms = all_forms.filter(location=country)
