@@ -294,7 +294,7 @@ class CommonForm(forms.ModelForm):
                 assessment_id=registration_form.id,
                 registration_id=instance.id
             ).exists()
-
+            all_forms.append(registration_form)
             print('registration form')
             print(registration_form)
 
