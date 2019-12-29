@@ -297,7 +297,7 @@ class CommonForm(forms.ModelForm):
                     registration_id=instance.id
                 ).exists()
 
-                
+
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
