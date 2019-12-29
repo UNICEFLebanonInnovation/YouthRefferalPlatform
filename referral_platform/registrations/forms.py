@@ -273,13 +273,13 @@ class CommonForm(forms.ModelForm):
             print('country')
             print(country).encode('utf8')
             init = {'Initiative assessment - Initiative registration', 'Initiative assessment - Initiative implementation'}
-            all_form = [tuple(ele for ele in sub if ele != init) for sub in all_forms]
-            # m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
-            # xforms = list(all_forms)
-            # removed = list(m1)
-            # for x in removed:
-            #     xforms.remove(x)
-            # all_form = tuple(xforms)
+            # all_form = [tuple(ele for ele in sub if ele != init) for sub in all_forms]
+            m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+            xforms = list(all_forms)
+            removed = list(m1)
+            for x in removed:
+                xforms.pop(x)
+            all_form = tuple(xforms)
 
             print("all form")
             print(all_form)
