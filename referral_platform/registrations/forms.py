@@ -179,7 +179,7 @@ class CommonForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner'] = instance.partner_organization
-            # initials['location'] = instance.location
+            initials['location'] = instance.location
 
         else:
             initials = kwargs.get('initial', '')
