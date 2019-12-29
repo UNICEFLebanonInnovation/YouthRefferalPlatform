@@ -280,7 +280,7 @@ class CommonForm(forms.ModelForm):
             # for x in removed:
             #     xforms.pop(x)
             # all_form = tuple(xforms)
-            all_forms.exclude(slug="init_registration")
+            all_forms.exclude('Initiative assessment - Initiative implementation')
             all_forms.exclude(slug="init_exec")
 
             print("all formms")
