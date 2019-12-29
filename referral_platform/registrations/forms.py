@@ -283,8 +283,8 @@ class CommonForm(forms.ModelForm):
             # all_forms.exclude('Assessment: Initiative assessment - Initiative implementation')
             # all_forms.exclude(slug="init_exec")
             #
-            print("all formms")
-            print(all_forms)
+            # print("all formms")
+            # print(all_forms)
             # print("m1")
             # print(m1)
 
@@ -295,7 +295,8 @@ class CommonForm(forms.ModelForm):
                 registration_id=instance.id
             ).exists()
 
-
+            print('registration form')
+            print(registration_form)
 
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
