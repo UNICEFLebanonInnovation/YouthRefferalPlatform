@@ -152,10 +152,10 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             print(registration_form)
 
             for specific_form in all_forms:
-                formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
-                    registry=instance.id,
-                )
+                # formtxt = '{assessment}?registry={registry}'.format(
+                #     assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
+                #     registry=instance.id,
+                # )
                 disabled = ""
 
                 if youth_registered:
@@ -187,7 +187,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     new_forms[specific_form.name] = OrderedDict()
                 new_forms[specific_form.name][specific_form.order] = {
                     'title': specific_form.overview,
-                    'form': formtxt,
+                    # 'form': formtxt,
                     'overview': specific_form.name,
                     'disabled': disabled
                 }
