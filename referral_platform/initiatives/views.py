@@ -117,7 +117,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
     model = Assessment
 
     def get_redirect_url(self, *args, **kwargs):
-        assessment = self.get_object()
+        assessment = self.get_object().filter(location_id=self.request.user.country_id)
         registry = YouthLedInitiative.objects.get(id=self.request.GET.get('registry'),
                                             partner_organization=self.request.user.partner_id)
         # youth = registry.youth
