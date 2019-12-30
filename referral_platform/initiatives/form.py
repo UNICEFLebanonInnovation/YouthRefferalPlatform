@@ -141,6 +141,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 initiative_id=instance.id
             ).exists()
 
+            print ("all forms")
+            print(all_forms)
+
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
