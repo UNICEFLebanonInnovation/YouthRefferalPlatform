@@ -43,6 +43,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         required=False, to_field_name='id',
     )
 
+    country = forms.CharField(
+        widget=forms.TextInput,
+        required=False
+    )
+
 
     class Meta:
         model = YouthLedInitiative
