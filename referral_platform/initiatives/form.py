@@ -88,7 +88,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # my_fields[_('Partner Organization')] = ['partner_organization']
         # my_fields[_('Initiative Title')] = ['title']
         my_fields[_('Participants')] = ['Participants']
-        my_fields[_('Initiative Location')] = ['governorate', 'center']
+        my_fields[_('Initiative Location')] = ['governorate', 'center', 'country']
         my_fields[_('Initiative Information')] = ['duration', 'type']
         self.helper = FormHelper()
         self.helper.form_show_labels = True
