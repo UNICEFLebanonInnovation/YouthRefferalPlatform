@@ -134,7 +134,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # all_forms = Assessment.objects.filter(Q(slug__icontains='init'))
             new_forms = OrderedDict()
 
-            registration_form = Assessment.objects.get(slug="init_registration", location_id=int(country))
+            if country:
+                registration_form = Assessment.objects.get(slug="init_registration", location_id=int(country))
+            else:
+                registration_form = Assessment.objects.get(slug="init_registration", location_id=None)
+
 
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
