@@ -192,7 +192,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     'title': specific_form.overview,
                     'form': formtxt,
                     'overview': specific_form.name,
-                    'disabled': disabled
+                    'disabled': disabled,
+                    'location_id': country
                 }
                 previous_status = disabled
             assessment_fieldset = []
