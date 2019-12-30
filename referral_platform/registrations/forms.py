@@ -191,6 +191,7 @@ class CommonForm(forms.ModelForm):
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
         my_fields = OrderedDict()
+        self.fields['location'].widget.attrs['readonly'] = True
 
         if not instance:
             my_fields['Search Youth'] = ['search_youth']
