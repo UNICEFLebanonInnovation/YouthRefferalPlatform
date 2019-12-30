@@ -64,7 +64,7 @@ class PlatformUserAdmin(AuthUserAdmin):
                                        'is_center','is_partner',
                                        'is_countryMgr','groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner', 'country',)})
+        (None, {'fields': ('partner', 'center', 'country',)})
     )
 
     ordering = ('email',)
