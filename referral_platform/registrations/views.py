@@ -219,7 +219,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
     model = Assessment
 
     def get_redirect_url(self, *args, **kwargs):
-        assessment = self.get_object().filter(location_id=self.request.user.country_id)
+        assessment = self.get_object(location_id=self.request.user.country_id)
 
         print("assessmennt")
         print(assessment)
