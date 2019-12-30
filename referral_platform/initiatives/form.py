@@ -74,6 +74,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.fields['partner_organization'].widget.attrs['readonly'] = True
         self.fields['country'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
+        print('Country')
+        print(country)
 
         if not instance:
             my_fields['Search Youth'] = ['partner_organization', 'title']
