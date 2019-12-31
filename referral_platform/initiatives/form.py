@@ -146,7 +146,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             ).exists()
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
+                    assessment=reverse('initiatives:assessment', kwargs={'id': specific_form.id}),
                     registry=instance.id,
                 )
                 disabled = ""
