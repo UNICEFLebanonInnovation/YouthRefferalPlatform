@@ -181,7 +181,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 new_forms[specific_form.id][specific_form.order] = {
                     'title': specific_form.overview,
                     'form': formtxt,
-                    'id': specific_form.id,
+                    'overview': specific_form.name,
                     'disabled': disabled,
 
 
@@ -209,7 +209,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     None,
                     Div(
                         HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[id][test_order][
-                            'id'] + '</h4>')
+                            'overview'] + '</h4>')
                     ),
                     assessment_div,
                     Div(
