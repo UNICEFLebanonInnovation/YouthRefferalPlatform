@@ -73,6 +73,6 @@ class CommonTableAlt(tables.Table):
             'birthday',
             'youth.nationality',
             'youth.marital_status',
-            'youth.address',
-            'comments',
+
+            'center',
         )
