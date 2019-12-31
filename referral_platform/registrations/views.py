@@ -298,10 +298,10 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         if hashing.assessment_id:
             print('ok')
             registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
+            print(registration.id)
             assessment = Assessment.objects.get(id=int(hashing.assessment_id))
             submission, new = InintiativeSubmission.objects.get_or_create(
-                registration=registration,
-                youth=registration.youth,
+                initiative=registration,
                 assessment=assessment,
                 status='enrolled'
             )
