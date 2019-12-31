@@ -273,6 +273,7 @@ class AssessmentHash(models.Model):
     hashed = models.CharField(max_length=254, unique=True)
     registration = models.CharField(max_length=20)
     assessment_slug = models.CharField(max_length=50)
+    assessment_id = models.CharField(max_length=50, blank=True, null=True)
     partner = models.CharField(max_length=5)
     user = models.CharField(max_length=20)
     timestamp = models.CharField(max_length=100)
@@ -282,19 +283,21 @@ class AssessmentHash(models.Model):
 
     @property
     def name(self):
-        return '{}{}{}{}{}'.format(
+        return '{}{}{}{}{}{}'.format(
             self.registration,
             self.assessment_slug,
+            self.assessment_id,
             self.partner,
             self.user,
             self.timestamp,
         )
 
     def __unicode__(self):
-        return '{}-{}-{}-{}-{}-{}'.format(
+        return '{}-{}-{}-{}-{}-{}-{}'.format(
             self.hashed,
             self.registration,
             self.assessment_slug,
+            self.assessment_id,
             self.partner,
             self.user,
             self.timestamp,

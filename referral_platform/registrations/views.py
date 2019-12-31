@@ -292,7 +292,10 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
 
         registration = Registration.objects.get(id=int(hashing.registration))
-        assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+        if hashing.assessment_id:
+            assessment = Assessment.objects.get(id=int(hashing.assessment_id))
+        else:
+            assessment = Assessment.objects.get(slug=hashing.assessment_slug)
         submission, new = AssessmentSubmission.objects.get_or_create(
             registration=registration,
             youth=registration.youth,
