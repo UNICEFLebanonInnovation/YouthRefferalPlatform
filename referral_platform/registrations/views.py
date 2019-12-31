@@ -60,7 +60,7 @@ class ListingView(LoginRequiredMixin,
         if beneficiary_flag:
             return Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         elif center_flag:
-            return Registration.objects.get(center=self.request.user.center)
+            return Registration.objects.filter(center=self.request.user.center)
         elif partner_flag:
             return Registration.objects.filter(partner_organization=self.request.user.partner)
         elif country_flag:
