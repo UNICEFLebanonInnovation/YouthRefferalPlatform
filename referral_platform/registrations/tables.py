@@ -29,7 +29,7 @@ class CommonTable(tables.Table):
         model = Registration
         fields = (
             'edit_column',
-            'delete_column',
+            # 'delete_column',
             'governorate',
             'trainer',
             'location',
@@ -62,7 +62,7 @@ class CommonTableAlt(tables.Table):
         model = Registration
         fields = (
             'edit_column',
-            'delete_column',
+            # 'delete_column',
             'governorate',
             'location',
             'youth.first_name',
