@@ -144,15 +144,23 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 assessment_id=registration_form.id,
                 initiative_id=instance.id
             ).exists()
+
+            print ("all forms")
+            print(all_forms)
+
+            print("registration form")
+            print(registration_form)
+
+            print('new form')
+            print(new_forms)
+
             for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('initiatives:assessment', kwargs={'id': specific_form.id}),
+                    assessment=reverse('initiatives:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
                 )
                 disabled = ""
-                print('formtxt')
-                print(formtxt)
-                
+
                 if youth_registered:
                     if specific_form.slug == "init_registration":
                         disabled = "disabled"
@@ -178,30 +186,26 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     if specific_form.slug != "init_registration":
                         disabled = "disabled"
 
-                if specific_form.id not in new_forms:
-                    new_forms[specific_form.id] = OrderedDict()
-                new_forms[specific_form.id][specific_form.order] = {
+                if specific_form.name not in new_forms:
+                    new_forms[specific_form.name] = OrderedDict()
+                new_forms[specific_form.name][specific_form.order] = {
                     'title': specific_form.overview,
                     'form': formtxt,
                     'overview': specific_form.name,
                     'disabled': disabled,
 
-
                 }
                 previous_status = disabled
             assessment_fieldset = []
 
-            print('new form')
-            print(new_forms)
-
-            for id in new_forms:
+            for name in new_forms:
                 test_html = ""
 
-                for test_order in new_forms[id]:
+                for test_order in new_forms[name]:
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
-                                + new_forms[id][test_order]['disabled'] + '" href="' + new_forms[id][test_order][
+                                + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
                                     'form'] \
-                                + '">' + new_forms[id][test_order][
+                                + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '
                 assessment_div = Div(
                     HTML(test_html),
@@ -210,7 +214,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 test_fieldset = Fieldset(
                     None,
                     Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[id][test_order][
+                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
                             'overview'] + '</h4>')
                     ),
                     assessment_div,
