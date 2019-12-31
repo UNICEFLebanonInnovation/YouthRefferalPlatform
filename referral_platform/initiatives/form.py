@@ -192,14 +192,14 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             print('new form')
             print(new_forms)
 
-            for name in new_forms:
+            for id in new_forms:
                 test_html = ""
 
-                for test_order in new_forms[name]:
+                for test_order in new_forms[id]:
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
                                 + new_forms[id][test_order]['disabled'] + '" href="' + new_forms[id][test_order][
                                     'form'] \
-                                + '">' + new_forms[name][test_order][
+                                + '">' + new_forms[id][test_order][
                                     'title'] + '</a></div> '
                 assessment_div = Div(
                     HTML(test_html),
@@ -208,7 +208,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 test_fieldset = Fieldset(
                     None,
                     Div(
-                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[name][test_order][
+                        HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[id][test_order][
                             'overview'] + '</h4>')
                     ),
                     assessment_div,
