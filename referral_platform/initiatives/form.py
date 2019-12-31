@@ -150,10 +150,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     registry=instance.id,
                 )
                 disabled = ""
-
-            print('form text')
-            print(formtxt)
-
+                print('formtxt')
+                print(formtxt)
+                
                 if youth_registered:
                     if specific_form.slug == "init_registration":
                         disabled = "disabled"
