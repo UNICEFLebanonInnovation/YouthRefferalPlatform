@@ -31,6 +31,8 @@ from .models import Registration, Assessment, NewMapping, AssessmentSubmission, 
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter, YouthIRFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
+from referral_platform.initiatives.models import AssessmentSubmission as InintiativeSubmission
+
 import zipfile
 import StringIO
 import io
@@ -294,14 +296,20 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         registration = Registration.objects.get(id=int(hashing.registration))
         if hashing.assessment_id:
             assessment = Assessment.objects.get(id=int(hashing.assessment_id))
+            submission, new = InintiativeSubmission.objects.get_or_create(
+                registration=registration,
+                youth=registration.youth,
+                assessment=assessment,
+                status='enrolled'
+            )
         else:
             assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-        submission, new = AssessmentSubmission.objects.get_or_create(
-            registration=registration,
-            youth=registration.youth,
-            assessment=assessment,
-            status='enrolled'
-        )
+            submission, new = AssessmentSubmission.objects.get_or_create(
+                registration=registration,
+                youth=registration.youth,
+                assessment=assessment,
+                status='enrolled'
+            )
         submission.data = payload
         submission.update_field()
         submission.save()
