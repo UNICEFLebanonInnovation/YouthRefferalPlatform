@@ -209,7 +209,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                     None,
                     Div(
                         HTML('<h4 id="alternatives-to-hidden-labels">' + new_forms[id][test_order][
-                            'overview'] + '</h4>')
+                            'id'] + '</h4>')
                     ),
                     assessment_div,
                     Div(
