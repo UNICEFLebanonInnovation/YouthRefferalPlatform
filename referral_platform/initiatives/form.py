@@ -151,6 +151,9 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                 )
                 disabled = ""
 
+            print('form text')
+            print(formtxt)
+
                 if youth_registered:
                     if specific_form.slug == "init_registration":
                         disabled = "disabled"
