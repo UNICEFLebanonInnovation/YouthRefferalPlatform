@@ -22,7 +22,7 @@ urlpatterns = [
         name='edit'
     ),
     url(
-        regex=r'^assessment/(?P<slug>[\w.@+-]+)/$',
+        regex=r'^assessment/(?P<id>[\w.@+-]+)/$',
         view=views.YouthAssessment.as_view(),
         name='assessment'
     ),
