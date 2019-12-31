@@ -123,7 +123,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         # youth = registry.youth
         hashing = AssessmentHash.objects.create(
             registration=registry.id,
-            assessment_id=assessment.id,
+            assessment_slug=assessment.slug,
             partner=self.request.user.partner_id,
             user=self.request.user.id,
             timestamp=time.time(),
