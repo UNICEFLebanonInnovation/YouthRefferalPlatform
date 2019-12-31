@@ -42,7 +42,7 @@ class CommonTable(tables.Table):
             'birthday',
             'youth.nationality',
             'youth.marital_status',
-            'youth.address',
+
             'center',
         )
 
