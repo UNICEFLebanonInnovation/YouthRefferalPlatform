@@ -100,14 +100,15 @@ class EditView(LoginRequiredMixin, FormView):
     def get_form(self, form_class=None):
         # form_class = self.get_form_class()
         form = YouthLedInitiativePlanningForm
-        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner, country=self.request.user.country_id)
+        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance.country = self.request.user.country_id
         if self.request.method == "POST":
             return form(self.request.POST, instance=instance)
         else:
             return form(instance=instance)
 
     def form_valid(self, form):
-        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner, country=self.request.user.country_id)
+        instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
         # self.fields['hidden_field'].initial = instance.id
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
