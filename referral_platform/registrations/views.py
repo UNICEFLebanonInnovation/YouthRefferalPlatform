@@ -238,6 +238,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         hashing = AssessmentHash.objects.create(
             registration=registry.id,
             assessment_slug=assessment.slug,
+            assessment_id=assessment.id,
             partner=self.request.user.partner_id,
             user=self.request.user.id,
             timestamp=time.time()
@@ -294,20 +295,21 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
 
         print(hashing.id)
+        assessment = Assessment.objects.get(id=int(hashing.assessment_id))
 
-        if hashing.assessment_id:
+        if assessment.slug in ("init_registration", "init_exec"):
             print('ok')
             registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
             print(registration.id)
-            assessment = Assessment.objects.get(id=int(hashing.assessment_id))
+
             submission, new = InintiativeSubmission.objects.get_or_create(
                 initiative=registration,
                 assessment=assessment,
                 status='enrolled'
             )
         else:
+            print("")
             registration = Registration.objects.get(id=int(hashing.registration))
-            assessment = Assessment.objects.get(slug=hashing.assessment_slug)
             submission, new = AssessmentSubmission.objects.get_or_create(
                 registration=registration,
                 youth=registration.youth,

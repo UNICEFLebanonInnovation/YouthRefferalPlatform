@@ -143,7 +143,7 @@ class CommonForm(forms.ModelForm):
 
             for specific_form in all_forms:
                 formtxt = '{assessment}?youth_id={youth_id}&status={status}'.format(
-                    assessment=reverse('youth:assessment', kwargs={'slug': specific_form.slug}),
+                    assessment=reverse('youth:assessment', kwargs={'pk': specific_form.id}),
                     youth_id=instance.number,
                     status='enrolled',
                 )
