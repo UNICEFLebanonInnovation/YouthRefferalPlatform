@@ -308,7 +308,7 @@ class CommonForm(forms.ModelForm):
 
             for specific_form in all_form:
                 formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
+                    assessment=reverse('registrations:assessment', kwargs={'pk': specific_form.id}),
                     registry=instance.id,
                 )
                 disabled = ""
@@ -633,7 +633,7 @@ class BeneficiaryCommonForm(CommonForm):
 
                 for specific_form in all_forms:
                     formtxt = '{assessment}?registry={registry}'.format(
-                        assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
+                        assessment=reverse('registrations:assessment', kwargs={'pk': specific_form.id}),
                         registry=instance.id,
                     )
                     disabled = ""
