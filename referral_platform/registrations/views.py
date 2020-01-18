@@ -452,7 +452,7 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
             queryset = self.queryset.filter(registration__governorate__parent__name_en=self.request.user.country.name_en)
         elif country_flag:
             queryset = self.queryset.filter(
-                registration__governorate__parent__name_en=self.request.user.country_id)
+                registration__governorate__parent__name_en=self.request.user.country.name_en)
             print ('country_flag')
 
         else:
@@ -816,7 +816,7 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
                 registration__governorate__parent__name_en=self.request.user.country.name_en)
         elif country_flag:
             queryset = self.queryset.filter(
-                registration__governorate__parent__name_en=self.request.user.country_id)
+                registration__governorate__parent__name_en=self.request.user.country.name_en)
             print ('country_flag')
 
         else:
@@ -1087,7 +1087,7 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
                 registration__governorate__parent__name_en=self.request.user.country.name_en)
         elif country_flag:
             queryset = self.queryset.filter(
-                registration__governorate__parent__name_en=self.request.user.country_id)
+                registration__governorate__parent__name_en=self.request.user.country.name_en)
             print ('country_flag')
 
         else:
@@ -1259,7 +1259,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
                 registration__governorate__parent__name_en=self.request.user.country.name_en)
         elif country_flag:
             queryset = self.queryset.filter(
-                registration__governorate__parent__name_en=self.request.user.country_id)
+                registration__governorate__parent__name_en=self.request.user.country.name_en)
             print ('country_flag')
 
         else:
