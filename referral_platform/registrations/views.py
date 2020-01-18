@@ -361,7 +361,22 @@ class ExportView(LoginRequiredMixin, ListView):
     queryset = Registration.objects.all()
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+
+        beneficiary_flag = self.request.user.is_beneficiary
+        center_flag = self.request.user.is_center
+        partner_flag = self.request.user.is_partner
+        country_flag = self.request.user.is_countryMgr
+
+        if beneficiary_flag:
+            queryset = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        elif center_flag:
+            queryset = Registration.objects.filter(center=self.request.user.center)
+        elif partner_flag:
+            queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+        elif country_flag:
+            queryset = Registration.objects.filter(governorate__parent_id=self.request.user.country_id)
+
+        elif self.request.user.is_superuser:
             queryset = self.queryset
         else:
             queryset = self.queryset.filter(partner_organization=self.request.user.partner)
@@ -431,8 +446,14 @@ class ExportRegistryAssessmentsView(LoginRequiredMixin, ListView):
     newmapping = NewMapping
 
     def get_queryset(self):
+
+        country_flag = self.request.user.is_countryMgr
         if self.request.user.is_superuser:
             queryset = self.queryset.filter(registration__governorate__parent__name_en=self.request.user.country.name_en)
+        elif country_flag:
+            queryset = self.queryset.filter(
+                registration__governorate__parent__name_en=self.request.user.country_id)
+
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
@@ -787,12 +808,25 @@ class ExportCivicAssessmentsView(LoginRequiredMixin, ListView):
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_assessment', 'post_assessment','post_post_civic'])
 
     def get_queryset(self):
+
+        country_flag = self.request.user.is_countryMgr
         if self.request.user.is_superuser:
             queryset = self.queryset.filter(
                 registration__governorate__parent__name_en=self.request.user.country.name_en)
+        elif country_flag:
+            queryset = self.queryset.filter(
+                registration__governorate__parent__name_en=self.request.user.country_id)
+
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+
         return queryset
+        # if self.request.user.is_superuser:
+        #     queryset = self.queryset.filter(
+        #         registration__governorate__parent__name_en=self.request.user.country.name_en)
+        # else:
+        #     queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        # return queryset
 
     def get(self, request, *args, **kwargs):
 
@@ -1037,9 +1071,22 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['pre_entrepreneurship', 'post_entrepreneurship'])
 
     def get_queryset(self):
+        # if self.request.user.is_superuser:
+        #     queryset = self.queryset.filter(
+        #         registration__governorate__parent__name_en=self.request.user.country.name_en)
+        # else:
+        #     queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        #
+        # return queryset
+
+        country_flag = self.request.user.is_countryMgr
         if self.request.user.is_superuser:
             queryset = self.queryset.filter(
                 registration__governorate__parent__name_en=self.request.user.country.name_en)
+        elif country_flag:
+            queryset = self.queryset.filter(
+                registration__governorate__parent__name_en=self.request.user.country_id)
+
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 
@@ -1195,9 +1242,22 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
     queryset = AssessmentSubmission.objects.filter(assessment__slug__in=['init_exec', 'init_registration'])
 
     def get_queryset(self):
+        # if self.request.user.is_superuser:
+        #     queryset = self.queryset.filter(
+        #         registration__governorate__parent__name_en=self.request.user.country.name_en)
+        # else:
+        #     queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
+        #
+        # return queryset
+
+        country_flag = self.request.user.is_countryMgr
         if self.request.user.is_superuser:
             queryset = self.queryset.filter(
                 registration__governorate__parent__name_en=self.request.user.country.name_en)
+        elif country_flag:
+            queryset = self.queryset.filter(
+                registration__governorate__parent__name_en=self.request.user.country_id)
+
         else:
             queryset = self.queryset.filter(registration__partner_organization=self.request.user.partner)
 

@@ -134,6 +134,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # all_forms = Assessment.objects.filter(Q(slug__icontains='init'))
             new_forms = OrderedDict()
 
+
+            # compared if country is Iraq to proceed. since other countries do no have yet
             if country == 11:
                 registration_form = Assessment.objects.get(slug="init_registration", location_id=int(country))
             else:
