@@ -52,15 +52,17 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         label=_("Duration of the initiative"),
         widget=forms.Select, required=True,
         choices=(
+            ('', '----------'),
             ('1_2', _('1-2 weeks')),
             ('3_4', _('3-4 weeks')),
             ('4_6', _('4-6 weeks')),
             ('6_plus', _('More than 6 weeks'))),
         )
     type = forms.ChoiceField(
-        label=_("Duration of the initiative"),
+        label=_("Type of the initiative"),
         widget=forms.Select, required=True,
         choices=(
+            ('', '----------'),
             ('basic_services',
              _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
             ('social', _('Enhancing social cohesion')),
@@ -105,8 +107,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         self.fields['partner_organization'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
 
-        if not instance:
-            my_fields['Initiative Details'] = ['partner_organization', 'title']
+        # if not instance:
+        my_fields['Initiative Details'] = ['partner_organization', 'title']
 
         # my_fields[_('Partner Organization')] = ['partner_organization']
         # my_fields[_('Initiative Title')] = ['title']
