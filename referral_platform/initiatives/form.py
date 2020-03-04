@@ -34,7 +34,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
     partner_organization = forms.ModelChoiceField(
         label=_('Partner Organization'),
-        queryset=PartnerOrganization.obects.all(), widget=forms.Select,
+        queryset=PartnerOrganization.objects.all(), widget=forms.Select,
         required=True,
     )
 
