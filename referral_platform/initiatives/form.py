@@ -114,7 +114,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         my_fields = OrderedDict()
 
         # if not instance:
-        my_fields['Initiative Details'] = ['partner_organization', 'title']
+        my_fields[_('Initiative Details')] = ['partner_organization', 'title']
 
         # my_fields[_('Partner Organization')] = ['partner_organization']
         # my_fields[_('Initiative Title')] = ['title']

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-04 14:39+0200\n"
+"POT-Creation-Date: 2020-03-04 14:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -757,7 +757,7 @@ msgstr "أكثر من 6 أسابيع "
 
 #: referral_platform/initiatives/form.py:68
 msgid "Type of the initiative"
-msgstr "اختر مدة المبادرة"
+msgstr "اختر نوع المبادرة"
 
 #: referral_platform/initiatives/form.py:73
 #: referral_platform/initiatives/models.py:18
@@ -818,6 +818,10 @@ msgstr "تعزيز السلامة العامة"
 msgid ""
 "Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)"
 msgstr "تحسين المساحات العامة (الحدائق، المستشفيات، المباني، المدارس والأرصفة)"
+
+#: referral_platform/initiatives/form.py:117
+msgid "Initiative Details"
+msgstr "تفاصيل عن المبادرة"
 
 #: referral_platform/initiatives/form.py:121
 #: referral_platform/initiatives/models.py:62
@@ -2053,9 +2057,6 @@ msgstr "الاسم الثلاثي"
 
 #~ msgid "Partcipants"
 #~ msgstr "المشاركين"
-
-#~ msgid "Initiative Details"
-#~ msgstr "تفاصيل عن المبادرة"
 
 #~ msgid "Member"
 #~ msgstr "الاعضاء"
