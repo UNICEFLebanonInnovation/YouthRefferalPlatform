@@ -713,16 +713,12 @@ msgstr "المحافظة"
 
 #: referral_platform/initiatives/form.py:73
 #: referral_platform/initiatives/models.py:56
-#, fuzzy
-#| msgid "Participation"
 msgid "Participants"
-msgstr "مشاركة"
+msgstr "المشاركين"
 
 #: referral_platform/initiatives/form.py:74
-#, fuzzy
-#| msgid "Location Information"
 msgid "Initiative Information"
-msgstr "معلومات عن الموقع"
+msgstr "معلومات عن المبادرة"
 
 #: referral_platform/initiatives/form.py:199
 #: referral_platform/registrations/forms.py:360
@@ -740,13 +736,11 @@ msgstr "احفظ وتابع"
 #: referral_platform/registrations/forms.py:426
 #: referral_platform/registrations/forms.py:439
 msgid "Your data has been sent successfully to the server"
-msgstr "تم إرسال البياناتك بنجاح"
+msgstr "تم إرسال بياناتك بنجاح"
 
 #: referral_platform/initiatives/forms.py:17
-#, fuzzy
-#| msgid "Search for youth by name or id"
 msgid "Search for youth by name"
-msgstr "ابحث عن شاب من خلال الاسم او الرقم"
+msgstr "ابحث عن مستفيد من خلال الاسم او الرقم"
 
 #: referral_platform/initiatives/forms.py:22
 #: referral_platform/registrations/exports.py:23
@@ -876,10 +870,8 @@ msgid "Initiative Title"
 msgstr "عنوان المبادرة"
 
 #: referral_platform/initiatives/models.py:60
-#, fuzzy
-#| msgid "Select Location for the initiative"
 msgid "Duration of the initiative"
-msgstr "اختر موقع المبادرة"
+msgstr "اختر مدة المبادرة"
 
 #: referral_platform/initiatives/models.py:63
 msgid "1-2 weeks"
