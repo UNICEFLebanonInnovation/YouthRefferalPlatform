@@ -25,11 +25,17 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.none(),
-                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False), label=_("Partcipants"),)
+                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False),)
     search_youth = forms.CharField(
         label=_("Search for youth by name or id"),
         widget=forms.TextInput,
         required=False
+    )
+
+    partner_organization = forms.ModelChoiceField(
+        label=_('Partner Organization'),
+        queryset=PartnerOrganization.obects.all(), widget=forms.Select,
+        required=True,
     )
 
     title = forms.CharField(
@@ -40,12 +46,12 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     governorate = forms.ModelChoiceField(
         label=_('Governorate'),
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
-        required=True, to_field_name='id',
+        required=True,
     )
     center = forms.ModelChoiceField(
         label=_('Center'),
         queryset=Center.objects.all(), widget=forms.Select,
-        required=False, to_field_name='id',
+        required=False,
     )
 
     duration = forms.ChoiceField(
