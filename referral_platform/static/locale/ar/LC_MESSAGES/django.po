@@ -756,8 +756,6 @@ msgid "More than 6 weeks"
 msgstr "أكثر من 6 أسابيع "
 
 #: referral_platform/initiatives/form.py:68
-#, fuzzy
-#| msgid "Duration of the initiative"
 msgid "Type of the initiative"
 msgstr "اختر مدة المبادرة"
 
