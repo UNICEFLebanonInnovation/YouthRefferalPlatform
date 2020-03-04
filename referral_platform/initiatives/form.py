@@ -25,13 +25,18 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.none(),
-                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False))
+                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False), label=_("Partcipants"),)
     search_youth = forms.CharField(
         label=_("Search for youth by name or id"),
         widget=forms.TextInput,
         required=False
     )
 
+    title = forms.CharField(
+        label=_("Initiative Title"),
+        widget=forms.TextInput,
+        required=True
+    )
     governorate = forms.ModelChoiceField(
         label=_('Governorate'),
         queryset=Location.objects.filter(parent__isnull=False), widget=forms.Select,
@@ -41,6 +46,34 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         label=_('Center'),
         queryset=Center.objects.all(), widget=forms.Select,
         required=False, to_field_name='id',
+    )
+
+    duration = forms.ChoiceField(
+        label=_("Duration of the initiative"),
+        widget=forms.Select, required=True,
+        Choices=(
+            ('1_2', _('1-2 weeks')),
+            ('3_4', _('3-4 weeks')),
+            ('4_6', _('4-6 weeks')),
+            ('6_plus', _('More than 6 weeks'))),
+        )
+    type = forms.ChoiceField(
+        label=_("Duration of the initiative"),
+        widget=forms.Select, required=True,
+        Choices=(
+            ('basic_services',
+             _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
+            ('social', _('Enhancing social cohesion')),
+            ('environmental', _('Environmental')),
+            ('health_services', _('Health Services')),
+            ('informational', _('Educational, informational or knowledge sharing')),
+            ('advocacy', _('Advocacy or Raising awareness')),
+            ('political', _('Political')),
+            ('religious', _('Spiritual/Religious')),
+            ('culture', _('Artistic/Cultural/Sports')),
+            ('safety', _('Enhancing public safety')),
+            ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
+            ('other', _('Other'))),
     )
 
 
@@ -73,7 +106,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         my_fields = OrderedDict()
 
         if not instance:
-            my_fields['Search Youth'] = ['partner_organization', 'title']
+            my_fields['Initiative Details'] = ['partner_organization', 'title']
 
         # my_fields[_('Partner Organization')] = ['partner_organization']
         # my_fields[_('Initiative Title')] = ['title']
