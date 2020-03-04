@@ -51,29 +51,29 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
     duration = forms.ChoiceField(
         label=_("Duration of the initiative"),
         widget=forms.Select, required=True,
-        # Choices=(
-        #     ('1_2', _('1-2 weeks')),
-        #     ('3_4', _('3-4 weeks')),
-        #     ('4_6', _('4-6 weeks')),
-        #     ('6_plus', _('More than 6 weeks'))),
+        choices=(
+            ('1_2', _('1-2 weeks')),
+            ('3_4', _('3-4 weeks')),
+            ('4_6', _('4-6 weeks')),
+            ('6_plus', _('More than 6 weeks'))),
         )
     type = forms.ChoiceField(
         label=_("Duration of the initiative"),
         widget=forms.Select, required=True,
-        # Choices=(
-        #     ('basic_services',
-        #      _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
-        #     ('social', _('Enhancing social cohesion')),
-        #     ('environmental', _('Environmental')),
-        #     ('health_services', _('Health Services')),
-        #     ('informational', _('Educational, informational or knowledge sharing')),
-        #     ('advocacy', _('Advocacy or Raising awareness')),
-        #     ('political', _('Political')),
-        #     ('religious', _('Spiritual/Religious')),
-        #     ('culture', _('Artistic/Cultural/Sports')),
-        #     ('safety', _('Enhancing public safety')),
-        #     ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
-        #     ('other', _('Other'))),
+        choices=(
+            ('basic_services',
+             _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
+            ('social', _('Enhancing social cohesion')),
+            ('environmental', _('Environmental')),
+            ('health_services', _('Health Services')),
+            ('informational', _('Educational, informational or knowledge sharing')),
+            ('advocacy', _('Advocacy or Raising awareness')),
+            ('political', _('Political')),
+            ('religious', _('Spiritual/Religious')),
+            ('culture', _('Artistic/Cultural/Sports')),
+            ('safety', _('Enhancing public safety')),
+            ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
+            ('other', _('Other'))),
     )
 
 
