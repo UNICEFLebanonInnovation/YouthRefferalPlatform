@@ -62,6 +62,9 @@ class AssessmentSubmissionResource(admin.ModelAdmin):
     class Meta:
         model = AssessmentSubmission
         fields = (
+            'id',
+            'initiative__title',
+            'initiative__id',
             'assessment',
             # 'member',
             'initiative',
@@ -74,6 +77,9 @@ class AssessmentSubmissionResource(admin.ModelAdmin):
 class AssessmentSubmissionAdmin(ImportExportModelAdmin):
     resource_class = AssessmentSubmissionResource
     list_display = (
+        'id',
+        'initiative__title',
+        'initiative__id',
         'assessment',
         # 'member',
         'initiative',
