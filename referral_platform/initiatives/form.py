@@ -168,11 +168,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             new_forms = OrderedDict()
 
 
-            # compared if country is Iraq to proceed. since other countries do no have yet
-            if country == 11:
-                registration_form = Assessment.objects.get(slug="init_registration", location_id=int(country))
-            else:
-                registration_form = Assessment.objects.get(slug="init_registration", location_id=None)
+            # # compared if country is Iraq to proceed. since other countries do no have yet
+            # if country == 11:
+            #     registration_form = Assessment.objects.get(slug="init_registration", location_id=int(country))
+            # else:
+            registration_form = Assessment.objects.get(slug="init_registration", location_id=None)
 
 
             youth_registered = AssessmentSubmission.objects.filter(
