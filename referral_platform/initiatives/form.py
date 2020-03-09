@@ -172,7 +172,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # if country == 11:
             #     registration_form = Assessment.objects.get(slug="init_registration", location_id=int(country))
             # else:
-            registration_form = Assessment.objects.get(slug="init_registration", location_id=None)
+            registration_form = Assessment.objects.get(slug="init_registration")
 
 
             youth_registered = AssessmentSubmission.objects.filter(
