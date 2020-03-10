@@ -51,7 +51,7 @@ class YouthLedInitiative(models.Model):
     )
 
     title = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Initiative Title'))
-    governorate = models.ForeignKey(Location, blank=True, null=True, verbose_name="Governorate")
+    governorate = models.ForeignKey(Location, blank=True, null=True, verbose_name=_("Governorate"))
     center = models.ForeignKey(
         Center,
         blank=True, null=True,

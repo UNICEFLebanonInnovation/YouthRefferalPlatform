@@ -30,6 +30,7 @@ class CommonTable(tables.Table):
             'Participants',
             'governorate',
             'type',
+            'duration',
 
         )
 
@@ -48,5 +49,6 @@ class CommonTableAlt(tables.Table):
             'Participants',
             'governorate',
             'type',
+            'duration',
 
         )
