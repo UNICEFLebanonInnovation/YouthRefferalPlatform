@@ -190,7 +190,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                                 # disabled = "disabled"
                 else:
                     if specific_form.slug != "init_registration":
-                        disabled = "disabled"
+                        disabled = ""
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
