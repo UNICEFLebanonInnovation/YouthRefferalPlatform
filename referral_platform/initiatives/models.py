@@ -58,7 +58,7 @@ class YouthLedInitiative(models.Model):
         related_name='+',
         verbose_name=_('Center')
     )
-    partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name="Partner Organization")
+    partner_organization = models.ForeignKey(PartnerOrganization, blank=True, null=True, verbose_name=_("Partner Organization"))
     Participants = models.ManyToManyField(Registration, related_name='+', verbose_name=_('Participants'))
 
     duration = models.CharField(

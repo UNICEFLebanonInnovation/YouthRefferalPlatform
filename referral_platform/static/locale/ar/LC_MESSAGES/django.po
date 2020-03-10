@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-10 11:48+0200\n"
+"POT-Creation-Date: 2020-03-10 12:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -699,13 +699,12 @@ msgid "Participants"
 msgstr "المشاركين"
 
 #: referral_platform/initiatives/form.py:31
+#: referral_platform/initiatives/models.py:61
 msgid "Partner Organization"
 msgstr "الجمعية"
 
 #: referral_platform/initiatives/form.py:37
 #: referral_platform/initiatives/models.py:53
-#: referral_platform/initiatives/tables.py:29
-#: referral_platform/initiatives/tables.py:48
 msgid "Initiative Title"
 msgstr "عنوان المبادرة"
 
@@ -722,8 +721,6 @@ msgstr "عنوان المبادرة"
 #: referral_platform/youth/filters.py:11 referral_platform/youth/filters.py:37
 #: referral_platform/youth/filters.py:58 referral_platform/youth/forms.py:41
 #: referral_platform/youth/forms.py:43 referral_platform/youth/models.py:265
-#: referral_platform/initiatives/tables.py:31
-#: referral_platform/initiatives/tables.py:50
 msgid "Governorate"
 msgstr "المحافظة"
 
@@ -738,8 +735,6 @@ msgstr "المركز"
 
 #: referral_platform/initiatives/form.py:53
 #: referral_platform/initiatives/models.py:66
-#: referral_platform/initiatives/tables.py:33
-#: referral_platform/initiatives/tables.py:52
 msgid "Duration of the initiative"
 msgstr "اختر مدة المبادرة"
 
@@ -903,8 +898,6 @@ msgid "Decision Making"
 msgstr "إتخاذ القرار"
 
 #: referral_platform/initiatives/models.py:40
-#: referral_platform/initiatives/tables.py:30
-#: referral_platform/initiatives/tables.py:49
 msgid "Participation"
 msgstr "مشاركة"
 
@@ -938,8 +931,6 @@ msgid "In-Kind (posters, booklet,etc)"
 msgstr "عيني (ملصقات، كتيبات ... الخ)"
 
 #: referral_platform/initiatives/models.py:78
-#: referral_platform/initiatives/tables.py:32
-#: referral_platform/initiatives/tables.py:51
 msgid "Initiative Types"
 msgstr "نوع المبادرة"
 
