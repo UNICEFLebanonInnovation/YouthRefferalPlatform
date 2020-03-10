@@ -105,16 +105,28 @@ class AddView(LoginRequiredMixin, FormView):
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'initiatives/form.html'
-    form_class = YouthLedInitiativePlanningForm
+    # form_class = YouthLedInitiativePlanningForm
     model = YouthLedInitiative
     success_url = '/initiatives/list/'
-    form = YouthLedInitiativePlanningForm
+    # form = YouthLedInitiativePlanningForm
 
     def get_context_data(self, **kwargs):
         if 'form' not in kwargs:
             kwargs['form'] = self.get_form()
         return super(EditView, self).get_context_data(**kwargs)
 
+    def get_success_url(self):
+        if self.request.POST.get('save_add_another', None):
+            return '/initiatives/add/'
+        return self.success_url
+
+    def get_initial(self):
+        data = dict()
+        if self.request.user.partner:
+            data['governorate'] = self.request.user.partner.locations.all()
+            data['partner_organization'] = self.request.user.partner
+        initial = data
+        return initial
     # def get_form_class(self):
     #     # if int(self.kwargs['term']) == 4:
     #     #     return GradingIncompleteForm
