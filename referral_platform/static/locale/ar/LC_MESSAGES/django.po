@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-04 14:54+0200\n"
+"POT-Creation-Date: 2020-03-10 11:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 
 #: referral_platform/clm/forms.py:220 referral_platform/courses/forms.py:245
 #: referral_platform/courses/forms.py:490
-#: referral_platform/initiatives/form.py:249
+#: referral_platform/initiatives/form.py:241
 #: referral_platform/registrations/forms.py:391
 #: referral_platform/youth/forms.py:243
 msgid "Save"
@@ -126,7 +126,7 @@ msgstr ""
 
 #: referral_platform/clm/models.py:95 referral_platform/clm/models.py:109
 #: referral_platform/courses/forms.py:274
-#: referral_platform/initiatives/form.py:84
+#: referral_platform/initiatives/form.py:79
 #: referral_platform/initiatives/models.py:29
 msgid "Other"
 msgstr "غير ذلك "
@@ -692,21 +692,25 @@ msgstr "مهارات ريادة الأعمال"
 msgid "Website skills"
 msgstr "مهارات انشاء المواقع الالكترونية"
 
-#: referral_platform/initiatives/form.py:30
-#: referral_platform/registrations/forms.py:39
-msgid "Search for youth by name or id"
-msgstr "ابحث عن شاب من خلال الاسم او الرقم"
+#: referral_platform/initiatives/form.py:28
+#: referral_platform/initiatives/form.py:108
+#: referral_platform/initiatives/models.py:62
+msgid "Participants"
+msgstr "المشاركين"
 
-#: referral_platform/initiatives/form.py:36
+#: referral_platform/initiatives/form.py:31
 msgid "Partner Organization"
 msgstr "الجمعية"
 
-#: referral_platform/initiatives/form.py:42
+#: referral_platform/initiatives/form.py:37
 #: referral_platform/initiatives/models.py:53
+#: referral_platform/initiatives/tables.py:29
+#: referral_platform/initiatives/tables.py:48
 msgid "Initiative Title"
 msgstr "عنوان المبادرة"
 
-#: referral_platform/initiatives/form.py:47
+#: referral_platform/initiatives/form.py:42
+#: referral_platform/initiatives/models.py:54
 #: referral_platform/registrations/admin.py:137
 #: referral_platform/registrations/exports.py:22
 #: referral_platform/registrations/exports.py:95
@@ -718,10 +722,12 @@ msgstr "عنوان المبادرة"
 #: referral_platform/youth/filters.py:11 referral_platform/youth/filters.py:37
 #: referral_platform/youth/filters.py:58 referral_platform/youth/forms.py:41
 #: referral_platform/youth/forms.py:43 referral_platform/youth/models.py:265
+#: referral_platform/initiatives/tables.py:31
+#: referral_platform/initiatives/tables.py:50
 msgid "Governorate"
 msgstr "المحافظة"
 
-#: referral_platform/initiatives/form.py:52
+#: referral_platform/initiatives/form.py:47
 #: referral_platform/initiatives/models.py:59
 #: referral_platform/registrations/forms.py:54
 #: referral_platform/registrations/forms.py:56
@@ -730,36 +736,38 @@ msgstr "المحافظة"
 msgid "Center"
 msgstr "المركز"
 
-#: referral_platform/initiatives/form.py:58
+#: referral_platform/initiatives/form.py:53
 #: referral_platform/initiatives/models.py:66
+#: referral_platform/initiatives/tables.py:33
+#: referral_platform/initiatives/tables.py:52
 msgid "Duration of the initiative"
 msgstr "اختر مدة المبادرة"
 
-#: referral_platform/initiatives/form.py:62
+#: referral_platform/initiatives/form.py:57
 #: referral_platform/initiatives/models.py:69
 msgid "1-2 weeks"
 msgstr "أسبوع - أسبوعان"
 
-#: referral_platform/initiatives/form.py:63
+#: referral_platform/initiatives/form.py:58
 #: referral_platform/initiatives/models.py:70
 msgid "3-4 weeks"
 msgstr "3-4 أسابيع"
 
-#: referral_platform/initiatives/form.py:64
+#: referral_platform/initiatives/form.py:59
 #: referral_platform/initiatives/models.py:71
 msgid "4-6 weeks"
 msgstr "4 - 6 أسابيع"
 
-#: referral_platform/initiatives/form.py:65
+#: referral_platform/initiatives/form.py:60
 #: referral_platform/initiatives/models.py:72
 msgid "More than 6 weeks"
 msgstr "أكثر من 6 أسابيع "
 
-#: referral_platform/initiatives/form.py:68
+#: referral_platform/initiatives/form.py:63
 msgid "Type of the initiative"
 msgstr "اختر نوع المبادرة"
 
-#: referral_platform/initiatives/form.py:73
+#: referral_platform/initiatives/form.py:68
 #: referral_platform/initiatives/models.py:18
 msgid ""
 "Improving or installing basic services (electricity, water, sanitation, and "
@@ -768,87 +776,82 @@ msgstr ""
 "تحسين أو تثبيت الخدمات الأساسية (الكهرباء، المياه، الصرف الصحي وإزالة "
 "النفايات)"
 
-#: referral_platform/initiatives/form.py:74
+#: referral_platform/initiatives/form.py:69
 #: referral_platform/initiatives/models.py:19
 msgid "Enhancing social cohesion"
 msgstr "تعزيز التماسك الاجتماعي"
 
-#: referral_platform/initiatives/form.py:75
+#: referral_platform/initiatives/form.py:70
 #: referral_platform/initiatives/models.py:20
 msgid "Environmental"
 msgstr "بيئية"
 
-#: referral_platform/initiatives/form.py:76
+#: referral_platform/initiatives/form.py:71
 #: referral_platform/initiatives/models.py:21
 msgid "Health Services"
 msgstr "خدمات صحية"
 
-#: referral_platform/initiatives/form.py:77
+#: referral_platform/initiatives/form.py:72
 #: referral_platform/initiatives/models.py:22
 msgid "Educational, informational or knowledge sharing"
 msgstr "تعليمية، معلوماتية أو تبادل معلومات"
 
-#: referral_platform/initiatives/form.py:78
+#: referral_platform/initiatives/form.py:73
 #: referral_platform/initiatives/models.py:23
 msgid "Advocacy or Raising awareness"
 msgstr "المناصرة أو زيادة الوعي"
 
-#: referral_platform/initiatives/form.py:79
+#: referral_platform/initiatives/form.py:74
 #: referral_platform/initiatives/models.py:24
 msgid "Political"
 msgstr "سياسية"
 
-#: referral_platform/initiatives/form.py:80
+#: referral_platform/initiatives/form.py:75
 #: referral_platform/initiatives/models.py:25
 msgid "Spiritual/Religious"
 msgstr "روحية / دينية"
 
-#: referral_platform/initiatives/form.py:81
+#: referral_platform/initiatives/form.py:76
 #: referral_platform/initiatives/models.py:26
 msgid "Artistic/Cultural/Sports"
 msgstr "فنية / ثقافية / رياضة"
 
-#: referral_platform/initiatives/form.py:82
+#: referral_platform/initiatives/form.py:77
 #: referral_platform/initiatives/models.py:27
 msgid "Enhancing public safety"
 msgstr "تعزيز السلامة العامة"
 
-#: referral_platform/initiatives/form.py:83
+#: referral_platform/initiatives/form.py:78
 #: referral_platform/initiatives/models.py:28
 msgid ""
 "Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)"
 msgstr "تحسين المساحات العامة (الحدائق، المستشفيات، المباني، المدارس والأرصفة)"
 
-#: referral_platform/initiatives/form.py:117
+#: referral_platform/initiatives/form.py:104
 msgid "Initiative Details"
 msgstr "تفاصيل عن المبادرة"
 
-#: referral_platform/initiatives/form.py:121
-#: referral_platform/initiatives/models.py:62
-msgid "Participants"
-msgstr "المشاركين"
-
-#: referral_platform/initiatives/form.py:122
+#: referral_platform/initiatives/form.py:109
 msgid "Initiative Location"
 msgstr "مكان المبادرة"
 
-#: referral_platform/initiatives/form.py:123
+#: referral_platform/initiatives/form.py:110
 msgid "Initiative Information"
 msgstr "معلومات عن المبادرة"
 
-#: referral_platform/initiatives/form.py:247
+#: referral_platform/initiatives/form.py:239
 #: referral_platform/registrations/forms.py:389
 #: referral_platform/youth/forms.py:244
 msgid "Save and add another"
 msgstr "احفظ وأضف آخر"
 
-#: referral_platform/initiatives/form.py:248
+#: referral_platform/initiatives/form.py:240
 #: referral_platform/registrations/forms.py:390
 #: referral_platform/registrations/forms.py:710
 msgid "Save and continue"
 msgstr "احفظ وتابع"
 
-#: referral_platform/initiatives/form.py:264
+#: referral_platform/initiatives/form.py:256
 #: referral_platform/registrations/forms.py:455
 #: referral_platform/registrations/forms.py:468
 msgid "Your data has been sent successfully to the server"
@@ -900,6 +903,8 @@ msgid "Decision Making"
 msgstr "إتخاذ القرار"
 
 #: referral_platform/initiatives/models.py:40
+#: referral_platform/initiatives/tables.py:30
+#: referral_platform/initiatives/tables.py:49
 msgid "Participation"
 msgstr "مشاركة"
 
@@ -933,11 +938,13 @@ msgid "In-Kind (posters, booklet,etc)"
 msgstr "عيني (ملصقات، كتيبات ... الخ)"
 
 #: referral_platform/initiatives/models.py:78
+#: referral_platform/initiatives/tables.py:32
+#: referral_platform/initiatives/tables.py:51
 msgid "Initiative Types"
 msgstr "نوع المبادرة"
 
 #: referral_platform/initiatives/tables.py:18
-#: referral_platform/initiatives/tables.py:39
+#: referral_platform/initiatives/tables.py:40
 #: referral_platform/registrations/tables.py:19
 #: referral_platform/registrations/tables.py:52
 #: referral_platform/templates/django_tables2/edit_column.html:4
@@ -1186,6 +1193,10 @@ msgstr ""
 #: referral_platform/registrations/exports.py:146
 msgid "text_4c6fe6c9"
 msgstr ""
+
+#: referral_platform/registrations/forms.py:39
+msgid "Search for youth by name or id"
+msgstr "ابحث عن شاب من خلال الاسم او الرقم"
 
 #: referral_platform/registrations/forms.py:84
 #: referral_platform/youth/models.py:113 referral_platform/youth/models.py:129
