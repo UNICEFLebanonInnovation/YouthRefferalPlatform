@@ -24,7 +24,8 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.none(),
-                                                  widget=FilteredSelectMultiple(_("Participants"), is_stacked=False), label=_("Participants"),)
+                                                  widget=FilteredSelectMultiple(_("Participants"), is_stacked=False),
+                                                  label=_("Participants"),)
 
     partner_organization = forms.ModelChoiceField(
         label=_('Partner Organization'),
@@ -77,7 +78,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
             ('other', _('Other'))),
     )
-
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)

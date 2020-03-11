@@ -93,14 +93,11 @@ class AddView(LoginRequiredMixin, FormView):
 
         return initial
 
-
-
     def form_valid(self, form):
 
         form.instance.user = self.request.user
         form.save(self.request)
         return super(AddView, self).form_valid(form)
-
 
 
 class EditView(LoginRequiredMixin, FormView):

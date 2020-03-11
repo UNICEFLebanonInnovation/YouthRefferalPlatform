@@ -217,7 +217,10 @@ RAVEN_CONFIG = {
 # }
 
 # DEBUG_MODE:
-DEBUG = env.bool('DJANGO_DEBUG', False)
+# DEBUG
+# ------------------------------------------------------------------------------
+DEBUG = env.bool('DJANGO_DEBUG', default=True)
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 
 # Your production stuff: Below this line define 3rd party library settings

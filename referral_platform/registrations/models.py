@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from datetime import date
 import datetime
 import json
+import random
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.conf import settings
@@ -305,7 +306,11 @@ class AssessmentHash(models.Model):
             :return:
             """
             if self.pk is None:
-                self.hashed = generate_hash(self.name)
+                try:
+                    self.hashed = generate_hash(self.name)
+                except Exception as ex:
+                    self.timestamp = '{}{}'.format(self.timestamp, str(random.randint(1, 10000000)))
+                    self.hashed = generate_hash(self.name)
 
             super(AssessmentHash, self).save(**kwargs)
 
