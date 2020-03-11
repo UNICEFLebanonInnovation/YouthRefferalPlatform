@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, absolute_import, division
 
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices
 from django.core.urlresolvers import reverse
 from referral_platform.partners.models import PartnerOrganization, Center
