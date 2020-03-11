@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals, absolute_import, division
 
-from django.utils.translation import ugettext as _
 from django import forms
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -25,7 +24,7 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.none(),
-                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False), label=_("Participants"),)
+                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False), label=_t("Participants"),)
 
     partner_organization = forms.ModelChoiceField(
         label=_('Partner Organization'),
