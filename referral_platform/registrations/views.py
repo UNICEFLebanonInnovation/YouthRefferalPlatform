@@ -31,7 +31,7 @@ from .models import Registration, Assessment, NewMapping, AssessmentSubmission, 
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
-from referral_platform.initiatives.models import YouthLedInitiative,
+from referral_platform.initiatives.models import YouthLedInitiative, AssessmentSubmission as InintiativeSubmission
 import zipfile
 import StringIO
 import io
