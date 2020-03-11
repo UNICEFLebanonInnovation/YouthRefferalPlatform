@@ -24,7 +24,7 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.none(),
-                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False), label=_t("Participants"),)
+                                                  widget=FilteredSelectMultiple(_("Participants"), is_stacked=False), label=_("Participants"),)
 
     partner_organization = forms.ModelChoiceField(
         label=_('Partner Organization'),
