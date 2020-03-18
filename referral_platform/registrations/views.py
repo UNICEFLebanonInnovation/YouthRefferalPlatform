@@ -31,7 +31,6 @@ from .models import Registration, Assessment, NewMapping, AssessmentSubmission, 
 from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
-from referral_platform.initiatives.models import YouthLedInitiative, AssessmentSubmission as InintiativeSubmission
 import zipfile
 import StringIO
 import io
@@ -241,32 +240,32 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         return url
 
 
-# class YouthAssessment(SingleObjectMixin, RedirectView):
-#     model = Assessment
-#
-#     def get_redirect_url(self, *args, **kwargs):
-#         assessment = self.get_object()
-#         registry = Registration.objects.get(id=self.request.GET.get('registry'),
-#                                             partner_organization=self.request.user.partner)
-#         youth = registry.youth
-#         hashing = AssessmentHash.objects.create(
-#             registration=registry.id,
-#             assessment_slug=assessment.slug,
-#             partner=self.request.user.partner_id,
-#             user=self.request.user.id,
-#             timestamp=time.time()
-#         )
-#
-#         url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
-#               '&returnURL={callback}'.format(
-#                 form=assessment.assessment_form,
-#                 registry=hashing.hashed,
-#                 partner=registry.partner_organization.name,
-#                 country=registry.governorate.parent.name_en,
-#                 nationality=youth.nationality.code,
-#                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
-#         )
-#         return url
+class YouthAssessment(SingleObjectMixin, RedirectView):
+    model = Assessment
+
+    def get_redirect_url(self, *args, **kwargs):
+        assessment = self.get_object()
+        registry = Registration.objects.get(id=self.request.GET.get('registry'),
+                                            partner_organization=self.request.user.partner)
+        youth = registry.youth
+        hashing = AssessmentHash.objects.create(
+            registration=registry.id,
+            assessment_slug=assessment.slug,
+            partner=self.request.user.partner_id,
+            user=self.request.user.id,
+            timestamp=time.time()
+        )
+
+        url = '{form}?d[registry]={registry}&d[country]={country}&d[partner]={partner}&d[nationality]={nationality}' \
+              '&returnURL={callback}'.format(
+                form=assessment.assessment_form,
+                registry=hashing.hashed,
+                partner=registry.partner_organization.name,
+                country=registry.governorate.parent.name_en,
+                nationality=youth.nationality.code,
+                callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
+        )
+        return url
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -279,28 +278,14 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
 
-        # print(hashing.id)
-        assessment = Assessment.objects.get(id=int(hashing.assessment_id))
-
-        if assessment.slug in ("init_registration", "init_exec"):
-            # print('ok')
-            registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
-            # print(registration.id)
-
-            submission, new = InintiativeSubmission.objects.get_or_create(
-                initiative=registration,
-                assessment=assessment,
-                status='enrolled'
-            )
-        else:
-            # print("")
-            registration = Registration.objects.get(id=int(hashing.registration))
-            submission, new = AssessmentSubmission.objects.get_or_create(
-                registration=registration,
-                youth=registration.youth,
-                assessment=assessment,
-                status='enrolled'
-            )
+        registration = Registration.objects.get(id=int(hashing.registration))
+        assessment = Assessment.objects.get(slug=hashing.assessment_slug)
+        submission, new = AssessmentSubmission.objects.get_or_create(
+            registration=registration,
+            youth=registration.youth,
+            assessment=assessment,
+            status='enrolled'
+        )
         submission.data = payload
         submission.update_field()
         submission.save()
