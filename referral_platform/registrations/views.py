@@ -224,6 +224,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         hashing = AssessmentHash.objects.create(
             registration=registry.id,
             assessment_slug=assessment.slug,
+            assessment_id=assessment.id,
             partner=self.request.user.partner_id,
             user=self.request.user.id,
             timestamp=time.time()
