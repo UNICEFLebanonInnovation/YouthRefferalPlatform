@@ -6,8 +6,12 @@ import httplib
 import datetime
 from time import mktime
 from django.core.serializers.json import DjangoJSONEncoder
+import re
 from openpyxl import load_workbook
 from referral_platform.youth.utils import generate_id
+from .models import AssessmentSubmission, Assessment, Registration
+from referral_platform.initiatives.models import YouthLedInitiative
+
 
 
 @app.task
@@ -79,8 +83,87 @@ def import_registrations(filename, base_url, token, protocol='HTTPS'):
             print(json.dumps(data, cls=DjangoJSONEncoder))
             print("---------------")
             pass
+##############################################################################
+@app.task
+def import_assessment_submission(filename):
+
+    wb = load_workbook(filename=filename, read_only=True)
+    ws = wb['Sheet1']
+    new_data = {}
+    header = []
+    index = 0
+    for row in ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            header.append((index, cell.value))
+            index += 1
+
+    for row in ws.rows:
+        try:
+            if row[0].value == 'ID':
+                continue
+            new_data = {}
+            # Rendering the assessment from excel
+
+            for key, value in header:
+                new_data[value] = row[key].value
+                instance = AssessmentSubmission.objects.get(youth__number=row[0].value, assessment__slug=row[1].value)
+                instance.new_data = new_data
+                instance.updated = '1'
+                print(instance)
+                instance.save()
+
+        except Exception as ex:
+            print("---------------")
+            print("error: ", ex.message)
+            print(json.dumps(new_data, cls=DjangoJSONEncoder))
+            print("---------------")
+            pass
 
 
+#################################################################################
+
+@app.task
+def import_initiatives(filename):
+
+    wb = load_workbook(filename=filename, read_only=True)
+    ws = wb['Sheet1']
+    header = []
+    index = 0
+    for row in ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            header.append((index, cell.value))
+            index += 1
+
+    for row in ws.rows:
+        try:
+            if row[0].value == 'title':
+                continue
+            # not for use 1, 2, 3, 4
+            data = {}
+            data['title'] = row[0].value
+            data['governorate_id'] = row[1].value
+            data['partner_organization_id'] = row[3].value
+            data['duration'] = row[4].value
+            data['type'] = row[5].value
+            init_id = row[6].value
+
+            instance = YouthLedInitiative(**data)
+            instance.id = init_id
+            instance.save()
+            id_participants = str(row[2].value)
+            s= map(int, re.findall(r'\d+', id_participants))
+            for number in s:
+                instance.Participants.add(number)
+
+            print('obj')
+
+
+        except Exception as ex:
+            print("---------------")
+            print("error: ", ex.message)
+            print("---------------")
+            pass
+##############################################################################
 @app.task
 def update_registrations(filename, base_url, token, protocol='HTTPS'):
     from referral_platform.registrations.models import Registration
@@ -91,7 +174,7 @@ def update_registrations(filename, base_url, token, protocol='HTTPS'):
 
     for row in ws.rows:
         try:
-            if row[0].value == 'start':
+            if row[0].value == 'ID':
                 continue
             data = {}
 
@@ -363,3 +446,43 @@ def update_data(protocol, url, apifunc, token, data):
     conn.close()
 
     return result
+
+##############################################################################
+@app.task
+def import_init_submission(filename):
+    from referral_platform.initiatives.models import AssessmentSubmission
+    wb = load_workbook(filename=filename, read_only=True)
+    ws = wb['Sheet1']
+    new_data = {}
+    header = []
+    index = 0
+    for row in ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            header.append((index, cell.value))
+            index += 1
+
+    for row in ws.rows:
+        try:
+                if row[0].value == 'ID':
+                    continue
+                data = {}
+                data['initiative_id'] = row[0].value
+                data['assessment_id'] = row[1].value
+                data['status'] = 'enrolled'
+                for key, value in header:
+                    new_data[value] = row[key].value
+                instance = AssessmentSubmission.objects.create(**data)
+                instance.new_data = new_data
+                instance.save()
+
+
+
+        except Exception as ex:
+            print("---------------")
+            print("error: ", ex.message)
+            print(json.dumps(new_data, cls=DjangoJSONEncoder))
+            print("---------------")
+            pass
+
+
+#################################################################################

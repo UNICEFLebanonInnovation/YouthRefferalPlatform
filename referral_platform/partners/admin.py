@@ -13,6 +13,7 @@ class PartnerOrganizationResource(resources.ModelResource):
             'name',
             'phone_number',
             'email',
+            'id',
         )
         export_order = fields
 
