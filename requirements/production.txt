@@ -25,5 +25,3 @@ raven==6.1.0
 # Opbeat agent for performance monitoring
 # -----------------------------------------
 opbeat==3.5.2
-
-#django-debug-toolbar==1.8
