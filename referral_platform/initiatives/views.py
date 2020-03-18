@@ -190,6 +190,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'initiative__title': 'Initiative Title',
             'initiative__Participants__youth__first_name': 'First Name',
             'initiative__Participants__youth__last_name': 'Last Name',
+            'initiative__partner_organization': 'Partner',
             'initiative__center': 'Center',
             'initiative__type': 'Type of Initiative',
             'initiative__duration': 'Duration of the initiative',
@@ -213,6 +214,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'planning_to_mobilize_resources' : 'Are you planning to mobilize resources for this project?',
             'if_so_who': 'If yes, from whom?',
             'type_of_support_required': 'What kind of support are you planning to receive? ',
+            '_submission_time': 'submission time',
 
         }
 
@@ -237,6 +239,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'planning_to_mobilize_resources': "new_data->>'planning_to_mobilize_resources'",
             'if_so_who': "new_data->>'if_so_who'",
             'type_of_support_required': "new_data->>'type_of_support_required'",
+            '_submission_time': "data->>'_submission_time'",
 
 
 
@@ -244,6 +247,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'initiative__title',
             'initiative__Participants__youth__last_name',
             'initiative__Participants__youth__first_name',
+            'initiative__partner_organization',
             'initiative__center',
             'initiative__type',
             'initiative__duration',
@@ -266,6 +270,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'planning_to_mobilize_resources',
             'if_so_who',
             'type_of_support_required',
+            '_submission_time',
 
 
 
