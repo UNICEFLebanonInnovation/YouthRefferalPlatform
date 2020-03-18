@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals, absolute_import, division
 
-from django.utils.translation import ugettext as _
 from django import forms
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -25,7 +24,8 @@ YES_NO_CHOICE = ((False, _('No')), (True, _('Yes')))
 
 class YouthLedInitiativePlanningForm(forms.ModelForm):
     Participants = forms.ModelMultipleChoiceField(queryset=Registration.objects.none(),
-                                                  widget=FilteredSelectMultiple("Participants", is_stacked=False), label=_("Participants"),)
+                                                  widget=FilteredSelectMultiple(_("Participants"), is_stacked=False),
+                                                  label=_("Participants"),)
 
     partner_organization = forms.ModelChoiceField(
         label=_('Partner Organization'),
@@ -78,7 +78,6 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
             ('other', _('Other'))),
     )
-
 
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
@@ -165,8 +164,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
 
                 if youth_registered:
                     if specific_form.slug == "init_registration":
-                        # disabled = "disabled"
-                        disabled = ""
+                        disabled = "disabled"
+                        # disabled = ""
                     # check if the pre is already filled
                     else:
                         order = 1  # int(specific_form.order.split(".")[1])
@@ -175,22 +174,22 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
                             form_submitted = AssessmentSubmission.objects.filter(
                                 assessment_id=specific_form.id, initiative_id=instance.id).exists()
                             if form_submitted:
-                                # disabled = "disabled"
-                                disabled = ""
+                                disabled = "disabled"
+                                # disabled = ""
                         else:
                             # make sure the user filled the form behind this one in order to enable it
                             if previous_status == "disabled":
                                 previous_submitted = AssessmentSubmission.objects.filter(
                                     assessment_id=specific_form.id, initiative_id=instance.id).exists()
                                 if previous_submitted:
-                                    # disabled = "disabled"
-                                    disabled = ""
+                                    disabled = "disabled"
+                                    # disabled = ""
                             else:
-                                disabled = ""
-                                # disabled = "disabled"
+                                # disabled = ""
+                                disabled = "disabled"
                 else:
                     if specific_form.slug != "init_registration":
-                        disabled = ""
+                        disabled = "disabled"
 
                 if specific_form.name not in new_forms:
                     new_forms[specific_form.name] = OrderedDict()
