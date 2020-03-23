@@ -12,9 +12,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='assessmenthash',
-            name='assessment_id',
-            field=models.CharField(blank=True, max_length=50, null=True),
-        ),
+        # migrations.AddField(
+        #     model_name='assessmenthash',
+        #     name='assessment_id',
+        #     field=models.CharField(blank=True, max_length=50, null=True),
+        # ),
     ]

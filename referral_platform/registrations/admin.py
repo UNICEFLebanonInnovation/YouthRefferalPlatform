@@ -379,8 +379,27 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'id',
     )
 
+class AssessmentHashResource(resources.ModelResource):
+    class Meta:
+        model = AssessmentHash
+        fields = (
+            'hashed',
+            'registration',
+            'assessment_slug',
+            'partner',
 
-class AssessmentHashAdmin(admin.ModelAdmin):
+
+        )
+        search_fields = (
+            'hashed',
+            'assessment_slug',
+            'partner',
+
+        )
+        export_order = fields
+
+class AssessmentHashAdmin(ImportExportModelAdmin):
+    resource_class = AssessmentHashResource
 
     readonly_fields = (
 
@@ -407,6 +426,10 @@ class AssessmentHashAdmin(admin.ModelAdmin):
     def get_export_formats(self):
         from referral_platform.users.utils import get_default_export_formats
         return get_default_export_formats()
+
+
+
+
 
 
 admin.site.register(Registration, RegistrationAdmin)

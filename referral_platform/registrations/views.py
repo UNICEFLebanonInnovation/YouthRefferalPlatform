@@ -279,14 +279,11 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
         payload = json.loads(request.body.decode('utf-8'))
 
         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
-
-        # print(hashing.id)
         assessment = Assessment.objects.get(id=int(hashing.assessment_id))
 
         if assessment.slug in ("init_registration", "init_exec"):
-            # print('ok')
+
             registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
-            # print(registration.id)
 
             submission, new = InintiativeSubmission.objects.get_or_create(
                 initiative=registration,
