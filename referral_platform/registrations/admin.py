@@ -386,14 +386,14 @@ class AssessmentHashResource(resources.ModelResource):
             'hashed',
             'registration',
             'assessment_slug',
-            'partner',
+            'partner_name',
 
 
         )
         search_fields = (
             'hashed',
             'assessment_slug',
-            'partner',
+            'partner_name',
 
         )
         export_order = fields
@@ -409,11 +409,11 @@ class AssessmentHashAdmin(ImportExportModelAdmin):
         'hashed',
         'registration',
         'assessment_slug',
-        'partner',
+        'partner_name',
     )
     list_filter = (
         'assessment_slug',
-        'partner',
+        'partner_name',
     )
 
     search_fields = (
