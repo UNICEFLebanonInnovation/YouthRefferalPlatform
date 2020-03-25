@@ -409,7 +409,7 @@ class AssessmentHashAdmin(ImportExportModelAdmin):
         'hashed',
         'registration',
         'assessment_slug',
-        'partner__name',
+        'partner',
     )
     list_filter = (
         'assessment_slug',
