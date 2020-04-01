@@ -135,7 +135,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.c
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ("""Ali Chamseddine""", 'achamseddine@unicef.org'),
+    ("""Ali Chamseddine""", 'achamseddine@unicef.org'), ("""Rami Sweidane""", 'rsweidane@unicef.org'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
