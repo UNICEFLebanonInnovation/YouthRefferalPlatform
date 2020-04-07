@@ -344,9 +344,16 @@ LOGIN_URL = 'account_login'
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-INSTALLED_APPS += ['referral_platform.taskapp.celery.CeleryConfig']
+# INSTALLED_APPS += ['referral_platform.taskapp.celery.CeleryConfig']
 # CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
-CELERY_BROKER_URL = 'redis://:fN13Yc3BkPg+QtBwX8zMyB9CiddvSoKPI+t1YZwxPtk=@compiler.redis.cache.windows.net:6379/0'
+# CELERY_BROKER_URL = 'redis://:fN13Yc3BkPg+QtBwX8zMyB9CiddvSoKPI+t1YZwxPtk=@compiler.redis.cache.windows.net:6379/0'
+# CELERY_RESULT_BACKEND = 'django-db'
+########## END CELERY
+
+
+########## CELERY
+INSTALLED_APPS += ['referral_platform.taskapp.celery.CeleryConfig']
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = 'django-db'
 ########## END CELERY
 

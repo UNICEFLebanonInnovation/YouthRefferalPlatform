@@ -128,19 +128,27 @@ if env.bool('DATABASE_SSL_ENABLED', default=False):
     DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
 
 # CACHING
-# ------------------------------------------------------------------------------
-# Heroku URL does not pass the DB number, so we parse it in
+
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': '{0}/{1}'.format(env('REDIS_URL', default='redis://127.0.0.1:6379'), 0),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
-                                        # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
-        }
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
     }
 }
+
+# ------------------------------------------------------------------------------
+# Heroku URL does not pass the DB number, so we parse it in
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': '{0}/{1}'.format(env('REDIS_URL', default='redis://127.0.0.1:6379'), 0),
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
+#                                         http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+        # }
+    # }
+# }
 
 
 # Sentry Configuration
