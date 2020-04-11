@@ -37,9 +37,9 @@ class YouthLedentView(LoginRequiredMixin,
 
 class AddView(LoginRequiredMixin, FormView):
 
-    template_name = 'initiatives/form.html'
+    template_name = 'entrepreneurship/form.html'
     model = YouthLedent
-    success_url = '/initiatives/list/'
+    success_url = '/entrepreneurship/list/'
     form_class = YouthLedentPlanningForm
     form = YouthLedentPlanningForm
 
@@ -101,7 +101,7 @@ class AddView(LoginRequiredMixin, FormView):
 
 
 class EditView(LoginRequiredMixin, FormView):
-    template_name = 'initiatives/form.html'
+    template_name = 'entrepreneurship/form.html'
     # form_class = YouthLedentPlanningForm
     model = YouthLedent
     success_url = '/entrepreneurship/list/'
