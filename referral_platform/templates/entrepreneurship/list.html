@@ -1,0 +1,57 @@
+{% extends "base2.html" %}
+{% load staticfiles i18n %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load bootstrap3 %}
+{% load util_tags %}
+{% bootstrap_css %}
+
+{% block extra_head %}
+    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content-full-page %}
+<section>
+
+    <section id="page-title" class="inline-form inner-section ui-menu-color02">
+        <div class="container-fluid nopadding">
+            <h3 class="font-accident-two-light color01 uppercase"
+                data-animation-origin="right"
+                data-animation-duration="400"
+                data-animation-delay="100"
+                data-animation-distance="50px">{% trans "Entrepreneurship" %}</h3>
+        </div>
+    </section>
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><span class="badge badge-primary">{{ table.rows|length }}</span></li>
+      <li class="breadcrumb-item active">{{ request.user.partner }}</li>
+      <li class="breadcrumb-item active">{{ request.user }}</li>
+
+       <li class="breadcrumb-item active">
+        <a href="{% url 'entrepreneurship:add-entrepreneurship' %}" class="btn btn-success">
+            <i class="icon-plus-sign icon-white"></i>
+            {% trans "Add a new Entrepreneurship" %}
+        </a>
+      </li>
+      <!--<li class="breadcrumb-item active">-->
+        <!--<a href="{% url 'entrepreneurship:export_entrepreneurship_assessments' %}" class="btn btn-success">-->
+            <!--{% trans "Export Initiatives" %}-->
+        <!--</a>-->
+      <!--</li>-->
+    </ol>
+
+    <div class="">
+        {% csrf_token %}
+        {% render_table table 'django_tables2/bootstrap.html' %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+    {% get_user_token request.user.id as user_token %}
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery-ui-1.12.1.js' %}"></script>
+
+{% endblock %}
