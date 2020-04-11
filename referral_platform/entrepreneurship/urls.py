@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
 from . import views
-from .views import YouthInitiativeView, AddView, YouthAssessment
+from .views import YouthLedentView, AddView, YouthAssessment
 
 urlpatterns = [
 

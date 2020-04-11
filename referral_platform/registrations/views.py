@@ -32,6 +32,7 @@ from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
 from referral_platform.initiatives.models import YouthLedInitiative, AssessmentSubmission as InintiativeSubmission
+from referral_platform.entrepreneurship.models import YouthLedent, AssessmentSubmission as EntSubmission
 import zipfile
 import StringIO
 import io
@@ -287,6 +288,15 @@ class YouthAssessmentSubmission(SingleObjectMixin, View):
 
             submission, new = InintiativeSubmission.objects.get_or_create(
                 initiative=registration,
+                assessment=assessment,
+                status='enrolled'
+            )
+        elif assessment.slug in ("pre_entrepreneurship", "post_entrepreneurship"):
+
+            registration = YouthLedent.objects.get(id=int(hashing.registration))
+
+            submission, new = EntSubmission.objects.get_or_create(
+                entrepreneurship=registration,
                 assessment=assessment,
                 status='enrolled'
             )

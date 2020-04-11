@@ -76,6 +76,7 @@ LOCAL_APPS = [
     'referral_platform.youth',
     'referral_platform.courses',
     'referral_platform.initiatives',
+    'referral_platform.entrepreneurship',
     'referral_platform.registrations',
     'referral_platform.clm',
     'referral_platform.dashboard',
@@ -411,6 +412,7 @@ SUIT_CONFIG = {
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
         {'app': 'initiatives', 'label': 'Initiatives', 'icon': 'icon-th-list'},
         {'app': 'INIT', 'label': 'INITIATIVES', 'icon': 'icon-th-list'},
+        {'app': 'INIT', 'label': 'entrepreneurship', 'icon': 'icon-th-list'},
 
     )
 }
