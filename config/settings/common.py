@@ -412,7 +412,7 @@ SUIT_CONFIG = {
         {'app': 'locations', 'label': 'Locations', 'icon': 'icon-globe'},
         {'app': 'initiatives', 'label': 'Initiatives', 'icon': 'icon-th-list'},
         {'app': 'INIT', 'label': 'INITIATIVES', 'icon': 'icon-th-list'},
-        {'app': 'INIT', 'label': 'entrepreneurship', 'icon': 'icon-th-list'},
+        {'app': 'entrepreneurship', 'label': 'entrepreneurship', 'icon': 'icon-th-list'},
 
     )
 }
