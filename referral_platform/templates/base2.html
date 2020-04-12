@@ -84,7 +84,7 @@
                 <!-- Main Navigation -->
 
                 <ul id="nav" class="row nopadding cd-side-navigation">
-                    <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color01" data-animation-duration="1000"
+                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color01" data-animation-duration="1000"
                         data-animation-delay="100">
                         <a href="/" class="hvr-sweep-to-bottom"><i class="flaticon-insignia"></i><span>{% trans 'home' %}</span></a>
                     </li>
@@ -95,11 +95,11 @@
                     </li>
                   <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"
                         data-animation-delay="300">
-                        <a href="{% url 'initiatives:list-initiatives' %}" class="hvr-sweep-to-bottom"><i class="flaticon-download167"></i><span>{% trans 'Initiatives' %}</span></a>
+                        <a href="{% url 'initiatives:list-initiatives' %}" class="hvr-sweep-to-bottom"><i class="flaticon-odnolassniki2"></i><span>{% trans 'Initiatives' %}</span></a>
                     </li>
-                   <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color04" data-animation-duration="1000"
+                   <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color05" data-animation-duration="1000"
                         data-animation-delay="300">
-                        <a href="{% url 'entrepreneurship:list-entrepreneurship' %}" class="hvr-sweep-to-bottom"><i class="flaticon-download167"></i><span>{% trans 'Entrepreneurship' %}</span></a>
+                        <a href="{% url 'entrepreneurship:list-entrepreneurship' %}" class="hvr-sweep-to-bottom"><i class="flaticon-book-bag2"></i><span>{% trans 'Entrepreneurship' %}</span></a>
                     </li>
                     <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color03" data-animation-duration="1000"
                         data-animation-delay="500">
@@ -116,13 +116,13 @@
                         <!--<a href="{% url 'backends:files_list' %}" class="hvr-sweep-to-bottom"><i class="flaticon-download167"></i><span>{% trans 'Exported files' %}</span></a>-->
                     <!--</li>-->
                   {% if request.user.is_staff %}
-                    <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
+                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
                         data-animation-delay="1100">
                         <a href="/admin/" class="hvr-sweep-to-bottom"><i
                                 class="flaticon-tool-1"></i><span>{% trans 'Admin' %}</span></a>
                     </li>
                   {% else %}
-                    <li class="col-xs-4 col-sm-3 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
+                    <li class="col-xs-4 col-sm-2 nopadding menuitem ui-menu-color06" data-animation-duration="1000"
                         data-animation-delay="1100">
                         <a href="{% url 'users:Profile' %}"  class="hvr-sweep-to-bottom"><i
                                 class="flaticon-profile5"></i><span>{% trans 'Profile' %}</span></a>
