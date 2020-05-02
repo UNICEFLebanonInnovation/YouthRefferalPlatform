@@ -4,7 +4,7 @@ from import_export import resources, fields
 from import_export import fields
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.postgres.fields import JSONField
-
+from referral_platform.registrations.models import Registration
 from prettyjson import PrettyJSONWidget
 
 from .models import YouthLedInitiative, AssessmentSubmission
@@ -20,9 +20,16 @@ class InitResource(resources.ModelResource):
         model = YouthLedInitiative
         fields = (
             'title',
-            'Participants',
-            'location',
-            'partner_organization',
+            # 'governorate',
+            # 'partner_organization',
+            # 'Participants',
+            'id',
+
+
+        )
+        search_fields = (
+            'title',
+            'id',
 
         )
         export_order = fields
@@ -31,24 +38,32 @@ class InitResource(resources.ModelResource):
 class InitAdmin(ImportExportModelAdmin):
     resource_class = InitResource
     list_display = (
-        'partner_organization',
+        # 'partner_organization',
         'title',
-        'location',
+        'partner_organization',
+        'get_participants',
+        'id',
 
     )
     list_filter = (
-        'location',
+        'governorate',
+        'partner_organization',
     )
     search_fields = (
         'title',
+        'id',
+
     )
-    filter_horizontal = ('Participants',)
+
+    # filter_horizontal = ('Participants',)
 
 
-class AssessmentSubmissionResource(resources.ModelResource):
+class AssessmentSubmissionResource(admin.ModelAdmin):
     class Meta:
         model = AssessmentSubmission
         fields = (
+            'id',
+            'initiative_id',
             'assessment',
             # 'member',
             'initiative',
@@ -58,12 +73,15 @@ class AssessmentSubmissionResource(resources.ModelResource):
         )
         export_order = fields
 
-class AssessmentSubmissionAdmin(admin.ModelAdmin):
+class AssessmentSubmissionAdmin(ImportExportModelAdmin):
     resource_class = AssessmentSubmissionResource
     list_display = (
+        'id',
+        'initiative_id',
         'assessment',
         # 'member',
         'initiative',
+
         'data',
         'new_data',
     )
@@ -71,6 +89,13 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
         'assessment__name',
         'assessment__overview',
         'assessment__slug',
+
+    )
+    search_fields = (
+        # 'member',
+        'id',
+        'initiative__title',
+        'initiative__id',
 
     )
 

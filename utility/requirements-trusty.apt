@@ -3,8 +3,7 @@
 build-essential
 #required to translate
 gettext
-
-python-dev
+python3-dev
 
 ##shared dependencies of:
 ##Pillow, pylibmc
@@ -22,4 +21,3 @@ libwebp-dev
 
 ##django-extensions
 graphviz-dev
-

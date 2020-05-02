@@ -1,61 +1,45 @@
 from __future__ import absolute_import, unicode_literals
 
-import json
-import datetime
+
 import time
-from .tables import BootstrapTable, CommonTable, CommonTableAlt
-from django.views.generic import ListView, FormView, TemplateView, UpdateView, View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.translation import ugettext as _
-from django.db.models import Q
-from django.views.generic.edit import CreateView
-from rest_framework import status
-from rest_framework import viewsets, mixins, permissions
-from braces.views import GroupRequiredMixin, SuperuserRequiredMixin
-from import_export.formats import base_formats
-from django.shortcuts import render, get_object_or_404
+from .tables import BootstrapTable
+from referral_platform.initiatives.tables import CommonTable
+from django.views.generic import ListView, FormView, TemplateView
+
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import RedirectView
-from django.shortcuts import render
 from referral_platform.backends.djqscsv import render_to_csv_response
-from rest_framework import status
-from django.conf import settings
-from django.http import HttpResponse
-from django.template.loader import render_to_string
+
 from referral_platform.initiatives.models import AssessmentSubmission
 from django_filters.views import FilterView
 from django_tables2 import MultiTableMixin, RequestConfig, SingleTableView
 from django_tables2.export.views import ExportMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from referral_platform.registrations.models import Registration, Assessment, AssessmentHash
+from referral_platform.partners.models import Center
+
+from .form import YouthLedInitiativePlanningForm
+from .models import YouthLedInitiative
 
 
-from referral_platform.users.views import UserRegisteredMixin
-
-from .forms import YouthLedInitiativePlanningForm
-from .models import YouthLedInitiative, YoungPerson
-
-
-class YouthInitiativeView(LoginRequiredMixin, FilterView, SingleTableView):
+class YouthInitiativeView(LoginRequiredMixin,
+                          FilterView,
+                          SingleTableView):
 
     table_class = CommonTable
     model = YouthLedInitiative
     template_name = 'initiatives/list.html'
     table = BootstrapTable(YouthLedInitiative.objects.all(), order_by='id')
 
-
     def get_queryset(self):
-        return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner)
+        return YouthLedInitiative.objects.filter(partner_organization=self.request.user.partner_id)
 
 
 class AddView(LoginRequiredMixin, FormView):
 
     template_name = 'initiatives/form.html'
     model = YouthLedInitiative
-    success_url = '/initiatives/list.html'
+    success_url = '/initiatives/list/'
     form_class = YouthLedInitiativePlanningForm
     form = YouthLedInitiativePlanningForm
 
@@ -74,6 +58,14 @@ class AddView(LoginRequiredMixin, FormView):
             return '/initiatives/edit/' + str(self.request.session.get('instance_id')) + '/'
         return self.success_url
 
+    # def get_queryset(self):
+    #     if self.request.user.is_partner:
+    #         queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
+    #     elif self.request.user.is_center:
+    #         queryset = Registration.objects.filter(center=self.request.user.center)
+    #     else:
+    #         queryset = Registration.objects.all()
+    #     return queryset
     def get_queryset(self):
         queryset = Registration.objects.filter(partner_organization=self.request.user.partner)
         return queryset
@@ -81,30 +73,57 @@ class AddView(LoginRequiredMixin, FormView):
     def get_initial(self):
         # force_default_language(self.request, 'ar-ar')
         data = dict()
-        if self.request.user.partner:
-            data['partner_locations'] = self.request.user.partner.locations.all()
-            data['partner_organization'] = self.request.user.partner_id
-            # data['member'] = Registration.objects.filter(partner_organization=self.request.user.partner)
+
+        #
+        # if self.request.user.is_center:
+        #     data['partner_locations'] = self.request.user.partner.locations.all()
+        #     data['partner_organization'] = self.request.user.partner
+        #     data['user_id'] = self.request.user.id
+        #     # data['center'] = self.request.user.center
+        #     # data['center_flag'] = self.request.user.is_center
+        #     initial = data
+        # else:
+        data['partner_locations'] = self.request.user.partner.locations.all()
+        data['partner_organization'] = self.request.user.partner_id
+        # data['Participants'] = Registration.objects.filter(partner_organization=self.request.user.partner)
+        data['user_id'] = self.request.user.id
+        # data['center_flag'] = self.request.user.is_center
+        data['center'] = Center.objects.filter(partner_organization=self.request.user.partner)
         initial = data
+
         return initial
 
     def form_valid(self, form):
+
+        form.instance.user = self.request.user
         form.save(self.request)
         return super(AddView, self).form_valid(form)
 
 
 class EditView(LoginRequiredMixin, FormView):
     template_name = 'initiatives/form.html'
-    form_class = YouthLedInitiativePlanningForm
+    # form_class = YouthLedInitiativePlanningForm
     model = YouthLedInitiative
     success_url = '/initiatives/list/'
-    form = YouthLedInitiativePlanningForm
+    # form = YouthLedInitiativePlanningForm
 
     def get_context_data(self, **kwargs):
         if 'form' not in kwargs:
             kwargs['form'] = self.get_form()
         return super(EditView, self).get_context_data(**kwargs)
 
+    def get_success_url(self):
+        if self.request.POST.get('save_add_another', None):
+            return '/initiatives/add/'
+        return self.success_url
+
+    def get_initial(self):
+        data = dict()
+        if self.request.user.partner:
+            data['governorate'] = self.request.user.partner.locations.all()
+            data['partner_organization'] = self.request.user.partner
+        initial = data
+        return initial
     # def get_form_class(self):
     #     # if int(self.kwargs['term']) == 4:
     #     #     return GradingIncompleteForm
@@ -114,7 +133,6 @@ class EditView(LoginRequiredMixin, FormView):
         # form_class = self.get_form_class()
         form = YouthLedInitiativePlanningForm
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        # print('instace is '+ instance)
         if self.request.method == "POST":
             return form(self.request.POST, instance=instance)
         else:
@@ -138,11 +156,12 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
         hashing = AssessmentHash.objects.create(
             registration=registry.id,
             assessment_slug=assessment.slug,
+            assessment_id=assessment.id,
             partner=self.request.user.partner_id,
             user=self.request.user.id,
             timestamp=time.time(),
             # title=registry.title,
-            # location=registry.location,
+            # location_id=registry.country,
             # type=registry.type,
         )
 
@@ -151,7 +170,7 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 form=assessment.assessment_form,
                 registry=hashing.hashed,
                 respid_initiativeID_title=registry.title,
-                initiative_loc=registry.location,
+                initiative_loc=registry.governorate_id,
                 type_of_initiative=registry.type,
                 partner=registry.partner_organization.name,
                 # country=registry.governorate.parent.name,
@@ -159,82 +178,6 @@ class YouthAssessment(SingleObjectMixin, RedirectView):
                 callback=self.request.META.get('HTTP_REFERER', registry.get_absolute_url())
         )
         return url
-
-# # @method_decorator(csrf_exempt, name='dispatch')
-# class YouthAssessmentSubmission(SingleObjectMixin, View):
-#     def post(self, request, *args, **kwargs):
-#
-#         if 'registry' not in request.body:
-#
-#             return HttpResponseBadRequest()
-#
-#         payload = json.loads(request.body.decode('utf-8'))
-#
-#         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
-#         # print('hash submission is ' + registry)
-#         # print('hashion is ' + hashing.registration)
-#         # assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-#         # submission, new = AssessmentSubmission.objects.get_or_create(
-#         #     registration_id=int(hashing.registration),
-#         #     assessment=assessment,
-#         #     status='enrolled'
-#         # )
-#         #
-#         # submission.data = payload
-#         # submission.update_field()
-#         # submission.save()
-#         #
-#         # return HttpResponse()
-#         print('***********************fetet barra l if **********************)')
-#         registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
-#         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-#         print('***********************l hash hiye********************** ' + hashing.registration)
-#         submission, new = AssessmentSubmission.objects.get_or_create(
-#             registration=registration,
-#             youth=registration.youth,
-#             assessment=assessment,
-#             status='enrolled'
-#         )
-#         submission.data = payload
-#         submission.update_field()
-#         submission.save()
-#
-#         return HttpResponse()
-
-# @method_decorator(csrf_exempt, name='dispatch')
-# class YouthAssessmentSubmission(SingleObjectMixin, View):
-#     def post(self, request, *args, **kwargs):
-#         if 'registry' not in request.body:
-#             return HttpResponseBadRequest()
-#
-#         payload = json.loads(request.body.decode('utf-8'))
-#
-#         hashing = AssessmentHash.objects.get(hashed=payload['registry'])
-#         assessment = Assessment.objects.get(slug=hashing.assessment_slug)
-#
-#         if assessment.slug in ['init_registration', 'init_exec' ]:
-#             from referral_platform.initiatives.models import YouthLedInitiative
-#             registration = YouthLedInitiative.objects.get(id=int(hashing.registration))
-#
-#             submission, new = AssessmentSubmission.objects.get_or_create(
-#                 initiative=registration,
-#                 assessment=assessment,
-#                 status='enrolled'
-#             )
-#         else:
-#             registration = Registration.objects.get(id=int(hashing.registration))
-#
-#             submission, new = AssessmentSubmission.objects.get_or_create(
-#                 registration=registration,
-#                 youth=registration.youth,
-#                 assessment=assessment,
-#                 status='enrolled'
-#             )
-#         submission.data = payload
-#         submission.update_field()
-#         submission.save()
-#
-#         return HttpResponse()
 
 
 class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
@@ -255,11 +198,13 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
         headers = {
 
             'initiative__title': 'Initiative Title',
-            'initiative__location__name': 'Initiative Location',
             'initiative__Participants__youth__first_name': 'First Name',
             'initiative__Participants__youth__last_name': 'Last Name',
+            'initiative__partner_organization__name': 'Partner',
+            'initiative__center': 'Center',
             'initiative__type': 'Type of Initiative',
             'initiative__duration': 'Duration of the initiative',
+            'assessment__overview': 'Assessment Type',
             # 'initiative__knowledge_areas': 'Knowledge Areas',
             'assertiveness': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
             'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
@@ -279,6 +224,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'planning_to_mobilize_resources' : 'Are you planning to mobilize resources for this project?',
             'if_so_who': 'If yes, from whom?',
             'type_of_support_required': 'What kind of support are you planning to receive? ',
+            '_submission_time': 'submission time',
 
         }
 
@@ -303,6 +249,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'planning_to_mobilize_resources': "new_data->>'planning_to_mobilize_resources'",
             'if_so_who': "new_data->>'if_so_who'",
             'type_of_support_required': "new_data->>'type_of_support_required'",
+            '_submission_time': "data->>'_submission_time'",
 
 
 
@@ -310,9 +257,11 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'initiative__title',
             'initiative__Participants__youth__last_name',
             'initiative__Participants__youth__first_name',
-            'initiative__location__name',
+            'initiative__partner_organization__name',
+            'initiative__center',
             'initiative__type',
             'initiative__duration',
+            'assessment__overview',
             'assertiveness',
             'mentorship_helpful',
             'problem_addressed',
@@ -331,11 +280,30 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             'planning_to_mobilize_resources',
             'if_so_who',
             'type_of_support_required',
+            '_submission_time',
 
 
 
         )
 
         filename = 'Initiative-Export'
-
         return render_to_csv_response(qs, filename,  field_header_map=headers)
+
+
+class ExecSequenceView(LoginRequiredMixin, TemplateView):
+
+    template_name = 'initiatives/execs.html'
+
+    def get_context_data(self, **kwargs):
+        from django.db import connection
+
+        cursor = connection.cursor()
+        cursor1 = connection.cursor()
+
+        cursor.execute("SELECT setval('initiatives_youthledinitiative_id_seq', (SELECT max(id) FROM initiatives_youthledinitiative))")
+        cursor1.execute("SELECT setval('initiatives_assessmentsubmission_id_seq', (SELECT max(id) FROM initiatives_assessmentsubmission))")
+
+        return {
+            'result1': cursor.fetchall(),
+            'result2': cursor1.fetchall(),
+        }

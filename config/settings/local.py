@@ -10,25 +10,15 @@ Local settings
 - Add django-extensions as app
 """
 
+import socket
+import os
 from .common import *  # noqa
 
 # DEBUG
 # ------------------------------------------------------------------------------
 DEBUG = env.bool('DJANGO_DEBUG', default=True)
-
-# if DEBUG:
-#     MIDDLEWARE += [
-#         'debug_toolbar.middleware.DebugToolbarMiddleware',
-#     ]
-#     INSTALLED_APPS += [
-#         'debug_toolbar',
-#     ]
-#     INTERNAL_IPS = ['127.0.0.1', ]
-#     DEBUG_TOOLBAR_CONFIG = {
-#         'INTERCEPT_REDIRECTS': False,
-#     }
-
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -39,11 +29,11 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='j49r%gsnj&t!ys+qz^*-lsupfnk(268+1
 # Mail settings
 # ------------------------------------------------------------------------------
 
-# EMAIL_PORT = 1025
-#
-# EMAIL_HOST = 'localhost'
-# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
-#                     default='django.core.mail.backends.console.EmailBackend')
+EMAIL_PORT = 1025
+
+EMAIL_HOST = 'localhost'
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
+                    default='django.core.mail.backends.console.EmailBackend')
 
 
 # CACHING
@@ -61,14 +51,6 @@ MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 INSTALLED_APPS += ['debug_toolbar', ]
 
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
-
-
-import socket
-import os
-# tricks to have debug toolbar when developing with docker
-if os.environ.get('USE_DOCKER') == 'yes':
-    ip = socket.gethostbyname(socket.gethostname())
-    INTERNAL_IPS += [ip[:-1] + '1']
 
 DEBUG_TOOLBAR_CONFIG = {
     'DISABLE_PANELS': [

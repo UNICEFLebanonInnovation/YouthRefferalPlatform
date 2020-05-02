@@ -22,7 +22,7 @@ urlpatterns = [
         name='edit'
     ),
     url(
-        regex=r'^assessment/(?P<slug>[\w.@+-]+)/$',
+        regex=r'^assessment/(?P<pk>[\w.@+-]+)/$',
         view=views.YouthAssessment.as_view(),
         name='assessment'
     ),
@@ -30,6 +30,11 @@ urlpatterns = [
         regex=r'^export-initiative-assessments/$',
         view=views.ExportInitiativeAssessmentsView.as_view(),
         name='export_initiative_assessments'
+    ),
+    url(
+        regex=r'^exec-sequence/$',
+        view=views.ExecSequenceView.as_view(),
+        name='exec_sequence'
     ),
 
 

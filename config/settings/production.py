@@ -20,19 +20,17 @@ import logging
 
 
 from .common import *  # noqa
-import os
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-# SECRET_KEY = env('DJANGO_SECRET_KEY')
-SECRET_KEY = 'l^y44io8f!zr^#n(ui099rz+w2(p^ufz3j726-^6)7g2ijcp!k'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # raven sentry client
 # See https://docs.getsentry.com/hosted/clients/python/integrations/django/
 INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
@@ -51,28 +49,26 @@ MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 # and https://docs.djangoproject.com/ja/1.9/howto/deployment/checklist/#run-manage-py-check-deploy
 
 # set this to 60 seconds and then to 518400 when you can prove it works
-SECURE_HSTS_SECONDS = 300
+SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
+    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
 SECURE_BROWSER_XSS_FILTER = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SECURE_FRAME_DENY = True
+X_FRAME_OPTIONS = 'DENY'
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['leb-ems.azurewebsites.net', '127.0.0.1', '172.16.1.19', '0.0.0.0', '*'])
-# ALLOWED_HOSTS = [os.environ['leb-ems'] + '.azurewebsites.net', '127.0.0.1', '172.16.1.19', '0.0.0.0', '*'] if 'leb_ems' in os.environ else []
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['leb-ems.azurewebsites.net', 'mena-ems.unicef.org'])
 # END SITE CONFIGURATION
 
-# INSTALLED_APPS += ['gunicorn', ]
+INSTALLED_APPS += ['gunicorn', ]
 
 
 # STORAGE CONFIGURATION
@@ -127,26 +123,32 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # ------------------------------------------------------------------------------
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
 DATABASES['default'] = env.db('DATABASE_URL')
-# DATABASES['default'] = 'postgres://dbbsanytmxkyzd:b10e9d200d7acb25a26ff7d84d0aa338944cd47e0503a29ad9e63c0e1eab8df5@ec2-50-16-196-238.compute-1.amazonaws.com:5432/d3pr7hqep9t1bk',
 
-# if env.bool('DATABASE_SSL_ENABLED', default=False):
-    # DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
-    # DATABASES['default']['OPTIONS']['sslmode'] = 'require'
+if env.bool('DATABASE_SSL_ENABLED', default=False):
+    DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
 
 # CACHING
-# ------------------------------------------------------------------------------
-# Heroku URL does not pass the DB number, so we parse it in
+
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': '{0}/{1}'.format(env('REDIS_URL', default='redis://127.0.0.1:6379'), 0),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
-                                        # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
-        }
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
     }
 }
+
+# ------------------------------------------------------------------------------
+# Heroku URL does not pass the DB number, so we parse it in
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': '{0}/{1}'.format(env('REDIS_URL', default='redis://127.0.0.1:6379'), 0),
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
+#                                         http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+        # }
+    # }
+# }
 
 
 # Sentry Configuration
@@ -223,16 +225,7 @@ RAVEN_CONFIG = {
 # }
 
 # DEBUG_MODE:
-DEBUG = env.bool('DJANGO_DEBUG', True)
-MIDDLEWARE += [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-]
-INSTALLED_APPS += [
-    'debug_toolbar',
-]
-INTERNAL_IPS = ['127.0.0.1', ]
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
+DEBUG = env.bool('DJANGO_DEBUG', False)
+
 
 # Your production stuff: Below this line define 3rd party library settings

@@ -224,6 +224,8 @@ class RegistrationAdmin(ImportExportModelAdmin):
                     )
 
     list_display = (
+        'youth',
+        'id',
         'partner_organization',
         'governorate',
         'trainer',
@@ -245,7 +247,8 @@ class RegistrationAdmin(ImportExportModelAdmin):
     search_fields = (
         'youth__first_name',
         'youth__last_name',
-        'youth__father_name'
+        'youth__father_name',
+        'id',
     )
 
     def get_queryset(self, request):
@@ -300,6 +303,7 @@ class AssessmentAdmin(admin.ModelAdmin):
         'slug',
         'overview',
         'order',
+        'id',
     )
     list_filter = (
     )
@@ -351,27 +355,51 @@ class AssessmentSubmissionAdmin(admin.ModelAdmin):
 
     list_display = (
         'assessment',
+        'updated',
         'registration',
         'data',
         'new_data',
+        'id',
     )
     list_filter = (
         'assessment__name',
         'assessment__overview',
         'assessment__slug',
-        'registration__partner_organization'
+        'updated',
+
+
+
     )
     search_fields = (
         'youth__first_name',
         'youth__last_name',
         'youth__father_name',
         'youth__bayanati_ID',
-        'data',
-        'new_data',
+        'youth__number',
+        'id',
     )
 
+class AssessmentHashResource(resources.ModelResource):
+    class Meta:
+        model = AssessmentHash
+        fields = (
+            'hashed',
+            'registration',
+            'assessment_slug',
+            'partner',
 
-class AssessmentHashAdmin(admin.ModelAdmin):
+
+        )
+        search_fields = (
+            'hashed',
+            'assessment_slug',
+            'partner',
+
+        )
+        export_order = fields
+
+class AssessmentHashAdmin(ImportExportModelAdmin):
+    resource_class = AssessmentHashResource
 
     readonly_fields = (
 
@@ -398,6 +426,10 @@ class AssessmentHashAdmin(admin.ModelAdmin):
     def get_export_formats(self):
         from referral_platform.users.utils import get_default_export_formats
         return get_default_export_formats()
+
+
+
+
 
 
 admin.site.register(Registration, RegistrationAdmin)

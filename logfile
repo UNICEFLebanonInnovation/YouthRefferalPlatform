@@ -1,0 +1,33 @@
+2019-04-30 23:09:39.934 EEST [17487] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-04-30 23:09:39.934 EEST [17487] LOG:  listening on IPv6 address "::1", port 5432
+2019-04-30 23:09:39.935 EEST [17487] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-04-30 23:09:39.949 EEST [17488] LOG:  database system was shut down at 2019-04-30 23:09:25 EEST
+2019-04-30 23:09:39.952 EEST [17487] LOG:  database system is ready to accept connections
+2019-04-30 23:09:55.559 EEST [17505] FATAL:  database "referral_platform" does not exist
+2019-04-30 23:11:26.118 EEST [17515] FATAL:  role "postgres" does not exist
+2019-04-30 23:11:36.429 EEST [17516] FATAL:  role "postgres" does not exist
+2019-04-30 23:11:41.077 EEST [17517] FATAL:  role "postgres" does not exist
+2019-04-30 23:11:42.429 EEST [17518] FATAL:  role "postgres" does not exist
+2019-04-30 23:13:01.518 EEST [17524] FATAL:  database "rsweidan" does not exist
+2019-04-30 23:13:42.002 EEST [17527] FATAL:  database "rsweidan" does not exist
+2019-04-30 23:22:05.941 EEST [17577] FATAL:  role "postgres" does not exist
+2019-05-01 13:35:52.479 EEST [17867] FATAL:  database "rsweidan" does not exist
+2019-05-01 15:57:19.120 EEST [17947] FATAL:  role "postgres" does not exist
+2019-05-01 19:10:17.612 EEST [18085] FATAL:  role "postgres" does not exist
+2019-05-01 19:14:40.588 EEST [18090] FATAL:  role "postgres" does not exist
+2019-05-01 19:14:55.446 EEST [18091] FATAL:  role "postgres" does not exist
+2019-05-01 19:27:05.696 EEST [20683] FATAL:  role "postgres" does not exist
+2019-05-01 19:39:14.535 EEST [21553] FATAL:  role "postgres" does not exist
+2019-05-02 10:59:03.990 EEST [23264] FATAL:  role "postgres" does not exist
+2019-05-02 11:01:27.017 EEST [23427] FATAL:  role "postgres" does not exist
+2019-05-02 11:01:28.035 EEST [23428] FATAL:  role "postgres" does not exist
+2019-05-02 11:01:38.007 EEST [23430] FATAL:  role "postgres" does not exist
+2019-05-02 11:12:29.423 EEST [24550] FATAL:  role "postgres" does not exist
+2019-05-02 11:12:33.665 EEST [24552] FATAL:  role "postgres" does not exist
+2019-05-02 11:16:40.474 EEST [24595] FATAL:  database "referral_platform" does not exist
+2019-05-02 11:17:10.930 EEST [24624] FATAL:  database "updated" does not exist
+2019-05-02 11:17:22.226 EEST [24632] FATAL:  database "updated" does not exist
+2019-05-02 11:22:05.710 EEST [17487] LOG:  received smart shutdown request
+2019-05-02 11:22:05.717 EEST [17487] LOG:  background worker "logical replication launcher" (PID 17494) exited with exit code 1
+2019-05-02 11:22:05.717 EEST [17489] LOG:  shutting down
+2019-05-02 11:22:05.734 EEST [17487] LOG:  database system is shut down

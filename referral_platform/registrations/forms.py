@@ -258,43 +258,83 @@ class CommonForm(forms.ModelForm):
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
             all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
+
             new_forms = OrderedDict()
+            m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+            xforms = list(all_forms)
+            removed = list(m1)
+            for x in removed:
+                xforms.remove(x)
+            all_form = tuple(xforms)
 
             registration_form = Assessment.objects.get(slug="registration")
-
+            previous_status = "disabled"
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
                 registration_id=instance.id
             ).exists()
 
-            for specific_form in all_forms:
+            for specific_form in all_form:
                 formtxt = '{assessment}?registry={registry}'.format(
                     assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
                     registry=instance.id,
                 )
                 disabled = ""
-
+                order = 1
                 if youth_registered:
                     if specific_form.slug == "registration":
                         disabled = "disabled"
                     # check if the pre is already filled
                     else:
-                        order = 1  # int(specific_form.order.split(".")[1])
+                        # order = 1  # int(specific_form.order.split(".")[1])
                         if order == 1:
                             # If the user filled the form disable it
                             form_submitted = AssessmentSubmission.objects.filter(
                                 assessment_id=specific_form.id, registration_id=instance.id).exists()
                             if form_submitted:
                                 disabled = "disabled"
+
                         else:
-                            # make sure the user filled the form behind this one in order to enable it
+                            # # make sure the user filled the form behind this one in order to enable it
+
                             if previous_status == "disabled":
                                 previous_submitted = AssessmentSubmission.objects.filter(
-                                    assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                        assessment_id=specific_form.id, registration_id=instance.id).exists()
                                 if previous_submitted:
                                     disabled = "disabled"
                             else:
+                                    disabled = "disabled"
+                        if specific_form.slug == "post_assessment":
+                            if AssessmentSubmission.objects.filter(assessment_id=2,
+                                                                   registration_id=instance.id).exists():
+                                if AssessmentSubmission.objects.filter(assessment_id=3,
+                                                                   registration_id=instance.id).exists():
+                                    disabled = "disabled"
+                                else:
+                                    disabled = ""
+
+                            else:
                                 disabled = "disabled"
+
+                        if specific_form.slug == "post_entrepreneurship":
+                            if AssessmentSubmission.objects.filter(assessment_id=7,
+                                                                   registration_id=instance.id).exists():
+                                if AssessmentSubmission.objects.filter(assessment_id=6,
+                                                                   registration_id=instance.id).exists():
+                                    disabled = "disabled"
+                                else:
+                                    disabled = ""
+                            else:
+                                disabled = "disabled"
+
+                        # if specific_form.slug == "init_post_civic":
+                        #     if AssessmentSubmission.objects.filter(assessment_slug="pre_entrepreneurship",
+                        #                                            registration_id=instance.id).exists():
+                        #         disabled = ""
+                        #     else:
+                        #         disabled = "disabled"
+
+
                 else:
                     if specific_form.slug != "registration":
                         disabled = "disabled"
@@ -315,7 +355,8 @@ class CommonForm(forms.ModelForm):
 
                 for test_order in new_forms[name]:
                     test_html = test_html + '<div class="col-md-3"><a class="btn btn-success ' \
-                                + new_forms[name][test_order]['disabled'] + '" href="' + new_forms[name][test_order][
+                                + new_forms[name][test_order]['disabled'] + '" href="' + \
+                                new_forms[name][test_order][
                                     'form'] \
                                 + '">' + new_forms[name][test_order][
                                     'title'] + '</a></div> '
@@ -578,12 +619,41 @@ class BeneficiaryCommonForm(CommonForm):
                                 if form_submitted:
                                     disabled = "disabled"
                             else:
-                                # make sure the user filled the form behind this one in order to enable it
+                                # # make sure the user filled the form behind this one in order to enable it
+                                # if previous_status == "disabled":
+                                #     previous_submitted = AssessmentSubmission.objects.filter(
+                                #         assessment_id=specific_form.id, registration_id=instance.id).exists()
+                                #     if previous_submitted:
+                                #         disabled = "disabled"
+                                # else:
+                                #     disabled = "disabled"
                                 if previous_status == "disabled":
                                     previous_submitted = AssessmentSubmission.objects.filter(
                                         assessment_id=specific_form.id, registration_id=instance.id).exists()
                                     if previous_submitted:
                                         disabled = "disabled"
+                                else:
+                                    disabled = "disabled"
+                            if specific_form.slug == "post_assessment":
+                                if AssessmentSubmission.objects.filter(assessment_id=2,
+                                                                       registration_id=instance.id).exists():
+                                    if AssessmentSubmission.objects.filter(assessment_id=3,
+                                                                           registration_id=instance.id).exists():
+                                        disabled = "disabled"
+                                    else:
+                                        disabled = ""
+
+                                else:
+                                    disabled = "disabled"
+
+                            if specific_form.slug == "post_entrepreneurship":
+                                if AssessmentSubmission.objects.filter(assessment_id=6,
+                                                                       registration_id=instance.id).exists():
+                                    if AssessmentSubmission.objects.filter(assessment_id=7,
+                                                                           registration_id=instance.id).exists():
+                                        disabled = "disabled"
+                                    else:
+                                        disabled = ""
                                 else:
                                     disabled = "disabled"
                     else:

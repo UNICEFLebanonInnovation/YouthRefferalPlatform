@@ -24,7 +24,7 @@ class PlatformUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('email', 'first_name', 'last_name','partner','password1', 'password2',)
+        fields = ('email', 'first_name', 'last_name','partner','password1', 'password2','country')
 
     def clean_email(self):
         email = self.cleaned_data["email"]
@@ -75,6 +75,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         'is_superuser',
         'is_staff',
         'is_beneficiary',
+        'country',
     )
     list_filter = (
         'email',
@@ -84,6 +85,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         'groups',
         'partner',
         'is_beneficiary',
+        'country',
     )
     search_fields = ['first_name', 'last_name', 'email']
     filter_horizontal = ('groups', 'user_permissions', )

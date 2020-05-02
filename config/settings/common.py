@@ -135,7 +135,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.c
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ("""Ali Chamseddine""", 'achamseddine@unicef.org'),
+    ("""Ali Chamseddine""", 'achamseddine@unicef.org'), ("""Rami Sweidane""", 'rsweidane@unicef.org'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -146,7 +146,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db('DATABASE_URL', default='postgres:///referral_platform'),
+    'default': env.db('DATABASE_URL', default='postgres:///postgres'),
     # 'default': 'postgres://dbbsanytmxkyzd:b10e9d200d7acb25a26ff7d84d0aa338944cd47e0503a29ad9e63c0e1eab8df5@ec2-50-16-196-238.compute-1.amazonaws.com:5432/d3pr7hqep9t1bk',
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
@@ -344,9 +344,16 @@ LOGIN_URL = 'account_login'
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-INSTALLED_APPS += ['referral_platform.taskapp.celery.CeleryConfig']
+# INSTALLED_APPS += ['referral_platform.taskapp.celery.CeleryConfig']
 # CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
-CELERY_BROKER_URL = 'redis://:fN13Yc3BkPg+QtBwX8zMyB9CiddvSoKPI+t1YZwxPtk=@compiler.redis.cache.windows.net:6379/0'
+# CELERY_BROKER_URL = 'redis://:fN13Yc3BkPg+QtBwX8zMyB9CiddvSoKPI+t1YZwxPtk=@compiler.redis.cache.windows.net:6379/0'
+# CELERY_RESULT_BACKEND = 'django-db'
+########## END CELERY
+
+
+########## CELERY
+INSTALLED_APPS += ['referral_platform.taskapp.celery.CeleryConfig']
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = 'django-db'
 ########## END CELERY
 

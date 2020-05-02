@@ -20,20 +20,8 @@ class COView(LoginRequiredMixin,
 
     # group_required = [u"UNICEF_CO"]
 
-    def handle_no_permission(self):
-        return HttpResponseForbidden()
-
     def get_context_data(self, **kwargs):
         powerbi_url = None
-        if self.request.user.country_id == 3 or \
-            (self.request.user.partner and self.request.user.partner.has_country(3)):
-            powerbi_url = settings.POWERBI_JCO
-        if self.request.user.country_id == 2 or \
-            (self.request.user.partner and self.request.user.partner.has_country(2)):
-            powerbi_url = settings.POWERBI_SCO
-        if self.request.user.country_id == 1 or \
-            (self.request.user.partner and self.request.user.partner.has_country(1)):
-            powerbi_url = settings.POWERBI_PCO
 
         return {
             'powerbi_url': powerbi_url,

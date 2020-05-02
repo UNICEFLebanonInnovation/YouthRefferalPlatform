@@ -77,3 +77,11 @@ referral_platform/static/referral_platform/dist/
 webpack-stats.json
 webpack-stats-production.json
 /staticfiles/
+civic-assessment.xlsx
+Entrepreneurship.xlsx
+init_test.xlsx
+Registration.xlsx
+~$civic-assessment.xlsx
+~$init_test.xlsx
+*.xlsx
+*.xlsx
