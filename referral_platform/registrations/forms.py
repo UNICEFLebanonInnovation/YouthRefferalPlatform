@@ -179,6 +179,7 @@ class CommonForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner'] = instance.partner_organization
+            initials['location'] = instance.location
 
         else:
             initials = kwargs.get('initial', '')
@@ -187,6 +188,8 @@ class CommonForm(forms.ModelForm):
         partner = initials['partner'] if 'partner' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner)
+        country = initials['location']
+        self.fields['location'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
 
         if not instance:
@@ -257,15 +260,21 @@ class CommonForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('registrations:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(Q(partner__isnull=True) | Q(partner=partner))
+            if country:
+
+                all_forms = Assessment.objects.filter(location_id=int(country)).exclude(slug="init_exec").exclude(
+                    slug="init_registration")
+            else:
+                all_forms = Assessment.objects.filter(location_id=None).exclude(slug="init_exec").exclude(
+                    slug="init_registration")
 
             new_forms = OrderedDict()
-            m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
-            xforms = list(all_forms)
-            removed = list(m1)
-            for x in removed:
-                xforms.remove(x)
-            all_form = tuple(xforms)
+            # m1 = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+            # xforms = list(all_forms)
+            # removed = list(m1)
+            # for x in removed:
+            #     xforms.remove(x)
+            # all_form = tuple(xforms)
 
             registration_form = Assessment.objects.get(slug="registration")
             previous_status = "disabled"
@@ -274,9 +283,9 @@ class CommonForm(forms.ModelForm):
                 registration_id=instance.id
             ).exists()
 
-            for specific_form in all_form:
+            for specific_form in all_forms:
                 formtxt = '{assessment}?registry={registry}'.format(
-                    assessment=reverse('registrations:assessment', kwargs={'slug': specific_form.slug}),
+                    assessment=reverse('registrations:assessment', kwargs={'pk': specific_form.id}),
                     registry=instance.id,
                 )
                 disabled = ""

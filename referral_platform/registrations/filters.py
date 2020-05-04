@@ -74,3 +74,24 @@ class YouthSYFilter(FilterSet):
             'youth__marital_status': ['exact'],
             'youth__sex': ['exact'],
         }
+
+
+class YouthIRFilter(FilterSet):
+
+    governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__p_code="IRAK"),
+                                    empty_label=_('Governorate'))
+
+    # nationality = ModelChoiceFilter(queryset=Nationality.objects.all(), empty_label=_('Nationality'))
+
+    class Meta:
+        model = Registration
+        fields = {
+            'location': ['contains'],
+            'youth__first_name': ['contains'],
+            'youth__father_name': ['contains'],
+            'youth__last_name': ['contains'],
+            # 'youth__nationality': ['exact'],
+            'governorate': ['exact'],
+            'youth__marital_status': ['exact'],
+            'youth__sex': ['exact'],
+        }

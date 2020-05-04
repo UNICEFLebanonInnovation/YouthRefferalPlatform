@@ -304,6 +304,7 @@ class AssessmentAdmin(admin.ModelAdmin):
         'overview',
         'order',
         'id',
+        'location',
     )
     list_filter = (
     )

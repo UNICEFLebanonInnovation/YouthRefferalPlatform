@@ -27,7 +27,7 @@ from django.dispatch import receiver
 class Assessment(models.Model):
 
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=False)
     overview = models.TextField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
@@ -35,6 +35,7 @@ class Assessment(models.Model):
     assessment_form = models.URLField(blank=True, null=True)
     order = models.TextField(blank=False, null=False, default=1)
     partner = models.ForeignKey(PartnerOrganization, null=True, blank=True,)
+    location = models.ForeignKey(Location, null=True, blank=True)
 
 
 

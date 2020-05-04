@@ -89,6 +89,7 @@ class AddView(LoginRequiredMixin, FormView):
         data['user_id'] = self.request.user.id
         # data['center_flag'] = self.request.user.is_center
         data['center'] = Center.objects.filter(partner_organization=self.request.user.partner)
+        data['country'] = self.request.user.country_id
         initial = data
 
         return initial
@@ -133,6 +134,7 @@ class EditView(LoginRequiredMixin, FormView):
         # form_class = self.get_form_class()
         form = YouthLedInitiativePlanningForm
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance.country = self.request.user.country_id
         if self.request.method == "POST":
             return form(self.request.POST, instance=instance)
         else:
@@ -140,7 +142,7 @@ class EditView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         instance = YouthLedInitiative.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
-        # self.fields['hidden_field'].initial = instance.id
+        instance.country = self.request.user.country_id
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
 

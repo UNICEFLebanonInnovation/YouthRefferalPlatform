@@ -79,6 +79,11 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             ('other', _('Other'))),
     )
 
+    country = forms.CharField(
+        widget=forms.TextInput,
+        required=False
+    )
+
     def __init__(self, *args, **kwargs):
         super(YouthLedInitiativePlanningForm, self).__init__(*args, **kwargs)
 
@@ -88,15 +93,18 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
+            initials['country'] = instance.country
         else:
             initials = kwargs.get('initial', '')
 
+        country = initials['country']
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
         self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
         self.fields['partner_organization'].widget.attrs['readonly'] = True
+        self.fields['country'].widget.attrs['readonly'] = True
         my_fields = OrderedDict()
 
         # if not instance:
@@ -105,7 +113,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # my_fields[_('Partner Organization')] = ['partner_organization']
         # my_fields[_('Initiative Title')] = ['title']
         my_fields[_('Participants')] = ['Participants']
-        my_fields[_('Initiative Location')] = ['governorate', 'center']
+        my_fields[_('Initiative Location')] = ['governorate', 'center', 'country']
         my_fields[_('Initiative Information')] = ['duration', 'type']
         self.helper = FormHelper()
         self.helper.form_show_labels = True
@@ -143,12 +151,18 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         # Rendering the assessments
         if instance:
             form_action = reverse('initiatives:edit', kwargs={'pk': instance.id})
-            all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+
+            if country:
+                all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec")).filter(
+                    location_id=int(country))
+            else:
+                all_forms = Assessment.objects.filter(Q(slug="init_registration") | Q(slug="init_exec"))
+
             # all_forms = Assessment.objects.get(Assessment.slug in('init_registration','init_exec', 'post_post_assessment'))
             # all_forms = Assessment.objects.filter(Q(slug__icontains='init'))
             new_forms = OrderedDict()
 
-            registration_form = Assessment.objects.get(slug="init_registration")
+            registration_form = Assessment.objects.get(slug="init_registration", location_id=None)
 
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
