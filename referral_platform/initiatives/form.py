@@ -33,6 +33,8 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
         required=True,
     )
 
+
+
     title = forms.CharField(
         label=_("Initiative Title"),
         widget=forms.TextInput,
@@ -162,7 +164,7 @@ class YouthLedInitiativePlanningForm(forms.ModelForm):
             # all_forms = Assessment.objects.filter(Q(slug__icontains='init'))
             new_forms = OrderedDict()
 
-            registration_form = Assessment.objects.get(slug="init_registration", location_id=None)
+            registration_form = Assessment.objects.get(slug="init_registration", location_id=int(country))
 
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,

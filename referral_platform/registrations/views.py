@@ -89,30 +89,30 @@ class ListingView(LoginRequiredMixin,
             return YouthFilter
 
     def get_table_class(self):
-            locations = [g.p_code for g in self.request.user.partner.locations.all()]
-            if "PALESTINE" in locations:
-                return CommonTableAlt
-            elif "SYRIA" in locations:
-                return CommonTableAlt
-            elif "JORDAN" in locations:
-                return CommonTable
-            elif "IRAQ" in locations:
-                return CommonTable
-            elif "IRAN" in locations:
-                return CommonTable
-            elif "MOROCCO" in locations:
-                return CommonTable
-            elif "DJIBOUTI" in locations:
-                return CommonTable
-            elif "EGYPT" in locations:
-                return CommonTable
-            elif "ALGERIA" in locations:
-                return CommonTable
-            elif "TUNIS" in locations:
-                return CommonTable
-            elif "LEBANON" in locations:
-                return CommonTable
-            elif "SUDAN" in locations:
+            # locations = [g.p_code for g in self.request.user.partner.locations.all()]
+            # if "PALESTINE" in locations:
+            #     return CommonTableAlt
+            # elif "SYRIA" in locations:
+            #     return CommonTableAlt
+            # elif "JORDAN" in locations:
+            #     return CommonTable
+            # elif "IRAQ" in locations:
+            #     return CommonTable
+            # elif "IRAN" in locations:
+            #     return CommonTable
+            # elif "MOROCCO" in locations:
+            #     return CommonTable
+            # elif "DJIBOUTI" in locations:
+            #     return CommonTable
+            # elif "EGYPT" in locations:
+            #     return CommonTable
+            # elif "ALGERIA" in locations:
+            #     return CommonTable
+            # elif "TUNIS" in locations:
+            #     return CommonTable
+            # elif "LEBANON" in locations:
+            #     return CommonTable
+            # elif "SUDAN" in locations:
                 return CommonTable
 
 
@@ -148,7 +148,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
-            data['location'] = self.request.user.country
+            data['location'] = self.request.user.country_id
 
         if self.request.GET.get('youth_id'):
                 instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))
@@ -187,6 +187,7 @@ class EditView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+            data['location'] = self.request.user.country_id
         initial = data
         return initial
 
@@ -207,10 +208,11 @@ class EditView(LoginRequiredMixin, FormView):
             data['youth_nationality'] = data['youth_nationality_id']
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+            data['location'] = self.request.user.country_id
             return form(data, instance=instance)
 
     def form_valid(self, form):
-        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
+        instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner, location=self.request.user.country_id)
         form.save(request=self.request, instance=instance)
         return super(EditView, self).form_valid(form)
 

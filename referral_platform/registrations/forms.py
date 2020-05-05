@@ -277,6 +277,11 @@ class CommonForm(forms.ModelForm):
             # all_form = tuple(xforms)
 
             registration_form = Assessment.objects.get(slug="registration")
+            xforms = list(all_forms)
+            # removed = list(m1)
+            #for x in removed:
+            xforms.insert(0, registration_form)
+            all_forms = tuple(xforms)
             previous_status = "disabled"
             youth_registered = AssessmentSubmission.objects.filter(
                 assessment_id=registration_form.id,
