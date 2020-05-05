@@ -28,7 +28,7 @@ from referral_platform.backends.exporter import export_full_data
 from referral_platform.youth.models import YoungPerson
 from .serializers import RegistrationSerializer, AssessmentSubmissionSerializer
 from .models import Registration, Assessment, NewMapping, AssessmentSubmission, AssessmentHash
-from .filters import YouthFilter, YouthPLFilter, YouthSYFilter
+from .filters import YouthFilter, YouthPLFilter, YouthSYFilter, YouthIRFilter
 from .tables import BootstrapTable, CommonTable, CommonTableAlt
 from .forms import CommonForm, BeneficiaryCommonForm
 from referral_platform.initiatives.models import YouthLedInitiative, AssessmentSubmission as InintiativeSubmission
@@ -68,8 +68,8 @@ class ListingView(LoginRequiredMixin,
             return YouthSYFilter
         elif "JORDAN" in locations:
             return YouthFilter
-        elif "IRAK" in locations:
-            return YouthPLFilter
+        elif "IRAQ" in locations:
+            return YouthIRFilter
         elif "IRAN" in locations:
             return YouthSYFilter
         elif "MOROCCO" in locations:
@@ -86,6 +86,8 @@ class ListingView(LoginRequiredMixin,
             return YouthSYFilter
         elif "SUDAN" in locations:
             return YouthFilter
+        else:
+            return YouthFilter
 
     def get_table_class(self):
             locations = [g.p_code for g in self.request.user.partner.locations.all()]
@@ -95,7 +97,7 @@ class ListingView(LoginRequiredMixin,
                 return CommonTableAlt
             elif "JORDAN" in locations:
                 return CommonTable
-            elif "IRAK" in locations:
+            elif "IRAQ" in locations:
                 return CommonTable
             elif "IRAN" in locations:
                 return CommonTable

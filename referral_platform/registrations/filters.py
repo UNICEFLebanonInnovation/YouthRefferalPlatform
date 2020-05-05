@@ -86,7 +86,6 @@ class YouthIRFilter(FilterSet):
     class Meta:
         model = Registration
         fields = {
-            'location': ['contains'],
             'youth__first_name': ['contains'],
             'youth__father_name': ['contains'],
             'youth__last_name': ['contains'],
