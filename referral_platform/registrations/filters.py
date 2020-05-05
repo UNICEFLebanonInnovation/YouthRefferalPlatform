@@ -78,7 +78,7 @@ class YouthSYFilter(FilterSet):
 
 class YouthIRFilter(FilterSet):
 
-    governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__p_code="IRAK"),
+    governorate = ModelChoiceFilter(queryset=Location.objects.filter(parent__p_code="IRAQ"),
                                     empty_label=_('Governorate'))
 
     # nationality = ModelChoiceFilter(queryset=Nationality.objects.all(), empty_label=_('Nationality'))

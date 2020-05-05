@@ -49,7 +49,6 @@ class ListingView(LoginRequiredMixin,
     model = Registration
     template_name = 'registrations/list.html'
     table = BootstrapTable(Registration.objects.all(), order_by='id')
-
     filterset_class = YouthFilter
 
     def get_queryset(self):
@@ -149,6 +148,7 @@ class AddView(LoginRequiredMixin, FormView):
         if self.request.user.partner:
             data['partner_locations'] = self.request.user.partner.locations.all()
             data['partner'] = self.request.user.partner
+            data['location'] = self.request.user.country
 
         if self.request.GET.get('youth_id'):
                 instance = YoungPerson.objects.get(id=self.request.GET.get('youth_id'))

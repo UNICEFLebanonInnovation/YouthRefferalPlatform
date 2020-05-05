@@ -85,3 +85,4 @@ Registration.xlsx
 ~$init_test.xlsx
 *.xlsx
 *.xlsx
+config/settings/common.py
