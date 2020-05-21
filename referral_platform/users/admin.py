@@ -75,6 +75,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         'is_superuser',
         'is_staff',
         'is_beneficiary',
+        'is_countryMgr',
         'country',
     )
     list_filter = (
@@ -85,6 +86,7 @@ class PlatformUserAdmin(AuthUserAdmin):
         'groups',
         'partner',
         'is_beneficiary',
+        'is_countryMgr',
         'country',
     )
     search_fields = ['first_name', 'last_name', 'email']

@@ -86,7 +86,7 @@ class Registration(TimeStampedModel):
     location = models.CharField(
         max_length=254,
         blank=True, null=True,
-        verbose_name=_('Location')
+        verbose_name=_('Country')
     )
     partner_organization = models.ForeignKey(
         PartnerOrganization,
