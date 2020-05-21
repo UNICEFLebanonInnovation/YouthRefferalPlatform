@@ -144,22 +144,24 @@ MANAGERS = ADMINS
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-# DATABASES = {
-#     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-#     'default': env.db('DATABASE_URL', default='postgres://lebems%40leb-ems:TestInn0vation!@leb-ems.postgres.database.azure.com:5432/dev_leb_emsdb'),
-#     # 'default': 'postgres://dbbsanytmxkyzd:b10e9d200d7acb25a26ff7d84d0aa338944cd47e0503a29ad9e63c0e1eab8df5@ec2-50-16-196-238.compute-1.amazonaws.com:5432/d3pr7hqep9t1bk',
-# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dev_leb_emsdb',
-        'USER': 'lebems@leb-ems',
-        'PASSWORD': 'TestInn0vation!',
-        'HOST': 'leb-ems.postgres.database.azure.com',
-        'PORT': '5432',
-    }
+    # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
+    'default': env.db('DATABASE_URL', default='postgres:///postgres'),
+    # 'default': 'postgres://dbbsanytmxkyzd:b10e9d200d7acb25a26ff7d84d0aa338944cd47e0503a29ad9e63c0e1eab8df5@ec2-50-16-196-238.compute-1.amazonaws.com:5432/d3pr7hqep9t1bk',
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'dev_leb_emsdb',
+#         'USER': 'lebems@leb-ems',
+#         'PASSWORD': 'TestInn0vation!',
+#         'HOST': 'leb-ems.postgres.database.azure.com',
+#         'PORT': '5432',
+#     }
+# }
+# DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # GENERAL CONFIGURATION
