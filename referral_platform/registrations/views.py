@@ -199,7 +199,6 @@ class EditView(LoginRequiredMixin, FormView):
         else:
             form_class = CommonForm
             form = CommonForm
-            form.cleaned_data['location'] = self.request.user.country_id
 
 
         instance = Registration.objects.get(id=self.kwargs['pk'], partner_organization=self.request.user.partner)
