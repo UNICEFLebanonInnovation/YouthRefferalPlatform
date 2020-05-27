@@ -47,23 +47,24 @@ class PlatformUserAdmin(AuthUserAdmin):
     #     (_('Partner'), {'fields': ('partner',)}),
     # )
 
-
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_beneficiary', 'is_center', 'is_partner',
-                                       'groups', 'user_permissions')}),
+        (_('Permissions'),
+         {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_beneficiary', 'is_center', 'is_partner',
+                     'is_countryMgr', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner', 'country',)})
+        (None, {'fields': ('partner', 'center', 'country',)})
     )
 
     add_fieldsets = (
         (None, {'fields': ('email', 'password1', 'password2')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_beneficiary',
-                                       'groups', 'user_permissions')}),
+                                       'is_center', 'is_partner',
+                                       'is_countryMgr', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (None, {'fields': ('partner', 'country',)})
+        (None, {'fields': ('partner', 'center', 'country',)})
     )
 
     ordering = ('email',)
@@ -75,6 +76,8 @@ class PlatformUserAdmin(AuthUserAdmin):
         'is_superuser',
         'is_staff',
         'is_beneficiary',
+        'is_partner',
+        'is_center',
         'is_countryMgr',
         'country',
     )
@@ -86,6 +89,8 @@ class PlatformUserAdmin(AuthUserAdmin):
         'groups',
         'partner',
         'is_beneficiary',
+        'is_partner',
+        'is_center',
         'is_countryMgr',
         'country',
     )
