@@ -154,7 +154,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'prd_leb_emsdb',
+        'NAME': 'dev_leb_emsdb',
         'USER': 'lebems@leb-ems',
         'PASSWORD': 'TestInn0vation!',
         'HOST': 'leb-ems.postgres.database.azure.com',
