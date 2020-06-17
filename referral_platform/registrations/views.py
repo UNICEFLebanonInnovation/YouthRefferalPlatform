@@ -56,6 +56,11 @@ class ListingView(LoginRequiredMixin,
 
         if beneficiary_flag:
             return Registration.objects.none()
+        elif self.request.user.is_countryMgr:
+            return Registration.objects.filter(location=self.request.user.country.name_en)
+
+        elif self.request.user.is_center:
+            return Registration.objects.filter(center=self.request.user.center)
         else:
             return Registration.objects.filter(partner_organization=self.request.user.partner)
 
@@ -172,7 +177,7 @@ class AddView(LoginRequiredMixin, FormView):
         return initial
 
     def form_valid(self, form):
-        #form.save(request=self.request)
+        form.save(request=self.request)
         return super(AddView, self).form_valid(form)
 
 
@@ -361,7 +366,14 @@ class ExportView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            queryset = self.queryset
+            queryset = self.queryset.filter(
+                location=self.request.user.country.name_en)
+        elif self.request.user.is_center:
+            queryset = self.queryset.filter(
+                center=self.request.user.center)
+        elif self.request.user.is_countryMgr:
+            queryset = self.queryset.filter(
+                location=self.request.user.country.name_en)
         else:
             queryset = self.queryset.filter(partner_organization=self.request.user.partner)
 
@@ -1061,15 +1073,14 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
 
         return queryset
 
-    def get(self, request, *args, **kwargs):
 
+    def get(self, request, *args, **kwargs):
         headers = {
             'registration__youth__first_name': 'First Name',
             'registration__youth__father_name': "Fathers's Name",
             'registration__youth__last_name': 'Last Name',
             'registration__partner_organization__name': 'Partner',
             'registration__youth__bayanati_ID': 'Bayanati ID',
-            # 'registration__partner_organization__name': 'Partner',
             'registration__youth__birthday_day': 'Birth Day',
             'registration__youth__birthday_month': 'Birth Month',
             'registration__youth__birthday_year': 'Birth Year',
@@ -1082,10 +1093,6 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'registration__center__name': 'Center',
             'registration__location': 'Location',
             'assessment__overview': 'Assessment Type',
-            # 'nationality': 'Nationality',
-            # 'training_type': 'Training Type',
-            # 'partner': 'Partner Organization',
-
             'can_plan_personal': 'I am prepared to plan my personal objectives',
             'can_plan_career': 'I am prepared to plan my professional objectives',
             'can_manage_financ': 'I know how to manage my monetary affairs responsibly',
@@ -1096,23 +1103,14 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'aware_resources': 'I know where and when to get support when I face a problem',
             'can_handle_pressure': 'When I am stressed, I manage my stress in a positive way',
             'motivated_advance_skills': 'There are opportunities in the labour market that encourage me to develop my skills',
-            'communication_skills': 'A good communicator',
-            'presentation_skills': 'The most important part of delivering a successful presentation is',
-            'team_is': 'A team is a group of people who',
-            'good_team_is': 'To work efficiently as a team',
-            'team_leader_is': 'If I am the group leader, I will',
-            'bad_decision_cause': 'One of the main reasons to NOT make the best decision',
-            'easiest_solution': 'The easiest solution for the problem is always the best solution',
-            'problem_solving': 'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
-
-            'bad_venue': 'If the room/ training area not convenient, please specify why',
-            'bad_venue_others': 'If other, please specify',
-            'additional_comments': 'If yes, what is it?',
-
-            'personal_value': 'Rate the benefits of the training to your personal life',
-            'faced_challenges': 'Have you faced any challenges with the program?',
-            'challenges': 'Challenges',
-            'has_comments': 'Do yo uhave anything else you want to tell us?',
+            'I_am_able_to_present_a_structured_manner': 'I am able to present my ideas in a structured manner',
+            'I_am_able_to_identif_ject_into_a_business': 'I am able to identify how to turn a project into a business',
+            'I_am_able_to_identif_lementing_my_project': 'I am able to identify the different sources of funding I can use to continue implementing my project',
+            'I_know_how_to_budget_I_want_to_implement': 'I know how to budget for a project that I want to implement',
+            'I_know_how_to_develo_implement_a_project': 'I know how to develop a workplan to implement a project',
+            'I_am_able_to_identif_implement_a_project': 'I am able to identify the resources needed to implement a project',
+            'I_feel_am_ready_to_s_to_help_my_community': 'I feel am ready to start a new a project to help my community?',
+            'A_good_way_to_descri_ling_it_like_a_story': 'A good way to describe my project is telling it like a story',
             '_userform_id': 'User',
             '_submission_time': 'submission time',
         }
@@ -1129,24 +1127,14 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'aware_resources': "data->>'aware_resources'",
             'can_handle_pressure': "data->>'can_handle_pressure'",
             'motivated_advance_skills': "data->>'motivated_advance_skills'",
-            'communication_skills': "data->>'communication_skills'",
-            'presentation_skills': "data->>'presentation_skills'",
-            'team_is': "data->>'team_is'",
-            'good_team_is': "data->>'good_team_is'",
-            'team_leader_is': "data->>'team_leader_is'",
-            'bad_decision_cause': "data->>'bad_decision_cause'",
-            'easiest_solution': "data->>'easiest_solution'",
-            'can_determin_probs': "data->>'can_determin_probs'",
-            '_submission_time': "data->>'_submission_time'",
-
-            'bad_venue': "data->>'bad_venue'",
-            'bad_venue_others': "data->>'bad_venue_others'",
-            'additional_comments': "data->>'additional_comments'",
-
-            'personal_value': "data->>'personal_value'",
-            'faced_challenges': "data->>'faced_challenges'",
-            'challenges': "data->>'challenges'",
-            'has_comments': "data->>'has_comments'",
+            'I_am_able_to_present_a_structured_manner': "data->>'I_am_able_to_present_a_structured_manner' ",
+            'I_am_able_to_identif_ject_into_a_business': "data->>'I_am_able_to_identif_ject_into_a_business'",
+            'I_am_able_to_identif_lementing_my_project': "data->>'I_am_able_to_identif_lementing_my_project'",
+            'I_know_how_to_budget_I_want_to_implement': "data->>'I_know_how_to_budget_I_want_to_implement'",
+            'I_know_how_to_develo_implement_a_project': "data->>'I_know_how_to_develo_implement_a_project'",
+            'I_am_able_to_identif_implement_a_project': "data->>'I_am_able_to_identif_implement_a_project'",
+            'I_feel_am_ready_to_s_to_help_my_community': "data->>'I_feel_am_ready_to_s_to_help_my_community'",
+            'A_good_way_to_descri_ling_it_like_a_story': "data->>'A_good_way_to_descri_ling_it_like_a_story'",
             '_userform_id': "data->>'_userform_id'",
 
         }).values(
@@ -1178,30 +1166,156 @@ class ExportEntrepreneurshipAssessmentsView(LoginRequiredMixin, ListView):
             'aware_resources',
             'can_handle_pressure',
             'motivated_advance_skills',
-
-            'communication_skills',
-            'presentation_skills',
-            'bad_venue',
-            'bad_venue_others',
-            'additional_comments',
-
-            'team_is',
-            'good_team_is',
-            'team_leader_is',
-            'bad_decision_cause',
-            'easiest_solution',
-            'can_determin_probs',
-            '_submission_time',
-
-            'personal_value',
-            'faced_challenges',
-            'challenges',
-            'has_comments',
+            'I_am_able_to_present_a_structured_manner',
+            'I_am_able_to_identif_ject_into_a_business',
+            'I_am_able_to_identif_lementing_my_project',
+            'I_know_how_to_budget_I_want_to_implement',
+            'I_know_how_to_develo_implement_a_project',
+            'I_am_able_to_identif_implement_a_project',
+            'I_feel_am_ready_to_s_to_help_my_community',
+            'A_good_way_to_descri_ling_it_like_a_story',
             '_userform_id',
 
         )
+        # else:
+        #     headers = {
+        #         'registration__youth__first_name': 'First Name',
+        #         'registration__youth__father_name': "Fathers's Name",
+        #         'registration__youth__last_name': 'Last Name',
+        #         'registration__partner_organization__name': 'Partner',
+        #         'registration__youth__bayanati_ID': 'Bayanati ID',
+        #         # 'registration__partner_organization__name': 'Partner',
+        #         'registration__youth__birthday_day': 'Birth Day',
+        #         'registration__youth__birthday_month': 'Birth Month',
+        #         'registration__youth__birthday_year': 'Birth Year',
+        #         'registration__youth__nationality__name_en': 'Nationality',
+        #         'registration__youth__marital_status': 'Marital status',
+        #         'registration__youth__sex': 'Gender',
+        #         'registration__youth__number': 'Unique number',
+        #         'registration__governorate__parent__name_en': 'Country',
+        #         'registration__governorate__name_en': 'Governorate',
+        #         'registration__center__name': 'Center',
+        #         'registration__location': 'Location',
+        #         'assessment__overview': 'Assessment Type',
+        #         # 'nationality': 'Nationality',
+        #         # 'training_type': 'Training Type',
+        #         # 'partner': 'Partner Organization',
+        #
+        #         'can_plan_personal': 'I am prepared to plan my personal objectives',
+        #         'can_plan_career': 'I am prepared to plan my professional objectives',
+        #         'can_manage_financ': 'I know how to manage my monetary affairs responsibly',
+        #         'can_plan_time': 'I know ways to plan my time',
+        #         'can_suggest': 'I can give suggestions without being bossy',
+        #         'can_take_decision': 'I make a decision by thinking about all the information I have about available options decision making',
+        #         'can_determin_probs': 'I know how to identify causes for my problems and find solutions for them  problem solving',
+        #         'aware_resources': 'I know where and when to get support when I face a problem',
+        #         'can_handle_pressure': 'When I am stressed, I manage my stress in a positive way',
+        #         'motivated_advance_skills': 'There are opportunities in the labour market that encourage me to develop my skills',
+        #         'communication_skills': 'A good communicator',
+        #         'presentation_skills': 'The most important part of delivering a successful presentation is',
+        #         'team_is': 'A team is a group of people who',
+        #         'good_team_is': 'To work efficiently as a team',
+        #         'team_leader_is': 'If I am the group leader, I will',
+        #         'bad_decision_cause': 'One of the main reasons to NOT make the best decision',
+        #         'easiest_solution': 'The easiest solution for the problem is always the best solution',
+        #         'problem_solving': 'If you face a problem, what procedures would you take into consideration to solve the problem? Please arrange the below steps chronologically',
+        #
+        #         'bad_venue': 'If the room/ training area not convenient, please specify why',
+        #         'bad_venue_others': 'If other, please specify',
+        #         'additional_comments': 'If yes, what is it?',
+        #
+        #         'personal_value': 'Rate the benefits of the training to your personal life',
+        #         'faced_challenges': 'Have you faced any challenges with the program?',
+        #         'challenges': 'Challenges',
+        #         'has_comments': 'Do yo uhave anything else you want to tell us?',
+        #         '_userform_id': 'User',
+        #         '_submission_time': 'submission time',
+        #     }
+        #
+        #     qs = self.get_queryset().extra(select={
+        #
+        #         'can_plan_personal': "data->>'can_plan_personal'",
+        #         'can_plan_career': "data->>'can_plan_career'",
+        #         'can_manage_financ': "data->>'can_manage_financ'",
+        #         'can_plan_time': "data->>'can_plan_time'",
+        #         'can_suggest': "data->>'can_suggest'",
+        #         'can_take_decision': "data->>'can_take_decision'",
+        #         'problem_solving': "data->>'problem_solving'",
+        #         'aware_resources': "data->>'aware_resources'",
+        #         'can_handle_pressure': "data->>'can_handle_pressure'",
+        #         'motivated_advance_skills': "data->>'motivated_advance_skills'",
+        #         'communication_skills': "data->>'communication_skills'",
+        #         'presentation_skills': "data->>'presentation_skills'",
+        #         'team_is': "data->>'team_is'",
+        #         'good_team_is': "data->>'good_team_is'",
+        #         'team_leader_is': "data->>'team_leader_is'",
+        #         'bad_decision_cause': "data->>'bad_decision_cause'",
+        #         'easiest_solution': "data->>'easiest_solution'",
+        #         'can_determin_probs': "data->>'can_determin_probs'",
+        #         '_submission_time': "data->>'_submission_time'",
+        #
+        #         'bad_venue': "data->>'bad_venue'",
+        #         'bad_venue_others': "data->>'bad_venue_others'",
+        #         'additional_comments': "data->>'additional_comments'",
+        #
+        #         'personal_value': "data->>'personal_value'",
+        #         'faced_challenges': "data->>'faced_challenges'",
+        #         'challenges': "data->>'challenges'",
+        #         'has_comments': "data->>'has_comments'",
+        #         '_userform_id': "data->>'_userform_id'",
+        #
+        #     }).values(
+        #         'registration__youth__first_name',
+        #         'registration__youth__father_name',
+        #         'registration__youth__last_name',
+        #         'registration__partner_organization__name',
+        #         'registration__governorate__parent__name_en',
+        #         'registration__governorate__name_en',
+        #         'registration__center__name',
+        #         'registration__location',
+        #         'registration__youth__bayanati_ID',
+        #         'registration__partner_organization__name',
+        #         'registration__youth__birthday_day',
+        #         'registration__youth__birthday_month',
+        #         'registration__youth__birthday_year',
+        #         'registration__youth__nationality__name_en',
+        #         'registration__youth__marital_status',
+        #         'registration__youth__sex',
+        #         'registration__youth__number',
+        #         'assessment__overview',
+        #         'can_plan_personal',
+        #         'can_plan_career',
+        #         'can_manage_financ',
+        #         'can_plan_time',
+        #         'can_suggest',
+        #         'can_take_decision',
+        #         'problem_solving',
+        #         'aware_resources',
+        #         'can_handle_pressure',
+        #         'motivated_advance_skills',
+        #
+        #         'communication_skills',
+        #         'presentation_skills',
+        #         'bad_venue',
+        #         'bad_venue_others',
+        #         'additional_comments',
+        #
+        #         'team_is',
+        #         'good_team_is',
+        #         'team_leader_is',
+        #         'bad_decision_cause',
+        #         'easiest_solution',
+        #         'can_determin_probs',
+        #         '_submission_time',
+        #
+        #         'personal_value',
+        #         'faced_challenges',
+        #         'challenges',
+        #         'has_comments',
+        #         '_userform_id',
+        #
+        #     )
         filename = 'Entrepreneurship-assessment'
-
         return render_to_csv_response(qs, filename, field_header_map=headers)
 
 
