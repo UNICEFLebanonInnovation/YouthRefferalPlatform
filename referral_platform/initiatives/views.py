@@ -190,9 +190,14 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         if self.request.user.is_superuser:
             queryset = self.queryset
+        elif self.request.user.is_center:
+                queryset = self.queryset.filter(
+                    initiative__center=self.request.user.center)
+        elif self.request.user.is_countryMgr:
+            queryset = self.queryset.filter(
+                initiative__country=self.request.user.country)
         else:
             queryset = self.queryset.filter(initiative__partner_organization=self.request.user.partner)
-
         return queryset
 
     def get(self, request, *args, **kwargs):
@@ -210,7 +215,7 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
             # 'initiative__knowledge_areas': 'Knowledge Areas',
             'assertiveness': 'The group feels certain that the initiative will address the problem(s) faced by our communities',
             'mentorship_helpful': 'The group expects to find the mentorship in the planning phase very helpful',
-            'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
+            # 'problem_addressed': 'Can you tell us more about the problem you/your community is facing?',
             'planned_results': 'Can you please tell us your planned results/what will the initiative achieve? ',
             'number_of_direct_beneficiaries':'How many people are estimated to benefit/will be reached by implementing the initiative?',
             'age_group_range': 'The estimated Age groups of the beneficiaries? ',
@@ -287,7 +292,6 @@ class ExportInitiativeAssessmentsView(LoginRequiredMixin, ListView):
 
 
         )
-
         filename = 'Initiative-Export'
         return render_to_csv_response(qs, filename,  field_header_map=headers)
 
