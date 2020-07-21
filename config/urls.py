@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^home/$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^courses/', include('referral_platform.courses.urls', namespace='courses')),
     url(r'^initiatives/', include('referral_platform.initiatives.urls', namespace='initiatives')),
+    url(r'^entrepreneurship/', include('referral_platform.entrepreneurship.urls', namespace='entrepreneurship')),
 
     #url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
