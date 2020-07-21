@@ -49,35 +49,35 @@ class YouthLedentPlanningForm(forms.ModelForm):
         required=False,
     )
 
-    # duration = forms.ChoiceField(
-    #     label=_("Duration of the initiative"),
-    #     widget=forms.Select, required=True,
-    #     choices=(
-    #         ('', '----------'),
-    #         ('1_2', _('1-2 weeks')),
-    #         ('3_4', _('3-4 weeks')),
-    #         ('4_6', _('4-6 weeks')),
-    #         ('6_plus', _('More than 6 weeks'))),
-    #     )
-    # type = forms.ChoiceField(
-    #     label=_("Type of the initiative"),
-    #     widget=forms.Select, required=True,
-    #     choices=(
-    #         ('', '----------'),
-    #         ('basic_services',
-    #          _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
-    #         ('social', _('Enhancing social cohesion')),
-    #         ('environmental', _('Environmental')),
-    #         ('health_services', _('Health Services')),
-    #         ('informational', _('Educational, informational or knowledge sharing')),
-    #         ('advocacy', _('Advocacy or Raising awareness')),
-    #         ('political', _('Political')),
-    #         ('religious', _('Spiritual/Religious')),
-    #         ('culture', _('Artistic/Cultural/Sports')),
-    #         ('safety', _('Enhancing public safety')),
-    #         ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
-    #         ('other', _('Other'))),
-    # )
+    duration = forms.ChoiceField(
+        label=_("Duration of the initiative"),
+        widget=forms.Select, required=True,
+        choices=(
+            ('', '----------'),
+            ('1_2', _('1-2 weeks')),
+            ('3_4', _('3-4 weeks')),
+            ('4_6', _('4-6 weeks')),
+            ('6_plus', _('More than 6 weeks'))),
+        )
+    type = forms.ChoiceField(
+        label=_("Type of the initiative"),
+        widget=forms.Select, required=True,
+        choices=(
+            ('', '----------'),
+            ('basic_services',
+             _('Improving or installing basic services (electricity, water, sanitation, and waste removal)')),
+            ('social', _('Enhancing social cohesion')),
+            ('environmental', _('Environmental')),
+            ('health_services', _('Health Services')),
+            ('informational', _('Educational, informational or knowledge sharing')),
+            ('advocacy', _('Advocacy or Raising awareness')),
+            ('political', _('Political')),
+            ('religious', _('Spiritual/Religious')),
+            ('culture', _('Artistic/Cultural/Sports')),
+            ('safety', _('Enhancing public safety')),
+            ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
+            ('other', _('Other'))),
+    )
 
     def __init__(self, *args, **kwargs):
         super(YouthLedentPlanningForm, self).__init__(*args, **kwargs)
@@ -88,15 +88,18 @@ class YouthLedentPlanningForm(forms.ModelForm):
             initials = {}
             initials['partner_locations'] = instance.partner_organization.locations.all()
             initials['partner_organization'] = instance.partner_organization
+            initials['country'] = instance.country
         else:
             initials = kwargs.get('initial', '')
 
+        country = initials['country']
         partner_locations = initials['partner_locations'] if 'partner_locations' in initials else []
         partner_organization = initials['partner_organization'] if 'partner_organization' in initials else 0
         self.fields['governorate'].queryset = Location.objects.filter(parent__in=partner_locations)
         self.fields['center'].queryset = Center.objects.filter(partner_organization=partner_organization)
         self.fields['Participants'].queryset = Registration.objects.filter(partner_organization=partner_organization)
-        self.fields['partner_organization'].widget.attrs['readonly'] = True
+        self.fields['partner_organization'].widget.attrs['disabled'] = True
+        self.fields['country'].widget.attrs['disabled'] = True
         my_fields = OrderedDict()
 
         # if not instance:
