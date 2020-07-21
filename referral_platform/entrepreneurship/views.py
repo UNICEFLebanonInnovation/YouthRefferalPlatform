@@ -28,7 +28,7 @@ class YouthLedentView(LoginRequiredMixin,
 
     table_class = CommonTable
     model = YouthLedent
-    template_name = 'initiatives/list.html'
+    template_name = 'entrepreneurship/list.html'
     table = BootstrapTable(YouthLedent.objects.all(), order_by='id')
 
     def get_queryset(self):
