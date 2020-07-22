@@ -34,7 +34,7 @@ class YouthLedentPlanningForm(forms.ModelForm):
     )
 
     title = forms.CharField(
-        label=_("Initiative Title"),
+        label=_("Title"),
         widget=forms.TextInput,
         required=True
     )
@@ -50,7 +50,7 @@ class YouthLedentPlanningForm(forms.ModelForm):
     )
 
     duration = forms.ChoiceField(
-        label=_("Duration of the initiative"),
+        label=_("Duration"),
         widget=forms.Select, required=True,
         choices=(
             ('', '----------'),
@@ -60,7 +60,7 @@ class YouthLedentPlanningForm(forms.ModelForm):
             ('6_plus', _('More than 6 weeks'))),
         )
     type = forms.ChoiceField(
-        label=_("Type of the initiative"),
+        label=_("Type"),
         widget=forms.Select, required=True,
         choices=(
             ('', '----------'),
@@ -77,6 +77,11 @@ class YouthLedentPlanningForm(forms.ModelForm):
             ('safety', _('Enhancing public safety')),
             ('public_spaces', _('Improving Public Spaces (parks, hospitals, buildings, schools, sidewalks)')),
             ('other', _('Other'))),
+    )
+
+    country = forms.CharField(
+        widget=forms.TextInput,
+        required=False
     )
 
     def __init__(self, *args, **kwargs):
