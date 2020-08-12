@@ -23,7 +23,22 @@ class COView(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         powerbi_url = None
 
+        country = self.request.user.country_id
+        print (country)
+        if country ==50:
+            powerbi_url = ''
+        elif country ==1:
+            powerbi_url='https://app.powerbi.com/view?r=eyJrIjoiMjg1NzRjY2UtM2U3MS00NjU2LTlmMmYtMzRhY2E3M2QzMmZkIiwidCI6Ijc3NDEwMTk1LTE0ZTEtNGZiOC05MDRiLWFiMTg5MjAyMzY2NyIsImMiOjh9&pageName=ReportSection9ad8159084a3dd930461'
+        elif country ==2:
+            powerbi_url = 'https://app.powerbi.com/view?r=eyJrIjoiM2FiYjk2NWUtMjQ2NS00Y2M2LTkzOWEtYWU1NWM5ZGRmNmQ3IiwidCI6Ijc3NDEwMTk1LTE0ZTEtNGZiOC05MDRiLWFiMTg5MjAyMzY2NyIsImMiOjh9'
+        elif country ==3:
+            powerbi_url = 'https://app.powerbi.com/view?r=eyJrIjoiZGJkNDZiOGQtOTM4NS00YTMwLWIwMjQtZjgyZDMxMGQyZDM3IiwidCI6Ijc3NDEwMTk1LTE0ZTEtNGZiOC05MDRiLWFiMTg5MjAyMzY2NyIsImMiOjh9'
+        else:
+            powerbi_url=''
+
+        print('url is:' + powerbi_url)
         return {
+
             'powerbi_url': powerbi_url,
         }
 
@@ -40,6 +55,23 @@ class PartnerView(LoginRequiredMixin,
         return HttpResponseForbidden()
 
     def get_context_data(self, **kwargs):
+
+        country = self.request.user.country_id
+        print (country)
+
+        if country ==50:
+            powerbi_url = ''
+        elif country ==1:
+            powerbi_url = 'https://app.powerbi.com/view?r=eyJrIjoiMjg1NzRjY2UtM2U3MS00NjU2LTlmMmYtMzRhY2E3M2QzMmZkIiwidCI6Ijc3NDEwMTk1LTE0ZTEtNGZiOC05MDRiLWFiMTg5MjAyMzY2NyIsImMiOjh9&pageName=ReportSection9ad8159084a3dd930461'
+        elif country ==2:
+            powerbi_url = 'https://app.powerbi.com/view?r=eyJrIjoiM2FiYjk2NWUtMjQ2NS00Y2M2LTkzOWEtYWU1NWM5ZGRmNmQ3IiwidCI6Ijc3NDEwMTk1LTE0ZTEtNGZiOC05MDRiLWFiMTg5MjAyMzY2NyIsImMiOjh9'
+        elif country ==3:
+            powerbi_url = 'https://app.powerbi.com/view?r=eyJrIjoiZGJkNDZiOGQtOTM4NS00YTMwLWIwMjQtZjgyZDMxMGQyZDM3IiwidCI6Ijc3NDEwMTk1LTE0ZTEtNGZiOC05MDRiLWFiMTg5MjAyMzY2NyIsImMiOjh9'
+
+        else:
+            powerbi_url = ''
+
+        print('url is:' + powerbi_url)
         return {
-            'powerbi_url': self.request.user.partner.dashboard_url,
-        }
+            'powerbi_url': powerbi_url}
+
