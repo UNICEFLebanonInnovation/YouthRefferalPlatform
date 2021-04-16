@@ -26,4 +26,4 @@ raven==6.1.0
 # -----------------------------------------
 opbeat==3.5.2
 
-django-debug-toolbar==1.8
+django-debug-toolbar==1.11.1
